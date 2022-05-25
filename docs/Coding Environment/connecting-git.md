@@ -7,10 +7,10 @@ sidebar_position: 2
 The first thing to do should be connecting the environment to your git repo. For this you will need a GitHub account, so please create one if needed.  
 
 
-Now we can connect this Mindsmiths environment with the Github account you have or you just created. To do that follow these steps this:
+Now we can connect this Mindsmiths environment with the GitHub account you have or you just created. To do that follow these steps this:
 1. Open terminal and run this command to create the SSH key and just press ENTER on all of the questions: `ssh-keygen -t ed25519 -C "your_email@example.com"` (change your_email@example.com with your email)
 2. Run `cat /root/.ssh/*.pub` and copy the output of the command - public part of your SSH key (**don't worry public part of the SSH key can be seen by everyone, it's not a secret!**)
-3. Go to this [link](https://github.com/settings/ssh/new) (takes you to the Github's page for adding new SSH key) and paste the public key you copied under the "Key" part
+3. Go to this [link](https://github.com/settings/ssh/new) (takes you to the GitHub's page for adding new SSH key) and paste the public key you copied under the "Key" part
 4. You can set the "Title" to whatever, it's just for you to know where it's from - we recommend something like "username-mindsmiths-free" (e.g. hrco-mindsmiths-free)
 
 Now it is time to push the code to the connected repo, do this:
@@ -29,7 +29,7 @@ Now it is time to push the code to the connected repo, do this:
     git push --set-upstream origin master (answer "yes")
     (It will take some time because of the big size of the files)
 ```
-That's it you have your Github account connected
+That's it, you have your GitHub account connected. The same process can also be applied for GitLab.
 
 ### Documentation
 To help you get started with the platform, you can check out the tutorials and supporting [documentation](http://docs.sandbox.mindsmiths.io/docs/intro)
