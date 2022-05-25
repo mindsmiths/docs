@@ -26,8 +26,7 @@ Now it is time to push the code to the connected repo, do this:
 ```commandline
     git add .
     git commit -m "First commit: pushed all the Mindsmiths initial repo files"
-    git push --set-upstream origin master (answer "yes")
-    (It will take some time because of the big size of the files)
+    git push --set-upstream origin master # answer "yes", it may take some time because of the big file size
 ```
 That's it, you have your GitHub account connected. The same process can also be applied for GitLab.
 
