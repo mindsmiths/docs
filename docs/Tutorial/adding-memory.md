@@ -18,7 +18,7 @@ public class Nola extends Agent {
     
     ...
 
-    // higlight-start
+    // highlight-start
     public void addMessageToMemory(String sender, String text){
         memory += String.format("%s: %s\n", sender, text);
     }
