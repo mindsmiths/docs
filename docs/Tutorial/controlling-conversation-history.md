@@ -134,7 +134,7 @@ public class Nola extends Agent {
 }
 ```
 
-And now we need to track the timestamp of every message the user sends to Nola. We do this by adding the following change to the rule ```"Handle message"``` in ```Conversation.drl```:
+And now we need to track the timestamp of every message the user sends to Nola. We do this by adding the following change to the rule ```"Handle message"``` in ```Conversation.drl``` (notice: you need to modify the rule "Handle message", not just paste in the new one):
 
 ```java title="rules/nola/Conversation.drl"
 ...

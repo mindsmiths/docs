@@ -46,10 +46,22 @@ public enum Personality {
 ```
 
 You’ll notice that apart from changing the intro of the prompt and stopwords, we’re now also playing with different temperatures and response lengths.
-Simply put, temperature controls response creativity: the higher the temperature, the “bolder” and less deterministic the responses will be.
+Simply put, temperature controls response creativity: the higher the temperature, the “bolder” and less deterministic the responses will be. Response length just limits the number of words agent's response can have.
 
 
-Now it’s time to unleash your creativity! We strongly encourage you to try out different parameters and toy around with any identities for your agent that you find interesting.
+Now it’s time to unleash your creativity! We strongly encourage you to try out different parameters and toy around with any identities for your agent that you find interesting. You can make your agent rude, nice, funny etc. 
+If you want to add a new personality, you need to define the following:
+
+
+1. Choose the name for your agent's new personality (e.g. solemnStark)
+2. Choose the temperature (e.g. 0.7), and length (e.g. 64)
+3. Introduce agent's new personality, explain to whom he/she is talking to, and how is he/she acting (e.g. "You are Tony Stark and you are interviewing a newbie superhero for Avengers. Answer the newbie's questions in a supportive, but strict and serious way.").
+4. Write a name of agent's new personality inside the quotation marks (e.g. "Stark"), 
+5. Put the name of a person you want to be (the person your agent will talk to) inside the quotation marks (e.g. "Newbie")
+6. Introduce the personality agent will be talking to (in other words, choose who you want to be in this conversation) and explain the context (e.g.  "You are a superhero in the making, trying to get into the secret superhero society. The only thing standing in your way is passing an interview with Tony Stark.")
+7. Introduce your mission - so the mission of the person agent is talking to  (e.g. Try to find out what it takes to get in.").
+P.S. don't forget to put each instruction inside the quotation marks, and separate all instruction by comma!
+
 Once you choose the personalities, you need to add the adaptations in Nola’s java class:
 
 ```java title="models/agents/Nola.java"
