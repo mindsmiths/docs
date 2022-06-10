@@ -16,8 +16,7 @@ We will use an existing integration with Telegram as a way for your system to co
 root:/app$ pip install "telegram-adapter[dev]==4.0.0a7"
 ```
 
-Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). To find it, just click on the contact search icon and type in "BotFather". Send the bot a message "/newbot" to create a new bot. 
-Once you get the bot token, run the following code to integrate the telegram adapter with the platform:
+Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). Once you get the bot token, run the following code to integrate the telegram adapter with Forge:
 
 ```shell
 root:/app$ telegram-adapter setup
@@ -82,7 +81,8 @@ rule "Handle message"
         delete(message);
 end
 ```
-Remember, you should name your file according to your agent's name, and you should change name "Nola" wherever you see it, and put the name you have chosen for your agent.
+
+Remember, you should name your file according to your agent's name, you should change name "Nola" wherever you see it, and put the name you have chosen for your agent.
 
 There's a lot going on, but let's break it down. There are two basic types of conditions we use in the ```when``` part:
 * Conditions based on signals, which come from entry-points.
