@@ -22,7 +22,11 @@ root:/app$ gpt3-adapter setup
 OpenAI API key: <YOUR API KEY>
 ```
 
-We can now make requests to GPT-3 and recieve its responses. We just need to adapt the rule for handling the incoming message, and add one for processing the GPT-3 response:
+We can now make requests to GPT-3 and receive its responses. We just need to adapt the rule for handling the incoming message, and add one for processing the GPT-3 response. 
+
+:::note
+Notice the highlighted part in the rule ```Handle message```. It signifies that this rule is already in the file, and we highlighted the part that you should change in the already existing rule. 
+Every time when there is a change in an existing rule, the modified part will be highlighted, so you can easily replace it. 
 
 ```java title="rules/nola/Conversation.drl"
 ...
