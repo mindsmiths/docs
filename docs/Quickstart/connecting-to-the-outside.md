@@ -13,7 +13,7 @@ Telegram is a great starting point for a chat platform because it has a free API
 We will use an existing integration with Telegram as a way for your system to communicate with the outside world. Just install the telegram adapter:
 
 ```
-root:/app$ pip install telegram-adapter==4.0.0a9
+root:/app$ pip install "telegram-adapter[dev]==4.0.0a9"
 ```
 
 Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). To find it, just click on the contact search icon and type in "BotFather". Send the bot a message "/newbot" to create a new bot. 
