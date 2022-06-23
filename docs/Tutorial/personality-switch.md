@@ -64,7 +64,7 @@ Once you choose the personalities, you need to add the adaptations in ```Nola.ja
 ...
 // highlight-start
 import java.util.Arrays;
-import com.mindsmiths.ruleEngine.util.Util;
+import com.mindsmiths.sdk.utils.Utils;
 import models.Personality;
 // highlight-end
 
@@ -84,14 +84,14 @@ public class Nola extends Agent {
                 Arrays.asList(Personality.values())
         );
         choices.remove(personality);
-        personality = Util.randomChoice(choices);
+        personality = Utils.randomChoice(choices);
     }
     // highlight-end
 
     public void askGPT3() {
         simpleGPT3Request(
             // highlight-start
-            personality.getInstruction() + String.join(“\n”, memory) + personality.getAiName() + ":", personality.getTemp(),
+            personality.getInstruction() + String.join("\n", memory) + personality.getAiName() + ":", personality.getTemp(),
             personality.getResponseLen(), List.of(personality.getAiName(), personality.getHumanName())
             // highlight-end
         );
