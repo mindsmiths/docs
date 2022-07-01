@@ -35,7 +35,7 @@ That's it, you have your GitHub account connected. The same process can also be 
 To help you get started with the platform, you can check out the tutorials and supporting [documentation](http://docs.sandbox.mindsmiths.io/docs/intro)
 
 ### Support
-If you need technical (and emotional) support, you can always reach out to us in our [Discord channel](https://discord.gg/FRUHd4eE)
+If you need technical (and emotional) support, you can always reach out to us in our [Discord channel](https://discord.gg/knYDVJ5Ez8)
 
 For frequent issues, there is a short rundown below.
 
