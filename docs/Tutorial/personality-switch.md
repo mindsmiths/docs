@@ -49,7 +49,7 @@ You’ll notice that apart from changing the intro of the prompt and stopwords, 
 Simply put, temperature controls response creativity: the higher the temperature, the “bolder” and less deterministic the responses will be (it has a range from 0 to 1). Response length just limits the number of tokens the agent's response can have.
 
 Now it’s time to unleash your creativity! We strongly encourage you to try out different parameters and toy around with any identities for your agent that you find interesting. You can make your agent rude, nice, funny etc. 
-If you want to add a new personality, go to ```rules/nola/Conversation.drl```, and inside ```"Switch personality"``` rule, you need to do the following:
+If you want to add a new personality, you can at one or more in  ```models/models/Personality.java```, you need to do the following:
 
 
 1. Choose the identity mark for your agent's new personality (e.g. ```solemnStark```).
@@ -89,10 +89,10 @@ public class Nola extends Agent {
     // highlight-end
 
     public void askGPT3() {
-        simpleGPT3Request(
             // highlight-start
+        simpleGPT3Request(
             personality.getInstruction() + String.join("\n", memory) + personality.getAiName() + ":", personality.getTemp(),
-            personality.getResponseLen(), List.of(personality.getAiName(), personality.getHumanName())
+            personality.getResponseLen(), List.of(personality.getAiName()+":", personality.getHumanName()+":")
             // highlight-end
         );
     }

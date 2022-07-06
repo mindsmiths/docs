@@ -70,7 +70,6 @@ package agents;
 ...
 // highlight-start
 import com.mindsmiths.gpt3.GPT3AdapterAPI;
-import com.mindsmiths.gpt3.completion.GPT3Completion;
 import com.mindsmiths.ruleEngine.util.Log;
 import java.util.List;
 // highlight-end
@@ -110,4 +109,4 @@ public class Nola extends Agent {
 
 Notice that we use the dialogue cues “Human” and “AI” as stop words to prevent the model from generating more than one dialogue exchange.
 
-Voilà, your touch of magic is done! Restart the system, try asking your Nola some questions, and see how she reacts!
+Voilà, your touch of magic is done! **Restart** and **run** the system, try asking your Nola some questions, and see how she reacts!
