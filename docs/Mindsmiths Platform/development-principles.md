@@ -1,8 +1,8 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
-# Principles of development on the Mindsmiths Platform
+# Development principles
 
 - Quick prototyping
 - Local optimization (multiple personas)
@@ -19,7 +19,8 @@ sidebar_position: 3
 ### Local optimizations: User-centric approach
 
 - When it comes to **user-centricity**, optimizing for each individual user sits at the very core of the multi-agent systems.
-- Building a simulation in which you don't aim to optimize for the system as a whole - each type of agent cares for their own persona, and each agent optimizes for their specific set of goals
+- Building a simulation in which you don't aim to optimize for the system as a whole - each type of agent cares for their own persona, and each agent optimizes for their specific set of goals.
+- This approach is in opposition to relying on monolithic large deep learning models trained on heaps of data for developing smart solutions. The agents pursuing their own goals should achieve the optimal performance for the system as a whole.
 - Goals and behaviours defined through our agents the capacity to have a personalized approach for every user, tuned to their history, specific situation and preferences, as opposed to predefined scripted behaviors.
 - All learning and customization of the process can be done specifically for that individual user.
 - We believe in the world where the best service and top-quality knowledge are accessible to everyone.
@@ -29,9 +30,11 @@ sidebar_position: 3
 
 - Running agents in a continuous simulation means your users are constantly under their agent’s care: the situation is constantly evaluated and monitored, enabling your agents to autonomously take proactive actions to improve the users’ lives.
 - When trying to achieve this, it helps if you don't need to explicitly define how each possible situation that might occur should be handled.
-- Among other reasons, this is why we use **[declarative programming]**(https://www.techopedia.com/definition/18763/declarative-programming) in evaluations.
+- Among other reasons, this is why we use **[declarative programming](https://www.techopedia.com/definition/18763/declarative-programming)** in evaluations.
 - This logic is implemented in the component called Rule Engine, in the form of human-readable business rules. 
 - Declarative programming allows for efficient, data-driven detection of situations as they occur, without the limitation of the imposed order of execution.
+
+#### Examples
 - Let's consider two short examples as an illustration of the benefits of this approach.
 - Let's say a doctor is examining a patient. The most important questions should be resolved first, such as "Is the person in a life-threatening state?". If the answer is no, the questions to ensue could for example be "Does the person have a fever?", "Is the person feeling nauseous?", "Is the person's face pale?" and so on. Now imagine that, during one these follow-up questions, the patient has a heart attack. If we were to transfer this situation to the digital world, we would have absolutely no way of reacting properly to the newly occurred situation using the imperative programming paradigm, because once we are in the defined process of statement execution, there is no way for us to circle back to the top of that decision tree, which in this situation, you'll agree, is relatively important. Declarative programming, on the other hand, allows us to evaluate each new situation in its own right, irrespective of what led up to its occurrence.
 - In a milder example, let's consider the situation in which you need to cross the road. There are many circumstances that need to be considered when making the decision to cross: is it a pedestrian crossing, is there a car coming, is there traffic regulation, at what speed is a vehicle approaching you... However, at the conscious level, the decision boils down to two main conditions: is it safe to cross the road, and is it allowed.
