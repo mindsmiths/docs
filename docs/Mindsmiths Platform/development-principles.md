@@ -23,8 +23,6 @@ sidebar_position: 4
 - This approach is in opposition to relying on monolithic large deep learning models trained on heaps of data for developing smart solutions. The agents pursuing their own goals should achieve the optimal performance for the system as a whole.
 - Goals and behaviours defined through our agents the capacity to have a personalized approach for every user, tuned to their history, specific situation and preferences, as opposed to predefined scripted behaviors.
 - All learning and customization of the process can be done specifically for that individual user.
-- We believe in the world where the best service and top-quality knowledge are accessible to everyone.
-- Through this platform, we want to help you create smart and caring support systems and bring value to the world. 
 
 ### Constant evaluation: Declarative programming paradigm
 

@@ -45,7 +45,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'Quickstart/intro',
+            docId: 'Mindsmiths Platform/intro',
             position: 'left',
             label: 'Tutorial',
           },
