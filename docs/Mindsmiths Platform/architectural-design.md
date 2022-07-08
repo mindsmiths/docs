@@ -190,24 +190,219 @@ connect with any method you need, do pooling or scheduling, or use a special sec
 To learn more about creating custom services, see "Creating a custom service" (TODO).
 
 
-
-
-
 ## Service creation
-TODO
-(https://git.mindsmiths.com/mindsmiths/platform/-/wikis/Using-the-Platform/Creating-a-new-service)
-(https://github.com/mindsmiths/platform-resources/blob/main/create_service_templates/creating_new_service.md)
-(https://github.com/mindsmiths/platform-resources/tree/main/create_service_templates/python)
+Sometimes you simply need more flexibility, so you want to create a custom service to extract a piece of functionality or logic.
+Whether it's an adapter, a complex algorithm or model, or a dashboard, you can easily create such a service.
+
+To create a new service simply run `forge create-service` in a terminal. You will be prompted to choose which type of service you want to create.
+You can see the [full list of available templates here](https://github.com/mindsmiths/platform-resources/tree/main/create_service_templates).
+Make sure you match the exact name of the directory.
+```shell
+root:/app$ forge create-service
+Which type of service would you like to create (eg. python, django)? ... [default: python]:
+```
+Read the template's documentation to fill in the prompts that follow correctly.
+For example, if you're creating a Python service, you need to set the name for the new service. The name should be capitalized, with words separated by spaces (e.g. `New Service`).
+The rest of the naming formats will be automatically generated based on the initial name you choose, so you can just press enter:
+```shell
+service_name: New Service
+service_name_camel_case [NewService]: 
+service_identifier [new_service]: 
+service_artifact_name [new-service]:
+New Service was successfully incorporated into your project!
+```
+
+That's it! The added service will now appear in your directory tree (`services` folder), and will be automatically added at the bottom of your `config/config.yaml`, for example:
+```yaml
+...
+  new-service:
+    type: python
+    db:
+      mongo: true
+    resources:
+      cpu: 100m
+      memory: 100Mi
+```
+
+You can learn more about the config file in "Project Config" (TODO).
+Don't forget to run `forge install` to install any new dependencies, and you're ready to start coding!
+
+### Service structure
+The service's structure depends on the template you used. Here we'll focus on a simple Python service.
+
+The basic structure looks like this:
+- {service_identifier}/
+  - api/ - contains the public API that can be used by other services (incl. models and a client)
+    - api.py - data models used in the API
+    - api_builder.py - a Python client that other services use to communicate with this service
+  - clients/java/ - a Java client that other services use to communicate with this service
+  - tests/ - service unit-tests
+  - {service_identifier}.py - the service's logic
+
+You're free to add new files and packages, but the basic structure should remain the same.
+
+### Writing the logic
+You can write the service's logic in `services/<new_service>/<new_service>.py`.
+
+You'll see an example function that receives some data, and returns a result. This function is already exposed through an API.
+Feel free to change this example and add new functions.
+
+If you don't want to expose any functions, but want some code to be run in a loop instead, just override the `start` function:
+```python
+class NewService(BaseService):
+    def start(self) -> None:
+        while True:
+            """ TODO: WRITE YOUR MAGIC HERE """
+            sleep(5)
+```
+
+If you want both, just add `self.start_async_message_consumer()` before the loop in the `start` method, to enable the service to listen to requests in a separate thread.
+
+### Defining an API
+To allow other services to communicate with our new service, we'll create a client for them. The `create-service` command already generated some examples for us.
+
+The platform will do most of the work for us, so all we need to do is define the prototypes of the exposed functions in `services/<new_service>/api/api_builder.py`.
+Keep in mind that if you're using additional data models in the calls or in the return (eg. `Result` in the example), they *must* be defined somewhere in the `services/<new_service>/api/` package, because this is the only package other services can access.
+This also means you *cannot* import any files outside this package in any file defined inside it.
+
+Notice that there is no `self` argument, and that we specify the expected result as _Future[dataType]_ in `api_builder.py`.
+This reminds us that the service doesn't wait for the result before continuing. All service communication in the platform is *asynchronous*.
+
+### Java client
+The code for handling communication with Java-based services (e.g. Rule Engine) is in the directories under the `services/<new_service>/clients/java` path. 
+The generated files also contain template code for API calls. Just mirror what you defined in the Python API, but in Java.
+
+Note that if you want the new service to communicate with the Rule Engine, you should add it as a dependency to its `pom.xml` (in `services/rule_engine/pom.xml`):
+```xml
+<dependencies>
+    ...
+		<dependency>
+			<groupId>com.mindsmiths</groupId>
+			<artifactId>new-service-client</artifactId>
+			<version>4.0.0a0</version>
+		</dependency>
+    ...
+</dependencies>
+```
+
+You need to run `forge install` from the terminal to finish connecting the services after adding the dependency.
 
 ### Saving and querying data
-TODO
-Data models, Java and Python...
+If you want to save some data in a database, you need to define a model for this data.
+We use dataclasses (specifically the Pydantic framework) to define these models.
 
-### Building an API
-TODO
+For example, you could define a simple Model like this:
+```python
+class User(DBModel):
+    id: str
+    name: str
+    isRegistered: bool = False
+    numTimesLoggedIn: int = 0
+```
+When using the model, the values of fields will be validated according to the specified type-hints, so they are required.
+Fields can have defaults if not specified (like `isRegistered` and `numTimesLoggedIn`).
+For more information about possible field types, see [Field Types](https://pydantic-docs.helpmanual.io/usage/types/).
+
+Keep in mind that every model needs to have a single primary key field, that needs to be unique. By default, this field
+is `id`, and if no such field exists, and you didn't override the `get_primary_field` function, an exception will be thrown.
+
+You can create a new user in the database like this:
+```python
+User(id='user1', name='Mind Smith', numTimesLoggedIn=1).create()
+```
+
+To fetch a single user you can use `get`:
+```python
+User.get(id='user1')
+```
+
+To query multiple users use `filter`:
+```python
+User.filter(numTimesLoggedIn=0)
+```
+This will return an iterator. You can wrap it in `list()` to fetch them all at once.
+
+There are also useful methods like `count`, `distinct`, `all`, `exists`, and others.
+
+To update an object, you have two options:
+```python
+user = User.get(id='user1')
+
+# Option 1
+user.update(numTimesLoggedIn=2)
+
+# Option 2
+user.numTimesLoggedIn = 2
+user.save()
+```
+Depending on the complexity of the update, one or the other may be preferred.
+
+Finally, to delete an object, just use `delete`:
+```python
+user.delete()              # if you have an instance
+```
+
+### Emitting events
+To emit an event to other services, first you need to define the event model. However, you need to be careful to define
+it somewhere in the `api/` folder, because other services only have access to that package.
+
+For example:
+```python
+class UserRegistered(Event):
+    userId: str
+    registeredAt: datetime
+    user: User
+```
+
+To emit the event, just do:
+```python
+UserRegistered(userId=userId, registeredAt=get_utc_datetime(), user=user).emit()
+```
+
+### Listening to events
+To listen to events from other services, simply add a new function and decorate it with `@on_event(<EventCls>)`, for example:
+```python
+from another_service.api import UserRegistered
+
+class NewService(BaseService):
+    ...
+
+    @on_event(UserRegistered)
+    def on_user_registered(self, user_registered: UserRegistered) -> None:
+        ...
+```
+
+### Service configuration
+If you'd like to be able to configure parts of the logic, a good practice is to use settings. Settings are also great for secret values like passwords and authentication tokens.
+
+Settings are regular Python variables, but their values are loaded from environment variables.
+To define one, first create `services/<new_service>/settings.py` and add the following code:
+```python
+from environs import Env
+env = Env()
+```
+Now you can add settings below, here are some examples:
+```python
+DEFAULT_TIMEZONE = env.str('DEFAULT_TIMEZONE', 'Europe/Zagreb')
+HTTP_PORT = env.int('HTTP_PORT', 8080)
+AUTH_TOKEN = env.str('AUTH_TOKEN')
+USE_WEBHOOK = env.bool('USE_WEBHOOK', True)
+```
+To override the service defaults, or provide values for settings with no defaults, go to `config/config.yaml` and add something like this to for your service:
+```yaml
+  new-service:
+    ...
+    env:
+      MY_SERVICE_PORT: 8081
+      AUTH_TOKEN: "{{env.NEW_SERVICE_AUTH_TOKEN}}"  # this will read the system's environment (and the '.env' file if running locally), and fill it here - good for secrets
+    ...     
+```
+
 
 
 
 
 ## Writing rules
 TODO (https://git.mindsmiths.com/mindsmiths/platform/-/wikis/Using-the-Platform/Writing-rules)
+
+### Signals and facts
