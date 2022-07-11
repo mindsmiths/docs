@@ -55,5 +55,5 @@ just reach out. We'll take you through a simple process and help you set up the 
 
 ### FAQ
 Error: Cannot access target/app.jar file.
-Solution: Remove the folder in path services/rule_engine/target and run again.
+Solution: Remove the directory in path services/rule_engine/target and run again.
 

@@ -143,7 +143,7 @@ In order for your agent to be able to react to external events, we need to regis
 There are two ways to do this: in `signals.yaml` and `Runner.java`.
 
 ### In signals.yaml
-You can find or create this file in `services/rule_engine/resources/config/signals.yaml`.
+You can find or create this file in `services/rule_engine/src/main/resources/config/signals.yaml`.
 
 The structure of the file is as follows:
 ```yaml
