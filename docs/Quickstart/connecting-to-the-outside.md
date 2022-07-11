@@ -63,8 +63,7 @@ public class Nola extends Agent {
     }
 }
 ```
-s
-We have created a simple helper function ```sendMessage``` to make it easier to send messages over Telegram. As each agent of class Nola communicates with exactly one user, we use that user’s Telegram ```chatId```.  Now that you’ve defined your first class, let’s write your first rule! We create a new folder inside rules and a new file inside the new folder, with path ```rules/nola/Conversation.drl```:
+We have created a simple helper function ```sendMessage``` to make it easier to send messages over Telegram. As each agent of class Nola communicates with exactly one user, we use that user’s Telegram ```chatId```.  Now that you’ve defined your first class, let’s write your first rule! We create a new directory inside rules and a new file inside it, with path ```rules/nola/Conversation.drl```:
 
 ```java title="rules/nola/Conversation.drl"
 

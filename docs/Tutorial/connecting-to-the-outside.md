@@ -24,7 +24,7 @@ Your bot token (from BotFather): <YOUR BOT TOKEN>
 What agent will handle signals? Nola
 ```
 
-As you can see, you will also need to choose a name for your chatbot agent. We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you chose.
+As you can see, you will also need to choose a name for your chatbot agent. We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you chose. Just make sure you keep the naming consistent in between the one you set when adding Telegram, the agent’s Java class and the subdirectory name containing all the rules.
 
 
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
