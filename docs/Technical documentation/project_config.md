@@ -1,4 +1,4 @@
-## Project config
+# Project config
 
 Files specifying project configuration are located in `config` directory.
 
@@ -12,7 +12,7 @@ The directory consists of:
 - (optional) sandbox.config.yaml
 - (optional) production.config.yaml
 
-### Charts
+## Charts
 
 This is the place for Helm charts. Every file/directory will be deployed to cluster by `Deploy charts`.
 
@@ -32,13 +32,13 @@ Values files are templated before deploying. You can put `{{ env.VARIABLE }}` to
 
 Charts are deployed with `helm upgrade -f ${file}`.
 
-### Dockerfiles
+## Dockerfiles
 
 This is the place for Dockerfiles. `Generate manifests` will place generated Dockerfiles here.
 
 You are free to put your custom Dockerfiles here. `Build manifests` will build images from these files.
 
-### Manifests
+## Manifests
 
 This is the place for Kubernetes manifests. Every file (except README.md) will be deployed to cluster by `Deploy manifests`.
 
@@ -46,7 +46,7 @@ This is the place for Kubernetes manifests. Every file (except README.md) will b
 
 You are free to put your custom manifests here. They are applied with `kubectl apply -f ${file}`.
 
-### Templates
+## Templates
 
 This is the place for templates used by CI to generate manifests. Structure of this directory is:
 - dockerfiles
@@ -54,18 +54,18 @@ This is the place for templates used by CI to generate manifests. Structure of t
 
 Forge already has templates built-in, but you can override them here.
 
-### Config
+## Config
 
 Final project config is built depending on environment type (module). `config.yaml` is overwritten by either:
 - `local.config.yaml` for local run
 - `sandbox.config.yaml` for sandbox deployment
 - `production.config.yaml` for production deployment
 
-#### `global`
+### `global`
 
 The following keywords are applied globally accros the project and its services.
 
-##### `dependecies`
+#### `dependecies`
 
 - `python` - packages and files that will be added to all python Dockerfiles
 
@@ -79,7 +79,7 @@ global:
       - forge-cli==3.0.0
 ```
 
-##### `env`
+#### `env`
 
 Dictionary of variables that will be deployed to cluster as a configmap and available in all services.
 
@@ -91,11 +91,11 @@ global:
     MONGO_CLIENT_USERNAME: root
 ```
 
-##### `secrets`
+#### `secrets`
 
 Dictionary of secret variables that will be deployed to cluster as a secret and available in all services. At this point secrets are weakly protected with `base64`.
 
-##### `backups`
+#### `backups`
 
 Backups are global and available for:
 - mongo
@@ -115,7 +115,7 @@ global:
 
 For determining cron expressions look here: [Crontab.guru](https://crontab.guru/)
 
-#### `services`
+### `services`
 
 Configurations of individual services:
 
@@ -127,7 +127,7 @@ services:
     ...
 ```
 
-##### a service
+#### a service
 
 Every service should have defined these keywords:
 - `type` - programming language
@@ -157,7 +157,7 @@ Other keywords are:
 
 Here are a few examples that should clarify things better:
 
-##### go service built on its repo
+#### go service built on its repo
 ```yaml
 gatekeeper:
   type: go
@@ -173,7 +173,7 @@ gatekeeper:
     memory: 300Mi
 ```
 
-##### pyton service built on a project repo
+#### pyton service built on a project repo
 ```yaml
 intent-recognizer:
   type: python
@@ -187,7 +187,7 @@ intent-recognizer:
     memory: 80Mi
 ```
 
-##### django service built on a project repo
+#### django service built on a project repo
 ```yaml
 dashboard:
   type: django
@@ -208,7 +208,7 @@ dashboard:
     memory: 80Mi
 ```
 
-##### java service built on a project repo
+#### java service built on a project repo
 ```yaml
 edu-bayes:
   type: java
