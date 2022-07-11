@@ -26,8 +26,8 @@ sidebar_position: 2
 - On the Mindsmiths Platform, any entities that are capable of interacting with each other or the environment are referred to as **agents**.
 - Defining a multitude of agents allows you to break down complex issues into more easily solvable and maintainable chunks.
 - Agents can both interact with the end users, or be defined fully internally to the platform, handling certain functionalities.
-- On the Mindsmiths platform, the user-facing agents are instances of Java classes. They are the basic entities the end users interact with, and each user is assigned an individual instance.
-- ***NOTE: add another document dedicated to defining an agent through rules and java class plus the folder structure
+- On the Mindsmiths Platform, the user-facing agents are instances of Java classes. They are the basic entities the end users interact with, and each user is assigned an individual instance.
+- ***TODO: add another document dedicated to defining an agent through rules and java class plus the folder structure
 - Other components of the platform (such as the separate services) are also considered to be agents.
 - All communication inside platform, i.e. the simulated environment, goes on via **signals**. Accordingly, they can also be external (e.g. coming in from chat platforms) or internal (e.g. coming from one agent communicating to another).
 - Signals are not persisted in memory between evaluation cycles.
