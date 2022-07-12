@@ -70,7 +70,6 @@ package agents;
 ...
 // highlight-start
 import com.mindsmiths.gpt3.GPT3AdapterAPI;
-import com.mindsmiths.gpt3.completion.GPT3Completion;
 import com.mindsmiths.ruleEngine.util.Log;
 import java.util.List;
 // highlight-end

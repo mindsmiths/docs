@@ -39,9 +39,10 @@ public class Nola extends Agent {
     // highlight-end
 
     public void addMessageToMemory(String sender, String text) {
+        // highlight-start
         memory.add(String.format("%s: %s\n", sender, text));
-        // highlight-next-line
         trimMemory();
+        //highlight-end
     }
     ...
 }

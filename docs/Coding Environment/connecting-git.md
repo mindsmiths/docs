@@ -22,6 +22,7 @@ Now it is time to push the code to the connected repo, do this:
     git config --global user.name "Your Name"
 ```
 4. Add the remote with: `git remote add origin git@github.com:<github_username>/<github_repo_name>`
+
 5. Now run these commands to push all the files to the repo:
 ```commandline
     git add .
