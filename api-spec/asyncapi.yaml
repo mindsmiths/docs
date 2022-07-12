@@ -1,0 +1,97 @@
+asyncapi: 2.4.0
+info:
+  title: Mindsmiths Websockets API
+  version: 1.0.0
+  description: ''
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  test:
+    url: websocket.mindsmiths.io/ws/
+    protocol: ws
+    description: Test server
+defaultContentType: application/json
+channels:
+  /:
+    publish:
+      description: Send messages to the API
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SendMessage'
+          - $ref: '#/components/messages/Event'
+    subscribe:
+      description: Messages that you receive from the API
+      message:
+        oneOf:
+          - $ref: '#/components/messages/Message'
+components:
+  messages:
+    SendMessage:
+      name: sendMessage
+      title: Send Message
+      summary: A message to send to an agent
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/sendMessagePayload'
+    Event:
+      name: event
+      title: Event
+      summary: Notify the server that an event happened
+      payload:
+        $ref: '#/components/schemas/eventPayload'
+    Message:
+      name: message
+      title: Message
+      summary: A message from an agent
+      payload:
+        $ref: '#/components/schemas/messagePayload'
+  schemas:
+    sendMessagePayload:
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/messagePayload'
+        to:
+          type: string
+          description: ID of agent to send the message to
+      required:
+        - message
+        - to
+      additionalProperties: false
+    eventPayload:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of this message. Randomly generated it not given.
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            A datetime object when the message was sent. Auto-generated if not
+            given.
+        eventType:
+          type: string
+          description: The event type, used for deserialization.
+      required:
+        - eventType
+      additionalProperties: {}
+    messagePayload:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of this message. Randomly generated it not given.
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            A datetime object when the message was sent. Auto-generated if not
+            given.
+        messageType:
+          type: string
+          description: The message type, used for deserialization.
+      required:
+        - messageType
+      additionalProperties: {}
