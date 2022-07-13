@@ -8,7 +8,7 @@ You can use the _API Gateway_ service to expose HTTP endpoints from the platform
 It already offers endpoints for managing agents and sending signals out-of-the-box. You can extend it with additional
 endpoints if the need arises.
 
-TODO: link to Swagger
+You can find the [full specification here](/api).
 
 
 ## Websockets

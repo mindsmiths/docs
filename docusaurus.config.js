@@ -13,8 +13,8 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'mindsmiths', // Usually your GitHub org/user name.
-  projectName: 'platform-docs', // Usually your repo name.
+  organizationName: 'mindsmiths',
+  projectName: 'platform-docs',
 
   presets: [
     [
@@ -23,13 +23,31 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           editUrl: 'https://github.com/mindsmiths/docs/tree/main',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+    ],
+    // '@docusaurus/preset-classic',
+    // Redocusaurus config
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: 'api-spec/swagger.yaml',
+            route: '/api/',
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#1890ff',
+        },
+      },
     ],
   ],
 
@@ -85,6 +103,7 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: [
           'java',
+          'scala',
           'diff',
         ],
       },
