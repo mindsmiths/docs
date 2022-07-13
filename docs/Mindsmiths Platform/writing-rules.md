@@ -103,24 +103,21 @@ end
 - We also set the `reengageAttempted` flag to true to prevent the rule from re-firing until the user responds and potentially sets a new value for the `lastActivity` timestamp.
 
 ## Chaining rules
-- salience
-- Whenever the facts in the knowledge base change, rules are re-evaluated. This enables us to reason in "steps"
-- order of execution not pre-supposed
-- thinking of single rules: not so obvious what the advantages are
-- Main strength comes from interactions, but each rule should be able to detect a particular set of circumstances and act upon it without needing anything other than the data of its domain
-However, sometimes rules do depend on others in an indirect way. The assumptions we make on one rule can be used in the conditions of another one. These data creations, through assumptions that a Business Rule engine can make, are called inferences and they are of great use to extend the usability of our rules.
-3. Rule chaining
-simple rules!!, atomicity, rule simplicity allows for back-tracking when decisions are made + easy to read!!
-- For example, let's say we want to send an alert to an office manager when a supply of something is running low. The conditions could be:
-  - the paper supply is running low
-  - it's working hours on a work day (because the notification is not of high priority)
-  - the person hasn't already been notified of this situation
-- Ideally, the code of the rule we produce should be as simple to read as this bullet points are, and we always break down the reasoning in as many steps as we can. 
-- For instance, we can have separate rules setting flags for whether this is an appropriate time to contact the user (it's working hours, and the person is in office). 
-- Inputs from these different rules are combined through a single rule via rule chaining.
+TODO: find some example
+- It's difficult to see the advantages of rule engines looking just at single simple rules: their true power is most obvious interactions of the rules when handling more complex behaviours.
+- As already mentioned, the order of execution of rules is not pre-imposed and whenever the facts in the knowledge base change, rules are re-evaluated.
+- Therefore, although rules are in principle independent of each other, they can indirectly depend on each other in terms of the outcome of one rule bringing about triggering of another. For example, it's relatively frequent that a rule modifies a fact in memory, and another rule detects when the fact has that specific value. This is called **rule chaining**.
+- Thinking of the road-crossing situation (TODO: link), rule chaining comes in handy for breaking down a complex reasoning process into a series of circumstances that need to be evaluated and whose outcomes accumulate to ultimately make the final decision whether to cross a simple one.
+- It's generally advisable to try and break down the reasoning in as many steps as possible and have the sum of their outputs caught by another rule.
+- Moreover, multiple rules could fire at once given some situation in the data. In this case, priority is determined using the **salience** parameter.
+- The mechanism is very simple: rules with higher salience have priority over the ones with lower salience, so you can think of it as a way of imposing order of execution on rules triggered by similar conditions.
+- Should the conditions for the other rules still be met afterwards, the other rule can still subsequently execute. 
+- The default salience of a rule is 0, and you can also set it to a negative value. This is useful for writing "catch-all" rules, e.g. ones making sure no message from the user goes unprocessed should it trigger no other rules.
 
 ## Best practices
-- simple: minimal set of conditions met + atomicity (separability for ease of maintenance)
-- put effort into readability
-- avoid making rules that say this or that or that - break down into separate rules with the same then part, or that give an outcome that then triggers another rule that executes this action
-- avoid having any if-else logic in the rules - more efficient to break down into separate rules
+- The writing of rules can be slightly confusing before you get used to it, so we'll quickly summarize some good practices for rule writing.
+- To improve flexibility, extendability and maintainability of the rule engine, the rules should be as simple as possible and only contain the minimal information necessary. This will also help you with rule atomicity and independence, which are desirable features.
+- Use rule chaining and transparent variable naming to improve rule readability and back-tracking in how a decision was reached. Ideally, your rules should be perfectly readable to non-developers as well. Same goes for rule names: write as clearly as possible what the rule does even if it makes the rule name slightly lengthy.
+- Avoid writing rules that say "condition1 or condition2 or condition3": it's better to break these down into separate rules with the same `then` part, or that have an outcome which triggers another rule that executes the desired action.
+- Avoid having any if-else logic in the rules: it's more efficient to break these cases down into separate rules.
+- We already mentioned that signals are not persisted between evaluation cycles, but it's good practice to still delete them once you are done processing them to avoid any unwanted behaviours as your system grows. 

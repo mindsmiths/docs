@@ -84,7 +84,7 @@ end
 ```
 
 :::note
-Remember, you should name your file according to your agent's name. You should change name "Nola" wherever you see it, and put the name you have chosen for your agent.
+Remember, you should name your directory according to your agent's name. In general, you should change the name "Nola" wherever you see it, and put the name you have chosen for your agent.
 :::
 
 There's a lot going on, but let's break it down. There are two basic types of conditions we use in the ```when``` part:
