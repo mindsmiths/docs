@@ -38,6 +38,7 @@
 # Deep dive (technical documentation)
 - [ ] Project structure
   - [ ] Project config
+  - [ ] Secret management
 - [ ] Platform architecture
   - [ ] Microservices
   - [ ] Core services
@@ -50,14 +51,16 @@
   - [ ] API, Java client
   - [ ] Logic
   - [ ] Listening to events
-  - [ ] Configuration
+  - [ ] Settings
+  - [ ] Service config
 - [ ] Creating agents
   - [ ] Agent's model
   - [ ] Agent's behavior
     - [ ] Rule package
   - [ ] Instantiating agents
-    - [ ] Manually, API, on signal
-  - Registering for signals
+    - [ ] Manually, API
+    - [ ] On signal (connections)
+  - [ ] Registering for signals
     - [ ] signals.yaml
     - [ ] Runner
 - [ ] Writing rules
@@ -65,15 +68,24 @@
   - [ ] Rule structure
   - [ ] Rule organization
   - [ ] Rule mechanics
-    - [ ] 
-  - [ ] Signals, events and facts
-  - [ ] Time-based condition (proactivity)
+  - [ ] When
+    - [ ] Signals, events and facts
+      - [ ] Defining new signals
+    - [ ] Time-based conditions (proactivity, heartbeat)
+  - [ ] Then
+    - [ ] modify
+    - [ ] sending signals to other agents
+    - [ ] deleting signals
+    - [ ] insert - persistence
   - [ ] Chaining
+  - [ ] Configuration (settings)
   - [ ] Best practices
+- [ ] Content management (Mitems)
 - [ ] Integrations
   - [ ] HTTP
   - [ ] Websockets
   - [ ] Custom adapter
+- [ ] Testing
 
 # Reference
 - [ ] HTTP API reference
