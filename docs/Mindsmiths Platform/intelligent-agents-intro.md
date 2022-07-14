@@ -26,3 +26,17 @@ The Patient agent can be augmented with any kind of knowledge representations, d
 On the other hand, the real-life doctor needs a different type of agent, the **Doctor agent**,  to represent his/her interests. 
 For instance, the doctors have limited capacity, working hours and prioritizing algorithms for urgency of admission.
 The beauty of multi-agent systems is that the two types of agents don’t need to know or care about the interests of each other's respective users, but the resulting process once the environment is run should be optimal for each individual situation. This is referred to as **local view**: each agent only has access to certain information at all times.
+
+
+## DNA & Learning
+
+DNA = Rules
+- gives structure
+- no need to learn unnecessary stuff (constrain problem/solution space to be relevant)
+- same as humans (predefined brain structures)
+- rules evolve just like organisms did
+
+Learning = AutoML & Model-as-a-Service
+- only for certain (relevant) parts
+- constrained to manageable size for small amounts of data
+- make use of already (pre)trained models, no need to start from scratch
