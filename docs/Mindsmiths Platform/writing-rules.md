@@ -19,7 +19,7 @@ You can also write a rule in the root package (`rules/`) which every agent will 
 ## Rule structure
 All DRL files follow the same basic layout:
 ```java title="rules/agent/Example.drl"
-package <path.to.current.directory>;
+package rules.agent;
 
 import ...
 
@@ -37,8 +37,8 @@ The rule name gives a short description of what a rule does (e.g. "Send notifica
 The `when` part of the rule is implemented in a special Drools language, while the `then` part is written in Java (with some Drools-specific constructs).
 
 For example:
-```java title="rules/agent/Agent.drl"
-package rules.agent;
+```java title="rules/customerAgent/CustomerAgent.drl"
+package rules.customerAgent;
 
 import ...
 
@@ -50,30 +50,30 @@ rule "Find available support agent"
         Log.info("Found an available agent!");
 end
 ```
-This rule checks if there is a `Customer` who needs help, and a `SupportAgent` who is active.
+This rule checks if there is a `Customer` who needs help, and a `SupportAgent` who is available.
 
 
 ## Rule mechanics
-The rules for a particular agent are constantly being re-evaluated (checking if the `when` part is satisfied), and when its condition is satisfied the rule _fires_ (or is _triggered_), i.e. the `then` part is executed.
+The rules for a particular agent are constantly being re-evaluated (checking if the `when` part is satisfied), and when the condition is satisfied the rule _fires_ (or is _triggered_), i.e. the `then` part is scheduled for execution.
 
 The conditions that get evaluated in the `when` part of the rule work as a series of constraints or filters - we check if the current data in the _knowledge base_ meets some defined criteria.
 There is an implicit `AND` operator between the lines with different conditions. You can also think of the `when` part as a query over the knowledge base.
 
 ### Assigning query results to variables
 
-You can also use a colon to assign results of these queries to variables which you can use in the `then` part. For example:
-```java title="rules/agent/Agent.drl"
+You can use a colon to assign results of these queries to variables which you can use in the `then` part. For example:
+```java title="rules/customerAgent/CustomerAgent.drl"
 package rules.customerAgent;
 
-rule "Purchase finished"
+rule "Order completed"
     when
-        purchase: Purchase(status == "FINISHED") from entry-point "signals"
-        agent: CustomerAgent(agentId: id, customerId == purchase.customerId)
+        order: Purchase(status == "COMPLETED") from entry-point "signals"
+        agent: CustomerAgent(agentId: id, customerId == order.customerId)
     then
-        Log.info(String.format("Customer %s (id=%s) made a new purchase (id=%s)!", agent.getName(), agentId, purchase.getId()));
+        Log.info(String.format("Customer %s (id=%s) made a new order (id=%s)!", agent.getName(), agentId, order.getId()));
 end
 ```
-`agent: CustomerAgent(agentId: id, ...)` assigns the value of the Agent's `id` field to the variable `agentId`, and the whole `CustomerAgent` object to the `agent` variable.
+The code in `agent: CustomerAgent(agentId: id, ...)` assigns the value of the Agent's `id` field to the variable `agentId`, and the whole `CustomerAgent` object to the `agent` variable.
 We assigned `id` to `agentId` for illustrative purposes, but you can use `agent.getId()` as well.
 
 
@@ -81,38 +81,38 @@ We assigned `id` to `agentId` for illustrative purposes, but you can use `agent.
 The `when` part queries the knowledge base, but how does anything end up in the knowledge base?
 
 There are three mechanisms that influence this:
-1. There is always an instance of the current agent in the knowledge base - (`CustomerAgent` in the previous example)
+1. There is always an instance of the current agent in the knowledge base - (`CustomerAgent` in the examples above)
 2. When a signal is sent to the agent, it is inserted in the knowledge base, under the entry point "signals" (see Facts and Signals TODO)
-3. Rules can insert, modify, and delete data from the knowledge base
+3. You can `insert`, `modify`, and `delete` data from the knowledge base from the rules
 
 Consider the following example:
-```java title="rules/customerAgent/Agent.drl"
+```java title="rules/customerAgent/CustomerAgent.drl"
 package rules.customerAgent;
 
 rule "Insert data"
     when
-        not(Purchase())  // there are no purchases
+        signal: PurchaseStart() from entry-point "signals"
+        not(Purchase())  // there are no orders
     then
         Log.info("Inserting data");
-        insert(new Purchase("id1", "FINISHED"));
-        insert(new Purchase("id2", "STARTED"));
-        insert(new Purchase("id3", "FINISHED"));
+        insert(new Purchase("order_id", "STARTED"));
+        delete(signal);
 end
 
-rule "Remove completed purchases"
+rule "Remove completed orders"
     when
-        purchase: Purchase(status == "FINISHED")
+        order: Purchase(status == "COMPLETED")
         agent: CustomerAgent()
     then
-        Log.info("Removing purchase " + purchase.getId());
+        Log.info("Removing order " + order.getId());
         modify(agent) {setCompletedAtLeastOnePurchase(true)};
-        delete(purchase);
+        delete(order);
 end
 
-rule "A new product arrived"
+rule "Notify customer new product is available"
     when
         product: NewProduct() from entry-point "signals"
-        agent: CustomerAgent()
+        agent: CustomerAgent(completedAtLeastOnePurchase == true)
     then
         agent.sendMessage("Hey, I have a new product for you: " + product.getName() + ". Interested?");
 end
@@ -120,8 +120,7 @@ end
 The output of this example would be:
 ```
 Inserting data
-Removing purchase id1
-Removing purchase id3
+Removing order order_id
 ```
 After some time, when another service or agent sends the `NewProduct` signal to this agent, the third rule would also
 fire and the agent would send a message to the user. To learn more about sending signals to other agents see "Sending signals" (TODO).
@@ -147,12 +146,12 @@ In other words, whenever you're changing an object, you should *always* use `mod
 There are two types of objects that can be queried from the knowledge base: facts and signals.
 
 Facts are persistent, while signals are not. Facts are objects that the agent chooses to remember.
-Signals can be sent by other services and agents, which the current agent can choose to accept or ignore.
+Signals can be sent by other services and agents, which the current agent can choose to react to or ignore.
 
 As already mentioned, the only fact that is present in the beginning is the object of the current agent.
 
-Even though signals are discarded by default after the current evaluation cycle ends, you can store them with `insert` and afterward use it in another rule as a fact. For example:
-```java title="rules/customerAgent/Agent.drl"
+Even though signals are discarded by default after the current evaluation cycle ends, you can store them with `insert` and afterward use them in another rule as a fact. For example:
+```java title="rules/customerAgent/CustomerAgent.drl"
 rule "Store user orders"
     when
         order : Order() from entry-point "signals"
@@ -178,12 +177,12 @@ Notice that signals are always received on specific entry points (the default on
 ## Heartbeat
 There is one special signal that is generated periodically and sent to every agent - the _heartbeat_ signal.
 
-This signal is what makes the agents "alive". Just like every signal, it triggers a re-evaluation of all rules.
+This signal is what makes the agents "alive". Just like any signal, it triggers the re-evaluation of all rules.
 This enables the agent to be proactive, instead of waiting to be "turned on".
 
-To do that, you'll mostly use [time-based conditions](https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/decision_engine_in_red_hat_decision_manager/cep-con_decision-engine).
+With the heartbeat you'll often use [time-based conditions](https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/decision_engine_in_red_hat_decision_manager/cep-con_decision-engine).
 Let's look at an example:
-```java title="rules/customerAgent/Agent.drl"
+```java title="rules/customerAgent/CustomerAgent.drl"
 rule "Store user orders"
     when
         Order() from entry-point "signals"
@@ -202,22 +201,22 @@ rule "Re-engage inactive customer"
         modify(agent) {setReengageAttempted(true)};
 end
 ```
-In the first rule, we just save the last order time.
-In the second rule, we get the current datetime from the heartbeat signal, and check that the last order was more than 60 days ago.
+With the first rule, we just save the last order time.
+With the second rule, we get the current datetime from the heartbeat signal, and check that the last order was more than 60 days ago.
 
 A very important thing to note here is that rules can fire at any time, and even multiple times.
-This means it's easy to fall into an infinite loop accidentally, even though the platform offers some safeguards against that.
+This means it's easy to get stuck in an infinite loop accidentally, even though the platform offers some safeguards against it.
 
-That's why we use the `reengageAttempted` flag. It will prevent the rule firing on every heartbeat and spamming the user with messages.
-It acts as a "stopping mechanism" - a way of making sure the conditions of a rule will no longer be met at some point.
+That's why we use the `reengageAttempted` flag. It will prevent the rule from re-firing on every heartbeat and spamming the user with messages until they make a new order and change the condition for `lastOrderAt`.
+The flag acts as a "stopping mechanism" - a way of making sure the conditions of a rule will no longer be met at some point.
 It sounds like an inconvenience, but being agnostic of the actions that led up to the current state is actually a desirable feature in many situations (see Rule chaining TODO).
 
 
 ## Handling edge cases
 Sometimes you may want to override a certain rule in a particular situation.
-For example, let's say that you want a human to verify all orders above a certain amount of value.
+For example, let's say that you want a human to verify all orders above a certain amount.
 This can be implemented as follows:
-```java title="rules/customerAgent/Agent.drl"
+```java title="rules/customerAgent/CustomerAgent.drl"
 rule "Process order"
     when
         order: Order() from entry-point "signals"
@@ -237,26 +236,28 @@ rule "Verify high-value orders"
 end
 ```
 The second rule defines a salience (priority) of 100, which is higher than the default (0), which means this rule is evaluated and executed before the first one.
-Additionally, it removes the order signal, which prevents the first rule from triggering.
+Additionally, it removes the order signal, which prevents the first rule from firing.
 This is why we generally recommend deleting signals despite them being discarded at the end of the evaluation cycle.
 
 The same mechanism can be used to implement a "catch-all" fallback rule. For example:
-```java title="rules/customerAgent/Agent.drl"
-rule "Buy"
+```java title="rules/customerAgent/CustomerAgent.drl"
+rule "Complete order"
     when
-        TelegramReceivedMessage(text == "buy") from entry-point "signals"
+        message: TelegramReceivedMessage(text.equalsIgnoreCase("buy")) from entry-point "signals"
         agent: CustomerAgent()
     then
-        agent.buy();
+        agent.completeOrder();
+        delete(message);
 end
 
 rule "Unrecognized message"
     salience -1
     when
-        TelegramReceivedMessage() from entry-point "signals"
+        message: TelegramReceivedMessage() from entry-point "signals"
         agent: CustomerAgent()
     then
         agent.sendMessage("Sorry, didn't understand that :/");
+        delete(message);
 end
 ```
 
