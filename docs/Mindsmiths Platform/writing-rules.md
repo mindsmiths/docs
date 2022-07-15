@@ -263,31 +263,49 @@ end
 
 
 ## Rule chaining
-TODO: find some example
-- It's difficult to see the advantages of rule engines looking just at single simple rules: their true power is most obvious interactions of the rules when handling more complex behaviours.
-- As already mentioned, the order of execution of rules is not pre-imposed and whenever the facts in the knowledge base change, rules are re-evaluated.
-- Therefore, although rules are in principle independent of each other, they can indirectly depend on each other in terms of the outcome of one rule bringing about triggering of another. For example, it's relatively frequent that a rule modifies a fact in memory, and another rule detects when the fact has that specific value. This is called **rule chaining**.
-- Thinking of the road-crossing situation (TODO: link), rule chaining comes in handy for breaking down a complex reasoning process into a series of circumstances that need to be evaluated and whose outcomes accumulate to ultimately make the final decision whether to cross a simple one.
-- It's generally advisable to try and break down the reasoning in as many steps as possible and have the sum of their outputs caught by another rule.
-- Moreover, multiple rules could fire at once given some situation in the data. In this case, priority is determined using the **salience** parameter.
-- The mechanism is very simple: rules with higher salience have priority over the ones with lower salience, so you can think of it as a way of imposing order of execution on rules triggered by similar conditions.
-- Should the conditions for the other rules still be met afterwards, the other rule can still subsequently execute. 
-- The default salience of a rule is 0, and you can also set it to a negative value. This is useful for writing "catch-all" rules, e.g. ones making sure no message from the user goes unprocessed should it trigger no other rules.
+It's difficult to see the advantages of rule engines vs. simple if-statements by just looking at simple independent rules.
+Their true power becomes clear when rules start to interact in more complex scenarios.
+
+We've already seen one such example in "Handling edge cases", but there's another even more powerful method - _rule chaining_.
+
+Consider this example:
+```java title="rules/customerAgent/Agent.drl"
+rule "Determine eligibility for premium offfers"
+    when
+        agent: CustomerAgent(funds > 1000, machineType == "PREMIUM")
+    then
+        modify(agent) {setIsEligibleForPremiumOffers(true)};
+end
+
+rule "Determine if premium offer"
+    when
+        offer: Offer(value > 500) from entry-point "signals"
+    then
+        modify(offer) {setIsPremium(true)};
+end
+
+rule "Send premium offer"
+    when
+        offer: Offer(isPremium == true) from entry-point "signals"
+        agent: CustomerAgent(isEligibleForPremiumOffers == true)
+    then
+        agent.sendOffer(offer);
+end
+```
+
+As you can see, you can quickly begin handling very complex scenarios with just a few rules.
+It's generally advisable to try and break down the reasoning into smaller steps to simplify complex problems.
+Each rule raises the level of abstraction and sounds closer to business-level logic.
+Eventually, you'll begin replacing rules with predictive models, but your higher-level rules will stay the same.
+
 
 ## Best practices
-- The writing of rules can be slightly confusing before you get used to it, so we'll quickly summarize some good practices for rule writing.
-- To improve flexibility, extendability and maintainability of the rule engine, the rules should be as simple as possible and only contain the minimal information necessary. This will also help you with rule atomicity and independence, which are desirable features.
-- Use rule chaining and transparent variable naming to improve rule readability and back-tracking in how a decision was reached. Ideally, your rules should be perfectly readable to non-developers as well. Same goes for rule names: write as clearly as possible what the rule does even if it makes the rule name slightly lengthy.
-- Avoid writing rules that say "condition1 or condition2 or condition3": it's better to break these down into separate rules with the same `then` part, or that have an outcome which triggers another rule that executes the desired action.
-- Avoid having any if-else logic in the rules: it's more efficient to break these cases down into separate rules.
-- We already mentioned that signals are not persisted between evaluation cycles, but it's good practice to still delete them once you are done processing them to avoid any unwanted behaviours as your system grows.
+Writing rules can be slightly confusing before you get used to it, so we'll quickly summarize some good practices.
 
-
-## Advantages of rule engines: simplification, flexibility, readability
-TODO: find a better title
-- The structure of rule engines enables you to break down highly complex scenarios into sets of very simple conditions and spares you the trouble of foreseeing all specific circumstances under which certain events might occur.
-- The rules themselves are written using declarative programming. This gives you much more freedom in how you structure the logic, because the rules that fire in evaluations are determined by the data.
-- The declarative programming paradigm allows you to express a piece of logic without explicitly specifying the flow of execution: the order of execution governed _only_ by the conditions the rules declare.
-- Each rule should be as simple as possible: they should be independent of each other, highly separable and only contain the minimal information necessary. 
-- This makes rules more easily maintainable and the system more easily extendable.
-- Moreover, together with the fact that rules are written in a sort of a "meta-language", this makes rules easy to read for people of different backgrounds.
+- Write "readable" rules - try to use names and structures such that even a non-technical person can read and understand it
+- Rules should be as simple as possible - if the rule looks too complex, break it down into multiple smaller rules
+- Organize your rules in meaningful structures - closely connected rules in the same DRL file, different features in different packages, etc.
+- Use rule chaining to break down complex problems
+- Avoid writing rules that say "condition1 or condition2 or condition3" - use rule chaining
+- Avoid using if-statement in the `then` part - use multiple rules and/or rule chaining
+- Remove processed signals explicitly to prevent any unwanted behaviours as your system grows

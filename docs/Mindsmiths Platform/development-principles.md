@@ -32,6 +32,15 @@ sidebar_position: 4
 - This logic is implemented in the component called Rule Engine, in the form of human-readable business rules. 
 - Declarative programming allows for efficient, data-driven detection of situations as they occur, without the limitation of the imposed order of execution.
 
+
+## Advantages of rule engines: simplification, flexibility, readability
+- The structure of rule engines enables you to break down highly complex scenarios into sets of very simple conditions and spares you the trouble of foreseeing all specific circumstances under which certain events might occur.
+- The rules themselves are written using declarative programming. This gives you much more freedom in how you structure the logic, because the rules that fire in evaluations are determined by the data.
+- The declarative programming paradigm allows you to express a piece of logic without explicitly specifying the flow of execution: the order of execution governed _only_ by the conditions the rules declare.
+- Each rule should be as simple as possible: they should be independent of each other, highly separable and only contain the minimal information necessary. 
+- This makes rules more easily maintainable and the system more easily extendable.
+- Moreover, together with the fact that rules are written in a sort of a "meta-language", this makes rules easy to read for people of different backgrounds.
+
 #### Examples
 - Let's consider two short examples as an illustration of the benefits of this approach.
 - Let's say a doctor is examining a patient. The most important questions should be resolved first, such as "Is the person in a life-threatening state?". If the answer is no, the questions to ensue could for example be "Does the person have a fever?", "Is the person feeling nauseous?", "Is the person's face pale?" and so on. Now imagine that, during one these follow-up questions, the patient has a heart attack. If we were to transfer this situation to the digital world, we would have absolutely no way of reacting properly to the newly occurred situation using the imperative programming paradigm, because once we are in the defined process of statement execution, there is no way for us to circle back to the top of that decision tree, which in this situation, you'll agree, is relatively important. Declarative programming, on the other hand, allows us to evaluate each new situation in its own right, irrespective of what led up to its occurrence.
