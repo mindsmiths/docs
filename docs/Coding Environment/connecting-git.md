@@ -4,43 +4,52 @@ sidebar_position: 2
 
 # Connecting your git repo
 
-The first thing to do should be connecting the environment to your git repo. For this you will need a GitHub account, so please create one if needed.  
+Before you begin with coding, you should connect your environment to your git repo. You can use your GitHub or GitLab account, so please create one if needed.
 
+We'll do this in just a couple easy steps.
+If you are more developers collaborating on the same project, the process differs slightly for the person setting up the project on their GitHub/GitLab, but we'll describe each process in turn.
 
-Now we can connect this Mindsmiths environment with the GitHub account you have or you just created. To do that follow these steps this:
-1. Open terminal and run this command to create the SSH key and just press ENTER on all of the questions: `ssh-keygen -t ed25519 -C "your_email@example.com"` (change your_email@example.com with your email)
-2. Run `cat /root/.ssh/*.pub` and copy the public key you just created - **Don't worry, public part of the SSH key can be seen by everyone, it's not a secret!**
-3. Go to this [link](https://github.com/settings/ssh/new) (takes you to the GitHub's page for adding new SSH key) and paste the public key you copied under the "Key" part
-4. You can set the "Title" to whatever, it's just for you to know where it's from - we recommend something like "username-mindsmiths-free" (e.g. hrco-mindsmiths-free)
+Let's start!
 
-Now it is time to push the code to the connected repo, do this:
-1. Create a new repo following instructions on this [link](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
-2. Run this command in terminal of your Mindsmiths environment: `git init`
-3. Set the name and email the git will know you for with commands (change values for "you@example.com" and "Your Name"):
+## Initial repo setup
+
+We start with connecting your GitHub account:
+1. First we need to create the SSH key:
+   - At the top bar, choose Terminal > New Terminal and run this command:
+```commandline
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+   - Make sure to adapt the email address
+   - You can just press ENTER for all questions that follow
+2. Next you need to add the public key you just created to your GitHub. **Don't worry, public part of the SSH key can be seen by everyone, it's not a secret!**
+   - Run the following command and copy the output:
+```commandline
+    cat /root/.ssh/*.pub
+```
+    - Go to this [link](https://github.com/settings/ssh/new) and paste in the public key you copied under the "Key" section
+    - Feel free to set the "Title" to whatever you want, but we recommend something intuitive, e.g. "project_name-mindsmiths"
+
+Great! Now that your account is connected, it's time to connect your git repo.
+If you don't have the repo yet, first [create](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) one for your project.
+1. Run `git init` in the Terminal to initialize a git repo
+2. Set the email and username: run the following command, adapting the credentials
 ```commandline
     git config --global user.email "you@example.com"
     git config --global user.name "Your Name"
 ```
-4. Add the remote with: `git remote add origin git@github.com:<github_username>/<github_repo_name>`
-:::note
-Make sure to use **ssh** to clone and, copy the entire repository name (example: git@github.com:Name/first_repo.git).
-:::
-5. Now run these commands to push all the files to the repo:
+3. Now add the remote: just copy the SSH from your repository (example: git@github.com:Name/first_repo.git)
+`git remote add origin git@github.com:<github_username>/<github_repo_name>`
+
+4. As a final step, just push all the files to the repo (make sure to type "yes" when prompted after you push):
 ```commandline
     git add .
     git commit -m "First commit: pushed all the Mindsmiths initial repo files"
-    git push --set-upstream origin master # answer "yes"
-    # It may take some time because of the big file size
+    git push --set-upstream origin master
 ```
-That's it, you have your GitHub account connected. The same process can also be applied for GitLab.
+That's it! Your git is now connected connected. The same process can also be applied for GitLab.
 
-### Documentation
-To help you get started with the platform, you can check out the tutorials and supporting [documentation](http://docs.sandbox.mindsmiths.io/docs/intro)
-
-### Support
-If you need technical (and emotional) support, you can always reach out to us in our [Discord channel](https://discord.gg/FRUHd4eE)
-
-For frequent issues, there is a short rundown below.
+## Connecting to an existing repo
+TODO
 
 ### Directory structure: quick reference
 The main directories are the following:
@@ -48,12 +57,3 @@ The main directories are the following:
 - models: symlink to the directory containing the agent models
 - rules: symlink to the directory divided into subdirectories with the names of the agents you define. The rules referring to each agent are inside the respective subdirectories (e.g. rules/smith/Heartbeat.drl).
 - services: directory containing all services you add to the platform. In the initial phase contains only the rule engine service.
-
-### Deployment
-Once you are satisfied with your product, and you would like to deploy it to production, 
-just reach out. We'll take you through a simple process and help you set up the production environment.
-
-### FAQ
-Error: Cannot access target/app.jar file.
-Solution: Remove the directory in path services/rule_engine/target and run again.
-
