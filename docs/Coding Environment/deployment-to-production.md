@@ -4,16 +4,19 @@ sidebar_position: 4
 
 # Deployment to production
 
-Production is an environment with a fully working system for real users. Apart from production we also provide dynamic sandbox environments.
-Sandbox environemnt is used to test your system before deploying it to production.
+## Production and sandbox environment
 
-Both production and sandbox are deployed to our server. We use Kubernetes architecture, but you don't have to worry about, as we manage everything regarding infrastructure.
+Production is an environment with a fully working system for real users.
+
+Apart from production we also provide dynamic sandbox environments. Sandbox environemnt is used to test your system before deploying it to production. Sandbox is run on the same architecture as production, however it has no production data and secrets.
+
+Both production and sandbox are deployed to our server. We use Kubernetes architecture, but you don't have to worry about it as we manage everything regarding infrastructure.
 
 ## Setup
 
 Production and sandbox are deployed by our CI server (GitLab CI/CD). This means that our CI server needs access to your git repository in order to clone it and deploy it.
 
-Please proceed to section [Setup GitHub](#setup-github) or [Setup GitLab](#setup-gitlab), depending on what you use for your repo.
+Jump to section [Setup GitHub](#setup-github) or [Setup GitLab](#setup-gitlab), depending on what you use for your repo.
 
 ### Setup GitHub
 
@@ -53,26 +56,26 @@ MINDSMITHS_GITLAB_ACCESS_TOKEN=abc123
 MINDSMITHS_GITLAB_PIPELINE_TOKEN=def456
 ```
 
-Great, now your environment can communicate with our CI server (we use GitLab CI). You can now deploy your project.
+Great, now your environment can communicate with our CI server. Congrats! You can now deploy your project.
 
 ## Deploying
 
 ### Deploying sandbox
 
-1. Switch to `uc/` branch. Branches that are deployed to sandbox must have names that begin wih `uc/`. Every `uc/` branch has its own sandbox
-2. [Setup deploy values](#setup-deploy-values) for the branch, if not already
+1. Switch to a `uc/` branch. Branches that are deployed to sandbox must have names that begin wih `uc/`. Every `uc/` branch has its own sandbox
+2. [Set up deploy values](#setup-deploy-values) for the branch, if not already done
 2. Run `forge deploy`. **Make sure that local changes are pushed before deploying**
 
 
 ### Deploying production
 
 1. Switch to the default repo branch. Only the default repo branch (usually `main`) can be deployed to production.
-2. [Setup deploy values](#setup-deploy-values) for the branch, if not already
+2. [Set up deploy values](#setup-deploy-values) for the branch, if not already done
 3. Run `forge deploy`. **Make sure that local changes are pushed before deploying**
 
 ### Setup deploy values
 
-Deploy values are variables that are deployed with your sandbox or production. For example, one of the variables could be `TELEGRAM_BOT_TOKEN`.
+Deploy values are variables that are deployed with your sandbox or production. For example, one of the variables could be `TELEGRAM_BOT_TOKEN`. Variables are specific to the environment. This means you may not use the same Telegram bot for local development and production deployment. In this case, you would have one bot for your local development, one for your sandbox deployment and one for production deployment.
 
 Before deploying sandbox or production, you need to set these values. We store them on our CI server. Every branch has its own values. Once a user sets values for a branch, other users don't have to set them again for that branch. Of course, you can update values at any time.
 
