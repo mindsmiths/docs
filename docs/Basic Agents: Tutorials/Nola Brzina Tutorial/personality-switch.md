@@ -62,22 +62,22 @@ Once you choose the personalities, you need to add the adaptations in ```Nola.ja
 
 ```java title="models/agents/Nola.java"
 ...
-// highlight-start
+// highlight-added-start
 import java.util.Arrays;
 import com.mindsmiths.ruleEngine.util.Util;
 import models.Personality;
-// highlight-end
+// highlight-added-end
 
 @Getter
 @Setter
 public class Nola extends Agent {
     ...
-    // highlight-next-line
+    // highlight-added-line
     private Personality personality = Personality.friendlyAI;
 
     ...
 
-    // highlight-start
+    // highlight-added-start
     public void changePersonality(){
         resetMemory();
         List<Personality> choices = new ArrayList<Personality>(
@@ -86,32 +86,32 @@ public class Nola extends Agent {
         choices.remove(personality);
         personality = Util.randomChoice(choices);
     }
-    // highlight-end
+    // highlight-added-end
 
     public void askGPT3() {
         simpleGPT3Request(
-            // highlight-start
+            // highlight-changed-start
             personality.getInstruction() + String.join(“\n”, memory) + personality.getAiName() + ":", personality.getTemp(),
             personality.getResponseLen(), List.of(personality.getAiName(), personality.getHumanName())
-            // highlight-end
+            // highlight-changed-end
         );
     }
 
-    // highlight-next-line
+    // highlight-changed-line
     public void simpleGPT3Request(String prompt, Double temp, Integer responseLen, List<String> stop) {
         Log.info("Prompt for GPT-3:\n" + prompt);
         GPT3AdapterAPI.complete(
             prompt, // input prompt
             "text-davinci-001", // model
-            // highlight-start
+            // highlight-changed-start
             responseLen, // max tokens
             temp, // temperature
-            // highlight-end
+            // highlight-changed-end
             1.0, // topP
             1, // N
             null, // logprobs
             false, // echo
-            // highlight-next-line
+            // highlight-changed-line
             stop, // STOP words
             0.6, // presence penalty
             0.0, // frequency penalty
@@ -126,7 +126,7 @@ Perfect. Now we just need to add a new rule to make Nola change the way in which
 
 ```java title="rules/nola/Conversation.drl"
 ...
-// highlight-start
+// highlight-added-start
 rule "Switch personality"
     salience 100
     when
@@ -137,7 +137,7 @@ rule "Switch personality"
         agent.sendMessage("Switched personality! " + agent.getPersonality().getUserPrompt());
         delete(message);
 end
-// highlight-end
+// highlight-added-end
 ```
 
 And adapt the previous rules communicating with the GPT-3, to allow for a bit more flexibility in setting the parameters:
@@ -149,7 +149,7 @@ rule "Handle message"
         agent: Nola()
    then
        modify(agent) {
-            // highlight-next-line
+            // highlight-changed-line
             addMessageToMemory(agent.getPersonality().getHumanName(), message.getText()),
             setPinged(false),
             setLastInteractionTime(new Date())
@@ -165,7 +165,7 @@ rule "Send GPT3 response"
     then
         String response = gpt3Result.getBestResponse();
         agent.sendMessage(response);
-        // highlight-next-line
+        // highlight-changed-line
         modify(agent) {addMessageToMemory(agent.getPersonality().getAiName(), response)};
         delete(gpt3Result);
 end

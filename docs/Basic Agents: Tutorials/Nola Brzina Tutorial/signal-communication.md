@@ -21,7 +21,7 @@ rule "First contact"
         agent: Nola()
     then
         agent.sendMessage("Okay, turning my engines on. Let's start!");
-        // highlight-next-line
+        // highlight-added-line
         agent.send("SMITH", initialize, "new-agent");
         delete(message);
 end

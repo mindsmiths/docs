@@ -10,10 +10,10 @@ Let’s begin by making our agent a bit more polite! We’ll add some special be
 All we need to do is add a new rule in the ```Conversation.drl``` file:
 
 ```java title="rules/Nola/Conversation.drl"
-// highlight-next-line
+// highlight-added-line
 import com.mindsmiths.ruleEngine.model.Initialize;
 ...
-// highlight-start
+// highlight-added-start
 rule "First contact"
     salience 100
     when
@@ -24,7 +24,7 @@ rule "First contact"
         agent.sendMessage("Ok, turning my engines on. Let's start!");
         delete(message);
 end
-// highlight-end
+// highlight-added-end
 ```
 
 :::info
