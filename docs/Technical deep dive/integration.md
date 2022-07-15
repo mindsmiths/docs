@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Integration
 There are multiple ways to integrate with the platform. Let's discuss them in turn.
 

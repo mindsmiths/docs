@@ -4,7 +4,12 @@ sidebar_position: 1
 
 # What is the Mindsmiths Platform?
 
-Mindsmiths Platform is a platform for **creating, evolving and running intelligent digital agents**.
+  - [ ] What is it
+  - [ ] When is it useful
+  - [ ] When should it NOT be used
+  - [ ] What are the common use cases
+
+Mindsmiths Platform is a high-code platform for **creating, evolving and running intelligent digital agents**.
 It's a tool that enables you to break down even the most complicated real-world problems into trivial technical challenges handled by a multitude of simple agents.
 We call this kind of modelling smart AI-based solutions **mindsmithing**.
 
