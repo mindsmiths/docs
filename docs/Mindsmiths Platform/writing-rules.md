@@ -5,7 +5,19 @@ sidebar_position: 7
 # Writing rules
 We use the [Drools framework](https://www.drools.org/) for defining and evaluating rules.
 
-- All rule files (ending in `.drl` extension) follow the same basic layout:
+
+## Rule organization
+Rules are written in `.drl` files, which are located in `rules/` (symlink to `services/rule_engine/src/main/resources/rules`).
+Each agent must have its own package in this root folder, where you'll write rules specific to this agent.
+Inside this package you can create additional subpackages to organize your DRL files.
+Additionally, a single DRL file can contain multiple rules.
+The ordering of rules is not important - they will all be evaluated.
+
+You can also write a rule in the root package (`rules/`) which every agent will evaluate.
+
+
+## Rule structure
+All DRL files follow the same basic layout:
 ```java title="rules/agent/Example.drl"
 package <path.to.current.directory>;
 
@@ -17,92 +29,239 @@ rule "Rule name"
     then
         // execute these actions
 end
+
+...
 ```
 
-The rule name gives a short description of what a rule does (e.g. "Send notification to user"). The rules can be specified in any order and can be distributed in any number of files 
-The `when` part of the rule is implemented purely in Drools, while the `then` part is written in Java, except for a couple Drools functions we will introduce later on (`insert`, `modify`, `delete`).
+The rule name gives a short description of what a rule does (e.g. "Send notification to user").
+The `when` part of the rule is implemented in a special Drools language, while the `then` part is written in Java (with some Drools-specific constructs).
 
-## Advantages of rule engines: simplification, flexibility, readability
-TODO: find a better title
-- The structure of rule engines enables you to break down highly complex scenarios into sets of very simple conditions and spares you the trouble of foreseeing all specific circumstances under which certain events might occur.
-- The rules themselves are written using declarative programming. This gives you much more freedom in how you structure the logic, because the rules that fire in evaluations are determined by the data.
-- The declarative programming paradigm allows you to express a piece of logic without explicitly specifying the flow of execution: the order of execution governed _only_ by the conditions the rules declare.
-- Each rule should be as simple as possible: they should be independent of each other, highly separable and only contain the minimal information necessary. 
-- This makes rules more easily maintainable and the system more easily extendable.
-- Moreover, together with the fact that rules are written in a sort of a "meta-language", this makes rules easy to read for people of different backgrounds.
-
-## Rule mechanics
-- The reasoning in the rule engine goes on via what we call **rule evaluation**.
-- The conditions that get evaluated in the `when` part of the rule basically function as a constraint or filter: we check if the current data meet some defined criteria. There is an implicit `AND` operator between the lines with different conditions, so the `when` part basically implements a query.
-- When such a situation is identified, some action in the `then` part is scheduled to be executed. Whether that will actually happen also depends on some other factors (see Rule chaining below).
-- Since the rule conditions work as a filter, everything used in `then` part should be referenced and assigned to a variable beforehand in the `when` part to make sure it exists.
-- Variable assignment is done using a colon: the expression `Agent(agentId: id)` assigns the value of the Agent's `id` field to variable name `agentId`, and can as such be used later on in the `then` part of the rule.
-- Another way to access the agent's id would be to reference the agent instead `agent: Agent()` and then use the Java getter method in the `then` part: `agent.getId()`.
-- Let's look at an example to make these points slightly clearer:
+For example:
 ```java title="rules/agent/Agent.drl"
 package rules.agent;
 
-rule "Register active customers"
+import ...
+
+rule "Find available support agent"
     when
-        agent: CustomerAgent(agentId: id, active != true)
-        OngoingPurchaseProcess(customerId == agentId)
+        Customer(needsHelp == true)
+        SupportAgent(available == true)
     then
-        modify(agent) {setActive(true)};
+        Log.info("Found an available agent!");
 end
 ```
-- As you can probably see for yourself, this rule registers if a customer is currently in the process of purchasing something. We create a reference to the customer's agent to be able to modify the value of one of its fields in the `then` part, and we assign its id to a variable to fetch the `OngoingPurchaseProcess()` for that customer in specific. (TODO remove this part? and also think of a better example)
-- The rule reads as follows: when there is a `CustomerAgent()` who is currently not flagged as `active` but there is an `OngoingPurchaseProcess()` object whose `customerId` matches the agent's, set the agent's `active` flag to `true`.
-- Apart from turning your attention to how the filtering syntax looks like in the Drools syntax, a very important thing to note here is that the rule engine has no way of knowing if some rule has already fired or not: that's why you need a "stopping mechanism" - a way of making sure the conditions of a rule will at some point no longer be met to prevent infinite loops.
-- It sounds like an inconvenience, but the engine being agnostic of the actions that led up to the current state is actually in many situations a desireable feature (see Rule chaining TODO).
-- Among other things, this means that the control over rules firing is neither determined by the order of the rules nor by the order of the incoming data, but by the conditions the rules declare. 
-- Therefore, you can write any number of rules in whichever order you want and distributed over any number of files - just make sure they are all in the correct location (TODO see Creating agents).
+This rule checks if there is a `Customer` who needs help, and a `SupportAgent` who is active.
 
 
-- In short, during an evaluation cycle, a rule can recognize that a specific situation has occurred (`when`) and perform some action (`then` - usually triggering some series of procedures or modifying the knowledge base).
-- The Drools rule engine uses the highly optimized Phreak algorithm (based on the Rete algorithm) in rule evaluation, and the sequence flow is determined by the engine at runtime.
-- These evaluation cycles can happen periodically at a specific rate (see Heartbeat TODO: link). Alternatively they can be triggered by certain signals or updates to the knowledge base.
+## Rule mechanics
+The rules for a particular agent are constantly being re-evaluated (checking if the `when` part is satisfied), and when its condition is satisfied the rule _fires_ (or is _triggered_), i.e. the `then` part is executed.
 
-## Rule reasoning: Signals and facts
-- While **signals** are not persisted in memory between evaluation cycles, the **knowledge base** contains "facts" persisted in memory on which we do the reasoning. 
-- Rules are evaluated per agent (see Creating agents TODO: link), and by default, the only entity present in the knowledge base at the very beginning is the agent itself.
-- You update the knowledge base using special reserved Drools keywords `insert`, `modify` and `delete`.
-- For instance, although signals are by default discarded once they are processed, you can store them permanently by using `insert` and use it in another rule as a fact: (TODO: think of better examples)
+The conditions that get evaluated in the `when` part of the rule work as a series of constraints or filters - we check if the current data in the _knowledge base_ meets some defined criteria.
+There is an implicit `AND` operator between the lines with different conditions. You can also think of the `when` part as a query over the knowledge base.
+
+### Assigning query results to variables
+
+You can also use a colon to assign results of these queries to variables which you can use in the `then` part. For example:
 ```java title="rules/agent/Agent.drl"
+package rules.customerAgent;
+
+rule "Purchase finished"
+    when
+        purchase: Purchase(status == "FINISHED") from entry-point "signals"
+        agent: CustomerAgent(agentId: id, customerId == purchase.customerId)
+    then
+        Log.info(String.format("Customer %s (id=%s) made a new purchase (id=%s)!", agent.getName(), agentId, purchase.getId()));
+end
+```
+`agent: CustomerAgent(agentId: id, ...)` assigns the value of the Agent's `id` field to the variable `agentId`, and the whole `CustomerAgent` object to the `agent` variable.
+We assigned `id` to `agentId` for illustrative purposes, but you can use `agent.getId()` as well.
+
+
+### Working with the knowledge base
+The `when` part queries the knowledge base, but how does anything end up in the knowledge base?
+
+There are three mechanisms that influence this:
+1. There is always an instance of the current agent in the knowledge base - (`CustomerAgent` in the previous example)
+2. When a signal is sent to the agent, it is inserted in the knowledge base, under the entry point "signals" (see Facts and Signals TODO)
+3. Rules can insert, modify, and delete data from the knowledge base
+
+Consider the following example:
+```java title="rules/customerAgent/Agent.drl"
+package rules.customerAgent;
+
+rule "Insert data"
+    when
+        not(Purchase())  // there are no purchases
+    then
+        Log.info("Inserting data");
+        insert(new Purchase("id1", "FINISHED"));
+        insert(new Purchase("id2", "STARTED"));
+        insert(new Purchase("id3", "FINISHED"));
+end
+
+rule "Remove completed purchases"
+    when
+        purchase: Purchase(status == "FINISHED")
+        agent: CustomerAgent()
+    then
+        Log.info("Removing purchase " + purchase.getId());
+        modify(agent) {setCompletedAtLeastOnePurchase(true)};
+        delete(purchase);
+end
+
+rule "A new product arrived"
+    when
+        product: NewProduct() from entry-point "signals"
+        agent: CustomerAgent()
+    then
+        agent.sendMessage("Hey, I have a new product for you: " + product.getName() + ". Interested?");
+end
+```
+The output of this example would be:
+```
+Inserting data
+Removing purchase id1
+Removing purchase id3
+```
+After some time, when another service or agent sends the `NewProduct` signal to this agent, the third rule would also
+fire and the agent would send a message to the user. To learn more about sending signals to other agents see "Sending signals" (TODO).
+
+### Modify
+As you can see, inserting and deleting facts from the knowledge base is pretty straightforward, but what's up with the `modify` thingy?
+
+Another way to write the same thing without using modify would just be:
+```java
+agent.setCompletedAtLeastOnePurchase(true);
+```
+So why did we use modify instead?
+
+The answer lies in the way the rule engine works.
+It uses a highly optimized Phreak algorithm in rule evaluation, which determines which rules should be evaluated at runtime.
+The `modify` keyword tells the rule engine that the agent changed, which means any rules that use it in the `when` condition should be re-evaluated.
+It even goes a step further and re-evaluates only those rules that could be impacted by the change of the specific field that changed (`completedAtLeastOnePurchase`).
+
+In other words, whenever you're changing an object, you should *always* use `modify` instead of the setter directly.
+
+
+## Facts and signals
+There are two types of objects that can be queried from the knowledge base: facts and signals.
+
+Facts are persistent, while signals are not. Facts are objects that the agent chooses to remember.
+Signals can be sent by other services and agents, which the current agent can choose to accept or ignore.
+
+As already mentioned, the only fact that is present in the beginning is the object of the current agent.
+
+Even though signals are discarded by default after the current evaluation cycle ends, you can store them with `insert` and afterward use it in another rule as a fact. For example:
+```java title="rules/customerAgent/Agent.drl"
 rule "Store user orders"
     when
         order : Order() from entry-point "signals"
-        agent: CustomerAgent()
     then
         insert(order);
 end
 
-rule "Update active order"
+rule "Finish order"
     when
+        finishSignal: FinishOrder(orderId: orderId) from entry-point "signals"
+        
+        order: Order(id == orderId)  // it's now a fact
         agent: CustomerAgent()
-        order: Order(active == true, processed != true)
     then
-        modify(order) {setProcessed(false)};
+        agent.sendOrder(order);
+        delete(order);
+        delete(finishSignal);
 end
 ```
-- Notice that signals are received by the Rule Engine from specific entry points (the default one is "signals"), while there is no entry point for retrieving facts stored in the knowledge base.
-- You can also build custom objects on the fly in the `then` part, e.g. `insert(new Purchase(itemList));`.
-- Once the object is in the knowledge base, you can of course modify (see example above) or delete it. Note that even though signals are not persisted after the triggered evaluation cycle is complete, we still recommend deleting them in the `then` part of the rule in which you process it once you no longer need them (see Rule chaining below).
-- You can think of the `modify` function as the equivalent of Java setter method. However, if you just use a regular setter, your changes won't be persisted outside the current evaluation cycle.
-- Another big group of conditions are [time-based conditions](https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/decision_engine_in_red_hat_decision_manager/cep-con_decision-engine). They closely relate to proactivity and the Heartbeat service (TODO: link). Let's look at an example:
-```java title="rules/agent/Agent.drl"
-rule "Re-engage inactive"
+Notice that signals are always received on specific entry points (the default one is "signals").
+
+
+## Heartbeat
+There is one special signal that is generated periodically and sent to every agent - the _heartbeat_ signal.
+
+This signal is what makes the agents "alive". Just like every signal, it triggers a re-evaluation of all rules.
+This enables the agent to be proactive, instead of waiting to be "turned on".
+
+To do that, you'll mostly use [time-based conditions](https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/decision_engine_in_red_hat_decision_manager/cep-con_decision-engine).
+Let's look at an example:
+```java title="rules/customerAgent/Agent.drl"
+rule "Store user orders"
     when
-        Heartbeat(ts: timestamp) from entry-point "signals"
-        agent: CustomerAgent(lastActivity before[60d] ts, reengageAttempted != true)
+        Order() from entry-point "signals"
+        agent: CustomerAgent()
+    then
+        modify(agent) {setLastOrderAt(new Date())};
+end
+
+rule "Re-engage inactive customer"
+    when
+        Heartbeat(now: timestamp) from entry-point "signals"
+        
+        agent: CustomerAgent(lastOrderAt before[60d] now, reengageAttempted != true)
     then
         agent.sendMessage("Hey! It's been a while 😊 Is there anything I can help you with?");
         modify(agent) {setReengageAttempted(true)};
 end
 ```
-- What's happening here is very simple: we read off the timestamp from the latest Heartbeat signal that was sent for that agent and compare to the customer's last recorded activity. If more than 60 days have passed between those two timestamps, we send the user a message to try to engage them.
-- We also set the `reengageAttempted` flag to true to prevent the rule from re-firing until the user responds and potentially sets a new value for the `lastActivity` timestamp.
+In the first rule, we just save the last order time.
+In the second rule, we get the current datetime from the heartbeat signal, and check that the last order was more than 60 days ago.
 
-## Chaining rules
+A very important thing to note here is that rules can fire at any time, and even multiple times.
+This means it's easy to fall into an infinite loop accidentally, even though the platform offers some safeguards against that.
+
+That's why we use the `reengageAttempted` flag. It will prevent the rule firing on every heartbeat and spamming the user with messages.
+It acts as a "stopping mechanism" - a way of making sure the conditions of a rule will no longer be met at some point.
+It sounds like an inconvenience, but being agnostic of the actions that led up to the current state is actually a desirable feature in many situations (see Rule chaining TODO).
+
+
+## Handling edge cases
+Sometimes you may want to override a certain rule in a particular situation.
+For example, let's say that you want a human to verify all orders above a certain amount of value.
+This can be implemented as follows:
+```java title="rules/customerAgent/Agent.drl"
+rule "Process order"
+    when
+        order: Order() from entry-point "signals"
+        agent: CustomerAgent()
+    then
+        agent.processOrder(order);
+end
+
+rule "Verify high-value orders"
+    salience 100
+    when
+        order: Order(value > 4000) from entry-point "signals"
+        agent: CustomerAgent()
+    then
+        agent.sendToVerification(order);
+        delete(order);
+end
+```
+The second rule defines a salience (priority) of 100, which is higher than the default (0), which means this rule is evaluated and executed before the first one.
+Additionally, it removes the order signal, which prevents the first rule from triggering.
+This is why we generally recommend deleting signals despite them being discarded at the end of the evaluation cycle.
+
+The same mechanism can be used to implement a "catch-all" fallback rule. For example:
+```java title="rules/customerAgent/Agent.drl"
+rule "Buy"
+    when
+        TelegramReceivedMessage(text == "buy") from entry-point "signals"
+        agent: CustomerAgent()
+    then
+        agent.buy();
+end
+
+rule "Unrecognized message"
+    salience -1
+    when
+        TelegramReceivedMessage() from entry-point "signals"
+        agent: CustomerAgent()
+    then
+        agent.sendMessage("Sorry, didn't understand that :/");
+end
+```
+
+
+## Rule chaining
 TODO: find some example
 - It's difficult to see the advantages of rule engines looking just at single simple rules: their true power is most obvious interactions of the rules when handling more complex behaviours.
 - As already mentioned, the order of execution of rules is not pre-imposed and whenever the facts in the knowledge base change, rules are re-evaluated.
@@ -120,4 +279,14 @@ TODO: find some example
 - Use rule chaining and transparent variable naming to improve rule readability and back-tracking in how a decision was reached. Ideally, your rules should be perfectly readable to non-developers as well. Same goes for rule names: write as clearly as possible what the rule does even if it makes the rule name slightly lengthy.
 - Avoid writing rules that say "condition1 or condition2 or condition3": it's better to break these down into separate rules with the same `then` part, or that have an outcome which triggers another rule that executes the desired action.
 - Avoid having any if-else logic in the rules: it's more efficient to break these cases down into separate rules.
-- We already mentioned that signals are not persisted between evaluation cycles, but it's good practice to still delete them once you are done processing them to avoid any unwanted behaviours as your system grows. 
+- We already mentioned that signals are not persisted between evaluation cycles, but it's good practice to still delete them once you are done processing them to avoid any unwanted behaviours as your system grows.
+
+
+## Advantages of rule engines: simplification, flexibility, readability
+TODO: find a better title
+- The structure of rule engines enables you to break down highly complex scenarios into sets of very simple conditions and spares you the trouble of foreseeing all specific circumstances under which certain events might occur.
+- The rules themselves are written using declarative programming. This gives you much more freedom in how you structure the logic, because the rules that fire in evaluations are determined by the data.
+- The declarative programming paradigm allows you to express a piece of logic without explicitly specifying the flow of execution: the order of execution governed _only_ by the conditions the rules declare.
+- Each rule should be as simple as possible: they should be independent of each other, highly separable and only contain the minimal information necessary. 
+- This makes rules more easily maintainable and the system more easily extendable.
+- Moreover, together with the fact that rules are written in a sort of a "meta-language", this makes rules easy to read for people of different backgrounds.
