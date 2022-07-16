@@ -2,8 +2,60 @@
 sidebar_position: 2
 ---
 
-# Connecting your git repo
+# Connecting your git repository
 
+## What will this guide help you with
+
+This guide will help you connect your git repository with Mindsmiths web IDE. The guide uses GitHub as a repository hosting 
+platform but the concepts shown here are applicable to any other git based repository hosting platform 
+(e.g. GitLab, Bitbucket, etc.).
+
+We will use SSH key to authenticate with git remote repository (authenticating code pushes from Mindsmiths web IDE to 
+your remote GitHub repository) instead of basic https to remove the need of constant username and password prompt.
+
+We will achieve this in 3 easy steps:
+1. Generating SSH key on a Mindsmiths web IDE
+2. Adding SSH key to your GitHub account (or other repository hosting platform)
+3. Initialising git repository on a Mindsmiths web IDE and pushing the code to the GitHub remote repository
+
+Let's get started!
+
+
+## Generating SSH key on a Mindsmiths web IDE
+To generate SSH key follow the instructions bellow and carefully read the directions provided with the steps.
+
+1. Open terminal in the Mindsmiths web IDE
+   > - Search for "Terminal" in the upper left bar and then choose "New Terminal"
+2. Run this command to create the SSH key:
+    ```commandline
+    ssh-keygen -t ed25519 -C "Mindsmiths web IDE"
+    ```
+    > - ! Press ENTER on all the prompts (we want the default directory to save the SSH key in and don't want to set the phassphrase) 
+    > - You can change the comment part of the command (`Mindsmiths web IDE`) to best describe this SSH key for you
+
+Great! We successfully generated our SSH key, and you can see it with:   
+```commandline 
+cat /root/.ssh/*.pub
+```
+
+
+## Adding SSH key to your GitHub account
+The next step is to add the key we just created to your GitHub repository. To do that we will copy the public part of the 
+generated SSH key and add it to GitHub using GitHub's dashboard.
+Follow the instructions bellow and carefully read the directions provided with the steps.
+
+1. Click the link: [Add GitHub SSH key](https://github.com/settings/ssh/new), which will take you to the GitHub's page for
+adding new SSH key 
+    > - ! You must be logged in so if you get any error please make sure you are logged in
+2. and paste the public key you copied under the "Key" part
+3. You can set the "Title" to whatever, it's just for you to know where it's from - we recommend something like "username-mindsmiths-free" (e.g. hrco-mindsmiths-free)
+
+
+
+---
+---
+---
+---
 The first thing to do should be connecting the environment to your git repo. For this you will need a GitHub account, so please create one if needed.  
 
 
@@ -22,9 +74,7 @@ Now it is time to push the code to the connected repo, do this:
     git config --global user.name "Your Name"
 ```
 4. Add the remote with: `git remote add origin git@github.com:<github_username>/<github_repo_name>`
-:::note
-Make sure to use **ssh** to clone and, copy the entire repository name (example: git@github.com:Name/first_repo.git).
-:::
+
 5. Now run these commands to push all the files to the repo:
 ```commandline
     git add .
@@ -33,27 +83,3 @@ Make sure to use **ssh** to clone and, copy the entire repository name (example:
     # It may take some time because of the big file size
 ```
 That's it, you have your GitHub account connected. The same process can also be applied for GitLab.
-
-### Documentation
-To help you get started with the platform, you can check out the tutorials and supporting [documentation](http://docs.sandbox.mindsmiths.io/docs/intro)
-
-### Support
-If you need technical (and emotional) support, you can always reach out to us in our [Discord channel](https://discord.gg/FRUHd4eE)
-
-For frequent issues, there is a short rundown below.
-
-### Directory structure: quick reference
-The main directories are the following:
-- config: directory containing all the configuration files
-- models: symlink to the directory containing the agent models
-- rules: symlink to the directory divided into subdirectories with the names of the agents you define. The rules referring to each agent are inside the respective subdirectories (e.g. rules/smith/Heartbeat.drl).
-- services: directory containing all services you add to the platform. In the initial phase contains only the rule engine service.
-
-### Deployment
-Once you are satisfied with your product, and you would like to deploy it to production, 
-just reach out. We'll take you through a simple process and help you set up the production environment.
-
-### FAQ
-Error: Cannot access target/app.jar file.
-Solution: Remove the directory in path services/rule_engine/target and run again.
-
