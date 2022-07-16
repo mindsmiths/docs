@@ -4,21 +4,16 @@ sidebar_position: 1
 
 # What is the Mindsmiths Platform?
 
-Mindsmiths Platform is a high-code platform for **creating, evolving and running intelligent digital agents**.
-It's a tool that enables you to break down even the most complicated real-world problems into trivial technical challenges handled by a multitude of simple agents.
-We call this kind of modelling smart AI-based solutions **mindsmithing**.
+Mindsmiths Platform is a development framework for creating, evolving, and running swarms of simple digital creatures 
+(autonomous agents). These agents integrate into the real world, interact with it, and learn from it.
 
-The main strong points of the platform are its **flexibility, extendability and ease of integration**. 
-It gives you full freedom for crafting intelligent human-machine interactions, while saving you the technical overhead of setting up the infrastructure for building smart, emotionally intelligent and proactive solutions.
-Mindsmiths Platform allows you to quickly devise functional prototypes, and gradually evolve more complex systems. You can also easily make use of your existing data and integrate different machine learning components. 
+Developers use this framework to tackle complex challenges by breaking them into tiny parts and then addressing them 
+through the collaboration of autonomous agents.
 
-As Mindsmiths, we believe in the world where the best service and top-quality knowledge are accessible to everyone. The aim is not to replace human experts, but to **enhance their capabilities** and **extend their reach**.
-Through this platform, we want to help you create smart and caring systems and bring value to the world. 
+Even for developers unfamiliar with the multi-agent approach to solving problems, it doesn’t take much time to learn 
+concepts, methodology, and the tool. Once they’re fluent, the framework rewards them with the ability to bring 
+human-machine collaboration to levels not achievable with traditional programming.
 
-So let’s see the Platform in action! For a start, we'll take you through some basic concepts, as well as some easy-going demo materials.
-In the demos, we’ll create digital beings that will be able to converse in a human-like way and help you keep the body mass index in check.
+To help you start, we’ll explain key concepts and walk you through your first projects. 
 
-It sounds difficult, but it takes just a couple of hours to do it. We'll be with you every step of the way. 
-
-
-Let’s start! 😊
+Let’s do it! 😊
