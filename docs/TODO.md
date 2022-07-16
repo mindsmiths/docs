@@ -1,7 +1,9 @@
-# Quickstart
+# TODO
+
+## Quickstart
 - [ ] Hello world in 1 minute
 
-# Mindsmiths Platform
+## Mindsmiths Platform
 - [ ] Platform intro
   - [ ] What is it
   - [ ] When is it useful
@@ -30,12 +32,12 @@
   - [ ] Deployment
   - [ ] Support and reporting issues
 
-# Tutorials
+## Tutorials
 - [ ] Tutorial 1 - Nola
 - [ ] Tutorial 2 - Doctor/Patient
 - ...
 
-# Deep dive (technical documentation)
+## Deep dive (technical documentation)
 - [ ] Project structure
   - [ ] Project config
   - [ ] Secret management
@@ -89,7 +91,7 @@
 - [ ] Testing
 - [ ] Infrastructure
 
-# Reference
+## Reference
 - [ ] HTTP API reference
 - [ ] Websocket API reference
 - [ ] Forge CLI reference
