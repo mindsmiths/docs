@@ -16,7 +16,7 @@ your remote GitHub repository) instead of basic https to remove the need of cons
 We will achieve this in 3 easy steps:
 1. Generating SSH key on a Mindsmiths web IDE
 2. Adding SSH key to your GitHub account (or other repository hosting platform)
-3. Initialising git repository on a Mindsmiths web IDE and pushing the code to the GitHub remote repository
+3. Pulling/pushing the code from/to the GitHub remote repository
 
 Let's get started!
 
@@ -45,25 +45,69 @@ generated SSH key and add it to GitHub using GitHub's dashboard.
 Follow the instructions bellow and carefully read the directions provided with the steps.
 
 1. Click the link: [Add GitHub SSH key](https://github.com/settings/ssh/new), which will take you to the GitHub's page for
-adding new SSH key 
-    > - ! You must be logged in so if you get any error please make sure you are logged in
-2. and paste the public key you copied under the "Key" part
-3. You can set the "Title" to whatever, it's just for you to know where it's from - we recommend something like "username-mindsmiths-free" (e.g. hrco-mindsmiths-free)
+adding new SSH key
+    > - You must be logged in into GitHub to do this, if you are not GitHub will automatically redirect you to the login page
+    > - The picture bellow shows the interface for adding GitHub's SSH key
+    
+    ![Add GitHub SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
+
+As the picture shows, you need to provide the Title, and the Key itself.
+2. Let's set the title. We can use the same value we used when creating the key - **Mindsmiths web IDE**
+   > - The title is used to recognize one key from the other and understand where it is used.
+   > - Setting the title to "Mindsmiths web IDE" will help us understand exactly where this key is used for the future 
+management needs
+3. To set the Key part first go back to the terminal of the Mindsmihts web IDE and run the following command:
+   ```commandline
+   cat /root/.ssh/*.pub
+   ```
+   > - This will print out the public part of your SSH key that we need to set to the GitHub
+   > - This part of the SSH key (public part) is not secret and can be shared, but still, share it only when you need to
+4. Copy the result of the above command and paste it into the Key box on GitHub.
+5. Press the "Add SSH key" button to save the SSH key and finish the process.
+
+Great! Now we connected our Mindsmiths web IDE with our GitHub repository. All that is left is to push/pull the code and 
+start coding.
+
+
+## Pulling/pushing the code from/to the GitHub remote repository
+There are two different ways you can approach this step based on where your code is:
+1. Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
+2. Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
+
+## Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
+For this situation Mindsmiths provide a specially prepared Mindsmiths web IDE that makes is easy to set everything up. 
+You probably already have the Mindsmiths web IDE whose README led you here, and now it is time to run the prepared script 
+that will set everything up.
+> If you don't have a Mindsmiths web IDE that led you here you can ask for one on our [Discord channel](https://discord.gg/knYDVJ5Ez8).
+
+### Understanding the provided script 
+
+Let's quickly understand what the script does:
+1. Ask you to input the remote SSH url of the repository (e.g. *git@github.com:username/repo-name.git*)
+    > If you are asked for your username and password it means you provided https url instead of an SSH url for the 
+      repository
+2. Pull all the code from the provided repository
+3. Configure the environment and all the code in your working directory - /app
+
+### Run the provided script
+> You can check if everything works as intended, after running the script by running forge in terminal and checking if 
+> your code behaves as you expect it to:
+>```commandline
+> forge run
+>```
+
+OK, now we are ready to run the script and start developing:
+```commandline
+. /root/pull_repo.sh
+```
+
+## Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
+
 
 
 
 ---
 ---
----
----
-The first thing to do should be connecting the environment to your git repo. For this you will need a GitHub account, so please create one if needed.  
-
-
-Now we can connect this Mindsmiths environment with the GitHub account you have or you just created. To do that follow these steps this:
-1. Open terminal and run this command to create the SSH key and just press ENTER on all of the questions: `ssh-keygen -t ed25519 -C "your_email@example.com"` (change your_email@example.com with your email)
-2. Run `cat /root/.ssh/*.pub` and copy the public key you just created - **Don't worry, public part of the SSH key can be seen by everyone, it's not a secret!**
-3. Go to this [link](https://github.com/settings/ssh/new) (takes you to the GitHub's page for adding new SSH key) and paste the public key you copied under the "Key" part
-4. You can set the "Title" to whatever, it's just for you to know where it's from - we recommend something like "username-mindsmiths-free" (e.g. hrco-mindsmiths-free)
 
 Now it is time to push the code to the connected repo, do this:
 1. Create a new repo following instructions on this [link](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
