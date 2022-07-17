@@ -90,10 +90,15 @@ Let's quickly understand what the script does:
 3. Configure the environment and all the code in your working directory - /app
 
 ### Run the provided script
-> You can check if everything works as intended, after running the script by running forge in terminal and checking if 
+> - As the script pulls the code using the SSH protocol, there will be a prompt shown:
+> ```commandline
+> Are you sure you want to continue connecting (yes/no/[fingerprint])?
+> ```
+> You need to answer with a full word `yes` here!
+> - You can check if everything works as intended, after running the script by running forge in terminal and checking if 
 > your code behaves as you expect it to:
 >```commandline
-> forge run
+>    forge run
 >```
 
 OK, now we are ready to run the script and start developing:
@@ -102,27 +107,32 @@ OK, now we are ready to run the script and start developing:
 ```
 
 ## Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
-
-
-
-
----
----
-
-Now it is time to push the code to the connected repo, do this:
-1. Create a new repo following instructions on this [link](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
-2. Run this command in terminal of your Mindsmiths environment: `git init`
-3. Set the name and email the git will know you for with commands (change values for "you@example.com" and "Your Name"):
+We first start with initializing git repository on your Mindsmiths web IDE:
 ```commandline
-    git config --global user.email "you@example.com"
+    git init
+```
+> - Make sure you are positioned the app/ folder when running the command
+
+After the initialisation lets make git understand who we are by setting our email and name. These will be "packed" 
+with every commit you make to help understand who committed what.
+```commandline
+    git config --global user.email "your-mail@example.com"
     git config --global user.name "Your Name"
 ```
-4. Add the remote with: `git remote add origin git@github.com:<github_username>/<github_repo_name>`
+> - ! Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real Name
+
+Next up we will add the remote:
+```commandline
+git remote add origin <SSH repo url> 
+```
+> - To find your SSH repo url go to your empty GitHub repo where GitHub's guide for connecting the repo will await you. 
+> There you will see the repository url that you need to copy and enter into the command above.
+> - Make sure you chose the SSH option for the url! SSH url will begin with the: **git@github.com**
 
 5. Now run these commands to push all the files to the repo:
 ```commandline
     git add .
-    git commit -m "First commit: pushed all the Mindsmiths initial repo files"
+    git commit -m "First commit: pushed all the Mindsmiths initial project files"
     git push --set-upstream origin master # answer "yes"
     # It may take some time because of the big file size
 ```
