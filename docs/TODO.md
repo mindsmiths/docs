@@ -33,13 +33,13 @@
   - [ ] Support and reporting issues
 
 ## Tutorials
-- [ ] Tutorial 1 - Nola
+- [x] Tutorial 1 - Nola
 - [ ] Tutorial 2 - Doctor/Patient
 - ...
 
 ## Deep dive (technical documentation)
-- [ ] Project structure
-  - [ ] Project config
+- [x] Project structure
+  - [x] Project config
   - [ ] Secret management
 - [ ] Platform architecture
   - [ ] Microservices

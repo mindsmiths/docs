@@ -2,9 +2,7 @@
 sidebar_position: 1
 ---
 
-# Platform architecture
-
-## Microservices
+# Architecture
 Under the hood, the platform is a collection of **microservices** that work together to simulate the world of agents.
 
 We chose the microservice architecture for the following reasons:
@@ -19,10 +17,10 @@ We chose the microservice architecture for the following reasons:
 
 We think this trade-off makes sense for us despite the cost of increasing complexity, since our platform is meant for solving very complex problems.
 
-### Core services
+## Core services
 There are two core services that every project needs - Rule Engine and Heartbeat.
 
-#### Rule Engine
+### Rule Engine
 We use rules to implement the business logic. The rules form the "glue" that coordinates all other actions like doing
 deeper analysis with algorithms or ML models, and performing concrete actions like sending messages and calling APIs.
 Since we never want to block the decision-making process, all of these actions should be performed asynchronously in
@@ -45,7 +43,7 @@ When it receives a signal, it performs these steps:
 
 The signals that trigger these actions are defined in `signals.yaml` and/or `Runner.java`.
 
-#### Heartbeat
+### Heartbeat
 We want our agents to be "alive" and constantly "think". This allows them to be proactive instead of waiting for someone
 to "turn them on". 
 
@@ -58,15 +56,14 @@ The Heartbeat service decides when to send a heartbeat for which agent. The defa
 Other strategies exist for more efficiency in special cases. You can also write a custom strategy if the need arises.
 
 
-
-### Contrib services
+## Additional services
 There are many other services which you can add to your project to extends its capabilities.
 You can see a full list of official services here: (TODO). You can also find open-source contributions, or write your
 own custom service.
 
 Here are some examples of other services.
 
-#### Adapters
+### Adapters
 Adapters are services used to integrate with external systems.
 Examples of adapters are:
 - **Email Adapter** - used to send and receive emails
@@ -80,11 +77,11 @@ Their APIs are completely custom, depending on their functionality. In addition 
 external system, they may also notify the agents of any changes that occur (e.g. user sent a message, a calendar
 event was moved, the user's address changed in the CRM). This allows us to create an efficient event-driven architecture.
 
-#### API Gateway
+### API Gateway
 If you just want to expose a simple HTTP API you can use our prebuilt API Gateway. It already includes endpoints for
 sending messages to agents, emitting events, creating and deleting agents, etc.
 
-#### Intent Recognizer
+### Intent Recognizer
 Intent recognizer provides an easy way to augment data about user's activities (e.g. a message he/she sent us) with an intent - what he/she actually wanted to do.
 An example would be: "turn off the lights please" -> lights_off.
 
@@ -93,11 +90,11 @@ See (TODO) for more information.
 
 There is a single API on which it receives the activity and any relevant context, and returns the intent and entities associated with it.
 
-#### AutoML
+### AutoML
 Not everything can be modeled with rules. Sometimes you need more powerful models that can learn from data.
 You can always build a custom neural network and wrap it in a service, but in most cases our AutoML can automatically
 find and train the best model for your data.
 
-#### Custom service
+### Custom service
 If you didn't find a service that fits your needs, you can always write your own. It's actually very simple!
-Our SDK will handle most of the boring stuff for you. You can find out how to do it here: (TODO).
+Our SDK will handle most of the boring stuff for you. You can find out how to [create a custom service here](./service-creation).

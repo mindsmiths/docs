@@ -3,6 +3,7 @@ sidebar_position: 2
 ---
 
 # Mindsmiths Platform: Basic concepts
+## 🚧 Under construction 🚧
 
 ## Basic concepts
 There are several basic concepts we need to introduce before you get started with coding on the platform:

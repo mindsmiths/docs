@@ -3,6 +3,7 @@ sidebar_position: 3
 ---
 
 # What are intelligent agents?
+## 🚧 Under construction 🚧
 
 Intelligent digital agents are intelligent pieces of software that perceive their environment and act autonomously in it to achieve some defined goals. They may also improve their performance through learning.
 These agents can interact with each other and with the environment, always being aware only of the _limited_ context and information.
@@ -29,7 +30,6 @@ The beauty of multi-agent systems is that the two types of agents don’t need t
 
 
 ## DNA & Learning
-
 DNA = Rules
 - gives structure
 - no need to learn unnecessary stuff (constrain problem/solution space to be relevant)

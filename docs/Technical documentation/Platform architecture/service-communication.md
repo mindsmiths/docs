@@ -3,6 +3,8 @@ sidebar_position: 2
 ---
 
 # Service communication
+## 🚧 Under construction 🚧
+
 Just like agents, our services also communicate through signals. This allows for a highly decoupled and performant
 architecture.
 
@@ -47,7 +49,7 @@ An example would be:
    2. If the sender was an agent, the reply is inserted to the signals entry point
 
 ## Data changes (event-carried state transfer)
-TODO
+🚧 Under construction 🚧
 
 ## Emitting and listening to events
 To emit an event to other services, first you need to define the event model. However, you need to be careful to define

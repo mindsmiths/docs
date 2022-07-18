@@ -37,7 +37,7 @@ That's it! The added service will now appear in your directory tree (under `serv
       memory: 100Mi
 ```
 
-You can learn more about the config file in "Project Config" (TODO: add link).
+You can learn more about the [config file here](../project-structure.md).
 Don't forget to run `forge install` to install any new dependencies, and you're ready to start writing up the code for your new service!
 
 ### Service structure

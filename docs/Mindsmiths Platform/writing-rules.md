@@ -82,7 +82,7 @@ The `when` part queries the knowledge base, but how does anything end up in the 
 
 There are three mechanisms that influence this:
 1. There is always an instance of the current agent in the knowledge base - (`CustomerAgent` in the examples above)
-2. When a signal is sent to the agent, it is inserted in the knowledge base, under the entry point "signals" (see Facts and Signals TODO)
+2. When a signal is sent to the agent, it is inserted in the knowledge base, under the entry point "signals" (see [Facts and Signals](#facts-and-signals))
 3. You can `insert`, `modify`, and `delete` data from the knowledge base from the rules
 
 Consider the following example:
@@ -209,7 +209,7 @@ This means it's easy to get stuck in an infinite loop accidentally, even though 
 
 That's why we use the `reengageAttempted` flag. It will prevent the rule from re-firing on every heartbeat and spamming the user with messages until they make a new order and change the condition for `lastOrderAt`.
 The flag acts as a "stopping mechanism" - a way of making sure the conditions of a rule will no longer be met at some point.
-It sounds like an inconvenience, but being agnostic of the actions that led up to the current state is actually a desirable feature in many situations (see Rule chaining TODO).
+It sounds like an inconvenience, but being agnostic of the actions that led up to the current state is actually a desirable feature in many situations (see [Rule chaining](#rule-chaining)).
 
 
 ## Handling edge cases
