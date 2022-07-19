@@ -17,7 +17,7 @@ So let’s implement the simplest way to control memory size by hardcoding the n
 
 ```java title="models/agents/Nola.java"
 ...
-// highlight-next-line
+// highlight-added-line
 import java.util.ArrayList;
 ...
 
@@ -25,22 +25,22 @@ import java.util.ArrayList;
 @Setter
 public class Nola extends Agent {
 
-    // highlight-start
+    // highlight-changed-start
     private List<String> memory = new ArrayList<>();
     private int MAX_MEMORY = 6;
-    // highlight-end
+    // highlight-changed-end
 
     ...
-    // highlight-start
+    // highlight-added-start
     private void trimMemory() {
         if (memory.size() > MAX_MEMORY + 1)
             memory = memory.subList(memory.size() - 1 - MAX_MEMORY, memory.size());
     }
-    // highlight-end
+    // highlight-added-end
 
     public void addMessageToMemory(String sender, String text) {
         memory.add(String.format("%s: %s\n", sender, text));
-        // highlight-next-line
+        // highlight-changed-line
         trimMemory();
     }
     ...
@@ -82,11 +82,11 @@ All components should already be familiar to you. The only thing we still need t
 @Setter
 public class Nola extends Agent {
     ...
-    // highlight-start
+    // highlight-added-start
     public void resetMemory() {
         memory.clear();
     }
-    // highlight-end
+    // highlight-added-end
     ...
 }
 ```
@@ -119,7 +119,7 @@ We read off the current time from the heartbeat - the periodic system pulse - an
 
 ```java title="models/agents/Nola.java"
 ...
-// highlight-next-line
+// highlight-added-line
 import java.util.Date;
 
 @Getter
@@ -127,7 +127,7 @@ import java.util.Date;
 public class Nola extends Agent {
 
     private List<String> memory = new ArrayList<>();
-    // highlight-next-line
+    // highlight-added-line
     private Date lastInteractionTime;
 
     ...
@@ -138,7 +138,7 @@ And now we need to track the timestamp of every message the user sends to Nola. 
 
 ```java title="rules/nola/Conversation.drl"
 ...
-// highlight-next-line
+// highlight-added-line
 import java.util.Date;
 ...
 rule "Handle message"
@@ -146,12 +146,12 @@ rule "Handle message"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Nola()
     then
-        // highlight-start
+        // highlight-changed-start
         modify(agent) {
             addMessageToMemory("Human", message.getText()),
             setLastInteractionTime(new Date())
         };
-        // highlight-end
+        // highlight-changed-end
         agent.askGPT3();
         delete(message);
 end

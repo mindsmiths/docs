@@ -91,7 +91,7 @@ const config = {
             items: [
               {
                 label: 'Discord',
-                href: 'https://discord.gg/FRUHd4eE',
+                href: 'https://discord.gg/knYDVJ5Ez8',
               },
             ],
           },
@@ -105,6 +105,29 @@ const config = {
           'java',
           'scala',
           'diff',
+        ],
+        magicComments: [
+            // Remember to extend the default highlight class name as well!
+            {
+              className: 'theme-code-block-highlighted-line',
+              line: 'highlight-next-line',
+              block: {start: 'highlight-start', end: 'highlight-end'},
+            },
+            {
+              className: 'code-block-added-line',
+              line: 'highlight-added-line',
+              block: {start: 'highlight-added-start', end: 'highlight-added-end'},
+            },
+            {
+              className: 'code-block-changed-line',
+              line: 'highlight-changed-line',
+              block: {start: 'highlight-changed-start', end: 'highlight-changed-end'},
+            },
+            {
+              className: 'code-block-removed-line',
+              line: 'highlight-removed-line',
+              block: {start: 'highlight-removed-start', end: 'highlight-removed-end'},
+            },
         ],
       },
     }),

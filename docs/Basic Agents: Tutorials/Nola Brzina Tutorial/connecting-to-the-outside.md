@@ -24,7 +24,7 @@ Your bot token (from BotFather): <YOUR BOT TOKEN>
 What agent will handle signals? Nola
 ```
 
-As you can see, you will also need to choose a name for your chatbot agent. We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you chose.
+As you can see, you will also need to choose a name for your chatbot agent. We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you chose. Just make sure you keep the naming consistent in between the one you set when adding Telegram, the agent’s Java class and the subdirectory name containing all the rules.
 
 
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
@@ -82,7 +82,7 @@ rule "Handle message"
 end
 ```
 :::note
-Remember, you should name your file according to your agent's name. You should change name "Nola" wherever you see it, and put the name you have chosen for your agent.
+Remember, you should name your directory according to your agent's name. In general, you should change the name "Nola" wherever you see it, and put the name you have chosen for your agent.
 :::
 
 There's a lot going on, but let's break it down. There are two basic types of conditions we use in the ```when``` part:

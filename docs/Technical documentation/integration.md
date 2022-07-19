@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Integration
 There are multiple ways to integrate with the platform. Let's discuss them in turn.
 
@@ -27,4 +31,4 @@ You can find the [full specification here](pathname:///asyncapi).
 If you need a highly flexible or complex integration, you can always write a custom adapter service. You can then
 connect with any method you need, do pooling or scheduling, or use a special security protocol.
 
-To learn more about creating custom services, see "Creating a custom service" (TODO).
+You can learn more about [creating custom services here](./Platform%20architecture/service-creation).

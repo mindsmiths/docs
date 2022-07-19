@@ -88,7 +88,7 @@ end
 Important: always make sure the `package` statement defines the correct package.
 Otherwise, your rules may not be evaluated or be evaluated by the wrong agent.
 
-To learn more about writing rules, see "Writing rules" (TODO).
+To learn more about writing rules, see [Writing rules](./writing-rules).
 
 
 ## Creating a new agent instance
@@ -105,7 +105,7 @@ You can do this in:
 - `Runner.java`
 - In the `then` part of another agent's rule
 - In another agent's method
-- On an event (see "Connecting events" (TODO))
+- On an event (see [Registering for events](#registering-for-events))
 
 For example:
 ```java title="models/Runner.java"
@@ -200,4 +200,4 @@ Here we do basically the same as in the `signals.yaml`, but we have more control
 After registering an event and defining a strategy to handle it, it will be sent to one or more agents.
 These agents will be re-evaluated as soon as that happens, and the event will be inserted to their "signals" entry point, where you can query it.
 
-You can learn more about that in "Writing rules" (TODO).
+You can learn more about that in [Writing rules](./writing-rules).

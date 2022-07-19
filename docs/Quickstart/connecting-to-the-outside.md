@@ -25,7 +25,7 @@ Your bot token (from BotFather): <YOUR BOT TOKEN>
 What agent will handle signals? Nola
 ```
 
-As you can see, you will also need to choose a name for your chatbot agent. We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you chose.
+As you can see, you will also need to choose a name for your chatbot agent. We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you chose. Just make sure you keep the naming consistent in between the one you set when adding Telegram, the agent’s Java class and the subdirectory name containing all the rules.
 
 
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
@@ -33,7 +33,7 @@ You’re all set! You now have a way to communicate with the platform through yo
 ## Designing Nola: the interactive agent
 
 Now that you have the communication channel set up between Forge and the outside world, it’s time to design your chatting agent!
-We already mentioned we’ll call our agent Nola, but you can pick any name you want. Just make sure you keep the naming consistent in between the one you set when adding Telegram, the agent’s Java class and the subdirectory name containing all the rules. The only thing Nola will know how to do at first is repeat after you: whatever message you send her, she will echo the same text back. Let’s start!
+We already mentioned we’ll call our agent Nola, but you can pick any name you want. The only thing Nola will know how to do at first is repeat after you: whatever message you send her, she will echo the same text back. Let’s start!
 
 We start with defining the class of the agent we want to create. Next to Smith.java, create a new file with the agent name you picked, for example ```models/agents/Nola.java``` and paste in the following, adapting the agent name:
 
@@ -63,8 +63,7 @@ public class Nola extends Agent {
     }
 }
 ```
-
-We have created a simple helper function ```sendMessage``` to make it easier to send messages over Telegram. As each agent of class Nola communicates with exactly one user, we use that user’s Telegram ```chatId```.  Now that you’ve defined your first class, let’s write your first rule! We create a new file inside rules, with path ```rules/nola/Conversation.drl```:
+We have created a simple helper function ```sendMessage``` to make it easier to send messages over Telegram. As each agent of class Nola communicates with exactly one user, we use that user’s Telegram ```chatId```.  Now that you’ve defined your first class, let’s write your first rule! We create a new directory inside rules and a new file inside it, with path ```rules/nola/Conversation.drl```:
 
 ```java title="rules/nola/Conversation.drl"
 
@@ -84,7 +83,7 @@ end
 ```
 
 :::note
-Remember, you should name your file according to your agent's name. You should change name "Nola" wherever you see it, and put the name you have chosen for your agent.
+Remember, you should name your directory according to your agent's name. In general, you should change the name "Nola" wherever you see it, and put the name you have chosen for your agent.
 :::
 
 There's a lot going on, but let's break it down. There are two basic types of conditions we use in the ```when``` part:
