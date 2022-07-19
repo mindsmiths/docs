@@ -45,7 +45,7 @@ Our CI server can now pull your repo and deploy it. You can proceed to [Set up y
 
 Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
 
-### Setup your Mindsmiths code environment
+### Set up your Mindsmiths code environment
 
 1. In your code environment add `.credentials` file under project root. We will send you the credentials you need. It looks like this:
 ```bash
@@ -85,4 +85,3 @@ To set up deploy values:
 3. Update values, save and exit
 4. Press enter in the terminal to upload values to our CI server
 5. You can now deploy the branch
-

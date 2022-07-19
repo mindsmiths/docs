@@ -21,7 +21,7 @@ rule "First contact"
         agent: Nola()
     then
         agent.sendMessage("Okay, turning my engines on. Let's start!");
-        // highlight-next-line
+        // highlight-added-line
         agent.send("SMITH", initialize, "new-agent");
         delete(message);
 end
@@ -58,7 +58,7 @@ That’s it! Write **forge reset** in the Terminal first to clear the database a
 The communication with the outside world also happens via signals. Earlier in the tutorial when we connected Telegram to our platform, the piece of code for routing the incoming Telegram signals to the appropriate agent was generated in the background.
 You can check the file that gets generated in this YAML file:
 
-```yaml title="services/rule_engine/src/main/resources/config/signals.yam"
+```yaml title="services/rule_engine/resources/config/signals.yaml"
 com.mindsmiths.telegramAdapter.TelegramReceivedMessage:
   - !GetOrCreateAgentByConnection
     connectionName: telegram

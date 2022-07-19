@@ -13,7 +13,7 @@ The new rule in ```Conversation.drl``` looks like this:
 
 ```java title="rules/nola/Conversation.drl"
 ...
-// highlight-start
+// highlight-added-start
 rule "Re-engage user"
     when
         Heartbeat(ts: timestamp) from entry-point "signals"
@@ -29,7 +29,7 @@ rule "Re-engage user"
         };
         agent.askGPT3();
 end
-// highlight-end
+// highlight-added-end
 ```
 
 With the ```pinged``` flag you control how many times you contact the user. By setting it to ```true```, you avoid triggering the rule multiple times and spamming the user with messages.
@@ -43,16 +43,16 @@ We also need to add ```pinged``` and ```addInstruction``` to ```Nola.java```:
 @Setter
 public class Nola extends Agent {
 
-    // highlight-next-line
+    // highlight-added-line
     private boolean pinged;
     ...
 
-    // highlight-start
+    // highlight-added-start
     public void addInstruction(String text){
         memory.add(text + "\n");
         trimMemory();
     }
-    // highlight-end
+    // highlight-added-end
     ...
 }
 ```
@@ -71,7 +71,7 @@ rule "Handle message"
     then
         modify(agent) {
             addMessageToMemory("Human", message.getText()),
-            // highlight-next-line
+            // highlight-added-line
             setPinged(false),
             setLastInteractionTime(new Date())
         };

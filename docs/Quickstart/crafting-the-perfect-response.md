@@ -33,7 +33,7 @@ Every time when there is a change in an existing rule, the modified part will be
 
 ```java title="rules/nola/Conversation.drl"
 ...
-// highlight-next-line
+// highlight-added-line
 import com.mindsmiths.gpt3.completion.GPT3Completion;
 ...
 rule "Handle message"
@@ -41,12 +41,12 @@ rule "Handle message"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Nola()
     then
-        // highlight-next-line
+        // highlight-changed-line
         agent.askGPT3(message.getText());
         delete(message);
 end
 
-// highlight-start
+// highlight-added-start
 rule "Send GPT3 response"
     when
         gpt3Result: GPT3Completion() from entry-point "signals"
@@ -56,7 +56,7 @@ rule "Send GPT3 response"
         agent.sendMessage(response);
         delete(gpt3Result);
 end
-// highlight-end
+// highlight-added-end
 ```
 
 As you can see, the type of signal we react to in the new rule is a ```GPT3Completion()``` we receive from GPT-3. At the end of the rule, we again delete this signal. It’s as easy as that! You can create an integration with any external model in a similar way.
@@ -68,18 +68,18 @@ To make the GPT-3’s response slightly more interesting, we will add some more 
 package agents;
 
 ...
-// highlight-start
+// highlight-added-start
 import com.mindsmiths.gpt3.GPT3AdapterAPI;
 import com.mindsmiths.ruleEngine.util.Log;
 import java.util.List;
-// highlight-end
+// highlight-added-end
 
 @Getter
 @Setter
 public class Nola extends Agent {
     ...
 
-    // highlight-start
+    // highlight-added-start
     public void askGPT3(String userMessage) {
         String intro = "You're an AI system called Nola Brzina talking to a human. You want to have an engaging and fun conversation. You are friendly, creative and innovative.\n";
         simpleGPT3Request(intro + "Human: " + userMessage + "\nNola:");
@@ -103,10 +103,10 @@ public class Nola extends Agent {
             null // logit bias
         );
     }
-    // highlight-end
+    // highlight-added-end
 }
 ```
 
-Notice that we use the dialogue cues “Human” and “AI” as stop words to prevent the model from generating more than one dialogue exchange.
+Notice that we use the dialogue cues “Human” and “Nola” as stop words to prevent the model from generating more than one dialogue exchange.
 
 Voilà, your touch of magic is done! **Restart** and **run** the system, try asking your Nola some questions, and see how she reacts!
