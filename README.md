@@ -2,7 +2,7 @@
 
 ## Deployment
 
-Deployed at docs.mindsmiths.com
+Deployed at https://docs.mindsmiths.com
 
 ## Local Development
 
