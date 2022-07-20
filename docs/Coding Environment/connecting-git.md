@@ -30,7 +30,7 @@ To generate SSH key follow the instructions bellow and carefully read the direct
     ```commandline
     ssh-keygen -t ed25519 -C "Mindsmiths web IDE"
     ```
-    > - ! Press ENTER on all the prompts (we want the default directory to save the SSH key in and don't want to set the phassphrase) 
+    > - Press ENTER on all the prompts (we want the default directory to save the SSH key in and don't want to set the phassphrase) 
     > - You can change the comment part of the command (`Mindsmiths web IDE`) to best describe this SSH key for you
 
 Great! We successfully generated our SSH key, and you can see it (assuming you pressed ENTER on first prompt) with:   
@@ -76,13 +76,13 @@ There are two different ways you can approach this step based on where your code
 1. Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
 2. Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
 
-## Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
+### Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
 For this situation Mindsmiths provide a specially prepared Mindsmiths web IDE that makes is easy to set everything up. 
 You probably already have the Mindsmiths web IDE whose README led you here, and now it is time to run the prepared script 
 that will set everything up.
 > If you don't have a Mindsmiths web IDE that led you here you can ask for one on our [Discord channel](https://discord.gg/knYDVJ5Ez8).
 
-### Understanding the provided script 
+#### Understanding the provided script 
 
 Let's quickly understand what the script does:
 1. Ask you to input the remote SSH url of the repository (e.g. *git@github.com:username/repo-name.git*)
@@ -91,7 +91,11 @@ Let's quickly understand what the script does:
 2. Pull all the code from the provided repository
 3. Configure the environment and all the code in your working directory - /app
 
-### Run the provided script
+#### Run the provided script
+> Next step is to run the script with following command:
+>```commandline
+>. /root/pull_repo.sh
+>```
 > - As the script pulls the code using the SSH protocol, there will be a prompt shown:
 > ```commandline
 > Are you sure you want to continue connecting (yes/no/[fingerprint])?
@@ -103,12 +107,10 @@ Let's quickly understand what the script does:
 >    forge run
 >```
 
-OK, now we are ready to run the script and start developing:
-```commandline
-. /root/pull_repo.sh
-```
+OK, you are now ready to start developing on this enviroment. Enjoy!
 
-## Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
+
+### Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
 We first start with initializing git repository on your Mindsmiths web IDE:
 ```commandline
     git init
@@ -121,7 +123,7 @@ with every commit you make to help understand who committed what.
     git config --global user.email "your-mail@example.com"
     git config --global user.name "Your Name"
 ```
-> - ! Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real Name
+> - Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real Name
 
 Next up we will add the remote:
 ```commandline

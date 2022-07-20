@@ -28,7 +28,7 @@ Jump to section [Set up GitHub](#setup-github) or [Set up GitLab](#setup-gitlab)
 6. Send clone URL to Mindsmiths developers
     1. Go to front page of your repo
     2. Click `Code` and then `SSH`
-    3. Copy the URL and send it
+    3. Copy the URL and send it to us
 
 Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
 
