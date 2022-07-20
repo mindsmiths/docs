@@ -34,7 +34,7 @@ To generate SSH key follow the instructions bellow and carefully read the direct
     > - You can change the comment part of the command (`Mindsmiths web IDE`) to best describe this SSH key for you
 
 Great! We successfully generated our SSH key, and you can see it (assuming you pressed ENTER on first prompt) with:   
-```commandline 
+```bash
 cat /root/.ssh/id_ed25519.pub
 ```
 
