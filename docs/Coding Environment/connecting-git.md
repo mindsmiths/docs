@@ -46,10 +46,10 @@ Follow the instructions bellow and carefully read the directions provided with t
 
 1. Click the link: [Add GitHub SSH key](https://github.com/settings/ssh/new), which will take you to the GitHub's page for
 adding new SSH key
-    > - You must be logged in into GitHub to do this, if you are not GitHub will automatically redirect you to the login page
-    > - The picture bellow shows the interface for adding GitHub's SSH key
-    
-    ![Add GitHub SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
+   > - You must be logged in into GitHub to do this, if you are not GitHub will automatically redirect you to the login page
+   > - The picture bellow shows the interface for adding GitHub's SSH key
+
+   ![Add GitHub SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
 
 As the picture shows, you need to provide the Title, and the Key itself.
 2. Let's set the title. We can use the same value we used when creating the key - **Mindsmiths web IDE**

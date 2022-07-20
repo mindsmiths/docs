@@ -82,7 +82,7 @@ You need to set these values before deploying sandbox or production. We store th
 To set up deploy values:
 1. Make sure you are on the desired branch
 2. Run `forge update-deployment-values`
-3. Update values with `export key='value'`. (Every export statement has to be in a new line)
+3. Update values with `export key='value'` (Every export statement has to be in a new line)
 4. Save (Ctrl+o) and Exit (Ctrl+x)
-5. Press enter in the terminal to upload values to our CI server
+5. Press ENTER in the terminal to upload values to our CI server
 6. You can now deploy the branch
