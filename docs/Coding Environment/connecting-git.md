@@ -16,12 +16,13 @@ your remote GitHub repository) instead of basic https to remove the need of cons
 We will achieve this in 3 easy steps:
 1. Generating SSH key on a Mindsmiths web IDE
 2. Adding SSH key to your GitHub account (or other repository hosting platform)
-3. Pulling/pushing the code from/to the GitHub remote repository
+3. Setting up git config
+4. Pulling/pushing the code from/to the GitHub remote repository
 
 Let's get started!
 
 
-## Generating SSH key on a Mindsmiths web IDE
+## 1. Generating SSH key on a Mindsmiths web IDE
 
 To generate SSH key follow the instructions bellow and carefully read the directions provided with the steps.
 
@@ -42,7 +43,7 @@ cat /root/.ssh/id_ed25519.pub
 ```
 
 
-## Adding SSH key to your GitHub account
+## 2. Adding SSH key to your GitHub account
 
 The next step is to add the key we just created to your GitHub repository. To do that we will copy the public part of the 
 generated SSH key and add it to GitHub using GitHub's dashboard.
@@ -75,13 +76,58 @@ Follow the instructions bellow and carefully read the directions provided with t
 Great! Now we connected our Mindsmiths web IDE with our GitHub repository. All that is left is to push/pull the code and start coding.
 
 
-## Pulling/pushing the code from/to the GitHub remote repository
+## 3. Setting up git config
 
-There are two different ways you can approach this step based on where your code is:
-1. Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
-2. Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
+To push to remote git repository you have to set up git in your Mindsmiths web IDE.
 
-### Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE
+1. Open terminal in the Mindsmiths web IDE
+
+2. Run these commands to set your email and name for git
+    ```bash
+    git config --global user.email "your-mail@example.com"
+    git config --global user.name "Your Name"
+    ```
+    > Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real name
+
+
+## 4. Pulling/pushing the code from/to the GitHub remote repository
+
+There are two different ways you can approach this step based on your situation:
+1. You want to push the code from your Mindsmiths web IDE to new GitHub repo. Jump to [Create new repo](#create-new-repo)
+2. Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-existing-repo)
+
+### Create new repo
+
+1. Go to your GitHub account and [create new empty repo](https://github.com/new). You probably want to create a private repo.
+    > **Do not add README or any other file to the repo!**
+
+2. Now navigate to your Mindsmiths web IDE and run in terminal:
+    ```bash
+    git init
+    ```
+    > Make sure you are positioned the `/app` directory when running the command
+
+3. Next up we will add the remote:
+    ```bash
+    git remote add origin <SSH repo url> 
+    ```
+    To find your SSH repo url go to your empty GitHub repo. Click `Code` and then `SSH`.
+    There you will see the repository url that you need to copy and enter into the command above.
+    
+    > The url should begin with **git@github.com**
+
+4. Now run these commands to push all the files to the repo:
+    ```bash
+    git add .
+    git commit -m "First commit: pushed all the Mindsmiths initial project files"
+    git branch -M "main"
+    git push --set-upstream origin main 
+    ```
+   If prompted, type `yes` and press ENTER.
+
+   > It may take some time because of the big file size
+
+### Pull existing repo
 
 For this situation Mindsmiths provide a specially prepared Mindsmiths web IDE that makes is easy to set everything up. 
 You probably already have the Mindsmiths web IDE whose README led you here, and now it is time to run the prepared script that will set everything up.
@@ -104,7 +150,7 @@ Now that you understand what this script does, you can run it.
    ```bash
    . /root/pull_repo.sh
    ```
-2. As the script pulls the code using the SSH protocol, there will be a prompt shown:
+2. As the script pulls the code using the SSH protocol, there will probably be a prompt shown:
    ```commandline
    Are you sure you want to continue connecting (yes/no/[fingerprint])?
    ```
@@ -115,38 +161,3 @@ Now that you understand what this script does, you can run it.
    ```
 
 OK, you are now ready to start developing on this enviroment. Enjoy!
-
-### Your remote GitHub repository is empty, and you want to push the code from the new Mindsmiths web IDE
-
-1. We first start with initializing git repository on your Mindsmiths web IDE:
-    ```bash
-    git init
-    ```
-    > Make sure you are positioned the `/app` directory when running the command
-
-2. After the initialisation lets make git understand who we are by setting our email and name. These will be "packed" with every commit you make to help understand who committed what.
-    ```bash
-    git config --global user.email "your-mail@example.com"
-    git config --global user.name "Your Name"
-    ```
-    > Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real Name
-
-3. Next up we will add the remote:
-    ```bash
-    git remote add origin <SSH repo url> 
-    ```
-    
-    To find your SSH repo url go to your empty GitHub repo where GitHub's guide for connecting the repo will await you. 
-    
-    There you will see the repository url that you need to copy and enter into the command above.
-    
-    > Make sure you chose the SSH option for the url! SSH url will begin with **git@github.com**
-
-4. Now run these commands to push all the files to the repo:
-    ```bash
-    git add .
-    git commit -m "First commit: pushed all the Mindsmiths initial project files"
-    git branch -M "main"
-    git push --set-upstream origin main 
-    # It may take some time because of the big file size
-    ```
