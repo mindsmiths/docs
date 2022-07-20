@@ -33,9 +33,9 @@ To generate SSH key follow the instructions bellow and carefully read the direct
     > - ! Press ENTER on all the prompts (we want the default directory to save the SSH key in and don't want to set the phassphrase) 
     > - You can change the comment part of the command (`Mindsmiths web IDE`) to best describe this SSH key for you
 
-Great! We successfully generated our SSH key, and you can see it with:   
+Great! We successfully generated our SSH key, and you can see it (assuming you pressed ENTER on first prompt) with:   
 ```commandline 
-cat /root/.ssh/*.pub
+cat /root/.ssh/id_ed25519.pub
 ```
 
 
@@ -58,10 +58,12 @@ As the picture shows, you need to provide the Title, and the Key itself.
 management needs
 3. To set the Key part first go back to the terminal of the Mindsmihts web IDE and run the following command:
    ```commandline
-   cat /root/.ssh/*.pub
+   cat /root/.ssh/id_ed25519.pub
    ```
    > - This will print out the public part of your SSH key that we need to set to the GitHub
    > - This part of the SSH key (public part) is not secret and can be shared, but still, share it only when you need to
+   > - If for any reason key `id_ed25519.pub` doesn't exists try to generate it again. Make sure to press ENTER on all prompts. 
+   [Generating SSH key on a Mindsmiths web IDE](#generating-ssh-key-on-a-mindsmiths-web-ide) 
 4. Copy the result of the above command and paste it into the Key box on GitHub.
 5. Press the "Add SSH key" button to save the SSH key and finish the process.
 
@@ -133,7 +135,8 @@ git remote add origin <SSH repo url>
 ```commandline
     git add .
     git commit -m "First commit: pushed all the Mindsmiths initial project files"
-    git push --set-upstream origin master # answer "yes"
+    git branch -M 'main'
+    git push --set-upstream origin main 
     # It may take some time because of the big file size
 ```
 That's it, you have your GitHub account connected. The same process can also be applied for GitLab.

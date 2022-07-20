@@ -64,7 +64,7 @@ Great, now your environment can communicate with our CI server. Congrats! You ca
 
 1. Switch to a `uc/` branch. Branches that are deployed to sandbox must have names that begin wih `uc/`. Every `uc/` branch has its own sandbox
 2. [Set up deploy values](#setup-deploy-values) for the branch, if you haven't already
-2. Run `forge deploy`. **Make sure that local changes are pushed before deploying**
+3. Run `forge deploy`. **Make sure that local changes are pushed before deploying**
 
 
 ### Deploying production
@@ -81,7 +81,8 @@ You need to set these values before deploying sandbox or production. We store th
 
 To set up deploy values:
 1. Make sure you are on the desired branch
-2. Run `forge update-values`
-3. Update values, save and exit
-4. Press enter in the terminal to upload values to our CI server
-5. You can now deploy the branch
+2. Run `forge update-deployment-values`
+3. Update values with `export key='value'`. (Every export statement has to be in a new line)
+4. Save (Ctrl+o) and Exit (Ctrl+x)
+5. Press enter in the terminal to upload values to our CI server
+6. You can now deploy the branch
