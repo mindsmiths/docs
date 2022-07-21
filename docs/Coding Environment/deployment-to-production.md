@@ -60,13 +60,13 @@ Our CI server can now pull your repo and deploy it. You can proceed to [Connect 
 ### 3. Connect your Mindsmiths web IDE with our CI server
 
 1. In your code environment add `.credentials` file under project root. We will send you the credentials you need. It looks like this:
-```bash
-[DEFAULT]
-MINDSMITHS_GITLAB_URL=https://git.mindsmiths.com/
-MINDSMITHS_GITLAB_PROJECT_ID=123
-MINDSMITHS_GITLAB_ACCESS_TOKEN=abc123
-MINDSMITHS_GITLAB_PIPELINE_TOKEN=def456
-```
+    ```bash
+    [DEFAULT]
+    MINDSMITHS_GITLAB_URL=https://git.mindsmiths.com/
+    MINDSMITHS_GITLAB_PROJECT_ID=123
+    MINDSMITHS_GITLAB_ACCESS_TOKEN=abc123
+    MINDSMITHS_GITLAB_PIPELINE_TOKEN=def456
+    ```
 
 Great, now your environment can communicate with our CI server. Congrats! You can now deploy your project.
 
