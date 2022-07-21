@@ -18,9 +18,9 @@ In this part we will set everything up to enable deployment of your code on our 
 
 You will need to follow this 3 steps below:
 
-> 1. Send us your git clone URL
-> 2. Add Deployment key
-> 3. Connect your Mindsmiths web IDE with our CI server
+1. Send us your git clone URL
+2. Add Deployment key
+3. Connect your Mindsmiths web IDE with our CI server
 
 ### 1. Send us your git clone URL
 
@@ -55,7 +55,7 @@ Our CI server can now pull your repo and deploy it. You can proceed to [Connect 
 4. Paste the public ssh key from step 1 in the `Key` field. For `Title` put `Mindsmiths GitLab` and add the key.
 5. `Grant write permissions to this key` should stay unchecked
 
-Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
+Our CI server can now pull your repo and deploy it. You can proceed to [Connect your Mindsmiths web IDE with our CI server](#3-connect-your-mindsmiths-web-ide-with-our-ci-server)
 
 ### 3. Connect your Mindsmiths web IDE with our CI server
 
@@ -75,14 +75,14 @@ Great, now your environment can communicate with our CI server. Congrats! You ca
 ### Deploying sandbox
 
 1. Switch to a `uc/` branch. Branches that are deployed to sandbox must have names that begin wih `uc/`. Every `uc/` branch has its own sandbox
-2. [Set up deploy values](#setup-deploy-values) for the branch, if you haven't already
+2. [Set up deploy values](#set-up-deploy-values) for the branch, if you haven't already
 3. Run `forge deploy`. **Make sure that local changes are pushed to git before deploying**
 
 
 ### Deploying production
 
 1. Switch to the default repo branch. Only the default repo branch (usually `main`) can be deployed to production.
-2. [Set up deploy values](#setup-deploy-values) for the branch, if you haven't already
+2. [Set up deploy values](#set-up-deploy-values) for the branch, if you haven't already
 3. Run `forge deploy`. **Make sure that local changes are pushed to git before deploying**
 
 ### Set up deploy values
