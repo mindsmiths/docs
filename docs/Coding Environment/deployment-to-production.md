@@ -12,40 +12,52 @@ Apart from production we also provide dynamic sandbox environments. Sandbox envi
 
 Both production and sandbox are deployed to our server. We use the Kubernetes architecture, but you don't have to worry about it. We manage everything regarding infrastructure.
 
-## Setup
+## Deployment setup
 
-Production and sandbox are deployed by our CI server (GitLab CI/CD). This means that our CI server needs access to your git repository in order to clone it and deploy it.
+In this part we will set everything up to enable deployment of your code on our sandbox or production directly from your Mindsmiths web IDE. For that to be possible our CI server (GitLab CI/CD) that is responsible for deployment needs access to your git project. Your Mindsmiths web IDE also has to be connected with our CI server to enable deployment directly from the web IDE.
+
+You will need to follow this three steps below:
+
+> 1. [Send us your git clone URL](#send-us-your-git-clone-url)
+> 2. [Add Deployment key](#add-deployment-key)
+> 3. [Connect your Mindsmiths web IDE with our CI server](#connect-your-mindsmiths-web-ide-with-our-ci-server)
+
+### 1. Send us your git clone URL
+
+For us to be able to clone and deploy your code to sandbox or productino we need your ssh git clone URL. 
+
+1. Go to front page of your git repo
+2. Click `Clone`
+3. Copy the `SSH` URL and send it to our Mindsmiths developers
+
+### 2. Add Deployment key
+
+Deployment key is used to grant our CI server read access to your project for us to be able to clone it. Your code is stored temporarily, only for deployment purposes.
 
 Jump to section [Set up GitHub](#setup-github) or [Set up GitLab](#setup-gitlab), depending on what you use for your repo.
 
-### Set up GitHub
+#### 3. Adding Deployment key to your Github project
 
-1. You should receive a public ssh key (ends with `.pub`) from us, so contact us if you haven't already
+1. You should receive your Deployment key (it is public ssh key that ends with `.pub`) from us, so contact us if you haven't already
 2. Open your GitHub repository and click on `Settings`
 3. Under `Security` open the `Deploy keys` tab
 4. Click on `Add deploy key`
 5. Paste the public ssh key from step 1 in the `Key` field. For `Title` put `Mindsmiths GitLab` and add the key.
-6. Send clone URL to Mindsmiths developers
-    1. Go to front page of your repo
-    2. Click `Code` and then `SSH`
-    3. Copy the URL and send it to us
+6. `Allow write access` should be unchecked
 
 Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
 
-### Set up GitLab
+#### Adding Deployment key to your Gitlab project
 
-1. You should receive a public ssh key (ends with `.pub`) from us, so contact us if you haven't already
+1. You should receive your Deployment key (it is public ssh key that ends with `.pub`) from us, so contact us if you haven't already
 2. Open your GitLab project and click on `Settings`
 3. On the left panel, click on settings for `Repository` and expand `Deploy keys`
 4. Paste the public ssh key from step 1 in the `Key` field. For `Title` put `Mindsmiths GitLab` and add the key.
-5. Send clone URL to Mindsmiths developers
-    1. Go to front page of your repo
-    2. Click `Clone`
-    3. Copy the `SSH` URL and send it
+5. `Grant write permissions to this key` should stay unchecked
 
 Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
 
-### Set up your Mindsmiths code environment
+### Connect your Mindsmiths web IDE with our CI server
 
 1. In your code environment add `.credentials` file under project root. We will send you the credentials you need. It looks like this:
 ```bash
@@ -64,14 +76,14 @@ Great, now your environment can communicate with our CI server. Congrats! You ca
 
 1. Switch to a `uc/` branch. Branches that are deployed to sandbox must have names that begin wih `uc/`. Every `uc/` branch has its own sandbox
 2. [Set up deploy values](#setup-deploy-values) for the branch, if you haven't already
-3. Run `forge deploy`. **Make sure that local changes are pushed before deploying**
+3. Run `forge deploy`. **Make sure that local changes are pushed to git before deploying**
 
 
 ### Deploying production
 
 1. Switch to the default repo branch. Only the default repo branch (usually `main`) can be deployed to production.
 2. [Set up deploy values](#setup-deploy-values) for the branch, if you haven't already
-3. Run `forge deploy`. **Make sure that local changes are pushed before deploying**
+3. Run `forge deploy`. **Make sure that local changes are pushed to git before deploying**
 
 ### Set up deploy values
 
