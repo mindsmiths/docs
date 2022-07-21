@@ -13,8 +13,8 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'mindsmiths', // Usually your GitHub org/user name.
-  projectName: 'platform-docs', // Usually your repo name.
+  organizationName: 'mindsmiths',
+  projectName: 'platform-docs',
 
   presets: [
     [
@@ -23,13 +23,32 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           editUrl: 'https://github.com/mindsmiths/docs/tree/main',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+    ],
+    // '@docusaurus/preset-classic',
+    // Redocusaurus config
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: 'static/httpapi/swagger.yaml',
+            url: '/httpapi/swagger.yaml',
+            route: '/api/',
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#1890ff',
+        },
+      },
     ],
   ],
 
@@ -47,7 +66,19 @@ const config = {
             type: 'doc',
             docId: 'Mindsmiths Platform/intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Platform',
+          },
+          {
+            type: 'doc',
+            docId: 'Coding Environment/environment-setup',
+            position: 'left',
+            label: 'Environment',
+          },
+          {
+            type: 'doc',
+            docId: 'Quickstart/intro',
+            position: 'left',
+            label: 'Quickstart',
           },
           {
             href: 'https://www.mindsmiths.com/',
@@ -63,7 +94,15 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Platform',
+                to: '/docs/Mindsmiths Platform/intro',
+              },
+              {
+                label: 'Environment',
+                to: '/docs/Coding Environment/environment-setup',
+              },
+              {
+                label: 'Quickstart',
                 to: '/docs/Quickstart/intro',
               },
             ],
@@ -85,6 +124,7 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: [
           'java',
+          'scala',
           'diff',
         ],
         magicComments: [
