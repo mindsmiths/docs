@@ -36,7 +36,7 @@ Deployment key is used to grant our CI server read access to your project for us
 
 Jump to section [Set up GitHub](#setup-github) or [Set up GitLab](#setup-gitlab), depending on what you use for your repo.
 
-#### 3. Adding Deployment key to your Github project
+#### 2.a) Adding Deployment key to your Github project
 
 1. You should receive your Deployment key (it is public ssh key that ends with `.pub`) from us, so contact us if you haven't already
 2. Open your GitHub repository and click on `Settings`
@@ -47,7 +47,7 @@ Jump to section [Set up GitHub](#setup-github) or [Set up GitLab](#setup-gitlab)
 
 Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
 
-#### Adding Deployment key to your Gitlab project
+#### 2b. Adding Deployment key to your Gitlab project
 
 1. You should receive your Deployment key (it is public ssh key that ends with `.pub`) from us, so contact us if you haven't already
 2. Open your GitLab project and click on `Settings`
@@ -57,7 +57,7 @@ Our CI server can now pull your repo and deploy it. You can proceed to [Set up y
 
 Our CI server can now pull your repo and deploy it. You can proceed to [Set up your Mindsmiths code environment](#setup-your-mindsmiths-code-environment)
 
-### Connect your Mindsmiths web IDE with our CI server
+### 3. Connect your Mindsmiths web IDE with our CI server
 
 1. In your code environment add `.credentials` file under project root. We will send you the credentials you need. It looks like this:
 ```bash
