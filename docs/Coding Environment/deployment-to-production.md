@@ -34,7 +34,7 @@ For us to be able to clone and deploy your code to sandbox or productino we need
 
 Deployment key is used to grant our CI server read access to your project for us to be able to clone it. Your code is stored temporarily, only for deployment purposes.
 
-Jump to section [Adding Deployment key to your Github project](#2a-adding-deployment-key-to-your-github-project) or [Adding Deployment key to your Gitlab project](#2b-adding-deployment-key-to-your-gitlab-project), depending on what you use for your repo.
+Jump to section [Adding Deployment key to your Github project](#2a-adding-deployment-key-to-your-github-project) or [Adding Deployment key to your Gitlab project](#2b-adding-deployment-key-to-your-gitlab-project) depending on what platform you use to host your repo.
 
 #### 2.a Adding Deployment key to your Github project
 

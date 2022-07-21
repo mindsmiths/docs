@@ -27,52 +27,52 @@ Let's get started!
 To generate SSH key follow the instructions bellow and carefully read the directions provided with the steps.
 
 1. Open terminal in the Mindsmiths web IDE
-    > Search for "Terminal" in the upper left bar and then choose "New Terminal"
+   > Search for "Terminal" in the upper left bar and then choose "New Terminal"
 
 2. Run this command to create the SSH key:
-    ```bash
-    ssh-keygen -t ed25519 -C "Mindsmiths web IDE"
-    ```
-    > You can change the comment of the key ("Mindsmiths web IDE") to best describe this SSH key for you
+   ```bash
+   ssh-keygen -t ed25519 -C "Mindsmiths web IDE"
+   ```
+   > You can change the comment of the key ("Mindsmiths web IDE") to best describe this SSH key for you
 
-    Press ENTER on all the prompts (we want the default directory to save the SSH key in and don't want to set the phassphrase) 
+   Press ENTER on all the prompts (we want the default directory to save the SSH key in and don't want to set the phassphrase) 
 
-Great! We successfully generated our SSH key, and you can see it (assuming you pressed ENTER on first prompt) with:   
-```bash
-cat /root/.ssh/id_ed25519.pub
-```
+   Great! We successfully generated our SSH key, and you can see it (assuming you pressed ENTER on first prompt) with:
+   ```bash
+   cat /root/.ssh/id_ed25519.pub
+   ```
 
 
 ## 2. Adding SSH key to your git account
 
-The next step is to add the key we just created to your git account. To do that we will copy the public part of the generated SSH key and add it to git account. This process is little bit different depending on if you are using Github or Gitlab. (Follow the instructions bellow and carefully read the directions provided with the steps.)
-- To add the SSH key to **Github account** jump to section [Adding SSH key to your Github account](#2a-adding-ssh-key-to-your-github-account).
-- To add the SSH key to **Gitlab account** jump to section [Adding SSH key to your Gitlab account](#2b-adding-ssh-key-to-your-gitlab-account).
+The next step is to add the key we just created to your git account. To do that we will copy the public part of the generated SSH key and add it to git account. This process is little bit different depending on if you are using GitHub or GitLab. (Follow the instructions bellow and carefully read the directions provided with the steps.)
+- To add the SSH key to **GitHub account** jump to section [Adding SSH key to your GitHub account](#2a-adding-ssh-key-to-your-github-account).
+- To add the SSH key to **GitLab account** jump to section [Adding SSH key to your GitLab account](#2b-adding-ssh-key-to-your-gitlab-account).
  
 
 
-### 2.a Adding SSH key to your Github account
+### 2.a Adding SSH key to your GitHub account
 
 
 1. Click the link: [Add GitHub SSH key](https://github.com/settings/ssh/new), which will take you to the GitHub's page for adding new SSH key
-    > You must be logged in into GitHub to do this, if you are not, GitHub will automatically redirect you to the login page
+   > You must be logged in into GitHub to do this, if you are not, GitHub will automatically redirect you to the login page
     
-    ![Add GitHub SSH key](/img/connecting-git-repo/add-github-ssh-key.png)
+   ![Add GitHub SSH key](/img/connecting-git-repo/add-github-ssh-key.png)
 
-    As the picture shows, you need to provide the Title, and the Key itself.
+   As the picture shows, you need to provide the Title, and the Key itself.
 
 2. Let's set the title. We can use the same value we used when creating the key - **"Mindsmiths web IDE"**
-    > - The title is used to recognize one key from the other and understand where it is used.
-    > - Setting the title to "Mindsmiths web IDE" will help us understand exactly where this key is used for the future management needs
+   > - The title is used to recognize one key from the other and understand where it is used.
+   > - Setting the title to "Mindsmiths web IDE" will help us understand exactly where this key is used for the future management needs
 
 3. To set the Key part first go back to the terminal of the Mindsmihts web IDE and run the following command:
-    ```bash
+   ```bash
    cat /root/.ssh/id_ed25519.pub
    ```
    > - This will print out the public part of your SSH key that should be added to GitHub
    > - This part of the SSH key (public part) is not secret and can be shared, but still, share it only when you need to
    > - If for any reason key `id_ed25519.pub` doesn't exists try to generate it again. Make sure to press ENTER on all prompts. 
-   [Generating SSH key on a Mindsmiths web IDE](#generating-ssh-key-on-a-mindsmiths-web-ide)
+   [Generating SSH key on a Mindsmiths web IDE](#1-generating-ssh-key-on-a-mindsmiths-web-ide)
 
 4. Copy the result of the above command and paste it into the Key box on GitHub.
 
@@ -80,34 +80,34 @@ The next step is to add the key we just created to your git account. To do that 
 
 Great! Now we connected our Mindsmiths web IDE with our GitHub repository. All that is left is to push/pull the code and start coding.
 
-### 2.b Adding SSH key to your Gitlab account
+### 2.b Adding SSH key to your GitLab account
 
 
-1. Click the link: [Add Gitlab SSH key](https://gitlab.com/-/profile/keys), which will take you to the Gitlabs's page for adding new SSH key
-    > You must be logged in into GitLab to do this, if you are not, Gitlab will automatically redirect you to the login page
+1. Click the link: [Add GitLab SSH key](https://gitlab.com/-/profile/keys), which will take you to the GitLabs's page for adding new SSH key
+   > You must be logged in into GitLab to do this, if you are not, GitLab will automatically redirect you to the login page
     
-    ![Add Gitlab SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
+   ![Add GitLab SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
 
-    As the picture shows, you need to provide the Title, and the Key itself.
+   As the picture shows, you need to provide the Title, and the Key itself.
 
 2. Let's set the title. We can use the same value we used when creating the key - **"Mindsmiths web IDE"**
-    > - The title is used to recognize one key from the other and understand where it is used.
-    > - Setting the title to "Mindsmiths web IDE" will help us understand exactly where this key is used for the future management needs
+   > - The title is used to recognize one key from the other and understand where it is used.
+   > - Setting the title to "Mindsmiths web IDE" will help us understand exactly where this key is used for the future management needs
 
 3. To set the Key part first go back to the terminal of the Mindsmihts web IDE and run the following command:
-    ```bash
+   ```bash
    cat /root/.ssh/id_ed25519.pub
    ```
-   > - This will print out the public part of your SSH key that should be added to Gitlab
+   > - This will print out the public part of your SSH key that should be added to GitLab
    > - This part of the SSH key (public part) is not secret and can be shared, but still, share it only when you need to
    > - If for any reason key `id_ed25519.pub` doesn't exists try to generate it again. Make sure to press ENTER on all prompts. 
-   [Generating SSH key on a Mindsmiths web IDE](#generating-ssh-key-on-a-mindsmiths-web-ide)
+   [Generating SSH key on a Mindsmiths web IDE](#1-generating-ssh-key-on-a-mindsmiths-web-ide)
 
-4. Copy the result of the above command and paste it into the Key box on Gitlab.
+4. Copy the result of the above command and paste it into the Key box on GitLab.
 
 5. Press the `Add key` button to save the SSH key and finish the process.
 
-Great! Now we connected our Mindsmiths web IDE with our Gitlab repository. All that is left is to push/pull the code and start coding.
+Great! Now we connected our Mindsmiths web IDE with our GitLab repository. All that is left is to push/pull the code and start coding.
 
 ## 3. Setting up git config
 
@@ -116,46 +116,48 @@ To push to remote git repository you have to set up git in your Mindsmiths web I
 1. Open terminal in the Mindsmiths web IDE
 
 2. Run these commands to set your email and name for git
-    ```bash
-    git config --global user.email "your-mail@example.com"
-    git config --global user.name "Your Name"
-    ```
-    > Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real name
+   ```bash
+   git config --global user.email "your-mail@example.com"
+   git config --global user.name "Your Name"
+   ```
+   > Make sure you change *your-mail@example.com* to your real email, and *Your Name* to your real name
 
 
-## 4. Pulling/pushing the code from/to the GitHub remote repository
+## 4. Pulling/pushing the code from/to the GitHub or GitLab remote repository
 
 There are two different ways you can approach this step based on your situation:
-1. You want to push the code from your Mindsmiths web IDE to new GitHub repo. Jump to [Create new repo](#create-new-repo)
-2. Code is already on the remote GitHub repository, and you want to pull it into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-existing-repo)
+1. You want to push the code from your Mindsmiths web IDE to new git repo. [Create new repo](#create-new-repo)
+2. Code is already on the remote git repository, and you want to pull it into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-existing-repo)
 
 ### Create new repo
 
-1. Go to your GitHub account and [create new empty repo](https://github.com/new). You probably want to create a private repo.
-    > **Do not add README or any other file to the repo!**
+1. You can choose between using GitHub or GitLab to develop your project. Choose your preferred platform and create new empty repository: 
+[Create new empty GitHub repository](https://github.com/new) or [Create new empty GitLab repository](https://gitlab.com/projects/new)
+   
+   > **Do not add README or any other file to the repo!**
 
 2. Now navigate to your Mindsmiths web IDE and run in terminal:
-    ```bash
-    git init
-    ```
-    > Make sure you are positioned the `/app` directory when running the command
+   ```bash
+   git init
+   ```
+   > Make sure you are positioned the `/app` directory when running the command
 
 3. Next up we will add the remote:
-    ```bash
-    git remote add origin <SSH repo url> 
-    ```
-    To find your SSH repo url go to your empty GitHub repo. Click `Code` and then `SSH`.
-    There you will see the repository url that you need to copy and enter into the command above.
+   ```bash
+   git remote add origin <SSH repo url> 
+   ```
+   To find your SSH repo url go to your empty git repo. Click `Code` (on GitHub) or `Clone` (on GitLab) and then `SSH`.
+   There you will see the repository url that you need to copy and enter into the command above.
     
-    > The url should begin with **git@github.com**
+   > The url should begin with **git@**
 
 4. Now run these commands to push all the files to the repo:
-    ```bash
-    git add .
-    git commit -m "First commit: pushed all the Mindsmiths initial project files"
-    git branch -M "main"
-    git push --set-upstream origin main 
-    ```
+   ```bash
+   git add .
+   git commit -m "First commit: pushed all the Mindsmiths initial project files"
+   git branch -M "main"
+   git push --set-upstream origin main 
+   ```
    If prompted, type `yes` and press ENTER.
 
    > It may take some time because of the big file size
@@ -170,7 +172,7 @@ You probably already have the Mindsmiths web IDE whose README led you here, and 
 
 Let's quickly understand what the script does:
 1. Ask you to input the remote SSH url of the repository (e.g. *git@github.com:username/repo-name.git*)
-    > If you are asked for your username and password it means you provided https url instead of an SSH url for the repository
+   > If you are asked for your username and password it means you provided https url instead of an SSH url for the repository
 
 2. Pull all the code from the provided repository
 3. Configure the environment and all the code in your working directory - `/app`
@@ -183,6 +185,7 @@ Now that you understand what this script does, you can run it.
    ```bash
    . /root/pull_repo.sh
    ```
+2. Enter your project SSH clone URL (you can find it in your git repository under `Code` for GitHub or `Clone` for GitLab).
 2. As the script pulls the code using the SSH protocol, there will probably be a prompt shown:
    ```commandline
    Are you sure you want to continue connecting (yes/no/[fingerprint])?
