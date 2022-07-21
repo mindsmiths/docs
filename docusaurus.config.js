@@ -38,7 +38,8 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: 'api-spec/swagger.yaml',
+            spec: 'static/httpapi/swagger.yaml',
+            url: '/httpapi/swagger.yaml',
             route: '/api/',
           },
         ],
