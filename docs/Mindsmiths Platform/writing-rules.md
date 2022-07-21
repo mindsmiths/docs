@@ -296,13 +296,13 @@ end
 As you can see, you can quickly begin handling very complex scenarios with just a few rules.
 It's generally advisable to try and break down the reasoning into smaller steps to simplify complex problems.
 Each rule raises the level of abstraction and sounds closer to business-level logic.
-Eventually, you'll begin replacing rules with predictive models, but your higher-level rules will stay the same.
+Eventually, you'll begin to replace rules with predictive models, but the rules determining the higher-level logic will stay the same.
 
 
 ## Best practices
-Writing rules can be slightly confusing before you get used to it, so we'll quickly summarize some good practices.
+Writing rules can be slightly confusing before you get a hang of it, so we'll quickly summarize some good practices.
 
-- Write "readable" rules - try to use names and structures such that even a non-technical person can read and understand it
+- Write "readable" rules - try to use names and structures such that even a non-technical person can read and understand them
 - Rules should be as simple as possible - if the rule looks too complex, break it down into multiple smaller rules
 - Organize your rules in meaningful structures - closely connected rules in the same DRL file, different features in different packages, etc.
 - Use rule chaining to break down complex problems
