@@ -13,9 +13,9 @@ platform but the concepts shown here are applicable to any other git based repos
 We will use SSH key to authenticate with git remote repository (authenticating code pushes from Mindsmiths web IDE to 
 your remote GitHub repository) instead of basic https to remove the need of constant username and password prompt.
 
-We will achieve this in 3 easy steps:
+We will achieve this in 4 easy steps:
 1. Generating SSH key on a Mindsmiths web IDE
-2. Adding SSH key to your GitHub account (or other repository hosting platform)
+2. Adding SSH key to your git account
 3. Setting up git config
 4. Pulling/pushing the code from/to the GitHub remote repository
 
@@ -43,16 +43,21 @@ cat /root/.ssh/id_ed25519.pub
 ```
 
 
-## 2. Adding SSH key to your GitHub account
+## 2. Adding SSH key to your git account
 
-The next step is to add the key we just created to your GitHub repository. To do that we will copy the public part of the 
-generated SSH key and add it to GitHub using GitHub's dashboard.
-Follow the instructions bellow and carefully read the directions provided with the steps.
+The next step is to add the key we just created to your git account. To do that we will copy the public part of the generated SSH key and add it to git account. This process is little bit different depending on if you are using Github or Gitlab. (Follow the instructions bellow and carefully read the directions provided with the steps.)
+- To add the SSH key to **Github account** jump to section [Adding SSH key to your Github account](#2a-adding-ssh-key-to-your-github-account).
+- To add the SSH key to **Gitlab account** jump to section [Adding SSH key to your Gitlab account](#2b-adding-ssh-key-to-your-gitlab-account).
+ 
+
+
+### 2.a Adding SSH key to your Github account
+
 
 1. Click the link: [Add GitHub SSH key](https://github.com/settings/ssh/new), which will take you to the GitHub's page for adding new SSH key
     > You must be logged in into GitHub to do this, if you are not, GitHub will automatically redirect you to the login page
     
-    ![Add GitHub SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
+    ![Add GitHub SSH key](/img/connecting-git-repo/add-github-ssh-key.png)
 
     As the picture shows, you need to provide the Title, and the Key itself.
 
@@ -75,6 +80,34 @@ Follow the instructions bellow and carefully read the directions provided with t
 
 Great! Now we connected our Mindsmiths web IDE with our GitHub repository. All that is left is to push/pull the code and start coding.
 
+### 2.b Adding SSH key to your Gitlab account
+
+
+1. Click the link: [Add Gitlab SSH key](https://gitlab.com/-/profile/keys), which will take you to the Gitlabs's page for adding new SSH key
+    > You must be logged in into GitLab to do this, if you are not, Gitlab will automatically redirect you to the login page
+    
+    ![Add Gitlab SSH key](/img/connecting-git-repo/add-gitlab-ssh-key.png)
+
+    As the picture shows, you need to provide the Title, and the Key itself.
+
+2. Let's set the title. We can use the same value we used when creating the key - **"Mindsmiths web IDE"**
+    > - The title is used to recognize one key from the other and understand where it is used.
+    > - Setting the title to "Mindsmiths web IDE" will help us understand exactly where this key is used for the future management needs
+
+3. To set the Key part first go back to the terminal of the Mindsmihts web IDE and run the following command:
+    ```bash
+   cat /root/.ssh/id_ed25519.pub
+   ```
+   > - This will print out the public part of your SSH key that should be added to Gitlab
+   > - This part of the SSH key (public part) is not secret and can be shared, but still, share it only when you need to
+   > - If for any reason key `id_ed25519.pub` doesn't exists try to generate it again. Make sure to press ENTER on all prompts. 
+   [Generating SSH key on a Mindsmiths web IDE](#generating-ssh-key-on-a-mindsmiths-web-ide)
+
+4. Copy the result of the above command and paste it into the Key box on Gitlab.
+
+5. Press the `Add key` button to save the SSH key and finish the process.
+
+Great! Now we connected our Mindsmiths web IDE with our Gitlab repository. All that is left is to push/pull the code and start coding.
 
 ## 3. Setting up git config
 
