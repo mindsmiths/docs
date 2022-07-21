@@ -131,9 +131,9 @@ There are two different ways you can approach this step based on your situation:
 
 ### Create new repo
 
-1. You can choose between using GitHub or GitLab to develop your project. Choose your preferred platform and create new repository on one them by following one of the provided links: 
-   - [create new empty GitHub repository](https://github.com/new)
-   - [create new empty GitLab repository](https://gitlab.com/projects/new)
+1. You can choose between using GitHub or GitLab to develop your project. Choose your preferred platform and create new empty repository: 
+[Create new empty GitHub repository](https://github.com/new) or [Create new empty GitLab repository](https://gitlab.com/projects/new)
+   
    > **Do not add README or any other file to the repo!**
 
 2. Now navigate to your Mindsmiths web IDE and run in terminal:
