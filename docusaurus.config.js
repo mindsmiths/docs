@@ -65,7 +65,19 @@ const config = {
             type: 'doc',
             docId: 'Mindsmiths Platform/intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Platform',
+          },
+          {
+            type: 'doc',
+            docId: 'Coding Environment/environment-setup',
+            position: 'left',
+            label: 'Environment',
+          },
+          {
+            type: 'doc',
+            docId: 'Quickstart/intro',
+            position: 'left',
+            label: 'Quickstart',
           },
           {
             href: 'https://www.mindsmiths.com/',
@@ -81,7 +93,15 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Platform',
+                to: '/docs/Mindsmiths Platform/intro',
+              },
+              {
+                label: 'Environment',
+                to: '/docs/Coding Environment/environment-setup',
+              },
+              {
+                label: 'Quickstart',
                 to: '/docs/Quickstart/intro',
               },
             ],
