@@ -16,11 +16,11 @@ Both production and sandbox are deployed to our server. We use the Kubernetes ar
 
 In this part we will set everything up to enable deployment of your code on our sandbox or production directly from your Mindsmiths web IDE. For that to be possible our CI server (GitLab CI/CD) that is responsible for deployment needs access to your git project. Your Mindsmiths web IDE also has to be connected with our CI server to enable deployment directly from the web IDE.
 
-You will need to follow this three steps below:
+You will need to follow this 3 steps below:
 
-> 1. [Send us your git clone URL](#1-send-us-your-git-clone-url)
-> 2. [Add Deployment key](#2-add-deployment-key)
-> 3. [Connect your Mindsmiths web IDE with our CI server](#3-connect-your-mindsmiths-web-ide-with-our-ci-server)
+> 1. Send us your git clone URL
+> 2. Add Deployment key
+> 3. Connect your Mindsmiths web IDE with our CI server
 
 ### 1. Send us your git clone URL
 
