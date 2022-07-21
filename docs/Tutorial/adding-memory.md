@@ -13,12 +13,12 @@ So let’s simply add memory to Nola’s model:
 @Setter
 public class Nola extends Agent {
 
-    // highlight-next-line
+    // highlight-added-line
     private String memory = "";
     
     ...
 
-    // highlight-start
+    // highlight-added-start
     public void addMessageToMemory(String sender, String text){
         memory += String.format("%s: %s\n", sender, text);
     }
@@ -27,7 +27,7 @@ public class Nola extends Agent {
         String intro = "This is a conversation between a human and an intelligent AI assistant named Nola.\n";
         simpleGPT3Request(intro + String.join("\n", memory) + "\nNola:");
     }
-    // highlight-end
+    // highlight-added-end
 
     ...
 }
@@ -44,9 +44,9 @@ rule "Handle message"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Nola()
     then
-        // highlight-next-line
+        // highlight-added-line
         modify(agent) {addMessageToMemory("Human", message.getText())};
-        // highlight-next-line
+        // highlight-added-line
         agent.askGPT3();
         delete(message);
 end
@@ -59,7 +59,7 @@ rule "Send GPT3 response"
     then
         String response = gpt3Result.getBestResponse();
         agent.sendMessage(response);
-        // highlight-next-line
+        // highlight-added-line
         modify(agent) {addMessageToMemory("Nola", response)};
         delete(gpt3Result);
 end

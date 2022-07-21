@@ -13,8 +13,8 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'mindsmiths', // Usually your GitHub org/user name.
-  projectName: 'platform-docs', // Usually your repo name.
+  organizationName: 'mindsmiths',
+  projectName: 'platform-docs',
 
   presets: [
     [
@@ -23,7 +23,6 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
           editUrl: 'https://github.com/mindsmiths/docs/tree/main',
         },
         theme: {
@@ -45,9 +44,21 @@ const config = {
         items: [
           {
             type: 'doc',
+            docId: 'Mindsmiths Platform/intro',
+            position: 'left',
+            label: 'Platform',
+          },
+          {
+            type: 'doc',
+            docId: 'Coding Environment/environment-setup',
+            position: 'left',
+            label: 'Environment',
+          },
+          {
+            type: 'doc',
             docId: 'Quickstart/intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Quickstart',
           },
           {
             href: 'https://www.mindsmiths.com/',
@@ -63,7 +74,11 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Platform',
+                to: '/docs/Mindsmiths Platform/intro',
+              },
+              {
+                label: 'Quickstart',
                 to: '/docs/Quickstart/intro',
               },
             ],
@@ -85,7 +100,31 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: [
           'java',
+          'scala',
           'diff',
+        ],
+        magicComments: [
+            // Remember to extend the default highlight class name as well!
+            {
+              className: 'theme-code-block-highlighted-line',
+              line: 'highlight-next-line',
+              block: {start: 'highlight-start', end: 'highlight-end'},
+            },
+            {
+              className: 'code-block-added-line',
+              line: 'highlight-added-line',
+              block: {start: 'highlight-added-start', end: 'highlight-added-end'},
+            },
+            {
+              className: 'code-block-changed-line',
+              line: 'highlight-changed-line',
+              block: {start: 'highlight-changed-start', end: 'highlight-changed-end'},
+            },
+            {
+              className: 'code-block-removed-line',
+              line: 'highlight-removed-line',
+              block: {start: 'highlight-removed-start', end: 'highlight-removed-end'},
+            },
         ],
       },
     }),
