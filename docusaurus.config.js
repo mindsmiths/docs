@@ -98,10 +98,6 @@ const config = {
                 to: '/docs/Mindsmiths Platform/intro',
               },
               {
-                label: 'Environment',
-                to: '/docs/Coding Environment/environment-setup',
-              },
-              {
                 label: 'Quickstart',
                 to: '/docs/Quickstart/intro',
               },
