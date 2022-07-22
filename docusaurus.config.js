@@ -44,18 +44,6 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'Mindsmiths Platform/intro',
-            position: 'left',
-            label: 'Platform',
-          },
-          {
-            type: 'doc',
-            docId: 'Coding Environment/environment-setup',
-            position: 'left',
-            label: 'Environment',
-          },
-          {
-            type: 'doc',
             docId: 'Quickstart/intro',
             position: 'left',
             label: 'Quickstart',
@@ -73,10 +61,6 @@ const config = {
           {
             title: 'Docs',
             items: [
-              {
-                label: 'Platform',
-                to: '/docs/Mindsmiths Platform/intro',
-              },
               {
                 label: 'Quickstart',
                 to: '/docs/Quickstart/intro',
