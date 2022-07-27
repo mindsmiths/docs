@@ -11,7 +11,7 @@ platform, but the concepts shown here are applicable to any other git-based repo
 (e.g. GitLab, Bitbucket, etc.).
 
 We will use the SSH key to authenticate with the git remote repository (authenticating code pushes from Mindsmiths web IDE to 
-your remote GitHub repository) instead of the basic https. This way we avoid having to repeatedly provide the username and password.
+your remote GitHub repository) instead of the basic https. This way we avoid use of username and password.
 
 We'll do this in just 4 easy steps:
 1. Generating an SSH key on a Mindsmiths web IDE
@@ -163,7 +163,7 @@ Depending on what you want to do, you can connect the remote GitHub/GitLab repos
 
 ### Pull an existing repo
 
-In case you want to pull the code from an exisitng repo, you should've receives a Mindsmiths web IDE that's specifically prepared to make this process as easy as possible.
+In case you want to pull the code from an exisitng repo, you should've received a Mindsmiths web IDE that's specifically prepared to make this process as easy as possible.
 > If you don't have  Mindsmiths web IDE that led you here you can ask for one on our [Discord channel](https://discord.gg/knYDVJ5Ez8).
 
 You just need to run the script that will set everything up.
