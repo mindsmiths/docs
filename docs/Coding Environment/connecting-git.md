@@ -125,8 +125,8 @@ To push to a remote git repository you have to set up git in your Mindsmiths web
 ## 4. Pulling/pushing the code from/to the remote repository
 
 Depending on what you want to do, you can connect the remote GitHub/GitLab repository in two different ways:
-1. You can push the initial code from your Mindsmiths web IDE to a new git repo. [Create a new repo](#create-new-repo)
-2. You can pull already existing code into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-existing-repo)
+1. You can push the initial code from your Mindsmiths web IDE to a new git repo. [Create a new repo](#create-a-new-repo)
+2. You can pull already existing code into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-an-existing-repo)
 
 ### Create a new repo
 
