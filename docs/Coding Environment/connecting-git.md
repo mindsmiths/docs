@@ -11,7 +11,7 @@ platform, but the concepts shown here are applicable to any other git-based repo
 (e.g. GitLab, Bitbucket, etc.).
 
 We will use the SSH key to authenticate with the git remote repository (authenticating code pushes from Mindsmiths web IDE to 
-your remote GitHub repository) instead of the basic https. This way we avoid having to repeatedly provide the username and password.
+your remote GitHub repository) instead of the basic https. This way we avoid use of username and password.
 
 We'll do this in just 4 easy steps:
 1. Generating an SSH key on a Mindsmiths web IDE
@@ -125,8 +125,8 @@ To push to a remote git repository you have to set up git in your Mindsmiths web
 ## 4. Pulling/pushing the code from/to the remote repository
 
 Depending on what you want to do, you can connect the remote GitHub/GitLab repository in two different ways:
-1. You can push the initial code from your Mindsmiths web IDE to a new git repo. [Create a new repo](#create-new-repo)
-2. You can pull already existing code into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-existing-repo)
+1. You can push the initial code from your Mindsmiths web IDE to a new git repo. [Create a new repo](#create-a-new-repo)
+2. You can pull already existing code into your Mindsmiths web IDE. Jump to [Pull existing repo](#pull-an-existing-repo)
 
 ### Create a new repo
 
@@ -163,7 +163,7 @@ Depending on what you want to do, you can connect the remote GitHub/GitLab repos
 
 ### Pull an existing repo
 
-In case you want to pull the code from an exisitng repo, you should've receives a Mindsmiths web IDE that's specifically prepared to make this process as easy as possible.
+In case you want to pull the code from an exisitng repo, you should've received a Mindsmiths web IDE that's specifically prepared to make this process as easy as possible.
 > If you don't have  Mindsmiths web IDE that led you here you can ask for one on our [Discord channel](https://discord.gg/knYDVJ5Ez8).
 
 You just need to run the script that will set everything up.
