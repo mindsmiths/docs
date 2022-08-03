@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Doctor and Patient Agent: Local view
 
 We already mentioned that each agent cares only for the needs of the user it is assigned to, 

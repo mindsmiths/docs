@@ -18,7 +18,7 @@ Once the estimated confidence is high enough, the model will take over the docto
 
 Let's visualize this in a graphic:
 
-![graphic](bmi-guidance-graphic.png)
+![graphic](bmi-guidance-graphic.png#center)
 
 What you can see is that the patient requests first go to the ML component and then get forwarded to the doctor if needed. 
 The doctor's input is passed to the model as training data, and communicated back to the patients. Alternatively, the model verdict is just sent back to the patient.

@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Welcome user
 
 We start from onboarding the users in our system. In this demo we're onboarding two types of users: patients and doctors.
@@ -47,6 +51,6 @@ public class Doctor extends Agent {
 }
 ```
 
-If you want to try onboarding the doctor, you can already hit FORGE RUN and send your Telegram bot a message.
+If you want to try onboarding the doctor, you can already hit **FORGE RUN** and send your Telegram bot a message.
 
 We'll now focus on the differences in the implementation of the rest of the onboarding process for the doctor and patient agents.

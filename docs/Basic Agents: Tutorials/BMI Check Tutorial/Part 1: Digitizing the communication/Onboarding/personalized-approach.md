@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Personalized approach: I know you
 
 Context is extremely important in relationships with the users: to avoid scripting out the system behavior into fixed scenarios, 
@@ -92,25 +96,47 @@ end
 
 Just the amount of code might seem intimidating, but the logic of the rules is very simple: based on the data we currently have about the user, we ask the next question for the data we still need to fill.
 But let’s start from the top! There are a couple of important things to note here.
-First, let’s look at the first three rules in the onboarding process. Notice that after executing the "Welcome patient" rule we don’t delete the incoming message signal that triggered it: instead, we use the same signal again to trigger the "Ask for name" rule, in which we prompt the user to submit their child’s name.
-This kind of connecting up the rules is called chaining. To ensure the welcome rule fires first, we set its salience to 100 (as opposed to the default value 0), and then we delete the message signal later on after the "Ask for name" rule is executed.
-Next, to better specify the context the user is currently in, we add the answerExpected flag, to distinguish between the conditions of the rules where we ask for the name and where we got the answer back from the user.
-This is the mechanism you can now see in the remaining rules as well: the rules for filling in the data are always triggered by the facts we have stored in memory (the data about the child), while the rules that modify the data are triggered on receiving the message signal. The “ask” and “set” rules are connected via these current facts: once we know the child’s name, but don’t know his/her name, we need to ask the user to tell us that next. And so on until we acquire all the necessary information (name, age, and height).
+First, let’s look at the first three rules in the onboarding process. Notice that after executing the `"Welcome patient"` rule we don’t delete the incoming message signal that triggered it: instead, we use the same signal again to trigger the `"Ask for name"` rule, in which we prompt the user to submit their child’s name.
+This kind of connecting up the rules is actually just multiple rules fireing, some sooner than the others (acording to the `salience` index). To ensure the welcome rule fires first, we set its `salience` to 100 (as opposed to the default value 0), and then we delete the message signal later on after the `"Ask for name"` rule is executed.
+Next, to better specify the context the user is currently in, we add the `waitingForAnswer` flag, to distinguish between the conditions of the rules where we ask for the name and where we got the answer back from the user.
+This is the mechanism you can now see in the remaining rules as well: the rules for filling in the data are always triggered by the facts we have stored in memory (the data about the child), while the rules that modify the data are triggered on receiving the message signal. The “ask” and “set” rules are connected via these current facts: once we know the child’s name, but don’t know his/her age, we need to ask the user to tell us that next. And so on until we acquire all the necessary information (name, age, and height).
+
+Let’s have a look at how these things look like inside the Patient agent’s data model:
+models/agents/Patient.java
+
+```java title="rules/patient/Patient.java"
+...
+public class Patient extends Agent {
+    private String name;
+    private Integer age;
+    private Integer height;
+    …
+    private boolean waitingForAnswer;
+    …
+
+    public Patient(String connectionName, String connectionId) {
+        super(connectionName, connectionId);
+    }
+
+    public void sendMessage(String text) {
+        String chatId = connections.get("telegram");
+        TelegramAdapterAPI.sendMessage(chatId, text);
+    }
+    …
+}
+```
+The contents of the Patient Java file are again nothing new: it just specifies all the fields you need to fill and implements the functionality for sending Telegram messages.
+
 Last thing to bring your attention to is the Utils for checking the validity of the answer received from the user in a given context. We only implemented the simplest functionalities, but you can imagine extending them in more complex scenarios:
 models/utils/Utils.java
+
+```java title="models/utils/BMIUtils.java"
 package utils;
 
 public class Utils {
-    public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
+    public static int getWeightForHeightAndBMI(int height, double bmi) {
+        double height_m = height / 100.;
+        return (int) Math.round(bmi * height_m * height_m);
     }
 
     public static boolean isValidAge(String strAge) {
@@ -136,29 +162,6 @@ public class Utils {
         }
         return false;
     }
+```
 
-Finally, let’s have a look at how these things look like inside the Patient agent’s data model:
-models/agents/Patient.java
-...
-public class Patient extends Agent {
-    private String name;
-    private Integer age;
-    private Integer height;
-    …
-    private boolean answerExpected;
-    …
-
-    public Patient(String connectionName, String connectionId) {
-        super(connectionName, connectionId);
-    }
-
-    public void sendMessage(String text) {
-        String chatId = connections.get("telegram");
-        TelegramAdapterAPI.sendMessage(chatId, text);
-    }
-    …
-}
-
-
-The contents of the Java file are again nothing new: it just specifies all the fields you need to fill and implements the functionality for sending Telegram messages.
-Okay, you can now run the platform with forge run to test out what this process looks like for your user!
+Okay, you can now run the platform with **forge run** to test out what this process looks like for your user!
