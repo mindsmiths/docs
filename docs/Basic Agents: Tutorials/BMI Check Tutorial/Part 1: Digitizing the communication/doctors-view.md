@@ -29,23 +29,23 @@ import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 
 import signals.BMIMeasurement;
-import signals.ModelPrediction;
+import signals.Prediction;
 ...
 public class Doctor extends Agent {
     ...
     private Integer modelVersion;
     ...
-    public void sendBMIMeasurement(ModelPrediction modelPrediction) {
-        BMIMeasurement bmi = modelPrediction.getBmiMeasurement();
+    public void sendBMIMeasurement(Prediction prediction) {
+        BMIMeasurement bmi = prediction.getBmiMeasurement();
 
-        String predictionResult = modelPrediction.getPrediction() ? "obese" : "not obese";
+        String predictionResult = prediction.getPrediction() ? "obese" : "not obese";
 
         TelegramAdapterAPI.sendMessage(
                 connections.get("telegram"),
                 "Can you help me with this case?\n" +
                         String.format("Age: %d\nBMI: %.1f\n", bmi.getAge(), bmi.calculateBMI()),
                 new KeyboardData(
-                        modelPrediction.getPredictionId(),
+                        prediction.getPredictionId(),
                         Arrays.asList(
                                 new KeyboardOption("YES", "Obese"),
                                 new KeyboardOption("NO", "Not obese")
