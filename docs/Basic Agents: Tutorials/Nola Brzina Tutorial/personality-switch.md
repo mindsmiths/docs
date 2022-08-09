@@ -18,7 +18,7 @@ import lombok.Getter;
 
 @Getter
 public enum Personality {
-    friendlyAI(0.9, 64, "You're an AI system called Nola Brzina. You're talking to %1$s. You want to have an engaging and fun conversation with them. You are friendly, creative and innovative.\n",
+    friendlyAI(0.9, 64, "You're an AI system called Nola Brzina. You're talking to a human. You want to have an engaging and fun conversation with them. You are friendly, creative and innovative.\n",
                "AI", "Human", "You are talking to your AI assistant called Nola. Ask her anything you want to know!"),
     wiseRock(0.91, 64, "You are an all-knowing rock talking to an old man. Answer the old man's questions in a deep and profound way.\n", "Rock", "Old man",
             "You are an old man talking to a very wise rock that can answer any of your difficult questions.\nGet answers to all your deepest worries right here!"),
@@ -64,7 +64,7 @@ Once you choose the personalities, you need to add the adaptations in ```Nola.ja
 ...
 // highlight-added-start
 import java.util.Arrays;
-import com.mindsmiths.ruleEngine.util.Util;
+import com.mindsmiths.sdk.utils.Utils;
 import models.Personality;
 // highlight-added-end
 
@@ -84,17 +84,17 @@ public class Nola extends Agent {
                 Arrays.asList(Personality.values())
         );
         choices.remove(personality);
-        personality = Util.randomChoice(choices);
+        personality = Utils.randomChoice(choices);
     }
     // highlight-added-end
 
     public void askGPT3() {
+        // highlight-changed-start
         simpleGPT3Request(
-            // highlight-changed-start
-            personality.getInstruction() + String.join(“\n”, memory) + personality.getAiName() + ":", personality.getTemp(),
-            personality.getResponseLen(), List.of(personality.getAiName(), personality.getHumanName())
-            // highlight-changed-end
+            personality.getInstruction() + String.join("\n", memory) + personality.getAiName() + ":", personality.getTemp(),
+            personality.getResponseLen(), List.of(personality.getAiName() + ":", personality.getHumanName() + ":")
         );
+        // highlight-changed-end
     }
 
     // highlight-changed-line
@@ -171,4 +171,4 @@ rule "Send GPT3 response"
 end
 ```
 
-Clear everything with **forge reset** and start the system again with **FORGE RUN**. Try switching between personalities, and have fun with your new diverse conversational partners!
+Clear everything with **forge reset** and start the system again with **forge run**. Try switching between personalities, and have fun with your new diverse conversational partners!

@@ -39,9 +39,10 @@ public class Nola extends Agent {
     // highlight-added-end
 
     public void addMessageToMemory(String sender, String text) {
+        // highlight-changed-start
         memory.add(String.format("%s: %s\n", sender, text));
-        // highlight-changed-line
         trimMemory();
+        // highlight-changed-end
     }
     ...
 }
@@ -157,4 +158,4 @@ rule "Handle message"
 end
 ```
 
-And there we go! Nola will now automatically reset the conversation history if the user stops writing back. Start up the system again with **FORGE RUN** to test it out!
+And there we go! Nola will now automatically reset the conversation history if the user stops writing back. Start up the system again with **forge run** to test it out!
