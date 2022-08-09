@@ -83,5 +83,5 @@ end
 Well done! You now have a more caring agent that proactively and creatively tries to keep the user in the conversation should she/he stop responding.
 
 
-As always, you can try it with **forge reset** and **FORGE RUN**.
+As always, you can try it with **forge reset** and **forge run**.
 
