@@ -81,6 +81,12 @@ const config = {
             label: 'Quickstart',
           },
           {
+            type: 'doc',
+            docId: 'Technical documentation/integration',
+            position: 'left',
+            label: 'API',
+          },
+          {
             href: 'https://www.mindsmiths.com/',
             label: 'Mindsmiths',
             position: 'right',
