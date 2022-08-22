@@ -4,8 +4,8 @@ sidebar_position: 4
 
 # Personalized approach: I know you
 
-Context is extremely important in relationships with the users: to avoid scripting out the system behavior into fixed scenarios, 
-you always want your system to know exactly who the person they are talking to is, what are some relevant aspects of previous interactions and what is the current context of their needs.
+Context is extremely important in relationships with users: to avoid scripting out the system behavior into fixed scenarios, 
+you always want your system to know exactly who the person they are talking to is, what some relevant aspects of previous interactions are and what the current context of their needs is.
 
 In the first step, this simply means giving the agent sufficient information on the user they are assigned to by defining a series of onboarding rules.
 In this demo, the user is keeping track of their child’s weight, so we only want them to send us the updated weight values. We’ll simply store some other relevant data, i.e. the child’s name, height and age, right in the beginning when the user registers.
@@ -47,10 +47,51 @@ rule "Set name"
 end
 ```
 What these rules will do is welcome the user when they send the first message, and ask them to send the name of the child whose weight they are checking.
-Notice that the first two rules react to the same message: since the welcome rule doesn't delete the Telegram message signal, the rule asking for the name fires as well. We ensure this order by setting a higher salience for the welcome rule.
+Notice that the first two rules react to the same message: since the welcome rule doesn't delete the incoming Telegram message signal, the rule asking for the name fires as well. We ensure this order by setting a higher salience for the welcome rule.
 
-The implementation is extremely simple. All onboarding rules follow the same pattern as the one for setting the name: we ask about the information we need in order, setting the `waitingForAnswer` flag to true, and set the value when we receive an answer.
-After filling in the child's name, age and height in turn, we send an overview:
+The implementation is extremely simple. All onboarding rules follow the same pattern as the one for setting the name: we ask about the information we need in order, setting the `waitingForAnswer` flag to `true`, and then set the value of the variable when we receive an answer:
+
+```java title="rules/patient/Patient.drl"
+rule "Ask for age"
+    when
+        patient: Patient(waitingForAnswer != true, name != null, age == null)
+    then
+        patient.sendMessage(
+                String.format("Lovely, how old is %s?", patient.getName())
+        );
+        modify(patient) {setWaitingForAnswer(true)};
+end
+
+rule "Set age"
+    when
+        message: TelegramReceivedMessage(text: text, BMIUtils.isValidAge(text)) from entry-point "signals"
+        patient: Patient(waitingForAnswer == true, name!= null, age == null)
+    then
+        modify(patient) {setWaitingForAnswer(false), setAge(Integer.parseInt(text))};
+        delete(message);
+end
+
+rule "Ask for height"
+    when
+        patient: Patient(waitingForAnswer != true, age != null, height == null)
+    then
+        patient.sendMessage(
+                String.format("And how tall is %s in cm?", patient.getName())
+        );
+        modify(patient) {setWaitingForAnswer(true)};
+end
+
+rule "Set height"
+    when
+        message: TelegramReceivedMessage(text: text, BMIUtils.isValidHeight(text)) from entry-point "signals"
+        patient: Patient(waitingForAnswer == true, age != null, height == null)
+    then
+        modify(patient) {setWaitingForAnswer(false), setHeight(Integer.parseInt(text))};
+        delete(message);
+end
+```
+ 
+This completes the onboarding process for our patients. We send the user an overview with all the data:
 
 ```java title="rules/patient/Patient.drl"
 rule "Summarize patient data"
@@ -58,51 +99,15 @@ rule "Summarize patient data"
         patient: Patient(waitingForAnswer == false, height != null, weight == null)
     then
         patient.sendMessage(
-                String.format("So, your %s is %d years old and %d cm tall.", patient.getName(), patient.getAge(),
-                patient.getHeight())
+                String.format("So, your %s is %d years old and %d cm tall.", 
+                    patient.getName(), 
+                    patient.getAge(),
+                    patient.getHeight()
+                )
         );
 end
 ```
-We now need to ask for the child's current weight. We fill this information in the same way as the previously: 
-
-
-```java title="rules/patient/Patient.drl"
-rule "Ask for weight"
-    when
-        patient: Patient(waitingForAnswer == false, height != null, weight == null)
-    then
-        patient.sendMessage("We can track your kid's weight together to see if there are any issues. Send me your kid's weight.");
-        modify(patient){setWaitingForAnswer(true)};
-end
-
-rule "Process weight"
-    when
-        message: TelegramReceivedMessage(text: text, BMIUtils.isValidWeight(text)) from entry-point "signals"
-        patient: Patient(height != null)
-    then
-        double weight = Double.parseDouble(text);
-        BMIMeasurement bmiMeasurement = new BMIMeasurement(patient.getAge(), weight, patient.getHeight());
-
-        patient.sendMessage("Thanks!");
-        patient.send(Doctor.ID, bmiMeasurement);
-        modify(patient) {
-            setWeight(weight),
-            setLastInteractionTime(new Date()),
-            setAttemptedEngagement(false)
-            };
-        delete(message);
-end
-```
-
-Just the amount of code might seem intimidating, but the logic of the rules is very simple: based on the data we currently have about the user, we ask the next question for the data we still need to fill.
-But let’s start from the top! There are a couple of important things to note here.
-First, let’s look at the first three rules in the onboarding process. Notice that after executing the `"Welcome patient"` rule we don’t delete the incoming message signal that triggered it: instead, we use the same signal again to trigger the `"Ask for name"` rule, in which we prompt the user to submit their child’s name.
-This kind of connecting up the rules is actually just multiple rules fireing, some sooner than the others (acording to the `salience` index). To ensure the welcome rule fires first, we set its `salience` to 100 (as opposed to the default value 0), and then we delete the message signal later on after the `"Ask for name"` rule is executed.
-Next, to better specify the context the user is currently in, we add the `waitingForAnswer` flag, to distinguish between the conditions of the rules where we ask for the name and where we got the answer back from the user.
-This is the mechanism you can now see in the remaining rules as well: the rules for filling in the data are always triggered by the facts we have stored in memory (the data about the child), while the rules that modify the data are triggered on receiving the message signal. The “ask” and “set” rules are connected via these current facts: once we know the child’s name, but don’t know his/her age, we need to ask the user to tell us that next. And so on until we acquire all the necessary information (name, age, and height).
-
-Let’s have a look at how these things look like inside the Patient agent’s data model:
-models/agents/Patient.java
+Finally, let's have a look at what this looks like inside the patient's data model:
 
 ```java title="rules/patient/Patient.java"
 ...
@@ -125,6 +130,47 @@ public class Patient extends Agent {
     …
 }
 ```
+These parts should also look familiar to you from the first tutorial. We've now set some very basic context with which the agent can show it knows the patient.
+Great! Now it's time to start implementing
+
+
+We now need to ask for the child's current weight. This is the only piece of information we will be updating throughout the demo:
+
+```java title="rules/patient/Patient.drl"
+rule "Ask for weight"
+    when
+        patient: Patient(waitingForAnswer == false, height != null, weight == null)
+    then
+        patient.sendMessage("We can track your child's weight together to see if there are any issues! Just send me send me your child's weight and I'll check it with the doctor 😊");
+        modify(patient){setWaitingForAnswer(true)};
+end
+
+rule "Process weight"
+    when
+        message: TelegramReceivedMessage(text: text, BMIUtils.isValidWeight(text)) from entry-point "signals"
+        patient: Patient(height != null)
+    then
+        double weight = Double.parseDouble(text);
+        BMIMeasurement bmiMeasurement = new BMIMeasurement(patient.getAge(), weight, patient.getHeight());
+
+        patient.sendMessage("Thanks!");
+        patient.send(Doctor.ID, bmiMeasurement);
+        modify(patient) {
+            setWeight(weight),
+            setLastInteractionTime(new Date()),
+            setAttemptedEngagement(false)
+            };
+        delete(message);
+end
+```
+Before we turn to the 
+The first rule is fairly simple, but let's dig into the second one for a bit.
+
+First, notice that in the `"Process weight"` rule, we only use the condition `height != null` on the Patient agent. This way we can reuse the rule in every subsequent case the user sends us their child's weight, when this variable is already filled with some previous value. That's why we also set some additional things we haven't encountered in onboarding when modifying the agent (`lastInteractionTime` and `attemptedEngagement`). We'll get back to these variables in the Engagement section.
+
+But let's 
+
+
 The contents of the Patient Java file are again nothing new: it just specifies all the fields you need to fill and implements the functionality for sending Telegram messages.
 
 Last thing to bring your attention to is the Utils for checking the validity of the answer received from the user in a given context. We only implemented the simplest functionalities, but you can imagine extending them in more complex scenarios:

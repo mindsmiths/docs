@@ -21,7 +21,7 @@ rule "Welcome doctor"
 end
 ```
 
-You will notice that the two welcome rules look fairly similar, as both types of users simply register by sending messages to your bot on Telegram.
+You will notice that the two welcome rules look fairly similar, as both types of users simply register in the system by contacting your bot on Telegram.
 As mentioned, this is because we made a simplification in the design of the demo: the first person to register will always be the doctor, and every next person will by default be registered as a patient.
 Since we always have a single doctor, we also hardcode the agent’s id to make the inter-agent communication easier. The rest of the `Doctor.java` file should already look familiar to you from the previous tutorial:
 
@@ -53,4 +53,4 @@ public class Doctor extends Agent {
 
 If you want to try onboarding the doctor, you can already hit **FORGE RUN** and send your Telegram bot a message.
 
-We'll now focus on the differences in the implementation of the rest of the onboarding process for the doctor and patient agents.
+We'll now focus on the differences in the implementation of the rest of the onboarding steps for the doctor and patient agents.
