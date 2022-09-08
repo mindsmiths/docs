@@ -5,7 +5,7 @@ sidebar_position: 2
 # Adding Armory to your project
 
 You can add Armory to your project in a few easy steps that follows:
-1. First move - installing Armory with ```pip install armory~=4.0.0a9```
+1. First move - installing Armory with ```pip install armory~=4.0.0a0```
 2. Next thing you should do is integrate Armory as a service into your project by typing ``` armory-admin setup```. 
 
 By doing so, you will be prompted to set some things:
@@ -18,7 +18,7 @@ This process will look something like this:
 root:/app$ armory-admin setup
 What agent will handle signals? Nola
 URL of your IDE (leave empty if running locally): 
-http://workspace-ms-0000000000.sandbox.mindsmiths.io
+http://8000.workspace-ms-0000000000.sandbox.mindsmiths.io
 Service successfully integrated into the project.
 ```
 
@@ -32,10 +32,7 @@ public class Runner extends RuleEngineService {
     @Override
     public void initialize() {
         configureSignals(getClass().getResourceAsStream("config/signals.yaml"));
-        
-        // Create Smith if he doesn't exist
-        if (!Agents.exists(Smith.ID))
-            Agents.createAgent(new Smith());
+        ...
     }
     ...
 }

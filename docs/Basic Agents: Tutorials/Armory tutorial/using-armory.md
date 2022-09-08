@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # Using Armory in the project
 
-You can add the following functions to  the java file of the agent you chose for handling signals (e.g. Nola.java):
+You can add the following functions to the `.java` file of the agent you chose for handling signals (e.g. Nola.java):
 
-```java title="models/agents/Nola.java"
+```java title="rule_engine/src/main/java/agents/Nola.java"
 package agents;
 
 import java.util.List;
@@ -38,7 +38,6 @@ public class Nola extends Agent {
     public void showScreens(String firstScreenId, Map<String, BaseTemplate> screens) {
         ArmoryAPI.showScreens(getConnection("armory"), firstScreenId, screens);
     }
-
 }
 ```
 
@@ -48,14 +47,23 @@ Every screen consists of components, and you can either use screen templates we 
 
 Add the following to your agent class:
 ```java title="rule_engine/src/main/java/agents/Nola.java"
-public void showDemoScreen() {
-   // Using the template generator with available components
-   BaseTemplate screen = new TemplateGenerator()
-           .addComponent("title", new TitleComponent("Hello, world!"));
-   showScreen(screen);
+...
+@Data
+@NoArgsConstructor
+public class Nola extends Agent {
+    ...
+    public void showDemoScreen() {
+       // Using the template generator with available components
+       BaseTemplate screen = new TemplateGenerator()
+               .addComponent("title", new TitleComponent("Hello, world!"));
+       showScreen(screen);
+    }
+    ...
 }
 ```
+
 Now just add a rule that will trigger this method:
+
 ``` java title="rule_engine/src/main/resources/rules/nola/Nola.drl"
 package rules.nola
 
@@ -73,10 +81,8 @@ rule "Hello world"
 end
 ```
 
-Finally, run the code with ```forge run``` and click on the Armory URL you got when running armory-admin setup
-Don't worry, in case you lost it, the format is: ```https://8000.YOUR WEB IDE LINK```. In order to see the beginning of our onboarding flow, 
-you need to add any text at the end of this link, which will be used as  ```connectionId``` for our agent.
-For example, ```https://8000.YOUR WEB IDE LINK/randomText```. Everytime you change it, another agent with that specific ```connectiondId``` is created.
+Finally, run the code with ```forge run``` and click on the Armory URL you got when running armory-admin setup.
+Don't worry, in case you lost it, the format is: ```http://8000.YOUR WEB IDE LINK```. 
 
 Cool! Now that you have the setup to toy around with, we can take a closer look at what Armory actually is.
 

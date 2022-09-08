@@ -3,9 +3,9 @@ sidebar_position: 6
 ---
 
 # Adding images to screens
-**TO-DO** change the title name
 
-You can easily use images on screens. To try it out, you can add the media content to the `services/armory/public` directory, and add it normally by adding an ImageComponent to your screen:
+You can easily use images on screens. To try it out, you can add the media content to the `services/armory/public` directory, 
+and add it normally by adding an `ImageComponent` to your screen:
 
 ```java title="models/agents/Nola.java"
 public void showExampleScreen() {
