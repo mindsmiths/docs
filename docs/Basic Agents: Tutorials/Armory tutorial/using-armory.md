@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # Using Armory in the project
 
-You can add the following functions to the `.java` file of the agent you chose for handling signals (e.g. Nola.java):
+You can add the following functions to the `Mindy.java`:
 
-```java title="rule_engine/src/main/java/agents/Nola.java"
+```java title="rule_engine/src/main/java/agents/Mindy.java"
 package agents;
 
 import java.util.List;
@@ -21,13 +21,13 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-public class Nola extends Agent {
+public class Mindy extends Agent {
 
-    public Nola(String connectionId) {
+    public Mindy(String connectionId) {
         super("armory", connectionId);
     }
     
-    public Nola(String connectionName, String connectionId) {
+    public Mindy(String connectionName, String connectionId) {
         super(connectionName, connectionId);
     }
 
@@ -46,11 +46,11 @@ Your agent can now show the user a screen, or a predefined list of screens. So l
 Every screen consists of components, and you can either use screen templates we already pre-defined, or you can build screens yourself using the template generator. Let’s first use the TemplateGenerator, since you will likely use this more often.
 
 Add the following to your agent class:
-```java title="rule_engine/src/main/java/agents/Nola.java"
+```java title="rule_engine/src/main/java/agents/Mindy.java"
 ...
 @Data
 @NoArgsConstructor
-public class Nola extends Agent {
+public class Mindy extends Agent {
     ...
     public void showDemoScreen() {
        // Using the template generator with available components
@@ -64,17 +64,17 @@ public class Nola extends Agent {
 
 Now just add a rule that will trigger this method:
 
-``` java title="rule_engine/src/main/resources/rules/nola/Nola.drl"
-package rules.nola
+``` java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
+package rules.mindy
 
 import com.mindsmiths.armory.events.UserConnectedEvent
 
-import agents.Nola
+import agents.Mindy
 
 rule "Hello world"
    when
        signal: UserConnectedEvent() from entry-point "signals"
-       agent: Nola()
+       agent: Mindy()
    then
        agent.showDemoScreen();
        delete(signal);

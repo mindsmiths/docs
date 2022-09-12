@@ -8,7 +8,7 @@ You just specify the name of the screen the action component leads to.
 For example, in the code below, the “Cool, let’s go!” button at the bottom of the welcome screen leads to the screen on 
 which we ask the user for their name:
 
-```java title="rule_engine/src/main/java/agents/Nola.java"
+```java title="rule_engine/src/main/java/agents/Mindy.java"
 ...
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +23,7 @@ import com.mindsmiths.armory.templates.TemplateGenerator;
 
 @Data
 @NoArgsConstructor
-public class Nola extends Agent {
+public class Mindy extends Agent {
     String name;
     Date birthday;
     String onboardingStage;
@@ -55,18 +55,18 @@ public class Nola extends Agent {
 
 After they input the name, the submit button has “finishOnboarding” as a value, which doesn’t lead to another screen, but you can still catch it in a rule and have the system react accordingly. You can remove the rule showing the demo screen and add the following:
 
-```java title="rule_engine/src/main/resources/rules/nola/Nola.drl"
-package rules.nola
+```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
+package rules.mindy
 
 import com.mindsmiths.armory.events.UserConnectedEvent
 import com.mindsmiths.armory.events.SubmitEvent
 
-import agents.Nola
+import agents.Mindy
 
 rule "Start onboarding"
    when
        signal: UserConnectedEvent() from entry-point "signals"
-       agent: Nola(onboardingStage != "onboarded")
+       agent: Mindy(onboardingStage != "onboarded")
    then
        agent.showOnboardingScreens();
        modify(agent) {
@@ -78,7 +78,7 @@ end
 rule "Finish onboarding"
    when
        signal: SubmitEvent(getParamAsString("submit") == "finishOnboarding") from entry-point "signals"
-       agent: Nola()
+       agent: Mindy()
    then
        modify(agent) {
 	     setName(signal.getParamAsString("name")),
@@ -102,22 +102,22 @@ state s/he is in.
 
 When the screen to show is determined based on other circumstances and not the fact if/which submit action the user made, you can capture this behavior through a rule, e.g.
 
-```java title="rule_engine/src/main/resources/rules/nola/Nola.drl"
+```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
     ...
     
 rule "Show thank you screen"
     when
-        agent: Nola(onboardingStage == "onboarded")
+        agent: Mindy(onboardingStage == "onboarded")
     then
         agent.showThanksScreen();
 end
 ```
 With the implementation in agent’s java class:
-```java title="rule_engine/src/main/java/agents/Nola.java"
+```java title="rule_engine/src/main/java/agents/Mindy.java"
 ...
 @Data
 @NoArgsConstructor
-public class Nola extends Agent {
+public class Mindy extends Agent {
     ...
     public void showThanksScreen() {
         showScreen(new TitleTemplate(String.format("Thanks, %s!", name)));

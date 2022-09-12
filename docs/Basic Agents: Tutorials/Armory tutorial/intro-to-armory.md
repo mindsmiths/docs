@@ -10,14 +10,13 @@ to onboard them with a good-looking web-app. We'll show you an efficient way to 
 After finishing this course, you should be able to create your own Armory web-apps and create different screen templates. 
 
 ## What exactly is Armory?
-Armory is a Mindsmiths' frontend service that we use for building web-applications. 
-One of its biggest perks is that you can easily create different kinds of flows, because with Armory you can quickly build many screens.
- 
+Mindsmiths Armory allows us to dinamically generate web-application screens. It is seamlessly integrated with the Mindsmiths platform, with predefined components and styles - which makes prototyping fast and easy
 ## Prerequisites
-You just need an environment where you have forge set up, everything else will be covered with this tutorial.
-Also, you can use an existing Nola Brzina project and add new rules in functions there, or if you prefer to have a fresh start, you can 
-easily add these new files to your project. 
+In this tutorial, we'll be creating a new agent - Mindy Smith, she is going to guide you through your screen building journey.
 
+For start, create an empty `Mindy.java` file in `rule_engine/src/main/java/agents` and `Mindy.drl` file in `rule_engine/src/main/resources/rules/mindy`, 
+after which you'll add new functions with every new step of the tutorial.
+  
 ## Onboarding
 OK, now you know what's cooking, are you ready to start with your very next tutorial? This time, we came up with a simple onboarding process flow through a web application.
 You will learn how to quickly build different kind of screens, how templates are used, how is it combined with agents and signals and much more.

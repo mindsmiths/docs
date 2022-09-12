@@ -9,7 +9,7 @@ We mentioned you can always use one of the predefined templates to create screen
 
 But assuming you’ll often want to create your own layouts, we’ll now focus a bit more on the TemplateGenerator. Let’s look at an example of how we can use it to create a new template:
 
-```java title="rule_engine/src/main/java/agents/Nola.java"
+```java title="rule_engine/src/main/java/agents/Mindy.java"
 new TemplateGenerator("exampleTemplate")
             .addComponent("title", new TitleComponent("Screen Title"))
             .addComponent("description", new DescriptionComponent("Here is where we put the description."))

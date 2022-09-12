@@ -7,7 +7,7 @@ sidebar_position: 6
 You can easily use images on screens. To try it out, you can add the media content to the `services/armory/public` directory, 
 and add it normally by adding an `ImageComponent` to your screen:
 
-```java title="models/agents/Nola.java"
+```java title="models/agents/Mindy.java"
 public void showExampleScreen() {
         BaseTemplate newScreen = new TemplateGenerator("exampleTemplate")
             .addComponent("title", new TitleComponent("Screen Title"))

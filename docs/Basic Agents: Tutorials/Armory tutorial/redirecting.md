@@ -11,7 +11,7 @@ Add the following to the `.java` file:
 ...
 @Data
 @NoArgsConstructor
-public class Nola extends Agent {
+public class Mindy extends Agent {
     ...
     public void redirect(String redirectUrl) {
         ArmoryAPI.redirect(getConnection("armory"), redirectUrl);
@@ -23,12 +23,12 @@ public class Nola extends Agent {
 
 You can switch out our example screen for a rule that redirects the user to the company website:
 
-```java title="rule_engine/src/main/resources/rules/nola/Nola.drl"
+```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
     ...
 rule "Redirect user to Mindsmiths website"
     when
         Heartbeat() from entry-point "signals"
-        agent: Nola(onboardingStage == "onboarded")
+        agent: Mindy(onboardingStage == "onboarded")
     then
         agent.redirect("https://www.mindsmiths.com/");
 end
