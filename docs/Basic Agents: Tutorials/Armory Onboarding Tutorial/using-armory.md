@@ -1,15 +1,14 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Using Armory in the project
+# Hello world!
 
-You can add the following functions to the `Mindy.java`:
+Similarly as in other tutorials, create the file `java/agents/Mindy.java` and add the following:
 
 ```java title="rule_engine/src/main/java/agents/Mindy.java"
 package agents;
 
-import java.util.List;
 import java.util.Map;
 
 import com.mindsmiths.armory.ArmoryAPI;
@@ -41,9 +40,10 @@ public class Mindy extends Agent {
 }
 ```
 
-Your agent can now show the user a screen, or a predefined list of screens. So let’s look at how we create those.
+Your agent now controls when the user is shown some screen or a predefined sequence of screens using ArmoryAPI. So let's create our first screen!
 
-Every screen consists of components, and you can either use screen templates we already pre-defined, or you can build screens yourself using the template generator. Let’s first use the TemplateGenerator, since you will likely use this more often.
+Every screen consists of components, and you can either use screen templates we already have pre-defined, or you can build screens yourself using the template generator. 
+Let’s first use the TemplateGenerator, since you will likely use this more often.
 
 Add the following to your agent class:
 ```java title="rule_engine/src/main/java/agents/Mindy.java"
@@ -62,7 +62,8 @@ public class Mindy extends Agent {
 }
 ```
 
-Now just add a rule that will trigger this method:
+This screen will only contain a single component, which will be a title.
+Now we need to create a rule when this demo screen should be shown. Again, create the file `rules/mindy/Mindy.drl` and add the rule:
 
 ``` java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
 package rules.mindy
@@ -81,8 +82,7 @@ rule "Hello world"
 end
 ```
 
-Finally, run the code with ```forge run``` and click on the Armory URL you got when running armory-admin setup.
-Don't worry, in case you lost it, the format is: ```http://8000.YOUR WEB IDE LINK```. 
+You are now ready to run! Start the platform with ```forge run``` and click on the Armory URL you got when running `armory-admin setup`.
+Don't worry, in case you lost it, the format is: ```http://8000.YOUR WEB IDE LINK```. You can see this link in your `.env` file located at the root of your project. 
 
-Cool! Now that you have the setup to toy around with, we can take a closer look at what Armory actually is.
-
+Cool! Now that you have the setup to toy around with, we can take a closer look at what you can do with Armory.

@@ -9,7 +9,7 @@ There are a couple important concepts to grasp for using Armory. We’ll look at
 ## Armory signals and connection
 
 Let’s start from the basics: there are three different Armory signals that are caught by the Rule engine:
-* **UserConnectedEvent**: this signal is emitted each time a user connects to Armory (opens the link)
+* **UserConnectedEvent**: emitted each time a user connects to Armory (opens the link)
 * **UserDisconnectedEvent**: emitted when the user disconnects from Armory (closes the link)
 * **SubmitEvent**: emitted when the user presses something on the screen (e.g. a button)
 
