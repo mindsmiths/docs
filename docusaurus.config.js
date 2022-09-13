@@ -88,7 +88,7 @@ const config = {
             items: [
               {
                 label: 'Discord',
-                href: 'https://discord.gg/8qCpr2aSsw',
+                href: 'https://discord.gg/hyperbiome',
               },
             ],
           },

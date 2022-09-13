@@ -164,7 +164,7 @@ Depending on what you want to do, you can connect the remote GitHub/GitLab repos
 ### Pull an existing repo
 
 In case you want to pull the code from an exisitng repo, you should've received a Mindsmiths web IDE that's specifically prepared to make this process as easy as possible.
-> If you don't have  Mindsmiths web IDE that led you here you can ask for one on our [Discord channel](https://discord.gg/8qCpr2aSsw).
+> If you don't have  Mindsmiths web IDE that led you here you can ask for one on our [Discord channel](https://discord.gg/hyperbiome).
 
 You just need to run the script that will set everything up.
 
