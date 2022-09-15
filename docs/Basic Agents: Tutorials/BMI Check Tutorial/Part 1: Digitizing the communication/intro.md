@@ -5,6 +5,13 @@ sidebar_position: 1
 # First steps
 
 To allow you to jump over to the more exciting parts of the development as soon as possible, we’ve already prepared the initial steps of the implementation.
+You can find everything you need on the branch [name-of-the-branch], that'll be your starting point. 
+Let's break it down, your first steps should look something like this:
+```console
+git clone <repo-link>
+git checkout <name-of-the-branch>
+forge init
+```
 We’ll walk you through the code, so it's easier for you to get a grip on what's going on. Feel free to implement this part from scratch, or extend it in any way you want.
 
 
