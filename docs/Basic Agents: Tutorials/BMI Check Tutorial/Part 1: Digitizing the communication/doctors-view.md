@@ -4,8 +4,8 @@ sidebar_position: 7
 
 # Doctor's view
 
-Our next step is closing the interaction loop: i.e. we want the doctor to give their opinion on the child’s weight being healthy or not.
-To contact the doctor, we’ll add the "Evaluate BMI request" rule to the `Doctor.drl` file. This rule will send the calculated BMI value and age of the child:
+Our aim now is closing the interaction loop: we want the doctor to give their opinion on the child’s weight being healthy or not.
+To contact the doctor, we’ll add the "Evaluate BMI request" rule to the `Doctor.drl` file. This rule will send the calculated BMI value and age of the child to the doctor's Telegram:
 
 ```java title="rules/doctor/Doctor.drl"
 ...
@@ -19,33 +19,19 @@ rule "Evaluate BMI request"
 end
 ```
 
-We’ll implement the sending of the BMI request (sendBMIMeasurement(...)) by adding “obese” and “not obese” keyboard options as possible replies from the doctor:
+The BMI request the doctor receives will be accompanied by “obese” and “not obese” keyboard options as possible replies. To generate a keyboard, you just add the message and button texts:
 
-```java title="agents/doctor/Doctor.java"
-...
-import java.util.Arrays;
-
-import com.mindsmiths.telegramAdapter.KeyboardData;
-import com.mindsmiths.telegramAdapter.KeyboardOption;
-
-import signals.BMIMeasurement;
-import signals.Prediction;
+```java title="java/agents/Doctor.java"
 ...
 public class Doctor extends Agent {
     ...
-    private Integer modelVersion;
-    ...
-    public void sendBMIMeasurement(Prediction prediction) {
-        BMIMeasurement bmi = prediction.getBmiMeasurement();
-
-        String predictionResult = prediction.getPrediction() ? "obese" : "not obese";
-
+    public void sendBMIMeasurement(BMIMeasurement bmi) {
         TelegramAdapterAPI.sendMessage(
                 connections.get("telegram"),
                 "Can you help me with this case?\n" +
                         String.format("Age: %d\nBMI: %.1f\n", bmi.getAge(), bmi.calculateBMI()),
                 new KeyboardData(
-                        prediction.getPredictionId(),
+                        bmi.getId(),
                         Arrays.asList(
                                 new KeyboardOption("YES", "Obese"),
                                 new KeyboardOption("NO", "Not obese")
@@ -53,15 +39,14 @@ public class Doctor extends Agent {
                 )
         );
     }
-}
+...
 ```
 
-Telegram is really developer-friendly for generating all sorts of forms. To generate a keyboard, you just add the message and button texts.
-To process the doctor’s answer and communicate it back to the patient, we need to add the  "Process doctor's BMI answer" rule inside the Doctor.drl file:
+To process the doctor’s answer and communicate it back to the patient, we need to add the "Process doctor's BMI answer" rule inside the `Doctor.drl` file:
 
 ```java title="rules/doctor/Doctor.drl"
 ...
-rule "Process doctor's BMI answer"
+rule "Process doctor's answer"
    when
        answer: TelegramKeyboardAnswered() from entry-point "signals"
        bmi: BMIMeasurement(id == answer.referenceId)
@@ -74,7 +59,8 @@ rule "Process doctor's BMI answer"
  end
 ```
 
-As we used the keyboard to get the doctor’s evaluation, the type of incoming signal we now expect is `TelegramKeyboardAnswered()`, making sure the answer we fetched is matched to a specific request (`BMIMeasurement(id == answer.referenceId)`). In the `then` part, we just need to interpret the answer (`answer.getAnswer().equals("YES")`) and send it to the Patient agent we received the initial signal from (`bmi.getFrom()`).
+As we used the keyboard to get the doctor’s evaluation, the type of incoming signal we now expect is `TelegramKeyboardAnswered()`, 
+making sure the answer we fetched is matched to a specific request (`BMIMeasurement(id == answer.referenceId)`). In the `then` part, we just need to interpret the answer (`answer.getAnswer().equals("YES")`) and send it to the Patient agent we received the initial signal from (`bmi.getFrom()`).
 
 As you can notice, we’re sending the response to the Patient in the form of a new signal, so let’s define it:
 
