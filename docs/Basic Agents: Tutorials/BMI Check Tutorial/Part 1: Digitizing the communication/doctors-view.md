@@ -4,8 +4,8 @@ sidebar_position: 7
 
 # Doctor's view
 
-Our next step is closing the interaction loop: we want the doctor to pass the judgment on the child’s health.
-To contact the doctor, we’ll add the "Evaluate BMI request"  rule to the Doctor.drl file. This rule will send the calculated BMI value and age of the child:
+Our next step is closing the interaction loop: i.e. we want the doctor to give their opinion on the child’s weight being healthy or not.
+To contact the doctor, we’ll add the "Evaluate BMI request" rule to the `Doctor.drl` file. This rule will send the calculated BMI value and age of the child:
 
 ```java title="rules/doctor/Doctor.drl"
 ...

@@ -5,7 +5,7 @@ sidebar_position: 3
 # Doctor and Patient Agent: Local view
 
 We already mentioned that each agent cares only for the needs of the user it is assigned to, 
-instead of being concerned with searching for optimal solutions at system level.users69
+instead of being concerned with searching for optimal solutions at system level.
 
 Looking at the principles behind the implementation, there is nothing especially new you will learn from the process of onboarding patients compared to the communication agent 
 you implemented in the Nola Brzina Tutorial.

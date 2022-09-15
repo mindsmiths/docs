@@ -158,7 +158,7 @@ rule "Process weight"
         modify(patient) {
             setWeight(weight),
             setLastInteractionTime(new Date()),
-            setAttemptedEngagement(false)
+            setWaitingForAnswer(false)
             };
         delete(message);
 end
@@ -166,7 +166,9 @@ end
 Before we turn to the 
 The first rule is fairly simple, but let's dig into the second one for a bit.
 
-First, notice that in the `"Process weight"` rule, we only use the condition `height != null` on the Patient agent. This way we can reuse the rule in every subsequent case the user sends us their child's weight, when this variable is already filled with some previous value. That's why we also set some additional things we haven't encountered in onboarding when modifying the agent (`lastInteractionTime` and `attemptedEngagement`). We'll get back to these variables in the Engagement section.
+First, notice that in the `"Process weight"` rule, we only use the condition `height != null` on the Patient agent. 
+This way we can reuse the rule in every subsequent case the user sends us their child's weight, when this variable is already filled with some previous value. 
+That's why we also set some additional things we haven't encountered in onboarding when modifying the agent (`lastInteractionTime` and `waitingForAnswer`). We'll get back to these variables in the Engagement section.
 
 But let's 
 

@@ -25,7 +25,7 @@ You will notice that the two welcome rules look fairly similar, as both types of
 As mentioned, this is because we made a simplification in the design of the demo: the first person to register will always be the doctor, and every next person will by default be registered as a patient.
 Since we always have a single doctor, we also hardcode the agent’s id to make the inter-agent communication easier. The rest of the `Doctor.java` file should already look familiar to you from the previous tutorial:
 
-```java title="models/agents/Doctor.java"
+```java title="java/agents/Doctor.java"
 package agents.doctor;
 
 import lombok.Data;

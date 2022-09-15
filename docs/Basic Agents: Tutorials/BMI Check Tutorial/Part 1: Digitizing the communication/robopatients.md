@@ -2,7 +2,7 @@
 sidebar_position: 8
 ---
 
-# Adding robopatients
+# Bonus feature: Adding robopatients
 
 To simulate the doctor’s workload, and also make the testing easier, we’ll introduce fake patients in the system: RoboPatients.
 These will be fake patient users that we’ll simply use to mock real user activity and simulate the kind of workload the doctor would normally be handling.

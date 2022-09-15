@@ -5,42 +5,48 @@ sidebar_position: 5
 # Engaging 101: I care about you
 
 Another important part is showing the user you care about them and proactively encourage them to tend to their problems.
-One of the very simple ways to show care is addressing your users in creative ways, so we can again use GPT-3 to make these interactions slightly more natural. Rules like this you’ve also seen before:
+One of the very simple ways to show care is talking to your users in creative ways. Here we can again use GPT-3 to make interactions for users slightly more natural.
+
+These rules should also already look familiar to you:
 
 ```java title="rules/patient/Patient.drl"
 ...
 rule "Engage patient"
-   when
-       Heartbeat(ts: timestamp) from entry-point "signals"
-       patient: Patient(lastInteractionTime before[30s] ts, attemptedEngagement == false)
+    when
+        Heartbeat(now: timestamp) from entry-point "signals"
+        patient: Patient(lastInteractionTime before[30s] now, waitingForAnswer != true)
    then
        patient.engageProactively();
-       modify(patient) {setAttemptedEngagement(true)};
+       modify(patient) {setWaitingForAnswer(true)};
 end
 
 rule "Send GPT3 response"
-   when
-       gpt3Result: GPT3Completion() from entry-point "signals"
-       patient: Patient()
-   then
-       String response = gpt3Result.getBestResponse();
-       patient.sendMessage(response);
-       delete(gpt3Result);
+    when
+        gpt3Result: GPT3Completion() from entry-point "signals"
+        patient: Patient()
+    then
+        String response = gpt3Result.getBestResponse();
+        patient.sendMessage(response);
+        delete(gpt3Result);
 end
 ```
 
-The main premise behind this feature is that you don’t make a real impact on someone’s life with a one-off thing. Ideally, you want to encourage your users to continuously care for their child’s health and send their data, say, once a week. For demonstrative purposes, we’ll keep the time passed since the last checkup at 30 seconds and send a reminder to the user that they should be checking their child’s weight again. We can also use GPT-3 for asking the user to correct their answer should they send something we don’t expect in a certain context.
+The main premise behind this feature is that you don’t make a real impact on someone’s life with a one-off thing. 
+Ideally, you want to encourage your users to continuously care for their child’s health and send their data, say, once a week. 
+For demonstrative purposes, we’ll keep the time passed since the last checkup at 30 seconds and send a reminder to the user that they should be checking their child’s weight again. 
+
+We can also use GPT-3 for asking the user to correct their answer should they send something we don’t expect in a certain context.
 
 ```java title="rules/patient/Patient.drl"
 ...
-rule "Unrecognizable message content"
-   salience -100
-   when
-       message: TelegramReceivedMessage(text: text) from entry-point "signals"
-       patient: Patient()
-   then
-       patient.answerIfInvalidValue();
-       delete(message);
+rule "Unrecognizable message"
+    salience -100
+    when
+        message: TelegramReceivedMessage(text: text) from entry-point "signals"
+        patient: Patient()
+    then
+        patient.answerIfInvalidValue();
+        delete(message);
 end
 ```
 
@@ -51,11 +57,6 @@ You can again control this through the input prompt you send to GPT-3, so let’
 ...
 public class Patient extends Agent {
     ...
-    private Date lastInteractionTime;
-    private boolean attemptedEngagement;
-    
-    ...
-    
     public void engageProactively() {
             String intro = "You are a doctor talking to a patient. " +
                         "The patient should send their child's weight for a regular check-up. " +
@@ -95,5 +96,7 @@ public class Patient extends Agent {
         );
     }
 ```
-As you can see, you’re tweaking GPT-3 to generate different messages based on the context: if the agent was expecting the answer for the child’s height, it will respond differently than if the onboarding process is complete and the system only expects updates on the child’s current weight.
+As you can see, you’re tweaking GPT-3 to generate different messages based on the context: if the agent was expecting the answer for the child’s height, it will respond differently than if the onboarding process is complete 
+and the system only expects updates on the child’s current weight.
+
 And that’s all there is to it! You can now run **forge reset** and **forge run** again to try these features out, so you can get familiar with the user experience the patients in your system will go through.
