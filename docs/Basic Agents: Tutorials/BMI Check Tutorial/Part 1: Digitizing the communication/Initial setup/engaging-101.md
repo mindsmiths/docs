@@ -4,17 +4,16 @@ sidebar_position: 5
 
 # Engaging 101: I care about you
 
-Another important part is showing the user you care about them and proactively encourage them to tend to their problems.
-One of the very simple ways to show care is talking to your users in creative ways. Here we can again use GPT-3 to make interactions for users slightly more natural.
-
-These rules should also already look familiar to you:
+Apart from being familiar with the user's context, it's also important to show the user you care about them by providing guidance and proactively encouraging them to tend to their problems.
+One very simple way to do this is by addressing your users in creative and diverse ways.
+Here we can again use the GPT-3 model to make interactions with users more natural:
 
 ```java title="rules/patient/Patient.drl"
 ...
 rule "Engage patient"
     when
         Heartbeat(now: timestamp) from entry-point "signals"
-        patient: Patient(lastInteractionTime before[30s] now, waitingForAnswer != true)
+        patient: Patient(lastInteractionTime before[1m] now, waitingForAnswer != true)
    then
        patient.engageProactively();
        modify(patient) {setWaitingForAnswer(true)};
@@ -31,11 +30,12 @@ rule "Send GPT3 response"
 end
 ```
 
-The main premise behind this feature is that you don’t make a real impact on someone’s life with a one-off thing. 
-Ideally, you want to encourage your users to continuously care for their child’s health and send their data, say, once a week. 
-For demonstrative purposes, we’ll keep the time passed since the last checkup at 30 seconds and send a reminder to the user that they should be checking their child’s weight again. 
+The main premise behind this feature is that you can’t make a real impact on someone’s life with a purely reactive approach: you need to proactively show you care about the user and their problems. 
+Ideally, you want to encourage your users to continuously care for their child’s health and regularly send updated weight data. 
+For demonstrative purposes, we’ll keep the time passed since the last checkup at 1 minute and send a reminder to the user to check their child’s weight again. In real life, of course, this would more likely be a weekly or monthly cycle.
 
-We can also use GPT-3 for asking the user to correct their answer should they send something we don’t expect in a certain context.
+
+We also use GPT-3 for asking the user to correct their answer should they send something we don’t expect in a certain context based on our input validation function:
 
 ```java title="rules/patient/Patient.drl"
 ...
@@ -50,10 +50,11 @@ rule "Unrecognizable message"
 end
 ```
 
-Notice that the salience for this rule is way lower than for the other rules we wrote: this makes it into a kind of “catch-all” rule: it will make sure no message the user sends stays unprocessed and the system can react appropriately in different situations.
-You can again control this through the input prompt you send to GPT-3, so let’s take a look at what that looks like:
+Notice that the salience for this rule is way lower than for the other rules we wrote: this makes it into a kind of “catch-all” rule: 
+it will make sure no message the user sends stays unprocessed, and that the system can react appropriately in different situations.
+You can again control this through the input prompt you send to GPT-3, so let’s take a look at what that looks like in the Java file:
 
-```java title="agents/patient/Patient.java"
+```java title="java/agents/Patient.java"
 ...
 public class Patient extends Agent {
     ...
@@ -96,7 +97,10 @@ public class Patient extends Agent {
         );
     }
 ```
+
 As you can see, you’re tweaking GPT-3 to generate different messages based on the context: if the agent was expecting the answer for the child’s height, it will respond differently than if the onboarding process is complete 
 and the system only expects updates on the child’s current weight.
 
-And that’s all there is to it! You can now run **forge reset** and **forge run** again to try these features out, so you can get familiar with the user experience the patients in your system will go through.
+And that’s all there is to it: you can now run **forge run** to try these features out, so you can get familiar with the user experience the patients in your system will go through.
+
+Congrats, you are now ready to start with the development!
