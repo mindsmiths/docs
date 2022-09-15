@@ -51,7 +51,7 @@ end
 Notice that in this simple case, the total number of active agents will correspond to the number of registered users (with the exception of Agent Smith, who doesn’t have a user). In more complex scenarios, this might not be the case.
 
 
-That’s it! Write **forge reset** in the Terminal first to clear the database and start **FORGE RUN** to try it out!
+That’s it! Write **forge reset** in the Terminal first to clear the database and start **forge run** to try it out!
 
 ## Part 2: Handling external signals
 

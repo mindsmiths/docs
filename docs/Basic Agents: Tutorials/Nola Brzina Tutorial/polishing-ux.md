@@ -38,5 +38,5 @@ To single out only the first received message, we make use of a special signal `
 Another important part is the ```salience``` parameter. Rules with higher salience have priority over the ones with lower salience, so you can think of it as a way of imposing order of execution on rules triggered by similar conditions. So, if we want our new rule to trigger before ```"Handle message"``` (which has the default salience of ``0``), we can set its salience to ``100``. Saliences can also be negative, which is useful for writing catch-all rules that make sure no signal stays unprocessed.
 
 
-Since an agent for your Telegram number already exists, stop the system with ```Ctrl+C ``` and write forge reset to clear the database.
-Start everything again with **FORGE RUN** to try out your new rule by sending a hello message!
+Since an agent for your Telegram number already exists, stop the system with ```Ctrl+C ``` and write **forge reset** to clear the database.
+Start everything again with **forge run** to try out your new rule by sending a hello message!

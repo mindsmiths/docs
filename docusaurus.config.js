@@ -81,6 +81,12 @@ const config = {
             label: 'Quickstart',
           },
           {
+            type: 'doc',
+            docId: 'Technical documentation/integration',
+            position: 'left',
+            label: 'API',
+          },
+          {
             href: 'https://www.mindsmiths.com/',
             label: 'Mindsmiths',
             position: 'right',
@@ -108,7 +114,7 @@ const config = {
             items: [
               {
                 label: 'Discord',
-                href: 'https://discord.gg/knYDVJ5Ez8',
+                href: 'https://discord.gg/hyperbiome',
               },
             ],
           },
