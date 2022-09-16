@@ -9,6 +9,9 @@ To contact the doctor, we’ll add the "Evaluate BMI request" rule to the `Docto
 
 ```java title="rules/doctor/Doctor.drl"
 ...
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
+import signals.BMIMeasurement
+...
 rule "Evaluate BMI request"
   when
       doctor: Doctor()
@@ -22,6 +25,10 @@ end
 The BMI request the doctor receives will be accompanied by “obese” and “not obese” keyboard options as possible replies. To generate a keyboard, you just add the message and button texts:
 
 ```java title="java/agents/Doctor.java"
+...
+import com.mindsmiths.telegramAdapter.KeyboardData;
+import com.mindsmiths.telegramAdapter.KeyboardOption;
+import signals.BMIMeasurement;
 ...
 public class Doctor extends Agent {
     ...
@@ -46,25 +53,29 @@ To process the doctor’s answer and communicate it back to the patient, we need
 
 ```java title="rules/doctor/Doctor.drl"
 ...
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
+import signals.BMIResponse
+...
 rule "Process doctor's answer"
    when
-       answer: TelegramKeyboardAnswered() from entry-point "signals"
-       bmi: BMIMeasurement(id == answer.referenceId)
+       response: TelegramKeyboardAnswered() from entry-point "signals"
+       bmi: BMIMeasurement(id == response.referenceId)
        doctor: Doctor()
    then
-       boolean isObese = answer.getAnswer().equals("YES");
+       boolean isObese = response.getAnswer().equals("YES");
        doctor.send(bmi.getFrom(), new BMIResponse(bmi, isObese));
        doctor.sendMessage("Thanks!");
-       delete(answer);
+       delete(response);
  end
 ```
 
 As we used the keyboard to get the doctor’s evaluation, the type of incoming signal we now expect is `TelegramKeyboardAnswered()`, 
-making sure the answer we fetched is matched to a specific request (`BMIMeasurement(id == answer.referenceId)`). In the `then` part, we just need to interpret the answer (`answer.getAnswer().equals("YES")`) and send it to the Patient agent we received the initial signal from (`bmi.getFrom()`).
+making sure the answer we fetched is matched to a specific request (`BMIMeasurement(id == answer.referenceId)`). 
+In the `then` part, we just need to interpret the answer (`answer.getAnswer().equals("YES")`) and send it to the Patient agent we received the initial signal from (`bmi.getFrom()`).
 
-As you can notice, we’re sending the response to the Patient in the form of a new signal, so let’s define it:
+As you can notice, we’re again sending the response to the Patient in the form of a new signal, so let’s define it:
 
-```java title="models/signals/BMIResponse.java"
+```java title="java/signals/BMIResponse.java"
 package signals;
 
 import lombok.*;
@@ -81,24 +92,29 @@ public class BMIResponse extends Signal {
 }
 ```
 
-To finish fully digitizing the patient-doctor communication, all that’s left to do is to process the received reply from the Doctor and send it to the patient. We are going to write a new rule "BMI request answered" that reacts to the received signal and notifies the patient, updating the time the patient last received a response:
+As you can see, the signal contains both the data the patient sent and the doctor's answer.
+To finish fully digitizing the patient-doctor communication, all that’s left to do is to process the received reply from the Doctor and send it to the patient.
+
+We are going to write a new rule "BMI request answered" that reacts to the received signal and notifies the patient, updating the time the patient last received a response:
 ```java title="rules/patient/Patient.drl"
 ...
 import signals.BMIResponse
 ...
 rule "BMI request answered"
     when
-        res: BMIResponse(req: request) from entry-point "signals"
+        response: BMIResponse(request: request) from entry-point "signals"
         patient: Patient()
     then
         patient.sendMessage(
             String.format(
                 "Your child with its current weight (%.1f kg) is %s",
-                req.getWeight(), res.isObese() ? "obese" : "not obese"
+                request.getWeight(), response.isObese() ? "obese" : "not obese"
             )
         );
         modify(patient) {setLastInteractionTime(new Date())};
-        delete(res);
+        delete(response);
 end
 ```
-That’s it, you can now try the whole loop! Register one user as doctor, and another as a patient, and try creating a couple interactions!
+Notice that in all the rules we wrote, we delete the signal after processing, same as we did before. 
+
+And that’s it, you can now try out the whole communication loop! Just register one user as doctor, and another as a patient, and try creating a couple bmi requests and responses!

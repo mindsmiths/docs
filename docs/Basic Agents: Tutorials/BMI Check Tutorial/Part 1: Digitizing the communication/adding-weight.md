@@ -10,6 +10,9 @@ So, let's pick up where we left off and ask the user to send us the child's weig
 
 ```java title="rules/patient/Patient.drl"
 ...
+import signals.BMIMeasurement
+import agents.doctor.Doctor
+...
 rule "Ask for weight"
     when
         patient: Patient(waitingForAnswer == false, height != null, weight == null)
@@ -44,9 +47,10 @@ First, notice that in the "Process weight" rule, we only use the condition `heig
 This way we can reuse the rule in every subsequent case the user sends us their child's weight, when this variable is already filled with some previous value.
 
 Once you have the latest weight, you need to forward the user's question to the doctor, so they can evaluate if the child has obesity issues.
-However, the patient's agent cannot have direct access to the doctor (remember what we talked about - each type of user in the system has different needs and preferences). 
-Instead, the Patient agent packs up the request it has into a signal and sends it to the Doctor agent to process.
+However, the patient's agent cannot have direct access to the doctor (remember what we talked about - each type of user in the system has different needs and preferences).
+Since we only have a single Doctor agent in this demo, we can just identify it using the hardcoded static id.
 
+Instead, the Patient agent packs up the request it has into a signal and sends it to the Doctor agent to process.
 This signal is just another Java class that we use for agent communication:
 
 ```java title="java/signals/BMIMeasurement.java"
