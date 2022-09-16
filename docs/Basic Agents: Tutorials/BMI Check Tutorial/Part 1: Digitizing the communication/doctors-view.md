@@ -12,7 +12,7 @@ To contact the doctor, we’ll add the "Evaluate BMI request" rule to the `Docto
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
 import signals.BMIMeasurement
 ...
-rule "Evaluate BMI request"
+rule "Ask doctor for help with BMI request"
   when
       doctor: Doctor()
       bmiMeasurement: BMIMeasurement() from entry-point "signals"
@@ -56,7 +56,7 @@ To process the doctor’s answer and communicate it back to the patient, we need
 import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
 import signals.BMIResponse
 ...
-rule "Process doctor's answer"
+rule "Process doctor's response"
    when
        response: TelegramKeyboardAnswered() from entry-point "signals"
        bmi: BMIMeasurement(id == response.referenceId)
@@ -100,7 +100,7 @@ We are going to write a new rule "BMI request answered" that reacts to the recei
 ...
 import signals.BMIResponse
 ...
-rule "BMI request answered"
+rule "Send BMI response to the patient"
     when
         response: BMIResponse(request: request) from entry-point "signals"
         patient: Patient()
