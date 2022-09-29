@@ -38,7 +38,6 @@ public class Prediction {
     private String predictionId;
     private Boolean prediction;
     private Integer modelVersion;
-    private Double confidence; ///////////////!!!!!!!!!!!!!!!!!!!!!!!!!! Model trainer also offers a calculation of the estimated `confidence` - roughly how sure the model is of the prediction it made. It can be used as a reference point for the doctor to see how much to rely on the model’s response when making a decision. 
     private BMIMeasurement bmiMeasurement;
     private boolean sentToDoctor;
 
@@ -51,10 +50,9 @@ public class Prediction {
 The most important fields are the `bmiMeasurement` (the input values for the model) and the `prediction` (the model’s binary decision on obesity).
 As we'll be re-training the model as we go along and collect more data, we also keep track of the version of the model that made the prediction (`modelVersion`).
 If there is a newer model version available before the doctor gets around to manually checking the request, the request will be sent to this newer model first.
-We keep track of which requests have been sent to the Doctor with the `sentToDoctor` flag. As the Prediction object is inserted as a fact in our knowledge base until the processing is complete (i.e. the decision about the request has been sent back to the Patient agent), the `sentToDoctor` flag also enables us to prevent the Doctor agent’s rules from re-firing for the same prediction instance.
+We keep track of which requests have been sent to the Doctor with the `sentToDoctor` flag. 
+As the Prediction object is inserted as a fact in our knowledge base until the processing is complete (i.e. the decision about the request has been sent back to the Patient agent), 
+the `sentToDoctor` flag also enables us to prevent the Doctor agent’s rules from re-firing for the same prediction instance.
 
 
 Okay, we are now ready to set our model trainer in motion and start learning!
-
-
-// TODO  private Double confidence; ///////////////!!!!!!!!!!!!!!!!!!!!!!!!!! Model trainer also offers a calculation of the estimated `confidence` - roughly how sure the model is of the prediction it made. It can be used as a reference point for the doctor to see how much to rely on the model’s response when making a decision.
