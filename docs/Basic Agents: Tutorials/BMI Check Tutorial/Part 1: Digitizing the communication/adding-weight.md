@@ -6,13 +6,15 @@ sidebar_position: 5
 
 With the onboarding and engagement processes in place, we can move on to implementing the code for the BMI checkup.
 
-So, let's pick up where we left off and ask the user to send us the child's weight: 
+So, let's pick up where we left off and ask the user to send us the child's weight:  // TODO switch order?
 
 ```java title="rules/patient/Patient.drl"
 ...
 import signals.BMIMeasurement
 import agents.doctor.Doctor
 ...
+////////////////////////// Process weight //////////////////////////
+
 rule "Ask for weight"
     when
         patient: Patient(waitingForAnswer == false, height != null, weight == null)
@@ -74,7 +76,16 @@ public class BMIMeasurement extends Signal {
 }
 
 ```
+As a final step, don't forget to add the `weight` field to your Patient agent model:
+```java title="java/agents/Patient.java"
+public class Patient extends Agent {
+    ...
+    private Double weight;
+    ...
+}
+```
 
-That's it! When the doctor's agent receives the signal from the Patient, it can decide what to do with the received data. This will be our next step: implementing the processing of the received singal on the Doctor's side.  
+That's it! When the doctor's agent receives the signal from the Patient, it can decide what to do with the received data. 
+This will be our next step: implementing the processing of the received singal on the Doctor's side.  
 
 For now, you can already run the platform with **forge run** to test out what this entire process looks like for your patients!

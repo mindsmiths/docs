@@ -1,15 +1,18 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Engaging 101: I care about you
 
-Apart from being familiar with the user's context, it's also important to show the user you care about them by providing guidance and proactively encouraging them to tend to their problems.
-One very simple way to do this is by addressing your users in creative and diverse ways.
-Here we can again use the GPT-3 model to make interactions with users more natural:
+Apart from being familiar with the user's context, it's also important to show the user you care about them by providing 
+guidance and proactively encouraging them to tend to their problems.
+To add some creativity to the way you address your users and make the interactions more natural and diverse,
+we can again use the GPT-3 model to make interactions with users more natural:
 
 ```java title="rules/patient/Patient.drl"
 ...
+////////////////////////// GPT-3 rules //////////////////////////
+
 rule "Engage patient"
     when
         Heartbeat(now: timestamp) from entry-point "signals"
@@ -28,14 +31,18 @@ rule "Send GPT3 response"
         patient.sendMessage(response);
         delete(gpt3Result);
 end
+...
 ```
 
-The main premise behind this feature is that you can’t make a real impact on someone’s life with a purely reactive approach: you need to proactively show you care about the user and their problems. 
+The main premise behind this feature is that you can’t make a real impact on someone’s life with a purely reactive approach: 
+you need to proactively show you care about the user and their problems. 
 Ideally, you want to encourage your users to continuously care for their child’s health and regularly send updated weight data. 
-For demonstrative purposes, we’ll keep the time passed since the last checkup at 1 minute and send a reminder to the user to check their child’s weight again. In real life, of course, this would more likely be a weekly or monthly cycle.
+For demonstrative purposes, we’ll keep the time passed since the last checkup at 1 minute and send a reminder to the 
+user to check their child’s weight again. In real life, of course, this would more likely be a weekly or monthly cycle.
 
 
-We also use GPT-3 for asking the user to correct their answer should they send something we don’t expect in a certain context based on our input validation function:
+We also use GPT-3 for asking the user to correct their answer should they send something 
+we didn’t expect in a certain context based on our input validation function:
 
 ```java title="rules/patient/Patient.drl"
 ...
@@ -96,11 +103,14 @@ public class Patient extends Agent {
                 0.31 // temperature
         );
     }
+}
 ```
 
-As you can see, you’re tweaking GPT-3 to generate different messages based on the context: if the agent was expecting the answer for the child’s height, it will respond differently than if the onboarding process is complete 
+As you can see, you’re tweaking GPT-3 to generate different messages based on the context: 
+if the agent was expecting the answer for the child’s height, it will respond differently than if the onboarding process is complete 
 and the system only expects updates on the child’s current weight.
 
-And that’s all there is to it: you can now run **forge run** to try these features out, so you can get familiar with the user experience the patients in your system will go through.
+And that’s all there is to it: you can now run **FORGE RUN** to try these features out, 
+so you can get familiar with the user experience the patients in your system will go through.
 
-Congrats, you are now ready to start with the development!
+Congrats, you are now ready to start developing!
