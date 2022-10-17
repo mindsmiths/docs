@@ -76,9 +76,9 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'Quickstart/intro',
+            docId: 'Tutorials/intro',
             position: 'left',
-            label: 'Quickstart',
+            label: 'Tutorials',
           },
           {
             type: 'doc',
@@ -104,8 +104,8 @@ const config = {
                 to: '/docs/Mindsmiths Platform/intro',
               },
               {
-                label: 'Quickstart',
-                to: '/docs/Quickstart/intro',
+                label: 'Tutorials',
+                to: '/docs/Tutorials/intro',
               },
             ],
           },
