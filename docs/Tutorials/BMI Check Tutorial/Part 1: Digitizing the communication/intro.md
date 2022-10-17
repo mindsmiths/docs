@@ -15,7 +15,7 @@ forge init
 ```
 
 We’ll walk you through the code, so it's easier for you to get a grip on what's going on. If you think you've got it, 
-you can just continue with the implementation from the point where we leave you off at the end of the section called [Initial setup](./Initial setup/welcome-user).
+you can just continue with the implementation from the point where we leave you off at the end of the section called [Initial setup](./Initial%20setup/welcome-user).
 
 :::note
 Remember to set the environment variables in [.env file](../intro.md) located at the root of the project in your web IDE, so you can run the system.

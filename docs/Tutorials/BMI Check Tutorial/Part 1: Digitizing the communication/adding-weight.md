@@ -100,4 +100,4 @@ Also, notice that we only use the condition `height != null`, so we can use the 
 That's it! When the doctor's agent receives the signal from the Patient agent, it can decide what to do with the received data. 
 This will be our next step: implementing the processing of the received singal on the Doctor's side.  
 
-For now, you can already run the platform with **forge run** to test out what this entire process looks like for your patients!
+For now, you can already run the platform with **FORGE RUN** to test out what this entire process looks like for your patients!
