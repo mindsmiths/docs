@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Forge 1.5 beta: Migration guide
+# Migration guide
 
 
 ## [1.5] - 2022-10-19

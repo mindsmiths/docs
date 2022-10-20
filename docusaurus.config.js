@@ -64,25 +64,25 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'Mindsmiths Platform/intro',
+            docId: 'src/Mindsmiths Platform/intro',
             position: 'left',
             label: 'Platform',
           },
           {
             type: 'doc',
-            docId: 'Coding Environment/environment-setup',
+            docId: 'src/Coding Environment/environment-setup',
             position: 'left',
             label: 'Environment',
           },
           {
             type: 'doc',
-            docId: 'Tutorials/intro',
+            docId: 'src/Tutorials/intro',
             position: 'left',
             label: 'Tutorials',
           },
           {
             type: 'doc',
-            docId: 'Technical documentation/integration',
+            docId: 'src/Technical documentation/integration',
             position: 'left',
             label: 'API',
           },
@@ -101,11 +101,11 @@ const config = {
             items: [
               {
                 label: 'Platform',
-                to: '/docs/Mindsmiths Platform/intro',
+                to: '/docs/src/Mindsmiths Platform/intro',
               },
               {
                 label: 'Tutorials',
-                to: '/docs/Tutorials/intro',
+                to: '/docs/src/Tutorials/intro',
               },
             ],
           },

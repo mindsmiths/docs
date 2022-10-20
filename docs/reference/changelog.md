@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Forge 1.5 beta: Changelog
+# Changelog
 
 
 ## [1.5 beta] - 2022-10-19
@@ -201,9 +201,3 @@ Aside from the ones mentioned, there were lots of bug fixes and improvements.
 #### Fixed
 - methods whose name starts with `get` are no longer evaluated and serialized to MongoDB
 - `MONGO_REPLICA_SET_NAME` setting name
-
-
-------------------------------------------------------------
-
-#### How do I write a changelog?
-https://keepachangelog.com/en/0.3.0/
