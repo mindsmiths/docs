@@ -93,6 +93,11 @@ const config = {
           },
         ],
       },
+      algolia: {
+        appId: 'HSNYVGS9V4',
+        apiKey: 'YOUR_SEARCH_API_KEY',
+        indexName: 'mindsmiths-sandbox-docs',
+      },
       footer: {
         style: 'dark',
         links: [

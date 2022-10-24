@@ -29,6 +29,7 @@ The BMI request the doctor receives will be accompanied by “obese” and “no
 import com.mindsmiths.telegramAdapter.KeyboardData;
 import com.mindsmiths.telegramAdapter.KeyboardOption;
 import signals.BMIMeasurement;
+import java.util.Arrays;
 ...
 public class Doctor extends Agent {
     ...
