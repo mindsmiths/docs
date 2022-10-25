@@ -156,7 +156,7 @@ rule "Handle message"
        };
        agent.askGPT3();
        delete(message);
-End
+end
 
 rule "Send GPT3 response"
     when

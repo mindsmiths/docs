@@ -69,7 +69,7 @@ import agents.Butler;
 
 rule "Agent created"
     when
-        message: Initialize() from entry-point "agent-created"
+        message: Initialize() from entry-point "signals"
         agent: Butler()
     then
         agent.sendMessage("Booting up!");

@@ -122,12 +122,14 @@ We read off the current time from the heartbeat - the periodic system pulse - an
 ...
 // highlight-added-line
 import java.util.Date;
+// highlight-added-line
+import java.util.ArrayList;
 
 @Getter
 @Setter
 public class Nola extends Agent {
-
     private List<String> memory = new ArrayList<>();
+    private int MAX_MEMORY = 6;
     // highlight-added-line
     private Date lastInteractionTime;
 

@@ -12,7 +12,7 @@ Now that your instance of Forge is up and running, you need a way to communicate
 We will use an existing integration with Telegram as a way for your system to communicate with the outside world. Just install the telegram adapter:
 
 ```console
-root:/app$ pip install "telegram-adapter[dev]==4.0.0a12"
+root:/app$ pip install "telegram-adapter[dev]==5.0.0b0"
 ```
 
 Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). To find it, just click on the contact search icon and type in "BotFather". Send the bot a message "/newbot" to create a new bot. 
@@ -51,11 +51,6 @@ public class Nola extends Agent {
     public Nola() {
     }
 
-    public Nola(String connectionName, String connectionId) {
-        super(connectionName, connectionId);
-    }
-
-
     public void sendMessage(String text) {
         String chatId = getConnections().get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
@@ -66,10 +61,11 @@ public class Nola extends Agent {
 We have created a simple helper function ```sendMessage``` to make it easier to send messages over Telegram. As each agent of class Nola communicates with exactly one user, we use that user’s Telegram ```chatId```.  Now that you’ve defined your first class, let’s write your first rule! We create a new file inside rules, with path ```rules/nola/Conversation.drl```:
 
 ```java title="rules/nola/Conversation.drl"
-
 package rules.nola;
-import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
-import agents.Nola;
+
+import com.mindsmiths.telegramAdapter.events.TelegramReceivedMessage
+
+import agents.Nola
 
 
 rule "Handle message"
