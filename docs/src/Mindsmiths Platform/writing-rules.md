@@ -37,20 +37,20 @@ The rule name gives a short description of what a rule does (e.g. "Send notifica
 The `when` part of the rule is implemented in a special Drools language, while the `then` part is written in Java (with some Drools-specific constructs).
 
 For example:
-```java title="rules/customerAgent/CustomerAgent.drl"
-package rules.customerAgent;
+```java title="rules/doctor/Doctor.drl"
+package rules.doctor;
 
 import ...
 
 rule "Find available support agent"
     when
-        Customer(needsHelp == true)
-        SupportAgent(available == true)
+        Patient(needsHelp == true)
+        Doctor(available == true)
     then
-        Log.info("Found an available agent!");
+        Log.info("Doctor, a patient needs your attention!");
 end
 ```
-This rule checks if there is a `Customer` who needs help, and a `SupportAgent` who is available.
+This rule checks if there is a `Patient` who needs help, and a `Doctor` who is available.
 
 
 ## Rule mechanics
