@@ -39,7 +39,6 @@ To send the signal, just add the following line to `"First contact"` rule:
 import signals.AgentCreated
 
 rule "First contact"
-    salience 100
     when
         initialize: Initialize() from entry-point "signals"
         agent: Nola()

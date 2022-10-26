@@ -34,7 +34,7 @@ Every time when there is a change in an existing rule, the modified part will be
 ```java title="rules/nola/Conversation.drl"
 ...
 // highlight-added-line
-import com.mindsmiths.gpt3.completion.GPT3Completion;
+import com.mindsmiths.gpt3.completion.GPT3Completion
 ...
 rule "Handle message"
     when

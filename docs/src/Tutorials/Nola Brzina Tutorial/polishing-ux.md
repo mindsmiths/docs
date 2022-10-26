@@ -11,11 +11,10 @@ All we need to do is add a new rule in the ```Conversation.drl``` file:
 
 ```java title="rules/Nola/Conversation.drl"
 // highlight-added-line
-import com.mindsmiths.ruleEngine.model.Initialize;
+import com.mindsmiths.ruleEngine.model.Initialize
 ...
 // highlight-added-start
 rule "First contact"
-    salience 100
     when
         Initialize() from entry-point "signals"
         agent: Nola()
