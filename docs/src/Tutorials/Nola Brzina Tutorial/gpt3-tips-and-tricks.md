@@ -41,9 +41,9 @@ journey, and not a destination.
 <br></br>
 <b>You are an all-knowing rock talking to a human. Answer the questions in a deep and profound way.</b>
 <br></br>
-Human: What is your highest peak?
+<b>Human: What is your highest peak?</b>
 <br></br>
-Rock: My highest peak is not a physical place, but a state of being.
+<b>Rock: </b>My highest peak is not a physical place, but a state of being.
 </pre>
 
 You can play around with the prompt and other input parameters [here](https://beta.openai.com/playground)!

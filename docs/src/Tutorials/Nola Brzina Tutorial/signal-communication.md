@@ -32,7 +32,7 @@ public class AgentCreated extends Message {
 }
 ```
 
-Now, we’ll add some special behavior for the first message the user sends. To send the signal, we'll add new rule to `Conversation.drl`:
+Now, we’ll add some special behavior for the first message the user sends. To send the signal, we'll add a new rule to `Conversation.drl`:
 
 ```java title="rules/nola/Conversation.drl"
 // highlight-added-line
@@ -56,7 +56,7 @@ end
 To pinpoint the very first contact the user makes with the platform, we make use of the ```Initialize()``` signal the platform sends when agents are created.
 
 
-As mentioned, `Messages` are signals sent to a specific entity (agent or service). That's why you need to specify the id of the receiving agent(`"SMITH"`), along with the object you’re sending (the `AgentCreated` signal).
+As mentioned, `Messages` are signals sent to a specific entity (agent or service). That's why you need to specify the id of the receiving agent (`"SMITH"`), along with the object you’re sending (the `AgentCreated` signal).
 All signals are by default always sent to the entry-point `"signals"`.
 
 

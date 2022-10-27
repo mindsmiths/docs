@@ -23,7 +23,8 @@ public class Nola extends Agent {
         memory += String.format("%s: %s\n", sender, text);
     }
     // highlight-added-end
-
+    
+    //highlight-changed-line
     public void askGPT3() {
         String intro = "This is a conversation between a human and an intelligent AI assistant named Nola.\n";
         //highlight-changed-line

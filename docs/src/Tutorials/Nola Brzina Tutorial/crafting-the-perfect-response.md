@@ -26,6 +26,7 @@ We can now make requests to GPT-3 and receive its responses. We just need to ada
 
 :::info
 From this point on, we will use highlighted lines to mark added or changed lines in our files: added lines are marked in green, deleted in red, and modified in yellow.
+:::
 
 Add the following to your rule file:
 ```java title="rules/nola/Conversation.drl"
@@ -56,7 +57,7 @@ end
 // highlight-added-end
 ```
 
-As you can see, the type of signal we react to in the new rule is a ```GPT3Completion()``` we receive from GPT-3. At the end of the rule, we again delete this signal. It’s as easy as that! You can create an integration with any external model in a similar way.
+As you can see, the type of signal we react to in the new rule is a ```GPT3Completion()``` we receive from GPT-3. At the end of the rule, we again delete this signal. It’s as easy as that! You can create an integration with any external AI model in a similar way.
 
 
 To make the GPT-3’s response slightly more interesting, we will add some more instructions to accompany the model input. We’ll shape the model’s responses as a conversation between a human and a friendly AI. Take a look:

@@ -97,7 +97,7 @@ public class Nola extends Agent {
 }
 ```
 
-Awesome! Nola can now completely forget previous interactions, and you can start your conversations afresh. Click on **FORGE RUN** and try it out!
+Awesome! Nola can now completely forget previous interactions, and you can start your conversations afresh. Click on **forge run** and try it out!
 
 
 ## Part 3: Expiring the conversation
@@ -106,8 +106,10 @@ Finally, let’s also reset the conversation if the user stays idle for a certai
 
 ```java title="rules/nola/Conversation.drl"
 ...
+// highlight-added-line
 import com.mindsmiths.ruleEngine.model.Heartbeat;
 ...
+// highlight-added-start
 rule "Expire conversation"
     when
         Heartbeat(ts: timestamp) from entry-point "signals"
@@ -119,16 +121,16 @@ rule "Expire conversation"
         modify(agent) {resetMemory()};
         agent.sendMessage("Talk to you some other time!");
 end
+// highlight-added-end
 ```
 
-We read off the current time from the heartbeat - the periodic system pulse - and compare it to the last time the user sent a message. For that we will of course also need to start tracking these interaction times. First we add lastInteractionTime to ```Nola.java```:
+We read off the current time from the heartbeat - the periodic system pulse - and compare it to the last time the user sent a message. For that we will of course also need to start tracking these interaction times. First we add `lastInteractionTime` to ```Nola.java```:
 
 ```java title="models/agents/Nola.java"
 ...
 // highlight-added-line
 import java.time.LocalDateTime;
-// highlight-added-line
-import java.util.ArrayList;
+...
 
 @Getter
 @Setter
@@ -154,12 +156,11 @@ rule "Handle message"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Nola()
     then
-        // highlight-changed-start
         modify(agent) {
             addMessageToMemory("Human", message.getText()),
+            // highlight-added-line
             setLastInteractionTime(LocalDateTime.now())
         };
-        // highlight-changed-end
         agent.askGPT3();
         delete(message);
 end
