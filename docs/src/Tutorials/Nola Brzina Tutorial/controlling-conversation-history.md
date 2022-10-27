@@ -39,10 +39,10 @@ public class Nola extends Agent {
     // highlight-added-end
 
     public void addMessageToMemory(String sender, String text) {
-        // highlight-changed-start
+        // highlight-changed-line
         memory.add(String.format("%s: %s\n", sender, text));
+        // highlight-added-line
         trimMemory();
-        // highlight-changed-end
     }
     ...
 }
@@ -126,7 +126,7 @@ We read off the current time from the heartbeat - the periodic system pulse - an
 ```java title="models/agents/Nola.java"
 ...
 // highlight-added-line
-import java.util.Date;
+import java.time.LocalDateTime;
 // highlight-added-line
 import java.util.ArrayList;
 
@@ -136,7 +136,7 @@ public class Nola extends Agent {
     private List<String> memory = new ArrayList<>();
     private int MAX_MEMORY = 6;
     // highlight-added-line
-    private Date lastInteractionTime;
+    private LocalDateTime lastInteractionTime;
 
     ...
 }
@@ -147,7 +147,7 @@ And now we need to track the timestamp of every message the user sends to Nola. 
 ```java title="rules/nola/Conversation.drl"
 ...
 // highlight-added-line
-import java.util.Date;
+import java.time.LocalDateTime;
 ...
 rule "Handle message"
     when
@@ -157,7 +157,7 @@ rule "Handle message"
         // highlight-changed-start
         modify(agent) {
             addMessageToMemory("Human", message.getText()),
-            setLastInteractionTime(new Date())
+            setLastInteractionTime(LocalDateTime.now())
         };
         // highlight-changed-end
         agent.askGPT3();
