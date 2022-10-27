@@ -22,12 +22,13 @@ public class Nola extends Agent {
     public void addMessageToMemory(String sender, String text){
         memory += String.format("%s: %s\n", sender, text);
     }
+    // highlight-added-end
 
     public void askGPT3() {
         String intro = "This is a conversation between a human and an intelligent AI assistant named Nola.\n";
+        //highlight-changed-line
         simpleGPT3Request(intro + String.join("\n", memory) + "\nNola:");
     }
-    // highlight-added-end
 
     ...
 }
@@ -46,7 +47,7 @@ rule "Handle message"
     then
         // highlight-added-line
         modify(agent) {addMessageToMemory("Human", message.getText())};
-        // highlight-added-line
+        // highlight-changed-line
         agent.askGPT3();
         delete(message);
 end
