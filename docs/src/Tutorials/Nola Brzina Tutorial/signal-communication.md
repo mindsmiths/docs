@@ -32,11 +32,15 @@ public class AgentCreated extends Message {
 }
 ```
 
-To send the signal, just add the following line to `"First contact"` rule:
+Now, we’ll add some special behavior for the first message the user sends. To send the signal, we'll add new rule to `Conversation.drl`:
 
 ```java title="rules/nola/Conversation.drl"
-...
+// highlight-added-line
+import com.mindsmiths.ruleEngine.model.Initialize
+// highlight-added-line
 import signals.AgentCreated
+...
+// highlight-added-start
 
 rule "First contact"
     when
@@ -44,10 +48,12 @@ rule "First contact"
         agent: Nola()
     then
         agent.sendMessage("Okay, turning my engines on. Let's start!");
-        // highlight-changed-line
         agent.send("SMITH", new AgentCreated(agent));
 end
+// highlight-added-end
 ```
+To single out only the first received message, we make use of the ```Initialize()``` signal the platform sends when creating agents.
+
 
 As mentioned, `Messages` are signals sent to a specific entity (agent or service), so when sending this signal 
 you need to specify the id of the receiving agent (`"SMITH"`) along with the object you’re sending (the `AgentCreated` signal).

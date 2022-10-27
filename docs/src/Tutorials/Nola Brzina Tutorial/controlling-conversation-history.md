@@ -76,7 +76,12 @@ rule "Reset conversation"
 end
 ```
 
-All components should already be familiar to you. The only thing we still need to do is add the function for resetting the memory to ```Nola.java```.
+Another important part is the ```salience``` parameter. Rules with higher salience have priority over the ones with lower salience, so you can think of it as a way of imposing order of execution on rules triggered by similar conditions. 
+So, if we want our new rule to trigger before ```"Handle message"``` (which has the default salience of ``0``), we can set its salience to ``100``. 
+Salience can also be negative, which is useful for writing catch-all rules that make sure no signal stays unprocessed.
+
+
+All other components should already be familiar to you. The only thing we still need to do is add the function for resetting the memory to ```Nola.java```.
 
 ```java title="models/agents/Nola.java"
 @Getter

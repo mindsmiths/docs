@@ -46,7 +46,7 @@ rule "Handle message"
     then
         // highlight-added-line
         modify(agent) {addMessageToMemory("Human", message.getText())};
-        // highlight-added-line
+        // highlight-changed-line
         agent.askGPT3();
         delete(message);
 end
