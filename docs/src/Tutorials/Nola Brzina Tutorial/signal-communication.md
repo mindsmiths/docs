@@ -49,14 +49,14 @@ rule "First contact"
     then
         agent.sendMessage("Okay, turning my engines on. Let's start!");
         agent.send("SMITH", new AgentCreated(agent));
+        delete(initialize);
 end
 // highlight-added-end
 ```
-To single out only the first received message, we make use of the ```Initialize()``` signal the platform sends when creating agents.
+To pinpoint the very first contact the user makes with the platform, we make use of the ```Initialize()``` signal the platform sends when agents are created.
 
 
-As mentioned, `Messages` are signals sent to a specific entity (agent or service), so when sending this signal 
-you need to specify the id of the receiving agent (`"SMITH"`) along with the object you’re sending (the `AgentCreated` signal).
+As mentioned, `Messages` are signals sent to a specific entity (agent or service). That's why you need to specify the id of the receiving agent(`"SMITH"`), along with the object you’re sending (the `AgentCreated` signal).
 All signals are by default always sent to the entry-point `"signals"`.
 
 

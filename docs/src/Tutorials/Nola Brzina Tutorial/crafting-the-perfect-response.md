@@ -25,15 +25,9 @@ OpenAI API key: <YOUR API KEY>
 We can now make requests to GPT-3 and receive its responses. We just need to adapt the rule for handling the incoming message, and add one for processing the GPT-3 response.
 
 :::info
-From this point on, we will use highlighted lines to mark added or changed lines in our files.
+From this point on, we will use highlighted lines to mark added or changed lines in our files: added lines are marked in green, deleted in red, and modified in yellow.
 
-Notice the yellow highlighted part in the rule ```Handle message```.
-It signifies that this rule is already in the file, and we highlighted the part you should change in the already existing rule.
-Every time when there is a change in an existing rule, the modified part will be highlighted yellow, so you can easily replace it.
-
-Green highlighted part symbolizes adding new lines of code in already existing rules and classes.
-:::
-
+Add the following to your rule file:
 ```java title="rules/nola/Conversation.drl"
 ...
 // highlight-added-line
