@@ -16,9 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 ...
-import com.mindsmiths.armory.components.DescriptionComponent;
-import com.mindsmiths.armory.components.InputComponent;
-import com.mindsmiths.armory.components.PrimarySubmitButtonComponent;
+import com.mindsmiths.armory.component.DescriptionComponent;
+import com.mindsmiths.armory.component.InputComponent;
+import com.mindsmiths.armory.component.PrimarySubmitButtonComponent;
 ...
 
 @Data
@@ -59,8 +59,8 @@ You can remove the rule showing the demo screen and add the following:
 ```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
 package rules.mindy
 
-import com.mindsmiths.armory.events.UserConnectedEvent
-import com.mindsmiths.armory.events.SubmitEvent
+import com.mindsmiths.armory.event.UserConnectedEvent
+import com.mindsmiths.armory.event.SubmitEvent
 
 import agents.Mindy
 

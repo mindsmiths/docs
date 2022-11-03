@@ -12,23 +12,15 @@ package agents;
 import java.util.Map;
 
 import com.mindsmiths.armory.ArmoryAPI;
-import com.mindsmiths.armory.templates.BaseTemplate;
-import com.mindsmiths.armory.templates.TemplateGenerator;
-import com.mindsmiths.armory.components.TitleComponent;
+import com.mindsmiths.armory.template.BaseTemplate;
+import com.mindsmiths.armory.template.TemplateGenerator;
+import com.mindsmiths.armory.component.TitleComponent;
 import com.mindsmiths.ruleEngine.model.Agent;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 public class Mindy extends Agent {
-
-    public Mindy(String connectionId) {
-        super("armory", connectionId);
-    }
-    
-    public Mindy(String connectionName, String connectionId) {
-        super(connectionName, connectionId);
-    }
 
     public void showScreen(BaseTemplate screen) {
         ArmoryAPI.showScreen(getConnection("armory"), screen);
@@ -68,7 +60,7 @@ Now we need to create a rule when this demo screen should be shown. Again, creat
 ``` java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
 package rules.mindy
 
-import com.mindsmiths.armory.events.UserConnectedEvent
+import com.mindsmiths.armory.event.UserConnectedEvent
 
 import agents.Mindy
 
