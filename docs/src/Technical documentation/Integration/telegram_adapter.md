@@ -79,9 +79,9 @@ There are 4 different static methods you can utilize from `TelegramAdapterApi`:
 2. `editMessage(String chatId, String messageId, String newText, List[MediaData] newMediaList, KeyboardData keyboardData, bool messageReanswerable)`
    - edit already sent text messages
    - `chatId` and `messageId` need to be defined 
-   - as before, you can edit text or media with setting `newText` or `newMediaList`
-   - optionally, message keyboard markup (buttons) can be edited with `keyboardData` (with that you can add new or remove previously set buttons)
-   - 
+   - as before, you can edit either text or media with setting `newText` or `newMediaList`, depending on the "type" of message
+   - optionally, message keyboard markup (buttons) can be edited with `keyboardData` (keep in mind that with it, you can also add new or entirely remove previously set buttons)
+   - `messageReanswerable` was explained and is used in a same way in every occasion
 3. `deleteMessage(String chatId, String messageId)`
     - delete a whole message sent to or by the user
     - message will vanish from chat like it was never there

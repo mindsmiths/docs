@@ -6,10 +6,10 @@ sidebar_position: 1
 
 Here you can find a quick explanation of how to integrate any of the existing internal services.
 
-First, you'll find a list of all **environment variables** you'll be needing to add to your `.env` file.
-If you're not completely sure what a specific environment variable stands for, a simple click on a variable will lead you to the part of service documentation where you can find more details about it.
+First, you'll find a list of all **environment variables** that'll be added to add to your `.env` file.
+If you're not completely sure what a specific environment variable stands for, or you don't know where to find the value for it, a simple click on a variable will lead you to the part of service documentation where you can find more details about it.
 
-Next, take a look how the process of **installing** the service goes, after which you can check out how to initialize the rest of the **setup**.
+Next, take a look how to **install** the chosen service, after which you can check out how to continue with the rest of the **setup**.
 
 <details>
   <summary>Armory</summary>
