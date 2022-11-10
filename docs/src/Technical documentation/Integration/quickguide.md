@@ -106,20 +106,34 @@ Next, take a look how to **install** the chosen service, after which you can che
 <details>
   <summary>Telegram Adapter</summary>
   <div>
-    <div><p>Environment variables:</p>
+    <div><p><b>Environment variables:</b></p>
         <ul>
             <li><a href="/docs/src/Technical%20documentation/Integration/telegram_adapter#tgrm-tkn">TELEGRAM_BOT_TOKEN</a></li>
         </ul>
     </div>
     <div>
-        <p>Installment:</p>
+        <p><b>Installment:</b></p>
         <ul>
             <li><code>pip install "telegram-adapter[dev]==5.0.0b0"</code></li>
         </ul>
     </div>
     <div>
-        <p>To start setup, write the following command to terminal:</p>
+        <p><b>Initialize setup:</b></p>
         <ul><li><p><code>telegram-adapter setup</code></p></li></ul>
+    </div>
+    <div>
+        <p><b>Running the service:</b></p>
+        <ul>
+            <li>
+                <p>Start with <code>forge init</code>, that should install every package and module that Telegram Adapter is using</p>
+            </li>
+            <li>
+                <p>For running the service alone: <code>forge run-service telegram-adapter</code></p>
+            </li>
+            <li>
+                <p>For running whole project: <code>forge run</code></p>
+            </li>
+        </ul>
     </div>
   </div>
 </details>
