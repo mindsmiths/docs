@@ -82,9 +82,9 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'src/Technical documentation/integration',
+            docId: 'src/Technical documentation/project-structure',
             position: 'left',
-            label: 'API',
+            label: 'Documentation',
           },
           {
             href: 'https://www.mindsmiths.com/',

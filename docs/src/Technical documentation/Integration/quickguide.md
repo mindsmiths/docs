@@ -85,7 +85,22 @@ Next, take a look how to **install** the chosen service, after which you can che
 <details>
   <summary>Google Sheets Adapter</summary>
   <div>
-    <div>This is the detailed content</div>
+    <div><p>Environment variables:</p>
+        <ul>
+            <li><a href="/docs/src/Technical%20documentation/Integration/gsheet-adapter#google-client-creds">GOOGLE_CLIENT_CREDENTIALS</a></li>
+            <li><a href="/docs/src/Technical%20documentation/Integration/gsheet-adapter#google-spreadsheet-id">GOOGLE_SPREADSHEET_ID</a></li>
+        </ul>
+    </div>
+    <div>
+        <p>Installment:</p>
+        <ul>
+            <li><code>pip install "gsheets-adapter[dev]~=0.5.0"</code></li>
+        </ul>
+    </div>
+    <div>
+        <p>To start setup, write the following command to terminal:</p>
+        <ul><li><p><code>gsheets-adapter setup</code></p></li></ul>
+    </div>
   </div>
 </details>
 
