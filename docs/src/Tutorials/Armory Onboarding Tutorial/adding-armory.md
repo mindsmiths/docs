@@ -5,7 +5,7 @@ sidebar_position: 2
 # Adding Armory to the project
 
 You can add Armory to your project in a few easy steps:
-1. First install Armory by running ```pip install armory~=4.0.0a0``` in the Terminal
+1. First install Armory by running ```pip install armory~=5.0.0b0``` in the Terminal
 2. Next run the ```armory-admin setup``` command to integrate Armory into the project  
 
 This command will prompt you to:

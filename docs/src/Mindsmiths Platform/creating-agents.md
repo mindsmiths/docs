@@ -11,7 +11,7 @@ To create a new type of agent, you just need to define two things:
 ## Defining the agent's data model
 The agent's data model defines the fields and methods which the agent can use in the rules. For example:
 
-```java title="models/agents/Butler.java"
+```java title="models/agents/Doctor.java"
 package agents;
 
 import com.mindsmiths.ruleEngine.model.Agent;
@@ -20,15 +20,15 @@ import lombok.*;
 
 @Getter
 @Setter
-public class Butler extends Agent {
+public class Doctor extends Agent {
 
     String name;
     List<String> messageHistory = new LinkedList<>();
 
-    public Butler(String name, String telegramId) {
-        this.id = "butler";
+    public Doctor(String name, String telegramId) {
+        this.id = "DOCTOR";
         this.name = name;
-        addConnection("telegram", telegramId);
+        addConnection("telegram", telegramId); //?? is this something that we still use
     }
 
     public void sendMessage(String text) {
@@ -38,10 +38,10 @@ public class Butler extends Agent {
 }
 ```
 
-Here we define a new agent type `Butler`. Each "Butler" agent has a name, a connection to a Telegram number, and its own message history.
+Here we define a new agent type `Doctor`. Each "Doctor" agent has a name, a connection to a Telegram number, and its own message history.
 Additionally, it has a `sendMessage` method that we can call to send a Telegram message to the connected number.
 
-In this case, we decided that there should be a single Butler agent, so we always set the `id` to "butler".
+In this case, we decided that there should be a single Doctor agent, so we always set the `id` to "DOCTOR".
 Otherwise, the ID is generated as a random string.
 
 Of course, you don't have to define any of these things and have an empty class, or add fields/methods that you need.
@@ -49,7 +49,7 @@ Of course, you don't have to define any of these things and have an empty class,
 
 ## Defining the agent's rules
 First we need to create a new package for rules.
-Go to `rules/` (`services/rule_engine/resources/rules/`) and create a new folder `butler/`.
+Go to `rules/` (`services/rule_engine/resources/rules/`) and create a new folder `doctor/`.
 The folder *must* be called the same as the agent's class (ignoring casing - camelCase is recommended).
 
 The agent will only evaluate rules within this package (and the global package).
@@ -60,25 +60,25 @@ The name of the file is not important, but give it something meaningful so that 
 You can organize your rules in multiple `drl` files, and each one can contain multiple rules.
 
 For example:
-```java title="rules/butler/Conversation.drl"
-package rules.butler;
+```java title="rules/doctor/Conversation.drl"
+package rules.doctor;
 
 import com.mindsmiths.ruleEngine.model.Initialize;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
-import agents.Butler;
+import agents.Doctor;
 
 rule "Agent created"
     when
-        message: Initialize() from entry-point "signals"
-        agent: Butler()
+        Initialize() from entry-point "signals"
+        agent: Doctor()
     then
-        agent.sendMessage("Booting up!");
+        agent.sendMessage("Welcome, doc!");
 end
 
 rule "Handle message"
     when
         message: TelegramReceivedMessage() from entry-point "signals"
-        agent: Butler()
+        agent: Doctor()
     then
         agent.sendMessage(message.getText());
         delete(message);
@@ -98,7 +98,7 @@ There are multiple ways to create a new agent instance.
 To manually create an actual agent instance, use `Agents.createAgent()`. It accepts a single parameter - the agent's java class instance.
 For example:
 ```java
-Agents.createAgent(new Butler("Albert", "012345678"));
+Agents.createAgent(new Doctor("Livio", "012345678"));
 ```
 
 You can do this in:
@@ -109,7 +109,7 @@ You can do this in:
 
 For example:
 ```java title="models/Runner.java"
-import agents.Butler;
+import agents.Doctor;
 import com.mindsmiths.ruleEngine.runner.RuleEngineService;
 import com.mindsmiths.ruleEngine.util.Agents;
 
@@ -117,24 +117,24 @@ import com.mindsmiths.ruleEngine.util.Agents;
 public class Runner extends RuleEngineService {
     @Override
     public void initialize() {
-        if (!Agents.exists("butler"))
-            Agents.createAgent(new Butler("Albert", "012345678"));
+        if (!Agents.exists("DOCTOR"))
+            Agents.createAgent(new Doctor("Livio", "012345678"));
     }
     ...
 }
 ```
 
-Here we create our butler on startup, if one doesn't already exist.
+Here we create our doctor on startup, if one doesn't already exist.
 
 ### Through the API
 You can also create agents from other services and even external systems, by using the API.
 
 For example, using the internal API could look something like this:
 ```python
-RuleEngineAPI.create_agent("Butler", name="Albert", connections={"telegram": "012345678"})
+RuleEngineAPI.create_agent("Doctor", name="Livio", connections={"telegram": "012345678"})
 ```
 
-For details on using the external API, see "Swagger HTTP API" (TODO).
+For details on using the external API, see [Swagger HTTP API](pathname:///asyncapi).
 
 
 ## Registering for events
@@ -164,10 +164,10 @@ com.mindsmiths.telegramAdapter.TelegramReceivedMessage:
   - !GetOrCreateAgentByConnection
     connectionName: telegram
     connectionField: chatId
-    agentType: agents.Butler
+    agentType: agents.Doctor
 ```
 This strategy will try to find an agent with the connection `telegram:<chatId>`, and if it fails it will create a new
-Butler agent with such a connection. In our case this would fail though, because Butler doesn't have a default constructor.
+Doctor agent with such a connection. In our case this would fail though, because Doctor doesn't have a default constructor.
 
 You can see all available strategies in the `com.mindsmiths.ruleEngine.mapping` package.
 
@@ -177,7 +177,7 @@ A more powerful alternative is registering signals in `models/Runner.java`. Here
 
 For example:
 ```java title="models/Runner.java"
-import agents.Butler;
+import agents.Doctor;
 import com.mindsmiths.ruleEngine.runner.RuleEngineService;
 import com.mindsmiths.ruleEngine.util.Agents;
 import com.mindsmiths.telegramAdapter.TelegramReceivedMessage;
@@ -186,7 +186,7 @@ public class Runner extends RuleEngineService {
     @Override
     public void initialize() {
         configureSignals(
-            Signals.on(TelegramReceivedMessage.class).sendTo((msg) -> Agents.getOrCreateByConnection("telegram", msg.getChatId(), new Butler("Albert", "012345678")),
+            Events.on(TelegramReceivedMessage.class).sendTo((msg) -> Agents.getOrCreateByConnection("telegram", msg.getChatId(), new Doctor()),
             ...
         );
     }
