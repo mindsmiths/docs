@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # Telegram Adapter
@@ -14,7 +14,7 @@ or you just want to explore ways of communicating with your clients, Telegram Ad
 
 ## Core features of Telegram Adapter
 - sending and receiving different kinds of Telegram messages
-  - text and media (pictures, videos, stickers, etc.) messages included
+  - including text and media (pictures, videos, stickers, etc.) messages
 - editing and deleting already sent Telegram messages
 - setting a chat action like "typing..."
 - adding buttons to your texts
@@ -30,13 +30,13 @@ pip install "telegram-adapter[dev]==5.0.0b0"
 ```
 ### Environment variables
 #### TELEGRAM_BOT_TOKEN {#tgrm-tkn}   
-Next step, introducing Telegram bot - small programs that run inside Telegram and simulate a regular user's account.
+Next step, introducing Telegram bots - small programs that run inside Telegram and simulate a regular user's account.
 Telegram bots will be accountable for sending and receiving all different kinds of messages. Next move is to 
 get your hands on a telegram bot token, which is pretty simple and we'll explain it to you right away.
 
-For starters, you can use an existing bot token if you created it at some time before, or you can create a new bot specially for this purpose.
-In order to creat a new bot or to find token of a previously created bot, find [BotFather](https://t.me/botfather) (username @BotFather) on Telegram. 
-When contacting the BotFather, you can create new bot accounts and also manage your existing bots.
+For starters, you can use an existing bot if you've created one before, or you can create a new bot specially for this purpose.
+In order to create a new bot or to find token of a previously created bot, find [BotFather](https://t.me/botfather) (username @BotFather) on Telegram. 
+After contacting the BotFather, he'll lead you through the whole process of  creating a new bot account as well as managing your existing bots.
 
 Bot tokens are used for controlling your bots, so we suggest you store it safely and keep it secure.
 After you fetch the token, the only thing left to do is to do is to copy it, so you can add it to the project you want to integrate with Telegram. 
@@ -71,10 +71,11 @@ There are 4 different static methods you can utilize from `TelegramAdapterApi`:
      
       import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
      
-      String text = "Hello, world!"
-      String chatId = getConnections().get("telegram");
-      TelegramAdapterAPI.sendMessage(chatId, text);
-     
+      public class Nola extends Agent {
+        String text = "Hello, world!";
+        String chatId = getConnections().get("telegram");
+        TelegramAdapterAPI.sendMessage(chatId, text);
+      }
     ```
 2. `editMessage(String chatId, String messageId, String newText, List[MediaData] newMediaList, KeyboardData keyboardData, bool messageReanswerable)`
    - edit already sent text messages
@@ -91,11 +92,27 @@ There are 4 different static methods you can utilize from `TelegramAdapterApi`:
 
 ## Catching responses
 
-There are also 4 different `event` signals that you can catch in your rules and make actions according to them. If you need more information about how signal communication
-works on the platform, check out our documentation [here](this is path to signal communication) 
+There are 4 different `event` signals that you can catch in your rules and make actions according to them. If you want to find out how signal communication
+works on the platform, read more about it [here](/docs/src/Technical%20documentation/Platform%20architecture/service-communication.md). 
 1. `TelegramReceivedMessage`
    - a signal which is being emitted when a user sends a message to your bot
    - if you want to take any sort of action when this happens, you should add a rule that catches this signal
+   - here is an example of a rule where you can get an idea how to use this type of signal
+   -  ```java
+      import agents.Nola
+      
+      import com.mindsmiths.telegramAdapter.events.TelegramReceivedMessage
+     
+      rule "Handle message"
+         when
+            message: TelegramReceivedMessage() from entry-point "signals"
+            agent: Nola()
+         then
+            agent.askGPT3(message);
+            delete(message);
+      end
+
+    ```
 2. `TelegramSentMessage`
    - a signal emmitted when platform sends  
 3. `TelegramKeyboardAnswered`
