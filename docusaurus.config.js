@@ -87,6 +87,12 @@ const config = {
             label: 'API',
           },
           {
+            type: 'doc',
+            docId: 'src/How-to guides/intro',
+            position: 'left',
+            label: 'How-to',
+          },
+          {
             href: 'https://www.mindsmiths.com/',
             label: 'Mindsmiths',
             position: 'right',
