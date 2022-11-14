@@ -46,6 +46,7 @@ Let's say we have a `Product` class whose objects we want to make available to a
 ```java
 // Product.java
 // ...
+@DataModel
 public class Product implements Serializable {
     private String id;
     private String name;
@@ -77,7 +78,7 @@ rule "Insert products"
     when
     then
         for (Product product : Database.all(Product.class)) {
-            drools.getEntryPoint("products").insert(product);
+            drools.getEntryPoint("signals").insert(product);
         }
 end
 ```
@@ -88,7 +89,7 @@ Finally, we can access the `Product` objects in that same agent.
 // ...
 rule "My rule"
     when
-        product: Product() from entry-point "products"
+        product: Product() from entry-point "signals"
     then
         // ...
 end
