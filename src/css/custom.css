@@ -59,3 +59,8 @@
 .row {
   place-content: center;
 }
+
+img[src*='#center'] {
+    display: block;
+    margin: auto;
+}

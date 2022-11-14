@@ -1,0 +1,222 @@
+asyncapi: '2.4.0'
+info:
+  title: Mindsmiths Websockets API
+  version: '1.0.0'
+  description: ''
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  test:
+    url: websocket.mindsmiths.io/ws/
+    protocol: ws
+    description: Test server
+
+defaultContentType: application/json
+
+channels:
+  /:
+    publish:
+      description: Send messages to the API
+      message:
+        oneOf:
+          - $ref: '#/components/messages/OutgoingMessage'
+          - $ref: '#/components/messages/OutgoingEvent'
+          - $ref: '#/components/messages/OutgoingReply'
+          - $ref: '#/components/messages/OutgoingError'
+
+    subscribe:
+      description: Messages that you receive from the API
+      message:
+        oneOf:
+          - $ref: '#/components/messages/IncomingMessage'
+          - $ref: '#/components/messages/IncomingEvent'
+          - $ref: '#/components/messages/IncomingReply'
+          - $ref: '#/components/messages/IncomingError'
+
+components:
+  messages:
+    OutgoingMessage:
+      name: outgoingMessage
+      title: Outgoing Message
+      summary: Send a message to a Forge agent
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/messagePayload"
+        required:
+          - signalType
+          - messageType
+          - to
+    OutgoingEvent:
+      name: outgoingEvent
+      title: Outgoing Event
+      summary: Send an event to Forge, where any agent can choose to listen to it
+      payload:
+        $ref: "#/components/schemas/eventPayload"
+        required:
+          - signalType
+          - eventType
+    OutgoingReply:
+      name: outgoingReply
+      title: Outgoing Reply
+      summary: Send a reply to an agent's message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/replyPayload"
+        required:
+          - signalType
+          - messageType
+          - replyTo
+    OutgoingError:
+      name: outgoingError
+      title: Outgoing Error Reply
+      summary: Send an error reply to an agent's message
+      payload:
+        $ref: "#/components/schemas/errorReplyPayload"
+        required:
+          - signalType
+          - errorType
+          - code
+          - replyTo
+    IncomingMessage:
+      name: incomingMessage
+      title: Incoming Message
+      summary: A message from an agent
+      payload:
+        $ref: "#/components/schemas/messagePayload"
+        required:
+          - id
+          - timestamp
+          - signalType
+          - messageType
+          - to
+    IncomingEvent:
+      name: incomingEvent
+      title: Incoming Event
+      summary: An event happened in Forge
+      payload:
+        $ref: "#/components/schemas/eventPayload"
+        required:
+          - id
+          - timestamp
+          - signalType
+          - eventType
+    IncomingReply:
+      name: incomingReply
+      title: Incoming Reply
+      summary: A reply from an agent
+      payload:
+        $ref: "#/components/schemas/replyPayload"
+        required:
+          - id
+          - timestamp
+          - signalType
+          - messageType
+          - replyTo
+          - to
+    IncomingError:
+      name: incomingError
+      title: Incoming Error Reply
+      summary: An error reply from an agent
+      payload:
+        $ref: "#/components/schemas/errorReplyPayload"
+        required:
+          - id
+          - timestamp
+          - signalType
+          - errorType
+          - replyTo
+          - to
+          - code
+
+  schemas:
+    messagePayload:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of this message. Auto-generated if not given.
+        timestamp:
+          type: string
+          format: date-time
+          description: A datetime object when the message was sent. Auto-generated if not given.
+        signalType:
+          const: MESSAGE
+        messageType:
+          type: string
+          description: The message type, used for deserialization.
+        to:
+          type: string
+          description: ID of the agent the message is meant for
+      additionalProperties: {}
+    eventPayload:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of this message. Auto-generated if not given.
+        timestamp:
+          type: string
+          format: date-time
+          description: A datetime object when the message was sent. Auto-generated if not given.
+        signalType:
+          const: EVENT
+        eventType:
+          type: string
+          description: The event type, used for deserialization.
+      additionalProperties: {}
+    replyPayload:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of this message. Auto-generated if not given.
+        timestamp:
+          type: string
+          format: date-time
+          description: A datetime object when the message was sent. Auto-generated if not given.
+        signalType:
+          const: REPLY
+        messageType:
+          type: string
+          description: The message type, used for deserialization.
+        replyTo:
+          $ref: "#/components/schemas/messagePayload"
+          description: The original message, to which this is the reply to.
+        to:
+          type: string
+          description: ID of the agent the message is meant for
+      additionalProperties: {}
+    errorReplyPayload:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of this message. Auto-generated if not given.
+        timestamp:
+          type: string
+          format: date-time
+          description: A datetime object when the message was sent. Auto-generated if not given.
+        signalType:
+          const: ERROR
+        errorType:
+          type: string
+          description: The error type.
+        replyTo:
+          $ref: "#/components/schemas/messagePayload"
+          description: The original message, to which this is the reply to.
+        to:
+          type: string
+          description: ID of the agent the message is meant for
+        code:
+          type: number
+          format: integer
+          description: The error group this error belongs to. Compatible with HTTP error codes.
+        description:
+          type: string
+          description: Optional error description.
+        help:
+          type: string
+          description: Optional message to help fix the error or learn more about it.
+      additionalProperties: {}
