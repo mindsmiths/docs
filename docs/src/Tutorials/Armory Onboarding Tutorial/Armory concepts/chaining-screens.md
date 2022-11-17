@@ -76,7 +76,7 @@ end
 
 rule "Finish onboarding"
    when
-       signal: SubmitEvent(getParamAsString("submit") == "finishOnboarding") from entry-point "signals"
+       signal: SubmitEvent(getParamAsString("submitBirthday") == "finishOnboarding") from entry-point "signals"
        agent: Mindy()
    then
        modify(agent) {

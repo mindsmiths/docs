@@ -105,6 +105,11 @@ const config = {
             label: "Mindsmiths",
             position: "right",
           },
+          {
+            href: "https://discord.com/invite/mindsmiths",
+            label: "Discord",
+            position: "right",
+          },
         ],
       },
       footer: {
