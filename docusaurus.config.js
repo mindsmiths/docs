@@ -29,15 +29,10 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-      }),
-    ],
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
         gtag: {
           trackingID: process.env.GA_TRACKING_ID || '',
         },
-      },
+      }),
     ],
     // Redocusaurus config
     [
