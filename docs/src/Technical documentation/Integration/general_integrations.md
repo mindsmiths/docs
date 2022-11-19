@@ -31,4 +31,4 @@ You can find the full specification for websockets [here](pathname:///asyncapi).
 If you need a highly flexible or complex integration, you can always write a custom adapter service. You can then
 connect with any method you need, do pooling or scheduling, or use a special security protocol.
 
-You can learn more about [creating custom services here](./Platform%20architecture/service-creation).
+You can learn more about [creating custom services here](../Platform%20architecture/service-creation).

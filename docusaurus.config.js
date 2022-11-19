@@ -59,52 +59,19 @@ const config = {
       },
     ],
   ],
-
+  themes: [
+    "@easyops-cn/docusaurus-search-local"
+  ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Docs",
+        title: "Mindsmiths Docs",
         logo: {
           alt: "Mindsmiths Logo",
           src: "img/logo.png",
         },
         items: [
-          {
-            type: "doc",
-            docId: "src/Mindsmiths Platform/intro",
-            position: "left",
-            label: "Platform",
-          },
-          {
-            type: "doc",
-            docId: "src/Coding Environment/environment-setup",
-            position: "left",
-            label: "Environment",
-          },
-          {
-            type: "doc",
-            docId: "src/Tutorials/intro",
-            position: "left",
-            label: "Tutorials",
-          },
-          {
-            type: "doc",
-            docId: "src/Technical documentation/project-structure",
-            position: "left",
-            label: "Documentation",
-          },
-          {
-            type: "doc",
-            docId: "src/How-to guides/intro",
-            position: "left",
-            label: "How-to",
-          },
-          {
-            href: "https://www.mindsmiths.com/",
-            label: "Mindsmiths",
-            position: "right",
-          },
           {
             href: "https://discord.com/invite/mindsmiths",
             label: "Discord",
@@ -113,31 +80,6 @@ const config = {
         ],
       },
       footer: {
-        style: "dark",
-        links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "Platform",
-                to: "/docs/src/Mindsmiths Platform/intro",
-              },
-              {
-                label: "Tutorials",
-                to: "/docs/src/Tutorials/intro",
-              },
-            ],
-          },
-          {
-            title: "Community",
-            items: [
-              {
-                label: "Discord",
-                href: "https://discord.gg/mindsmiths",
-              },
-            ],
-          },
-        ],
         copyright: `Copyright © ${new Date().getFullYear()} Mindsmiths`,
       },
       prism: {

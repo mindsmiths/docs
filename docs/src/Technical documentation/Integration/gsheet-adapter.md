@@ -35,7 +35,7 @@ This data is a `json` that represents credentials to gain access to chosen Googl
 You'll need to go through a bit of a hassle to finally get the credentials, so let's start right away.
 
 You'll want to create a [Google Cloud](https://console.cloud.google.com/) project, if you already don't have one ready and waiting. 
-For additional help with creating a new project, check out Google's [tutorial]((https://developers.google.com/workspace/guides/create-project)).
+For additional help with creating a new project, check out Google's [tutorial](https://developers.google.com/workspace/guides/create-project).
 
 Next, you'll have to enable Google Sheet API in a chosen Google Cloud project. Follow this [link](https://console.cloud.google.com/flows/enableapi?apiid=sheets.googleapis.com) to enable the API or to check if it's already enabled.
 This is the process: 
