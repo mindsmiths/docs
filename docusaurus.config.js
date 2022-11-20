@@ -30,7 +30,7 @@ const config = {
           customCss: require.resolve("./src/css/custom.css"),
         },
         gtag: {
-          trackingID: process.env.GA_TRACKING_ID || '',
+          trackingID: process.env.GA_TRACKING_ID || "example",
         },
       }),
     ],
