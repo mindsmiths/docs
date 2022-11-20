@@ -3,7 +3,7 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-require('dotenv').config();
+require("dotenv").config();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -17,6 +17,14 @@ const config = {
   organizationName: "mindsmiths",
   projectName: "platform-docs",
 
+  plugins: [
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        trackingID: process.env.GA_TRACKING_ID || "example",
+      },
+    ],
+  ],
   presets: [
     [
       "classic",
@@ -28,9 +36,6 @@ const config = {
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
-        },
-        gtag: {
-          trackingID: process.env.GA_TRACKING_ID || "example",
         },
       }),
     ],
@@ -54,9 +59,7 @@ const config = {
       },
     ],
   ],
-  themes: [
-    "@easyops-cn/docusaurus-search-local"
-  ],
+  themes: ["@easyops-cn/docusaurus-search-local"],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
