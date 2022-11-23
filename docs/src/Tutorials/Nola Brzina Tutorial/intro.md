@@ -10,6 +10,6 @@ In this tutorial, you will learn how to create an intelligent and fun conversati
 
 If you don't have the cloud-based instance of the platform yet, you can request one [here](https://discord.com/invite/mindsmiths).
 
-When you have the workspace link, you can enter `forge run` command inside your terminal or hit the **FORGE RUN** button in the upper right corner to test everything runs properly.
+When you have the workspace link, you can enter `forge run` command inside your terminal or hit the **F8** key to test everything runs properly.
 
 That's it, let's get started!
