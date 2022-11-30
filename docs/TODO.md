@@ -4,97 +4,72 @@
 - [ ] Hello world in 1 minute
 
 ## Mindsmiths Platform
-- [ ] Platform intro
-  - [ ] What is it
+- Platform intro
   - [ ] When is it useful
   - [ ] When should it NOT be used
   - [ ] What are the common use cases
-- [ ] Basic concepts
-  - [ ] Agent
-      - [ ] Autonomous in environment
-      - [ ] Local view
-  - [ ] Rule
-  - [ ] Facts and Signals
-  - [ ] Heartbeat
-  - [ ] Service
-  - [ ] Adapter
-- [ ] Philosophy
-  - [ ] Agents are always alive
-      - [ ] Careful with infinite loops
-  - [ ] Complex problems can be split into smaller agents
-  - [ ] Agents are independent and optimize for their "customer" (user-centricity)
-  - [ ] DNA + Learning
-  - [ ] Declarative programming
-  - [ ] Prototyping (fail fast)
-- [ ] Coding environment
-  - [ ] Usage basics
-  - [ ] Connecting to git
-  - [ ] Deployment
+- Coding environment
   - [ ] Support and reporting issues
 
-## Tutorials
-- [x] Tutorial 1 - Nola
-- [ ] Tutorial 2 - Doctor/Patient
-- ...
-
 ## Deep dive (technical documentation)
-- [x] Project structure
-  - [x] Project config
+- Project structure
   - [ ] Secret management
-- [ ] Platform architecture
-  - [ ] Microservices
-  - [ ] Core services
-  - [ ] Contrib services
-  - [ ] Service communication
-  - [ ] Versioning
-- [ ] Service creation
-  - [ ] Structure
-  - [ ] Data management, events
-  - [ ] API, Java client
-  - [ ] Logic
-  - [ ] Listening to events
-  - [ ] Settings
-  - [ ] Service config
-- [ ] Creating agents
-  - [ ] Agent's model
-  - [ ] Agent's behavior
-    - [ ] Rule package
-  - [ ] Instantiating agents
-    - [ ] Manually, API
-    - [ ] On signal (connections)
-  - [ ] Registering for signals
-    - [ ] signals.yaml
-    - [ ] Runner
-- [ ] Writing rules
-  - [ ] Drools
-  - [ ] Rule structure
-  - [ ] Rule organization
-  - [ ] Rule mechanics
-  - [ ] When
-    - [ ] Signals, events and facts
-      - [ ] Defining new signals
-    - [ ] Time-based conditions (proactivity, heartbeat)
-  - [ ] Then
-    - [ ] modify
-    - [ ] sending signals to other agents
-    - [ ] deleting signals
-    - [ ] insert - persistence
-  - [ ] Chaining
+- CLI
+  - [ ] What is it
+  - [ ] How to use it
+  - [ ] What can you do with it
+  - [ ] Custom commands
+  - [ ] How to run them in production
+  - [ ] CECS
+- Heartbeat service
+  - [ ] Custom strategies
+- Rule Engine
+  - [ ] API
+  - [ ] Temporary facts
+  - [ ] Stopping evaluation
+  - [ ] Creating/updating/deleting agents
+  - [ ] Configuring signals (events/data changes)
+  - [ ] Infinite loop protection
+  - [ ] Agent summary
+  - [ ] Locking/unlocking
+  - [ ] Pending signals
+  - [ ] Subscription strategies reference
+- SDK (Java/Python)
+  - [ ] What is it
+  - [ ] Logging
   - [ ] Configuration (settings)
-  - [ ] Best practices
+  - [ ] Modules (production, local...)
+  - [ ] Available utils (datetime, strings, feature toggling, templating...)
+- Service creation
+  - [ ] Listening to events
+  - [ ] Emitting events
+  - [ ] Testing the service
+- Writing rules
+  - When
+    - [ ] Signals, events and facts
+      - [ ] Predefined signals
+      - [ ] Defining new signals
+    - [ ] Cron expressions
+  - Then
+    - [ ] sending signals to other agents
+  - [ ] Testing agents
 - [ ] Machine learning and other intelligent components
-- [ ] Content management (Mitems)
-- [ ] Integrations
-  - [ ] HTTP
+- Monitoring & analytics
+  - [ ] Logs
+  - [ ] Grafana
+  - [ ] Posthog
+- Integrations & extensions
+  - [ ] Web (Armory)
+  - [ ] Content management (Mitems)
+  - [ ] API Gateway
   - [ ] Websockets
   - [ ] Custom adapter
-- [ ] Testing
-- [ ] Infrastructure
+  - [ ] Forge storage
 
 ## Reference
-- [ ] HTTP API reference
-- [ ] Websocket API reference
+- HTTP API reference
+  - [ ] Update to latest version
+  - [ ] Extending with custom routes
+- [ ] Websocket API reference - fix page
 - [ ] Forge CLI reference
 - [ ] Forge SDK reference
-- [ ] Drools / Rule Engine reference
-- [ ] Contrib services reference
