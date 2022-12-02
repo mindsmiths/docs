@@ -62,11 +62,7 @@ import com.mindsmiths.armory.template.TitleTemplate;
 import com.mindsmiths.armory.template.TemplateGenerator;
 import com.mindsmiths.armory.component.TitleComponent;
 import com.mindsmiths.ruleEngine.model.Agent;
-
-import lombok.Getter;
-import lombok.Setter;
 import lombok.*;
-import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
 import com.mindsmiths.armory.component.InputComponent;
@@ -76,8 +72,6 @@ import com.mindsmiths.armory.component.ImageComponent;
 import com.mindsmiths.armory.component.CloudSelectComponent;
 import com.mindsmiths.armory.component.HeaderComponent;
 
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 
