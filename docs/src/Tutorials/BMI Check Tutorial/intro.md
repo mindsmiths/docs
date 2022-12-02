@@ -6,10 +6,10 @@ sidebar_position: 1
 
 Welcome to the BMI Check Tutorial!
 
-Here you will learn how to use more advanced features of the platform. Together we'll develop a more complex system, working with multiple types agents.
+Here you will learn how to use more advanced features of the platform. Together we'll develop a more complex system, working with multiple types of agents.
 You will also see how you can train new machine learning systems from scratch when you don’t have any initial data. 
 
-No matter how complex our systems get, we always want our agents to display these three core characteristics in communication with end users:
+However, no matter how complex our systems get, we always want our agents to display these three core characteristics in communication with end users:
 - I know you (and that's why I can take care of your specific needs)
 - I have the expertise (and that's why my advice is relevant)
 - I care about you (and that's why I'm proactively reaching out to you).
