@@ -15,14 +15,20 @@
 - Project structure
   - [ ] Secret management
 - CLI
-  - [ ] What is it
-  - [ ] How to use it
-  - [ ] What can you do with it
-  - [ ] Custom commands
+  - [x] What is it
+  - [x] How to use it
+  - [x] What can you do with it
+  - [x] Custom commands
   - [ ] How to run them in production
   - [ ] CECS
 - Heartbeat service
-  - [ ] Custom strategies
+  - [x] How it works
+  - [x] Settings
+  - [x] Strategies
+  - [x] Checks and alerts
+  - [x] Custom strategies
+  - [ ] Custom strategies with agent data
+  - [x] Changelog
 - Rule Engine
   - [ ] API
   - [ ] Temporary facts
