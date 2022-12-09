@@ -43,6 +43,7 @@ public class Nola extends Agent {
         memory.add(String.format("%s: %s\n", sender, text));
         // highlight-added-line
         trimMemory();
+        // highlight-changed-end
     }
     ...
 }

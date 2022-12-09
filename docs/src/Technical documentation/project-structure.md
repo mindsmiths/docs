@@ -6,7 +6,7 @@ sidebar_position: 1
 
 The basic project structure consists of the following:
 - `config`: project configuration
-- `services`: contains custom project-specific services (see [Platform architecture](./Platform%20architecture/microservices)) 
+- `services`: contains custom project-specific services (see [Platform architecture](./Platform%20architecture/service-creation)) 
 - `.env`: contains secrets and developer-specific as environment variables
 - [other files you can ignore]
 
