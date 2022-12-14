@@ -66,6 +66,10 @@
   - [ ] Posthog
 - Integrations & extensions
   - [ ] Web (Armory)
+    - [ ] Supported components and functionalities
+    - [ ] Communication with rule engine
+    - [ ] Adding custom components
+    - [ ] Adding custom templates
   - [ ] Content management (Mitems)
   - [ ] API Gateway
   - [ ] Websockets
