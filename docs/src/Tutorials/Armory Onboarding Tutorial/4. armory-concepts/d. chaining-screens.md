@@ -11,9 +11,10 @@ We'll now show you how to do just that: we'll add a function that shows multiple
 To tell Armory which screen to switch to, just specify the name of the next screen as the value of the action component that leads to it (such as a button). 
 For example, in the code below, the “Cool, let's go!” button at the bottom of the `welcome` screen leads to the screen on 
 which we ask the user for their name (i.e. the `askForName` screen):
-// TODO explain where the jpg file got from (add it in later?)
+// TODO explain where the jpg file got from (add it in later?) - actually, remove the image entirely for now and only add it in in the chapter where you address adding images 
 // TODO remove all armory history stuff
 // TODO add file path
+// TODO - better naming than "next"? - to signify it's the end of a procedure
 ```
 public class Felix extends Agent {
     String name;
@@ -38,19 +39,21 @@ public class Felix extends Agent {
 ```
 As you can see, all screens defined within the `showStartScreens()` function are shown to the user as part of a single procedure. This means that there is no need to define any business logic in the rule engine to handle transitions between screens.
 
+// TODO add the whole code in rules that covers this part, it's confusing like this
 The data the user inputs during the screen sequence are transferred as values of `GET` parameters with the corresponding `componentId` as key.
 We can store the user's answers at the end of the procedure: for example, here we only asked for the name which the user sets through an input area, so we can fetch it off the `SubmitEvent` using `getParamAsString("name")`, because `name` is the id of the text input component.
 
-Keep in mind that you might not always want to use predefined sequences of screens: sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the state the user is in.
+Keep in mind that you might not always want to use predefined sequences of screens: sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the state the user is in. When the screen to show is determined based on other circumstances and not just the fact which screen the user was on, and which button was pressed, you can define this behavior through a rule.
 
-When the screen to show is determined based on other circumstances and not the fact which screen the user was on, and which button was pressed, you can capture this behavior through a rule.
-In Felix case, we decided to seperate `startScreens` from `onboardingScreens`, while otherwise it would be hard to use the name of the user, while we need to set it first.
-So, when we activated `startScreens`, we asked user for a name, and we stored it after the whole start process is done. 
-Now, we can easily use it in the onboarding part, to add a bit of personalization to our usecase.
 
-We can do it with the following implementation in agent's java class:
+// TODO present this more as a feature, less of an inconvenience :)
+You can define multiple screen chains, for different stages of onboarding. In the Felix case, we decided to separate `startScreens` from `onboardingScreens`, because we want to store and use the name the user provides to address them in onboarding.
+In other words, during the `startScreens` sequence, we asked the user for a name, and stored it after the procedure was completed (i.e. the user entered their name on the second screen and pressed the "Done, next!" button). 
+Now, we can easily use it in other screens, to add a bit of personalization to the user experience.
 
-```java title="rule_engine/src/main/java/agents/Felix.java"
+Let's add the code for onboarding in agent's Java class:
+// TODO change goData :D
+```java title="java/agents/Felix.java"
 
 package agents;
 
@@ -123,12 +126,12 @@ public class Felix extends Agent {
 }
 ```
 
-And with the rule that activates written function and initialize screens. 
-
-```java title="rule_engine/src/main/resources/rules/felix/Felix.drl"
-    
+You'll notice we added a bunch of fields to our class, to store the data the user inputs on onboarding screens. Let's see how it looks in the rules:
+// TODO remove the imports that were already in there, use "..." + format code
+// TODO process the onboarding data as well, now that you included it in the java class, and it's not a new concept (it's the same as storing the name)
+// TODO explicitly show where you used this name you stored, now that you mentioned it
+```java title="rules/felix/Felix.drl"
 ...
-    
 package rules.felix
 import com.mindsmiths.armory.event.UserConnectedEvent
 import agents.Felix
@@ -149,7 +152,5 @@ rule "Start user onboarding"
         delete(signal);
 end
 ```
- 
-After the name is submitted, this rule is activated - in that moment the name will be stored in the base, and the onboarding will start. 
 
-Perfect, now that you mastered building and chaining different kind of screens, we can go a step further and introduce you to the `armory history`.
+Perfect, now that you mastered building and chaining different kinds of screens, we can focus a bit more on different armory functionalities and components.
