@@ -4,13 +4,18 @@ sidebar_position: 4
 
 # Chaining Armory screens
 
-Pretty cool ha? It's so simple! But obviously, you don't want to have just one screen, but the chain of screens.
-Well, you can link together multiple Armory screens by specifying the transitions between them. 
-Just specify the name of the screen the action component leads to. 
-For example, in the code below, the “Cool, let's go!” button at the bottom of the `welcome` screen leads to the screen on 
-which we ask the user for their name (`askForName` screen):
+As you can see, you can create screens really quickly with Armory's smart defaults! 
+But to create a real web-app experience, you usually want to create a sequence of linked screens the user can switch between.
 
-```public class Felix extends Agent {
+We'll now show you how to do just that: we'll add a function that shows multiple screens, specifying the transitions between them. 
+To tell Armory which screen to switch to, just specify the name of the next screen as the value of the action component that leads to it (such as a button). 
+For example, in the code below, the “Cool, let's go!” button at the bottom of the `welcome` screen leads to the screen on 
+which we ask the user for their name (i.e. the `askForName` screen):
+// TODO explain where the jpg file got from (add it in later?)
+// TODO remove all armory history stuff
+// TODO add file path
+```
+public class Felix extends Agent {
     String name;
     String onboardingStage = "START";
 
@@ -31,19 +36,14 @@ which we ask the user for their name (`askForName` screen):
     }
 }
 ```
-As you can see, there is no need to write out a separate rule for the transition between the `welcome` screen and the `askForName`
-screen - this will already happen because it is specified in agent's `showStartScreens`.
+As you can see, all screens defined within the `showStartScreens()` function are shown to the user as part of a single procedure. This means that there is no need to define any business logic in the rule engine to handle transitions between screens.
 
-The data the user inputs during the screen sequence are transferred as `GET` parameters with the variable name you set (`componentId`) as key, 
-and we can store them at the end of the onboarding procedure (here we only asked for a name which the user sets through an input area, so we can fetch it off the `SubmitEvent` like this:
-`signal.getParamAsString("name")`).
+The data the user inputs during the screen sequence are transferred as values of `GET` parameters with the corresponding `componentId` as key.
+We can store the user's answers at the end of the procedure: for example, here we only asked for the name which the user sets through an input area, so we can fetch it off the `SubmitEvent` using `getParamAsString("name")`, because `name` is the id of the text input component.
 
-Of course, you don't always want to use predefined sequences of screens (although note that you can just as easily 
-implement condition-based branching in logic, as long as certain actions always lead to the same outcomes). 
-Sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the 
-state s/he is in.
+Keep in mind that you might not always want to use predefined sequences of screens: sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the state the user is in.
 
-When the screen to show is determined based on other circumstances and not the fact if/which submit action the user made, you can capture this behavior through a rule.
+When the screen to show is determined based on other circumstances and not the fact which screen the user was on, and which button was pressed, you can capture this behavior through a rule.
 In Felix case, we decided to seperate `startScreens` from `onboardingScreens`, while otherwise it would be hard to use the name of the user, while we need to set it first.
 So, when we activated `startScreens`, we asked user for a name, and we stored it after the whole start process is done. 
 Now, we can easily use it in the onboarding part, to add a bit of personalization to our usecase.
@@ -138,6 +138,7 @@ import com.mindsmiths.ruleEngine.util.Log
 rule "Start user onboarding"
    when
         signal: SubmitEvent(getParamAsString("submitName") == "next") from entry-point "signals"
+        
         agent: Felix()
    then
         modify(agent) {
