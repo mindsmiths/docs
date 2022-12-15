@@ -153,4 +153,4 @@ rule "Start user onboarding"
 end
 ```
 
-Perfect, now that you mastered building and chaining different kinds of screens, we can focus a bit more on different armory functionalities and components.
+Perfect, now that you mastered building and chaining different kinds of screens, we can focus a bit more on customizing the screen layout.
