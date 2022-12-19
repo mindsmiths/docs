@@ -8,6 +8,7 @@ Now, let's start coding!
 Let's start by giving our agent the ability to show the web screens. Just create the file `java/agents/Felix.java` and add the following functions:
 
 ```java title="java/agents/Felix.java"
+
 package agents;
 
 import java.util.Map;
