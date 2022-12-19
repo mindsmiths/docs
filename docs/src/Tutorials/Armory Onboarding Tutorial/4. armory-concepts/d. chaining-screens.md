@@ -132,7 +132,6 @@ rule "Start user onboarding"
 end
 ```
 
-
 Ok, now when we did the onboarding successfully, we can add survey screens! Here we'll use 3 new components: `DescriptionComponent`, `CloudSelectComponent` and `ActionGroupComponent`. 
 When it comes to `CloudSelectComponent` and `ActionGroupComponent`, you can't just add them to the method, you need to make list of options first.
 For `CloudSelectComponent` the logic goes like this: first you define the name of the list (in our case "buttons"). After that you just choose the ID and the text each button will contain.

@@ -22,17 +22,12 @@ First, inside the ```Felix.java``` file, we create the showStartScreens method, 
 
 package agents;
 
+...
+
 import java.util.Map;
-
-import com.mindsmiths.armory.ArmoryAPI;
-import com.mindsmiths.armory.template.BaseTemplate;
-import com.mindsmiths.armory.template.TitleTemplate;
-import com.mindsmiths.armory.template.TemplateGenerator;
-import com.mindsmiths.ruleEngine.model.Agent;
-
-import lombok.*;
-import com.mindsmiths.armory.component.TitleComponent;
 import com.mindsmiths.armory.component.PrimarySubmitButtonComponent;
+
+...
 
 public class Felix extends Agent {
     String name;
@@ -47,19 +42,11 @@ public class Felix extends Agent {
     }
 }
 ```
-// TODO why do we need the onboardingStage? drop it if not necessary, explain if it is. you also need to explain the structure of the function (although it shouldn't be a function)
-
 Okay, now when the function is defined, all we need is a rule that will tell the agent to show screens once the user connects to Armory by clicking the link.  
+
 Go to ```Felix.drl``` and add the following:
 
 ```java title="rules/felix/Felix.drl"
-package rules.felix;
-
-import com.mindsmiths.armory.event.UserConnectedEvent
-import com.mindsmiths.armory.event.SubmitEvent
-import com.mindsmiths.ruleEngine.util.Log 
-
-import agents.Felix
 
 rule "Start flow"
    when
