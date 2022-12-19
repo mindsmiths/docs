@@ -30,8 +30,8 @@ public class Felix extends Agent {
                 "workoutQuestion", new TemplateGenerator ("workoutQuestion")
                         .addComponent("title", new TitleComponent("Do you workout?"))
                         .addComponent("actionGroup", new ActionGroupComponent(List.of(
-                        new PrimarySubmitButtonComponent("yes", "Hell yeah!", "workoutFrequency"),
-                        new PrimarySubmitButtonComponent("no", "No, but I am planning...", "chooseDays"))
+                        new PrimarySubmitButtonComponent("submityes", "Hell yeah!", "workoutFrequency"),
+                        new PrimarySubmitButtonComponent("submitno", "No, but I am planning...", "chooseDays"))
                         )),
                 "workoutFrequency", new TemplateGenerator ("workoutFrequency")
                         .addComponent("title", new TitleComponent("How many days a week?"))
@@ -60,7 +60,8 @@ public class Felix extends Agent {
                         );
         showScreens("waterIntake", screens);
     }
-    ...
+
+    
 }
 ```
 

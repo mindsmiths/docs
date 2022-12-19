@@ -14,6 +14,14 @@ For example, in the code below, the “Cool, let's go!” button at the bottom o
 
 ```java title="java/agents/Felix.java"
 
+package agents;
+
+...
+
+import com.mindsmiths.armory.component.InputComponent;
+
+...
+
 @Data
 @NoArgsConstructor
 public class Felix extends Agent {
@@ -54,7 +62,6 @@ package agents;
 
 ...
 
-import com.mindsmiths.armory.component.InputComponent;
 import com.mindsmiths.armory.component.HeaderComponent;
 
 ...
@@ -74,9 +81,9 @@ public class Felix extends Agent {
                 .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
                 .addComponent("submit", new PrimarySubmitButtonComponent("Cool, let's go!", "askForName")),
                 "askForName", new TemplateGenerator("askForName")
-                        .addComponent("title", new TitleComponent("Okay, first, tell me your name? :)"))
+                        .addComponent("title", new TitleComponent("Okay, first, tell me your name? "))
                         .addComponent("name", new InputComponent("name", "Type your name here", true))
-                        .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "done")));
+                        .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "completed")));
         showScreens("welcome", screens);
     }
     
@@ -118,7 +125,7 @@ import com.mindsmiths.armory.event.SubmitEvent
 
 rule "Start user onboarding"
    when
-        signal: SubmitEvent(getParamAsString("submitName") == "next") from entry-point "signals"
+        signal: SubmitEvent(getParamAsString("submitName") == "completed") from entry-point "signals"
         
         agent: Felix()
    then
@@ -130,6 +137,8 @@ rule "Start user onboarding"
         delete(signal);
 end
 ```
+
+Start `forge run` and voila! You have a full onboarding process done!
 
 Ok, now when we did the onboarding successfully, we can add survey screens! Here we'll use 3 new components: `DescriptionComponent`, `CloudSelectComponent` and `ActionGroupComponent`. 
 When it comes to `CloudSelectComponent` and `ActionGroupComponent`, you can't just add them to the method, you need to make list of options first.
@@ -201,7 +210,7 @@ public class Felix extends Agent {
 
 rule "Start survey"
    when
-        signal: SubmitEvent(getParamAsString("submitHeight") == "done") from entry-point "signals"
+        signal: SubmitEvent(getParamAsString("submitHeight") == "completed") from entry-point "signals"
         agent: Felix()
    then
         modify(agent) {

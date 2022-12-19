@@ -13,6 +13,9 @@ package agents;
 
 ...
 
+import com.mindsmiths.armory.component.ImageComponent;
+...
+
 @Data
 @NoArgsConstructor
 public class Felix extends Agent {
@@ -25,7 +28,7 @@ public class Felix extends Agent {
                     "askForName", new TemplateGenerator("askForName")
                             .addComponent("title", new TitleComponent("Okay, first, tell me your name? :)"))
                             .addComponent("name", new InputComponent("name", "Type your name here", true))
-                            .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "done")));
+                            .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "completed")));
             showScreens("welcome", screens);
         }
     }

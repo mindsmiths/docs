@@ -66,7 +66,7 @@ You can try this out by adding a rule that will call the `showDemoScreen()` func
 package rules.Felix
 
 import agents.Felix
-import com.mindsmiths.armory.events.UserConnectedEvent
+import com.mindsmiths.armory.event.UserConnectedEvent
 
 rule "Hello world"
    when
@@ -81,6 +81,8 @@ end
 This rule just identifies the moment the user connected to the Armory link and shows the demo screen, consisting of just a single element - text "Hello, world!".
 
 Finally, run the code with `forge run` and click on the Armory URL you got when running `armory-admin setup`.
-Don't worry, in case you lost it, the format is: ```http://8000.YOUR-WEB-IDE-LINK``` (or you can just look for it in `.env` file). 
+Don't worry, in case you lost it, the format is: ```http://8000.YOUR-WEB-IDE-LINK``` (or you can just look for it in `.env` file).
 
 Cool! Now that you have the setup to toy around with, we can take a closer look at what Armory actually is, and what you can do with it.
+
+P.S. Now, you can delete `showDemoScreen` in .java file and `HelloWorld` rule in .drl file, while we used it only as a demonstration, and we'll not be needing them anymore.
