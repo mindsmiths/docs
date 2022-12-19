@@ -6,8 +6,8 @@ sidebar_position: 7
 
 You can also redirect the user to another location through a link on an Armory screen.
 For example, after finishing the onboarding process, Felix redirects the user to the Discord server.
-You just use the hyperlink notation: `<a href='link_placeholder'>text_placeholder</a>`
-We just add the hyperlink on the last screen in `showSurveyScreens()` in `Felix.java` file:
+Just use the hyperlink notation: `<a href='link_placeholder'>text_placeholder</a>` and add the hyperlink where you want, 
+in this case it should be on the last screen in `showSurveyScreens()` in `Felix.java` file:
 
 ```java title="java/agents/Felix.java"
 
