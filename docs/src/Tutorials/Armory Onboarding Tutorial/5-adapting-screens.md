@@ -1,10 +1,10 @@
 ---
 sidebar_position: 5
 ---
-// TODO maybe make this the last lectrue, so include some "congrats, go ahead and have fun"-like message
+
 # Adapting screen and template style
-// TODO purple magic? :) nije li plavo?
-This purple magic you can notice going on is the default screen styling, but you can override the default style sheet used when generating screens by adding custom style to the `skin.scss` file located in `services/armory/src/assets/css`.
+
+This color magic you can notice going on is the default screen styling, but you can override the default style sheet used when generating screens by adding custom style to the `skin.scss` file located in `services/armory/src/assets/css`.
 You can adapt the style applied for a specific template, and changing its style will affect any screen using it. By default, any new screen you generate uses the `GenericTemplate`, but you can also specify a different template name when using `TemplateGenerator`.
 
 So let's start with some css basics. 

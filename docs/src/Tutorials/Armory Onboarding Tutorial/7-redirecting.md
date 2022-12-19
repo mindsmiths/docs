@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 ---
+
 # Going places
 
 You can also redirect the user to another location through a link on an Armory screen.
@@ -8,7 +9,6 @@ For example, after finishing the onboarding process, Felix redirects the user to
 You just use the hyperlink notation: `<a href='link_placeholder'>text_placeholder</a>`
 We just add the hyperlink on the last screen in `showSurveyScreens()` in `Felix.java` file:
 
-// TODO remove all code that wasn't changed, this is huge
 ```java title="java/agents/Felix.java"
 
 package agents;
