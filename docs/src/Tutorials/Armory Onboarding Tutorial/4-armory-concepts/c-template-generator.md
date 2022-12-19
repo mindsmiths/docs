@@ -58,4 +58,4 @@ rule "Start flow"
 end
 ```
 
-That's it! You can now run forge and start toying around with Felix!
+That's it! Now write `forge run` in terminal and start toying around with Felix!

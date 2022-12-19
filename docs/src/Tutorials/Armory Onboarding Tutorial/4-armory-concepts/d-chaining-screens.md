@@ -11,7 +11,6 @@ We'll now show you how to do just that: we'll add a function that shows multiple
 To tell Armory which screen to switch to, just specify the name of the next screen as the value of the action component that leads to it (such as a button). 
 For example, in the code below, the “Cool, let's go!” button at the bottom of the `welcome` screen leads to the screen on which we ask the user for their name (i.e. the `askForName` screen):
 
-// TODO - better naming than "next"? - to signify it's the end of a procedure
 
 ```java title="java/agents/Felix.java"
 

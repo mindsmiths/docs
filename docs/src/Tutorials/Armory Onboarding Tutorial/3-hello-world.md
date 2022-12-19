@@ -83,4 +83,3 @@ Finally, run the code with `forge run` and click on the Armory URL you got when 
 Don't worry, in case you lost it, the format is: ```http://8000.YOUR-WEB-IDE-LINK``` (or you can just look for it in `.env` file). 
 
 Cool! Now that you have the setup to toy around with, we can take a closer look at what Armory actually is, and what you can do with it.
-
