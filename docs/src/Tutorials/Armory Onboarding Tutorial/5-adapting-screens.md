@@ -10,7 +10,7 @@ You can adapt the style applied for a specific template, and changing its style 
 So let's start with some css basics. 
 For example, to adapt the style of the screens we implemented in this tutorial, you can paste in the following in services in `skin.scss` file:
 
-```"css title="src/assets/css/skin.scss"
+```"css title="armory/src/assets/css/skin.scss"
 
 body {
     background-color: rgb(209, 238, 255);

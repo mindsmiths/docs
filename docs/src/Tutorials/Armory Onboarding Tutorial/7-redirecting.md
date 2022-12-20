@@ -56,7 +56,7 @@ public class Felix extends Agent {
                         )),
                 "endScreen", new TemplateGenerator("endScreen")
                         .addComponent("title", new TitleComponent("You are the best!💙"))
-                        .addComponent("description", new DescriptionComponent("To join our workout group on Discord, follow this <a href='https://discord.com/invite/mindsmiths'>link</a> !"))
+                        .addComponent("description", new DescriptionComponent("To join our workout group on Discord, here is a <a href='https://discord.com/invite/mindsmiths'>link</a> !"))
                         );
         showScreens("waterIntake", screens);
     }
