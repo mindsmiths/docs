@@ -105,7 +105,7 @@ public class Felix extends Agent {
                         .addComponent("header", new HeaderComponent(null, true))        
                         .addComponent("title", new TitleComponent("How tall are you in cm?"))
                         .addComponent("height", new InputComponent("height", "Type your height here", true))
-                        .addComponent("submitHeight", new PrimarySubmitButtonComponent("submitHeight", "Next!", "done")));
+                        .addComponent("submitHeight", new PrimarySubmitButtonComponent("submitHeight", "Next!", "completed")));
         showScreens("startOnboarding", screens);
     }
 }
