@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Let's start by add Armory as a new service to your project:
 1. First, install Armory by running ```pip install armory~=5.0.0b0``` in the Terminal
-2. Next, run the ```armory-admin setup``` command, to integrate Armory into the project. 
+2. Next, run the ```armory setup``` command, to integrate Armory into the project. 
 
 This command will prompt you to:
 * Choose the agent handling signals coming from Armory
@@ -44,7 +44,6 @@ public class Runner extends RuleEngineService {
 ```
 
 Otherwise, add `configureSignals(getClass().getResourceAsStream("config/signals.yaml"));` in `initialize()`.
-
 
 4. Finally, run ```forge init``` to make sure all dependencies are in place. 
 
