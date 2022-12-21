@@ -64,21 +64,48 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Mindsmiths Docs",
+        title: "Mindsmiths",
         logo: {
           alt: "Mindsmiths Logo",
           src: "img/logo.png",
         },
         items: [
           {
-            href: "https://discord.com/invite/mindsmiths",
-            label: "Discord",
+            type: "doc",
+            label: "Docs",
+            docId: 'platform/getting-started',
+            position: "left",
+            sidebarPath: "platformSidebar",
+          },
+          {
+            type: "doc",
+            label: "Tutorials",
+            docId: "tutorials/getting-started",
+            position: "left",
+            sidebarPath: "tutorialsSidebar",
+          },
+          {
+            type: "doc",
+            label: "Integrations",
+            docId: "integrations/getting-started",
+            position: "left",
+            sidebarPath: "integrationsSidebar",
+          },
+          {
+            type: "doc",
+            label: "Community",
+            docId: "community",
             position: "right",
           },
         ],
       },
       footer: {
         copyright: `Copyright © ${new Date().getFullYear()} Mindsmiths`,
+      },
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
       },
       prism: {
         theme: lightCodeTheme,
