@@ -5,6 +5,91 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.5] - 2022-12-21
+
+This release contains the following service versions:
+- `forge-sdk==5.0.0` (Python)
+- `forge-sdk==5.0.0` (Java)
+- `forge-cli==5.0.0`
+- `rule-engine==5.0.0`
+- `heartbeat==5.0.0`
+- `cecs==5.0.0`
+
+Noteable changes **since 1.5 beta**:
+
+### CLI
+
+#### Fixed
+- loading env variables in JSON form
+
+#### Added
+- locking/unlocking all agents
+- overriding any Kubernetes manifest file
+
+#### Changed
+- prebuilt Django services are started with `<service-name> runserver` instead of `<service-name>-admin runserver`
+
+
+### Rule Engine
+
+#### Fixed
+- `getByConnection` and `getOrCreateByConnection` now return the correct agent instance instead of a generic `Agent`
+- `ConncurrentModificationExeption` when clearing entry points
+
+#### Added
+- `GetAgentByConnection` for `signals.yaml`
+- stopping agent evaluation with `Agents.stopEvaluation()`
+- `unlockAllAgents` and `lockAllAgents` APIs
+
+#### Changed
+- deprecated `Agent.addConnection` (use `Agent.setConnection`)
+- upgraded dependency `io.github.classgraph==4.8.151`
+
+#### Removed
+- `json-simple` dependency
+
+
+### Python SDK
+
+#### Fixed
+- service API functions no longer get signal metadata (`id`, `timestamp`...) in `**kwargs`
+
+#### Changed
+- `LOGGING`, `REGISTRY_CONFIG`, `CONSUMER_CONFIG` and `PRODUCER_CONFIG` settings are now loaded as JSON to supported advanced configuration
+- upgraded dependencies (`redis<4.5.0`, `fakeredis<3.0`)
+
+
+### Java SDK
+
+#### Added
+- `getVariant` in `UnleashFeatureToggle`
+
+#### Changed
+- _requires self-hosted Sentry >=v21.9.0 (!)_
+- updated dependencies
+
+
+### Project template
+
+#### Changed
+- cleaned up project root
+- using CI v5.x
+
+#### Fixed
+- `MONGO_CLIENT_CONNECTION_STRING` secret would throw an error if not set
+- `rule-engine` depends on the `mongo` database
+
+
+### Docs
+
+#### Added
+- technical documentation for CLI and Heartbeat
+
+#### Fixed
+- minor tutorial fixes
+
+
+
 ## [1.5 beta] - 2022-10-19
 
 This release contains the following service versions:
