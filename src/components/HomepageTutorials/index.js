@@ -41,7 +41,7 @@ const TutorialList = [
   },
   {
     title: "Create an enhanced onboarding user experiences on the web in minutes",
-    Image: require("@site/static/img/mind.svg").default,
+    Image: require("@site/static/img/tutorial3.png").default,
     description: (
       <>
         <p>
