@@ -5,6 +5,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import HomepageTutorials from '../components/HomepageTutorials';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -17,7 +18,12 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/tutorials/getting-started">
-            Tutorials
+            Get started
+          </Link>
+          <Link
+            className="button button--lg"
+            to="https://discord.gg/mindsmiths">
+            Join the community
           </Link>
         </div>
       </div>
@@ -34,6 +40,7 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
+        <HomepageTutorials />
       </main>
     </Layout>
   );

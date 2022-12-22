@@ -7,8 +7,8 @@ require("dotenv").config();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Mindsmiths Platform",
-  tagline: "Unleash The Power Of Autonomy",
+  title: "Mindsmiths",
+  tagline: "A platform for enhancing human-machine cooperation by building AI-first solutions",
   url: "https://docs.mindsmiths.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
