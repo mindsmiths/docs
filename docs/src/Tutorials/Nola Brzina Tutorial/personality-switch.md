@@ -152,7 +152,7 @@ rule "Handle message"
             // highlight-changed-line
             addMessageToMemory(agent.getPersonality().getHumanName(), message.getText()),
             setPinged(false),
-            setLastInteractionTime(new Date())
+            setLastInteractionTime(Utils.getUtcDatetime())
        };
        agent.askGPT3();
        delete(message);

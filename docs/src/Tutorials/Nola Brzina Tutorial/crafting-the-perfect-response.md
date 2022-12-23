@@ -13,7 +13,7 @@ So, let’s add an existing Forge integration for GPT-3. Start off by installing
 
 
 ```console
-root:/app$ pip install "gpt3-adapter[dev]==5.0.0b0"
+root:/app$ pip install "gpt3-adapter[dev]"
 ```
 
 To use the model, you will need to get an [OpenAI account](https://beta.openai.com/account/api-keys). Once you get the API key, run the following code in your terminal:
