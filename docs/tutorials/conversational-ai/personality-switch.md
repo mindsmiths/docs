@@ -1,9 +1,9 @@
 ---
-sidebar_position: 9
+sidebar_position: 8
 ---
 
 
-# Bonus: Personality switch
+# Personality switch
 
 To top it all off, let’s have some more fun with your agent’s identity!
 We’ll make things a bit more interesting by adding multiple personality options for Nola.

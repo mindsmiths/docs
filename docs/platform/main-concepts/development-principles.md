@@ -3,13 +3,12 @@ sidebar_position: 4
 ---
 
 # Development principles
-## 🚧 Under construction 🚧
 
 - Quick prototyping
 - Local optimization (multiple personas)
 - Constant evaluations: Declarative programming
 
-### Qucik prototyping: Fail fast approach
+### Quick prototyping: Fail fast approach
 
 - The platform supports the principles of **quick prototyping**, making your development process fundamentally agile.
 - You don’t need heaps of data to start developing smart solutions, and you don’t need a fully automated product to unleash it into the world.

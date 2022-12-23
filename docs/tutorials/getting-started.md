@@ -12,7 +12,7 @@ There is **no setup required** to start this tutorial series.
 Welcome to the Mindsmiths Platform tutorial series!
 Here you will learn how to **build AI-first systems using the Mindsmiths Platform**.
 
-### Overview
+## Overview
 
 The series is divided into 3 parts:
 1. [Building a conversational AI assistant](conversational-ai/introduction)
@@ -31,13 +31,13 @@ check out the [documentation](/platform/getting-started.md).
 :::
 
 
-### Before we begin
+## Before we begin
 **No setup is required** to start this tutorial series.
 The Mindsmiths Platform is fully cloud-based.
 To access it, you just need a Mindsmiths IDE — a VSCode-like web IDE.
 
 If you don't already have one, go to the 
-[Mindsmiths Discord](https://discord.gg/mindsmiths) and just ask for one in `#dev` channel.
+[Mindsmiths Discord](https://discord.gg/mindsmiths) and just ask for one in *#dev* channel.
 It will take just a few minutes for us to get your IDE up and running.
 
 Your IDE should look something like this:
@@ -65,7 +65,7 @@ To learn more about the Mindsmiths IDE and what it can do, check out the [Mindsm
 
 
 
-### Help, I'm stuck!
+## Help, I'm stuck!
 
 If you ever get stuck, check out our [FAQ](/docs/platform/reference/faq).
 We always try to keep it up-to-date.
@@ -75,5 +75,5 @@ If that doesn't help, don't hesitate to ask for help in the
 You can find helpful materials from other developers, but also from the Mindsmiths team.
 
 If you find any errors or have any suggestions, please let us know either through
-[Discord](https://discord.gg/mindsmiths) `#dev` channel or through
+[Discord](https://discord.gg/mindsmiths) *#dev* channel or through
 [Github](https://github.com/mindsmiths/examples) issues!

@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Meet agent Smith
 
-### Agent Smith - developer's super helper
+## Agent Smith - developer's super helper
 
 Agent Smith is here to help you get started with development on the Forge.
 For a start, we’ll use Smith to showcase some basic concepts you need to know about our agents and our rule engine.

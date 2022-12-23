@@ -1,12 +1,13 @@
 ---
-sidebar_position: 6
+sidebar_position: 9
 ---
 
-# Signal communication
+# Agent cooperation
 
 We already mentioned signals on a couple of occasions, but let’s take a closer look at how communication on the platform actually works.
+This is important to understand if you want to build a more complex system, where multiple agents cooperate with each other.
 
-## Sending internal signals
+## Sending signals between agents
 
 Apart from communicating with their users, we already mentioned the agents can communicate with each other.
 For example, your developer agent, Agent Smith, could be notified each time a new agent is created, to keep track of all the new users in the system.
@@ -81,49 +82,8 @@ end
 Notice that in this simple case, the total number of active agents will correspond to the number of registered users 
 (with the exception of Agent Smith, who doesn’t have a user). In more complex scenarios, this might not be the case.
 
-
 That’s it! Write **forge reset** in the Terminal first to clear the database and start **forge run** to try it out!
 
-## Handling external signals
-
-The communication with the outside world also happens via signals. Earlier in the tutorial when we connected Telegram to our platform, 
-the piece of code for routing the incoming Telegram signals to the appropriate agent was generated in the background.
-You can check the file that gets generated in this `yaml` file:
-
-```yaml title="services/rule_engine/resources/config/signals.yaml"
-com.mindsmiths.telegramAdapter.events.TelegramReceivedMessage:
-  - !GetOrCreateAgentByConnection
-    connectionName: telegram
-    connectionField: chatId
-    agentType: agents.Nola
-```
-
-You can see the name of your agent was inserted under ```agentType```. This file is used in the Rule Engine’s ```Runner.java``` file:
-
-```java title="models/Runner.java"
-import agents.Smith;
-import com.mindsmiths.ruleEngine.runner.RuleEngineService;
-import com.mindsmiths.ruleEngine.util.Agents;
-
-
-public class Runner extends RuleEngineService {
-    @Override
-    public void initialize() {
-        configureSignals(getClass().getResourceAsStream("config/signals.yaml"));
-
-        if (!Agents.exists(Smith.ID))
-            Agents.createAgent(new Smith());
-    }
-    ...
-}
-```
-The signal we catch from Telegram is of type ```TelegramReceivedMessage```. 
-When the signal arrives, the platform tries to find the agent assigned to handle Telegram messages (`Nola()`) received 
-from the user with that Telegram number (`chatId`).
-
-The type of agent that gets assigned to handle the messages is the one you specify when adding the service.
-If no such agent exists, a new one is created to handle messages coming from this communication channel.
-
-
-In this part you don’t need to write any code yourself - we just wanted to show you `Runner.java` because this is the place where you will be catching and routing all incoming external signals you want the platform to handle.
-
+:::tip
+If you want to learn more about signals, check out the [documentation](/docs/platform/advanced-concepts/service-communication).
+:::

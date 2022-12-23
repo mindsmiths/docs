@@ -3,7 +3,6 @@ sidebar_position: 2
 ---
 
 # Mindsmiths Platform: Basic concepts
-## 🚧 Under construction 🚧
 
 ## Basic concepts
 There are several basic concepts we need to introduce before you get started with coding on the platform:
@@ -55,6 +54,10 @@ When it receives a signal, it performs these steps:
 
 The signals that trigger these actions are defined in `signals.yaml` and/or `Runner.java`.
 
+:::tip
+Read more about the Rule Engine service [here](/docs/platform/advanced-concepts/rule-engine).
+:::
+
 #### Heartbeat
 We want our agents to be "alive" and constantly "think". This allows them to be proactive instead of waiting for someone
 to "turn them on". 
@@ -66,3 +69,7 @@ That's why we gave our agents a _heartbeat_. Apart from evaluating agents on eac
 
 The Heartbeat service decides when to send a heartbeat for which agent. The default strategy is to send it every X seconds (where X is configurable).
 Other strategies exist for more efficiency in special cases. You can also write a custom strategy if the need arises.
+
+:::tip
+Read more about the Heartbeat service [here](/docs/platform/advanced-concepts/heartbeat).
+:::

@@ -7,7 +7,7 @@ sidebar_position: 3
 Now that your instance of Forge is up and running, you need a way to communicate with it.
 [Telegram Messenger](https://telegram.org/) is a great starting point because it has a free API and it’s very easy to start working with it.
 
-### Creating a Telegram bot
+## Creating a Telegram bot
 
 We will use an existing integration with Telegram as a way for your system to communicate with the outside world. Just install the telegram adapter:
 
@@ -27,7 +27,7 @@ telegram-adapter setup
 
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
 
-### Creating Nola - the interactive agent
+## Creating Nola - the interactive agent
 
 Now that you have the communication channel set up between Forge and the outside world, it’s time to design your chatting agent!
 
