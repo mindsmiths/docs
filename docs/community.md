@@ -1,11 +1,14 @@
 # Community
 
-### Where to get support
+## Where to share ideas and get support
 
-Get in touch with us via Discord or email for help.
-Also, if you find a bug in our tutorial, let us now on Github.
+Get in touch with us via [Discord](https://discord.gg/mindsmiths)
+or [Twitter](https://twitter.com/MindsmithsHQ).
 
-### Contributing
+Also, if you find a bug in our tutorial, let us now on [Github](https://github.com/mindsmiths).
 
-To contribute, join us on Discord and let us know what you want to work on.
-Also, get into some discussions on our Twitter.
+
+## How to contribute
+
+To contribute, join us on [Discord](https://discord.gg/mindsmiths)
+and let us know what you want to work on.
