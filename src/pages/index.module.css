@@ -21,3 +21,17 @@
   align-items: center;
   justify-content: center;
 }
+
+section:not(:last-child) {
+  padding-bottom: 4rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ececec;
+}
+
+hr.section-divider {
+  height: 1px;
+  margin-bottom: -1px;
+  border: none;
+  border-bottom: 1px solid #ececec;
+  margin-top: 40px;
+}

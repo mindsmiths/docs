@@ -41,26 +41,31 @@
   border-left: 3px solid #ff000080;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #8974b2;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-}
-
-[data-theme='dark'] {
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-}
-
-.row {
-  place-content: center;
-}
-
 img[src*='#center'] {
     display: block;
     margin: auto;
+}
+
+div:has(> article) {
+  max-width: 50em;
+}
+
+div.language-bash .codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module::before {
+  content: url("/img/terminal.png") !important;
+}
+
+.codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module::before {
+  content: url("/img/vscode.png");
+  padding-right: 0.5em;
+  position: relative;
+  top: 0.15em;
+}
+
+.theme-doc-footer:has(.theme-doc-footer-edit-meta-row) {
+  display: none;
+}
+
+.error-404-image {
+  max-height: 250px;
+  width: fit-content;
 }
