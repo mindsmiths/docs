@@ -26,7 +26,7 @@ In a few easy steps, you'll quickly go through the setup process.
 ### Installment
 First, you'll need to pip install the Adapter with the following command:
 ```console
-pip install "telegram-adapter[dev]==5.0.0b0"
+pip install "telegram-adapter[dev]"
 ```
 ### Environment variables
 #### TELEGRAM_BOT_TOKEN {#tgrm-tkn}   
@@ -73,7 +73,7 @@ There are 4 different static methods you can utilize from `TelegramAdapterApi`:
      
       public class Nola extends Agent {
         String text = "Hello, world!";
-        String chatId = getConnections().get("telegram");
+        String chatId = getConnection("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
       }
     ```

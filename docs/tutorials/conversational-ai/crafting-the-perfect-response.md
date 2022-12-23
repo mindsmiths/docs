@@ -18,7 +18,7 @@ To use the model, you will need an [OpenAI account](https://beta.openai.com/acco
 There you'll get the OpenAI API key. Now add GPT-3 to your project by running the following command:
 
 ```bash title="Terminal"
-pip install "gpt3-adapter[dev]==5.0.0b0"
+pip install "gpt3-adapter[dev]""
 gpt3-adapter setup
 ```
 

@@ -12,7 +12,7 @@ Now that your instance of Forge is up and running, you need a way to communicate
 We will use an existing integration with Telegram as a way for your system to communicate with the outside world. Just install the telegram adapter:
 
 ```bash title="Terminal"
-pip install "telegram-adapter[dev]==5.0.0b0"
+pip install "telegram-adapter[dev]"
 ```
 
 Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). To find it, just click on the contact search icon and type in "BotFather". Send the bot a message "/newbot" to create a new bot. 
@@ -51,7 +51,7 @@ public class Nola extends Agent {
     }
 
     public void sendMessage(String text) {
-        String chatId = getConnections().get("telegram");
+        String chatId = getConnections("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 }
