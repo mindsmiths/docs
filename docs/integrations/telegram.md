@@ -1,8 +1,8 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 ---
 
-# Telegram Adapter
+# Telegram
 This service enables you to integrate your project with Telegram, an open-source messaging app. If you aren't familiar wit Telegram, you can read more about it on their [website](https://telegram.org/).
 
 

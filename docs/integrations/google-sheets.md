@@ -1,11 +1,33 @@
 ---
-sidebar_position: 3
+sidebar_position: 6
 ---
 
-# Google Sheet Adapter
+# Google Sheets
 
 If you're ever in a need of syncing with your Google Sheets and want to automatize inputting and extracting the data from your spreadsheets, Google Sheet Adapter is the service you want to integrate with.
 It's based on the Google's [Cloud Platform](https://console.cloud.google.com/) and [Sheets API](https://developers.google.com/sheets/api), a duo used for accessing the chosen spreadsheet in a safe way.
+
+<details>
+  <summary>Setup details</summary>
+  <div>
+    <div><p><b>Environment variables:</b></p>
+        <ul>
+            <li>GOOGLE_CLIENT_CREDENTIALS</li>
+            <li>GOOGLE_SPREADSHEET_ID</li>
+        </ul>
+    </div>
+    <div>
+        <p><b>Installment:</b></p>
+        <ul>
+            <li><code>pip install "gsheets-adapter[dev]~=0.5.0"</code></li>
+        </ul>
+    </div>
+    <div>
+        <p><b>Initialize setup:</b></p>
+        <ul><li><p><code>gsheets-adapter setup</code></p></li></ul>
+    </div>
+  </div>
+</details>
 
 ## When to use Google Sheet Adapter?
 

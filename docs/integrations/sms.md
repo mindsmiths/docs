@@ -2,10 +2,33 @@
 sidebar_position: 4
 ---
 
-# Infobip Adapter
+# SMS
 
 Infobip Adapter enables sending [WhatsApp](https://www.whatsapp.com/) and SMS messages by using [Infobip's APIs](https://www.infobip.com/docs/api/channels/whatsapp/whatsapp-outbound-messages) and integrating it with the Platform. 
 It can be used for facilitating communication with your users.
+
+<details>
+  <summary>Setup details</summary>
+  <div>
+    <div><p><b>Environment variables:</b></p>
+        <ul>
+            <li>INFOBIP_BASE_URL</li>
+            <li>INFOBIP_API_KEY</li>
+            <li>INFOBIP_PHONE_NUMBER</li>
+        </ul>
+    </div>
+    <div>
+        <p><b>Installment:</b></p>
+        <ul>
+            <li><code>pip install "infobip-adapter[dev]~=5.0.0b0"</code></li>
+        </ul>
+    </div>
+    <div>
+        <p><b>Initialize setup:</b></p>
+        <ul><li><p><code>infobip-adapter setup</code></p></li></ul>
+    </div>
+  </div>
+</details>
 
 ## When to use Infobip Adapter?
 If your project involves direct communication with your users and you want to use WhatsApp or SMS text messages as preferred chanel for communication, then integrating Infobip Adapter is the way to go.
