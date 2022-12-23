@@ -150,7 +150,7 @@ And now we need to track the timestamp of every message the user sends to Nola. 
 ```java title="rules/nola/Conversation.drl"
 ...
 // highlight-added-line
-import java.time.LocalDateTime;
+import com.mindsmiths.sdk.utils.Utils;
 ...
 rule "Handle message"
     when
@@ -160,7 +160,7 @@ rule "Handle message"
         modify(agent) {
             addMessageToMemory("Human", message.getText()),
             // highlight-added-line
-            setLastInteractionTime(LocalDateTime.now())
+            setLastInteractionTime(Utils.getUtcDatetime())
         };
         agent.askGPT3();
         delete(message);

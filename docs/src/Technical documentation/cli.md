@@ -11,7 +11,7 @@ Forge CLI is a tool that allows you to interact with your project. It is used to
 
 Just run this command in your terminal:
 ```shell
-pip install forge-cli>=5.0.0
+pip install forge-cli
 ```
 
 You can also install autocomplete with:
