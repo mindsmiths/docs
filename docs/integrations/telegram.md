@@ -6,7 +6,7 @@ sidebar_position: 3
 This service enables you to integrate your project with Telegram, an open-source messaging app. If you aren't familiar wit Telegram, you can read more about it on their [website](https://telegram.org/).
 
 
-For a quick demo of how a project with included Telegram Adapter looks like, you can check out our [Nola Brzina tutorial](docs/src/Tutorials/Nola%20Brzina%20Tutorial/intro.md).
+For a quick demo of how a project with included Telegram Adapter looks like, you can check out our [Conversational AI tutorial](docs/tutorials/conversational-ai/introduction).
 
 ## When to use Telegram Adapter?
 If you want to include features like sending and receiving messages, perhaps you want to offer your users a possibility of responding to your Telegram texts with buttons,
@@ -93,7 +93,7 @@ There are 4 different static methods you can utilize from `TelegramAdapterApi`:
 ## Catching responses
 
 There are 4 different `event` signals that you can catch in your rules and make actions according to them. If you want to find out how signal communication
-works on the platform, read more about it [here](/docs/src/Technical%20documentation/Platform%20architecture/service-communication.md). 
+works on the platform, read more about it [here](/docs/platform/advanced-concepts/service-communication). 
 1. `TelegramReceivedMessage`
    - a signal which is being emitted when a user sends a message to your bot
    - if you want to take any sort of action when this happens, you should add a rule that catches this signal

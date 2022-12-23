@@ -61,7 +61,7 @@ You don't have to worry about what _heartbeat_ means straight away. For now this
 You can stop the platform by pressing **CTRL+C** in the Terminal.
 :::
 
-To learn more about the Mindsmiths IDE and what it can do, check out the [Mindsmiths IDE](/docs/platform/advanced-concepts/ide) section.
+To learn more about the Mindsmiths IDE and what it can do, check out the [Mindsmiths IDE](/docs/platform/guides/ide) section.
 
 
 
