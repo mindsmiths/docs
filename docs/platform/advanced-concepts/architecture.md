@@ -97,4 +97,4 @@ find and train the best model for your data.
 
 ### Custom service
 If you didn't find a service that fits your needs, you can always write your own. It's actually very simple!
-Our SDK will handle most of the boring stuff for you. You can find out how to [create a custom service here](./service-creation).
+Our SDK will handle most of the boring stuff for you. You can find out how to [create a custom service here](/docs/platform/guides/service-creation).

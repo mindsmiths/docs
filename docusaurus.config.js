@@ -11,7 +11,7 @@ const config = {
   tagline: "A platform for enhancing human-machine cooperation by building AI-first solutions",
   url: "https://docs.mindsmiths.com",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "mindsmiths",

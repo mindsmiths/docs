@@ -18,7 +18,7 @@ We’ll walk you through the code, so it's easier for you to get a grip on what'
 you can just continue with the implementation from the point where we leave you off at the end of the section called [Initial setup](./Initial%20setup/welcome-user).
 
 :::note
-Remember to set the environment variables in [.env file](../intro.md) located at the root of the project in your web IDE, so you can run the system.
+Remember to set the environment variables in *.env file* located at the root of the project in your web IDE, so you can run the system.
 ```console
 TELEGRAM_BOT_TOKEN=<YOUR BOT TOKEN>
 OPENAI_API_KEY=<YOUR API KEY>
