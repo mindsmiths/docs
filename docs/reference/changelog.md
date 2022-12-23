@@ -5,7 +5,7 @@ sidebar_position: 1
 # Changelog
 
 
-## [1.5] - 2022-12-21
+## [1.5.0] - 2022-12-21
 
 This release contains the following service versions:
 - `forge-sdk==5.0.0` (Python)
@@ -15,7 +15,7 @@ This release contains the following service versions:
 - `heartbeat==5.0.0`
 - `cecs==5.0.0`
 
-Noteable changes **since 1.5 beta**:
+Noteable changes **since 1.5.0 beta**:
 
 ### CLI
 
@@ -90,7 +90,7 @@ Noteable changes **since 1.5 beta**:
 
 
 
-## [1.5 beta] - 2022-10-19
+## [1.5.0 beta] - 2022-10-19
 
 This release contains the following service versions:
 - `forge-sdk==5.0.0b0` (Python)

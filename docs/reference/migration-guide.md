@@ -5,7 +5,7 @@ sidebar_position: 2
 # Migration guide
 
 
-## [1.5 beta -> 1.5] - 2022-12-21
+## [1.5.0 beta -> 1.5.0] - 2022-12-21
 Estimated migration time: 5 minutes
 
 ### Project template
@@ -48,7 +48,7 @@ Alternatively, put the URL of your repo with the appropriate credentials, so tha
 
 
 
-## [1.4 -> 1.5 beta] - 2022-10-19
+## [1.4 -> 1.5.0 beta] - 2022-10-19
 Estimated migration time: 1 day
 
 ### API Gateway
