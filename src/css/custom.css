@@ -69,3 +69,7 @@ div.language-bash .codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-th
   max-height: 250px;
   width: fit-content;
 }
+
+.markdown a {
+    background-color: #6454960d;
+}
