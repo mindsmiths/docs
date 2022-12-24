@@ -153,6 +153,7 @@ And adapt the previous rules communicating with the GPT-3, to allow for a bit mo
 ```java title="rules/nola/Conversation.drl"
 rule "Handle message"
     when
+        Heartbeat(ts: timestamp) from entry-point "signals"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Nola()
    then
@@ -160,7 +161,7 @@ rule "Handle message"
             // highlight-changed-line
             addMessageToMemory(agent.getPersonality().getHumanName(), message.getText()),
             setPinged(false),
-            setLastInteractionTime(new Date())
+            setLastInteractionTime(ts)
        };
        agent.askGPT3();
        delete(message);
