@@ -1,11 +1,55 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Migration guide
 
 
-## [1.5] - 2022-10-19
+## [1.5.0 beta -> 1.5.0] - 2022-12-21
+Estimated migration time: 5 minutes
+
+### Project template
+- Update versions in `config/config.yaml` and all `pom.xml` files:
+  - `forge-sdk==5.0.0` (Python)
+  - `forge-sdk==5.0.0` (Java)
+  - `forge-cli==5.0.0`
+  - `rule-engine==5.0.0`
+  - `heartbeat==5.0.0`
+  - `cecs==5.0.0`
+  - update other services to versions compatible with SDK 5.0 (probably also `5.0.0`)
+  - you can look at the new project config template for reference (https://github.com/mindsmiths/platform-resources/blob/main/project_template/%7B%7Bcookiecutter.project_repo_name%7D%7D/config/config.yaml)
+- In your `.gitlab-ci.yml` change the ref from `v4.x` to `v5.x`
+- Remove `__init__.py` and `setup.cfg`
+- Update the Makefile according to the newest version: https://github.com/mindsmiths/platform-resources/blob/main/project_template/%7B%7Bcookiecutter.project_repo_name%7D%7D/Makefile
+
+### Mitems
+If you're using Mitems, you'll need to update the config:
+- Remove `COMMIT_TOKEN`
+- Change `REPO` env variable from:
+```yaml
+  mitems:
+    ...
+    env:
+      ...
+      COMMIT_TOKEN: '{{ env.COMMIT_TOKEN }}'
+      REPO: '{{ env.CI_REPOSITORY_URL }}'
+...
+```
+to:
+```yaml
+  mitems:
+    ...
+    env:
+      ...
+      REPO: 'https://commit-bot:{{ env.COMMIT_TOKEN }}@{{ env.get("CI_REPOSITORY_URL", "").split("@")[1] }}'
+...
+```
+Alternatively, put the URL of your repo with the appropriate credentials, so that Mitems has rights to clone and push to the repo.
+
+
+
+## [1.4 -> 1.5.0 beta] - 2022-10-19
+Estimated migration time: 1 day
 
 ### API Gateway
 - rename usages of "Forge API" to "API Gateway"
