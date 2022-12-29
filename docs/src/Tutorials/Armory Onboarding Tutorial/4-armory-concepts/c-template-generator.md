@@ -19,7 +19,6 @@ Let's just jump right into coding!
 First, inside the ```Felix.java``` file, we create the showStartScreens method, add screen template, and add components we want our first screen to have.  
 
 ```java title="java/agents/Felix.java"
-
 package agents;
 
 ...

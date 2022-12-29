@@ -2,49 +2,57 @@
 sidebar_position: 2
 ---
 
-# Adding Armory to your project
+# Armory
 
-Let's start by add Armory as a new service to your project:
-1. First, install Armory by running ```pip install armory~=5.0.0b0``` in the Terminal
-2. Next, run the ```armory setup``` command, to integrate Armory into the project. 
+## Wait... So what is Armory?
 
-This command will prompt you to:
+Armory is the Mindsmiths implementation of a templating system used for building web-applications.
+It allows you to create an app-like experience for your users quickly and easily, with sequences of linked screens. 
+This provides the feeling of user guidance through the process you are modeling. 
+One of its biggest perks is that it allows you to smoothly build in the logic you need, and try out various components quickly and easily, with minimum code. 
+
+
+## Adding Armory to your project
+
+Let's start by adding Armory as a new service to your project:
+
+```bash title="Terminal"
+pip install armory~=5.0.0
+armory setup
+```
+
+This latter command will prompt you to:
 * Choose the agent handling signals coming from Armory
 * Provide the Armory site URL, which you'll use to access Armory
 
-We'll name our agent Felix. In case you choose a different name, make sure to keep it consistent throughout the tutorial.
+We'll name our agent Felix. 
+:::caution In case you choose a different name, make sure to keep it consistent throughout the tutorial.:::
 As for the URL, you just use your environment URL (e.g. http://workspace-ms-XXXXXXXXXX.sandbox.mindsmiths.io) with the `XXXXXXXXXX` being the digits you have in your web IDE link. 
 The URL will automatically be saved in your `.env` file, where you can find it at any moment.
 
-This is what adding armory looks like in the Terminal:
+This is what adding Armory looks like in the Terminal:
 
-```console
-root:/app$ armory-admin setup
+```bash title="Terminal"
+armory-admin setup
 What agent will handle signals? Felix
 URL of your IDE (leave empty if running locally): 
 http://8000.workspace-ms-0000000000.sandbox.mindsmiths.io
 Service successfully integrated into the project.
 ```
 
-Armory will now run on:
-```http://8000.workspace-ms-0000000000.sandbox.mindsmiths.io```
+Armory will now on: ```http://8000.workspace-ms-0000000000.sandbox.mindsmiths.io```
 
-3. Check that your ```Runner.java``` reads configuration from ```signals.yaml```. It should look like this:
+:::note
+Make sure that your `Runner.java` reads the configuration from `signals.yaml`:
 
-```java title="src/main/java/Runner.java"
-
-public class Runner extends RuleEngineService {
-    @Override
+```java title="java/Runner.java"
     public void initialize() {
         configureSignals(getClass().getResourceAsStream("config/signals.yaml"));
         ...
     }
-    ...
-}
 ```
+:::
 
-Otherwise, add `configureSignals(getClass().getResourceAsStream("config/signals.yaml"));` in `initialize()`.
-
-4. Finally, run ```forge init``` to make sure all dependencies are in place. 
+Finally, run `forge init` to make sure all dependencies are in place. 
 
 Congratulations, you can now use Armory in your project! Let's find out how we can actually use it and make an awesome onboarding flow.

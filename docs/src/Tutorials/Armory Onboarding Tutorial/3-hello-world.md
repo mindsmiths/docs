@@ -1,14 +1,13 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Hello world!
 
-Now, let's start coding! 
-Let's start by giving our agent the ability to show the web screens. Just create the file `java/agents/Felix.java` and add the following functions:
+Now, give this new service a try! 
+Let's start by giving our agent the ability to show the Armory screens. Just create the file `java/agents/Felix.java` and add the following functions:
 
 ```java title="java/agents/Felix.java"
-
 package agents;
 
 import java.util.Map;
@@ -32,7 +31,7 @@ public class Felix extends Agent {
 }
 ```
 
-Your agent can now control how screens, either a single one or a sequence of them, are presented to the user using the ArmoryAPI.  
+These are the basic functions that allow you to control how screens, either a single one or a sequence of them, are presented to the users using the ArmoryAPI.
 
 Every screen template is built up of multiple components we'll introduce you to later in this tutorial. For the moment we'll just build a demo screen using `TemplateGenerator`.
 
@@ -62,7 +61,6 @@ public class Felix extends Agent {
 You can try this out by adding a rule that will call the `showDemoScreen()` function. First add the rule directory with your agent's name and the `.drl` file: 
 
 ```java title="rules/felix/Felix.drl"
-
 package rules.Felix
 
 import agents.Felix
@@ -85,4 +83,4 @@ Don't worry, in case you lost it, the format is: ```http://8000.YOUR-WEB-IDE-LIN
 
 Cool! Now that you have the setup to toy around with, we can take a closer look at what Armory actually is, and what you can do with it.
 
-P.S. Now, you can delete `showDemoScreen` in .java file and `HelloWorld` rule in .drl file, while we used it only as a demonstration, and we'll not be needing them anymore.
+P.S. Now, you can delete `showDemoScreen` in .java file and `HelloWorld` rule in .drl file, while we used it only as a demonstration, and we'll not be needing them anymore. Let's dig in!
