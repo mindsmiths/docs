@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Chaining Armory screens
@@ -9,62 +9,67 @@ But to create a real web-app experience, you usually want to create a sequence o
 
 We'll now show you how to do just that: we'll add a function that shows multiple screens, specifying the transitions between them. 
 To tell Armory which screen to switch to, just specify the name of the next screen as the value of the action component that leads to it (such as a button). 
-For example, in the code below, the “Cool, let's go!” button at the bottom of the `welcome` screen leads to the screen on which we ask the user for their name (i.e. the `askForName` screen):
+For example, in the code below, the “Cool, let's go!” button at the bottom of the `"welcome"` screen leads to the screen on which we ask the user for their name (i.e. the `"askForName"` screen):
 
-
+Let's take a look:
 ```java title="java/agents/Felix.java"
-
-package agents;
-
 ...
-
 import com.mindsmiths.armory.component.InputComponent;
 
-...
 
 @Data
 @NoArgsConstructor
 public class Felix extends Agent {
     String name;
-    String onboardingStage = "START";
 
-    public void showStartScreens() {
+    public void showWelcomeScreens() {
         Map<String, BaseTemplate> screens = Map.of(
-                "welcome", new TemplateGenerator ("welcome")      
-                .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
-                .addComponent("submit", new PrimarySubmitButtonComponent("Cool, let's go!", "askForName")),
+                "welcome", new TemplateGenerator("welcome")      
+                    .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
+                    .addComponent("submit", new PrimarySubmitButtonComponent("submit", "Cool, let's go!", "askForName")),
                 "askForName", new TemplateGenerator("askForName")
-                        .addComponent("title", new TitleComponent("Okay, first, tell me your name? :)"))
-                        .addComponent("name", new InputComponent("name", "Type your name here", true))
-                        .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "end")));
+                    .addComponent("title", new TitleComponent("Okay, first, tell me your name? 😊"))
+                    .addComponent("name", new InputComponent("name", "Type your name here", true))
+                    .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "finish"))); // TODO: test if both ids are necessary?
         showScreens("welcome", screens);
     }
 }
 ```
-As you can see, all screens defined within the `showStartScreens()` function are shown to the user as part of a single procedure. This means that there is no need to define any business logic in the rule engine to handle transitions between screens.
 
-The data the user inputs during the screen sequence are transferred as values of `GET` parameters with the corresponding `componentId` as key.
-We can store the user's answers at the end of the procedure: for example, here we only asked for the name which the user sets through an input area, so we can fetch it off the `SubmitEvent` using `getParamAsString("name")`, because `name` is the id of the text input component.
+As you can see, all screens defined within the `showWelcomeScreens()` function are shown to the user as part of a single procedure, starting from the screen whose name is specified as the `firstScreen`. This means that there is no need to define any business logic in the rule engine to handle transitions between screens.
 
-Keep in mind that you might not always want to use predefined sequences of screens: sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the state the user is in. 
-When the screen to show is determined based on other circumstances and not just the fact which screen the user was on, and which button was pressed, you can define this behavior through a rule.
+The data the user inputs during the screen sequence are transferred as values of GET parameters with the corresponding `componentId` as key.
+We can store the user's answers at the end of the procedure: for example, here we only asked for the name which the user sets through an input area, so we can fetch it off the `SubmitEvent()` using `getParamAsString("name")`, because `name` is the id of the text input component that was filled in:
 
-With armory, you can define multiple screen chains for different stages of onboarding easily. This can be beneficial if you want to store some data separately. 
+```java titile="rules/felix/Felix.drl"
+...
+import com.mindsmiths.armory.event.SubmitEvent
+...
+rule "Start user onboarding"
+   when
+        signal: SubmitEvent(getParamAsString("submitName") == "finish") from entry-point "signals"       
+        agent: Felix()
+   then
+        modify(agent) {
+            setName(signal.getParamAsString("name"))
+        };
+        delete(signal);
+end
+```
 
-Here you can see that during the `startScreens` sequence we asked the user for a name, and stored it after the procedure was completed. 
-Now, we can easily use it in other screens, to add a bit of personalization to the user experience.
+With Armory, you can easily define multiple screen chains for different stages of the process. This can be beneficial if you want to store some data separately.
+For example, in the onboarding screens we asked the user for a name, and stored it after the procedure was completed. 
+Now, we can use it in other screens, to add a bit of personalization to the user experience.
+
+Moreover, keep in mind that you might not always want to use predefined sequences of screens: sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the state the user is in. 
+When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
+
 
 Let's add the code for user onboarding in agent's Java class:
-
 ```java title="java/agents/Felix.java"
-
-package agents;
-
 ...
-
 import com.mindsmiths.armory.component.HeaderComponent;
 
-...
 
 @Data
 @NoArgsConstructor
@@ -75,66 +80,65 @@ public class Felix extends Agent {
     String weight;
     String height;
 
-    public void showStartScreens() {
-        Map<String, BaseTemplate> screens = Map.of(
-                "welcome", new TemplateGenerator ("welcome")      
-                .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
-                .addComponent("submit", new PrimarySubmitButtonComponent("Cool, let's go!", "askForName")),
-                "askForName", new TemplateGenerator("askForName")
-                        .addComponent("title", new TitleComponent("Okay, first, tell me your name? "))
-                        .addComponent("name", new InputComponent("name", "Type your name here", true))
-                        .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "completed")));
-        showScreens("welcome", screens);
-    }
+    ...
     
     public void showOnboardingScreens() {
         Map<String, BaseTemplate> screens = Map.of(
-                "startOnboarding", new TemplateGenerator ("startOnboarding")
-                        .addComponent("title", new TitleComponent(String.format("Nice to meet you %s ! Now, to make the best workout plan only for you, I have a few questions, ready?", name)))
+                "startOnboarding", new TemplateGenerator("startOnboarding")
+                        .addComponent("title", new TitleComponent(String.format("Nice to meet you, %s! To make the workout plan just for you, I have a few questions. Ready? 💪", name)))
                         .addComponent("submitOnboarding", new PrimarySubmitButtonComponent("submitOnboarding", "Let's go!", "askForAge")),
-                "askForAge", new TemplateGenerator("askForAge")      
+                "askForAge", new TemplateGenerator("askForAge") // TODO: back button not needed here?      
                         .addComponent("title", new TitleComponent("How old are you?"))
                         .addComponent("age", new InputComponent("age", "Choose the age you would like to be", "age", true))
                         .addComponent("submitAge", new PrimarySubmitButtonComponent("submitAge", "Next", "askForWeight")),
-                "askForWeight", new TemplateGenerator ("askForWeight")
+                "askForWeight", new TemplateGenerator("askForWeight")
                         .addComponent("header", new HeaderComponent(null, true))
                         .addComponent("title", new TitleComponent("How much do you weigh in kilograms?"))
                         .addComponent("weight", new InputComponent("weight", "Type your weight here", true))
                         .addComponent("submitWeight", new PrimarySubmitButtonComponent("submitWeight", "Next!", "askForHeight")),
-                "askForHeight", new TemplateGenerator ("askForHeight")
+                "askForHeight", new TemplateGenerator("askForHeight")
                         .addComponent("header", new HeaderComponent(null, true))        
                         .addComponent("title", new TitleComponent("How tall are you in cm?"))
                         .addComponent("height", new InputComponent("height", "Type your height here", true))
-                        .addComponent("submitHeight", new PrimarySubmitButtonComponent("submitHeight", "Next!", "completed")));
+                        .addComponent("submitHeight", new PrimarySubmitButtonComponent("submitHeight", "Next!", "finish")));
         showScreens("startOnboarding", screens);
     }
 }
 ```
 
-Here you can see that we are using the user name to refrence them in the start of onboarding flow.
-You'll also notice that we added a bunch of fields to our class, to store the data the user inputs on onboarding screens. The data we'll process are age, weight and height. 
-Let's see how it looks in the rules:
+Here you can see that we are using the user's name to refrence them at the start of the onboarding flow.
+You'll also notice that we added a bunch of fields to our class, to store the data the user inputs on onboarding screens. The data we'll process are age, weight and height.
 
+
+Let's see how it looks in the rules! First add a line to start the onboarding screens once we have the user's name, and then add a new rule to store the data at the end of onboarding:
 ```java title="rules/felix/Felix.drl"
-
 ...
-
 import com.mindsmiths.armory.event.SubmitEvent
 
-...
 
 rule "Start user onboarding"
    when
-        signal: SubmitEvent(getParamAsString("submitName") == "completed") from entry-point "signals"
-        
+        signal: SubmitEvent(getParamAsString("submitName") == "finish") from entry-point "signals"
         agent: Felix()
    then
         modify(agent) {
-            setName(signal.getParamAsString("name")),
-            setOnboardingStage("ONBOARDING")
+            setName(signal.getParamAsString("name"))
         };
-        agent.showOnboardingScreens();
+        agent.showOnboardingScreens(); // TODO: colour-code
         delete(signal);
+end
+
+rule "Start survey"
+   when
+        signal: SubmitEvent(getParamAsString("submitHeight") == "finish") from entry-point "signals"
+        agent: Felix()
+   then
+        modify(agent) {
+            setAge(signal.getParamAsString("age")),
+            setWeight(signal.getParamAsString("weight")),
+            setHeight(signal.getParamAsString("height"))
+        };
+        delete (signal);
 end
 ```
 

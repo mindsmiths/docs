@@ -31,39 +31,21 @@ public class Felix extends Agent {
 }
 ```
 
-These are the basic functions that allow you to control how screens, either a single one or a sequence of them, are presented to the users using the ArmoryAPI.
+These are the basic functions that allow you to control how screens, 
+either a single one or a sequence of them, are presented to the users using the ArmoryAPI.
 
-Every screen template is built up of multiple components we'll introduce you to later in this tutorial. For the moment we'll just build a demo screen using `TemplateGenerator`.
+:::tip
+Every screen template is built up of multiple components. You can see a breakdown of the components we have readily available for you [here](/docs/integrations/web).
+:::
 
-Just continue where you left off and add the following to the agent's java class:
-
-```java title="java/agents/Felix.java"
-...
-import com.mindsmiths.armory.template.TemplateGenerator;
-import com.mindsmiths.armory.component.TitleComponent;
-...
-
-@Data
-@NoArgsConstructor
-public class Felix extends Agent {
-
-    ...
-
-    public void showDemoScreen() {
-       BaseTemplate screen = new TemplateGenerator()
-               .addComponent("title", new TitleComponent("Hello, world!"));
-       showScreen(screen);
-    }
-    ...
-}
-```
-
-You can try this out by adding a rule that will call the `showDemoScreen()` function. First add the rule directory with your agent's name and the `.drl` file: 
+Let's start with something simple: a single "Hello world" screen built using the `TitleTemplate`.
+Just import the template in the rule and use your `showScreen()` function to display it when the user clicks the Armory link:
 
 ```java title="rules/felix/Felix.drl"
 package rules.Felix
 
 import agents.Felix
+import com.mindsmiths.armory.template.TitleTemplate
 import com.mindsmiths.armory.event.UserConnectedEvent
 
 rule "Hello world"
@@ -71,16 +53,23 @@ rule "Hello world"
        signal: UserConnectedEvent() from entry-point "signals"
        agent: Felix()
    then
-       agent.showDemoScreen();
+       agent.showScreen(new TitleTemplate("Hello world!"));
        delete(signal);
 end
 ```
 
-This rule just identifies the moment the user connected to the Armory link and shows the demo screen, consisting of just a single element - text "Hello, world!".
+The `UserConnectedEvent()` is emitted when the user connects to Armory, so the screen with text "Hello world!" will appear every time the user enters the link. 
 
-Finally, run the code with `forge run` and click on the Armory URL you got when running `armory-admin setup`.
-Don't worry, in case you lost it, the format is: ```http://8000.YOUR-WEB-IDE-LINK``` (or you can just look for it in `.env` file).
+:::tip
+You can find out more about the Armory events in the section with [Armory concepts](/docs/integrations/web).
+:::
 
-Cool! Now that you have the setup to toy around with, we can take a closer look at what Armory actually is, and what you can do with it.
+But enough talk, let's see this in action! Run the code with `forge run` and click on the Armory URL you got when running `armory-admin setup`.
 
-P.S. Now, you can delete `showDemoScreen` in .java file and `HelloWorld` rule in .drl file, while we used it only as a demonstration, and we'll not be needing them anymore. Let's dig in!
+:::tip
+Don't worry, in case you lost it, the format is: `http://8000.YOUR-WEB-IDE-LINK` (or you can just look for it in the `.env` file in the root of your project).
+:::
+
+Cool, now that you're familiar with the basics, you are ready to start coding!
+
+P.S. We don't need the `"Hello world"` rule, so feel free to remove it.
