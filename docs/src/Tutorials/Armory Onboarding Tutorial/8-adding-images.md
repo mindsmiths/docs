@@ -37,7 +37,7 @@ public class Felix extends Agent {
 You can arrange the subdirectory structure inside this directory however you want, you only need to take care that the path to the image you added always starts with `/public/`.
 
 
-## Going places from Armory
+## Redirecting from Armory
 
 As mentioned, you can also redirect users to another location through a link on the Armory screen.
 For example, after finishing the onboarding process, Felix could redirect the user to the community Discord server.

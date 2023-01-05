@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Hello world!
+# Hello world
 
 Now, give this new service a try! 
 Let's start by giving our agent the ability to show the Armory screens. Just create the file `java/agents/Felix.java` and add the following functions:
