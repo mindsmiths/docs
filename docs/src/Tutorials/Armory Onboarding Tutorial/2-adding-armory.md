@@ -25,8 +25,11 @@ This latter command will prompt you to:
 * Choose the agent handling signals coming from Armory
 * Provide the Armory site URL, which you'll use to access Armory
 
-We'll name our agent Felix. 
-:::caution In case you choose a different name, make sure to keep it consistent throughout the tutorial.:::
+We'll name our agent Felix.
+:::caution
+In case you choose a different name, make sure to keep it consistent throughout the tutorial.
+:::
+
 As for the URL, you just use your environment URL (e.g. http://workspace-ms-XXXXXXXXXX.sandbox.mindsmiths.io) with the `XXXXXXXXXX` being the digits you have in your web IDE link. 
 The URL will automatically be saved in your `.env` file, where you can find it at any moment.
 

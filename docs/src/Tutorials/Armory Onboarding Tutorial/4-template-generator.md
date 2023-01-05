@@ -28,7 +28,7 @@ import com.mindsmiths.armory.component.PrimarySubmitButtonComponent;
 public class Felix extends Agent {
     String name;
 
-    public void showOnboardingScreens() {
+    public void showWelcomeScreens() {
         Map<String, BaseTemplate> screens = Map.of(
                 "welcome", new TemplateGenerator("welcome")      
                     .addComponent("title", new TitleComponent("Hello! I'm Felix and I'm here to help you find the best workout plan for you. Ready?")) 
@@ -50,11 +50,11 @@ rule "Onboard new user"
        signal: UserConnectedEvent() from entry-point "signals"
        agent: Felix(name == null)
    then
-       agent.showOnboardingScreens();
+       agent.showWelcomeScreens();
        delete(signal);
 end
 ```
 
-To make sure everything is in place, you can already run the code and click the link. Instead of the "Hello world!", you should now see the message from Felix and a button.
+To make sure everything is in place, you can already run the code with `forge run` and click the link. Instead of the "Hello world!", you should now see the message from Felix and a button.
 
 As always, feel free to customize the texts to your liking! Otherwise, we are ready for the next step.

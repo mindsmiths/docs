@@ -1,19 +1,27 @@
 ---
-sidebar_position: 8
+sidebar_position: 6
 ---
 
-# Going places
+# Adding the survey
 
-You can also redirect the user to another location through a link on an Armory screen.
-For example, after finishing the onboarding process, Felix redirects the user to the Discord server.
-Just use the hyperlink notation: `<a href='link_placeholder'>text_placeholder</a>` and add the hyperlink where you want, 
-in this case it should be on the last screen in `showSurveyScreens()` in `Felix.java` file:
+Ok, now when we have the onboarding in place, we can add the survey screens! There are no new concepts to grasp in this section - so feel free to play around with the code and build up your own survey experience using different components.
 
-```java title="java/agents/Felix.java"
+You might be wondering what the advantage would be for separating out the different sequences of screens, instead of chaining them all together.
 
-package agents;
+Please consider that you might not always want to use screen chains that are strictly predefined. Sometimes you want more flexibility in allowing the system to determine which screen (sequence) to show next to the user, depending on the state the user is in. 
+When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
 
+You'll notice that two of the newly added components look slightly different: the `ActionGroupComponent` comprises a list of buttons (`PrimarySubmitButtonComponent`) that you saw on previous screens. This means that these buttons form a group, and in principle you can only pick one of them. The other component we want to turn your attention to is the `CloudSelectComponent`, which is basically a map of multiple options you can select. Since in our particular case we care about the order in which these options appear, we fixate their order by using a Linked HashMap.
+
+As always, check out our docs for more insights on the components and their syntax!
+```java title="rules/felix/Felix.java"
 ...
+import java.util.List;
+...
+import com.mindsmiths.armory.component.ActionGroupComponent;
+import com.mindsmiths.armory.component.DescriptionComponent;
+import com.mindsmiths.armory.component.CloudSelectComponent;
+
 
 @Data
 @NoArgsConstructor
@@ -41,8 +49,8 @@ public class Felix extends Agent {
                         new PrimarySubmitButtonComponent("often", "5 or more", "chooseDays"))
                         )),
                 "chooseDays", new TemplateGenerator ("chooseDays")
-                        .addComponent("title", new TitleComponent(String.format("Okay %s , we are one step away! Choose the days that you are available for workout?", name)))
-                        .addComponent("buttons", new CloudSelectComponent("buttons", Map.of("MON", "mon", "TUE", "tue", "WED", "wed", "THU", "thu", "FRI", "fri")))
+                        .addComponent("title", new TitleComponent(String.format("Okay %s, we are one step away! Choose the days that you are available for workout?", name)))
+                        .addComponent("buttons", new CloudSelectComponent("buttons", new LinkedMap<String, String>().putall("MON", "mon", "TUE", "tue", "WED", "wed", "THU", "thu", "FRI", "fri")))
                         .addComponent("submitDays", new PrimarySubmitButtonComponent("submitDays", "Submit", "askMail"
                         )),
                 "askMail", new TemplateGenerator("askMail")
@@ -56,41 +64,38 @@ public class Felix extends Agent {
                         )),
                 "endScreen", new TemplateGenerator("endScreen")
                         .addComponent("title", new TitleComponent("You are the best!💙"))
-                        .addComponent("description", new DescriptionComponent("To join our workout group on Discord, here is a <a href='https://discord.com/invite/mindsmiths'>link</a> !"))
+                        .addComponent("description", new DescriptionComponent("To join our workout group on Discord, here is a link!"))
                         );
         showScreens("waterIntake", screens);
     }
-
     
-}
-```
-
-
-In the end, we'll just add the ThanksScreen that will appear after if user refreshes the web site after finishing the flow.
-
-```java title="java/agents/Felix.java"
-
-package agetns;
-
-...
-
-import com.mindsmiths.armory.template.TitleTemplate;
-
-...
-
-@Data
-@NoArgsConstructor
-public class Felix extends Agent {
     public void showThanksScreen() {
         showScreen(new TitleTemplate(String.format("Thanks, %s, you are the best!", name)));
     }
 }
 ```
 
+To round off the experience, we also added a thanks screen that we can display once we have all the information we need.
+Let's also add the rules for these screens:
 
-```java title="java/agents/Felix.drl"
+```java title="rules/felix/Felix.drl"
+...
+rule "Start survey"
+   when
+        signal: SubmitEvent(getParamAsString("submitHeight") == "completed") from entry-point "signals"
+        agent: Felix()
+   then
+        modify(agent) {
+            setAge(signal.getParamAsString("age")),
+            setWeight(signal.getParamAsString("weight")),
+            setHeight(signal.getParamAsString("height")),
+            setOnboardingStage("ONBOARDED")
+        };
+            agent.showSurveyScreens();
+            delete (signal);
+end
 
-rule "Show screen on refresh after onboarding"
+rule "Show thank you screen"
     salience -10
     when
         signal: UserConnectedEvent() from entry-point "signals"
@@ -101,4 +106,5 @@ rule "Show screen on refresh after onboarding"
 end
 ```
 
-That's it, `forge run` and you're ready for building screens and creating flows autonomously. Have fun!
+Perfect, have fun toying around!
+Now that you mastered building and chaining different kinds of screens, we can focus a bit more on customizing the screen layout.

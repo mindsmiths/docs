@@ -61,11 +61,7 @@ With Armory, you can easily define multiple screen chains for different stages o
 For example, in the onboarding screens we asked the user for a name, and stored it after the procedure was completed. 
 Now, we can use it in other screens, to add a bit of personalization to the user experience.
 
-Moreover, keep in mind that you might not always want to use predefined sequences of screens: sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the state the user is in. 
-When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
-
-
-Let's add the code for user onboarding in agent's Java class:
+The data is only stored at the end of a procedure to allow the user to go back and forth and change their answers before submitting. To allow the user to go back through the screen chain, simply set the `allowsUndo` field in the `HeaderComponent` to `true`. Let's see this in the onboarding screens:
 ```java title="java/agents/Felix.java"
 ...
 import com.mindsmiths.armory.component.HeaderComponent;
@@ -106,11 +102,11 @@ public class Felix extends Agent {
 }
 ```
 
-Here you can see that we are using the user's name to refrence them at the start of the onboarding flow.
+Here you can see that we are using the user's name to reference them at the start of the onboarding flow.
 You'll also notice that we added a bunch of fields to our class, to store the data the user inputs on onboarding screens. The data we'll process are age, weight and height.
 
 
-Let's see how it looks in the rules! First add a line to start the onboarding screens once we have the user's name, and then add a new rule to store the data at the end of onboarding:
+Let's see how it looks in the rules! First add a line to start the onboarding procedure once we have the user's name, and then add a new rule to store the data at the end of onboarding:
 ```java title="rules/felix/Felix.drl"
 ...
 import com.mindsmiths.armory.event.SubmitEvent
@@ -118,7 +114,7 @@ import com.mindsmiths.armory.event.SubmitEvent
 
 rule "Start user onboarding"
    when
-        signal: SubmitEvent(getParamAsString("submitName") == "finish") from entry-point "signals"
+        signal: SubmitEvent(getParamAsString("submitName") == "finish") from entry-point "signals" // TODO naming?
         agent: Felix()
    then
         modify(agent) {
@@ -143,89 +139,3 @@ end
 ```
 
 Start `forge run` and voila! You have a full onboarding process done!
-
-Ok, now when we did the onboarding successfully, we can add survey screens! Here we'll use 3 new components: `DescriptionComponent`, `CloudSelectComponent` and `ActionGroupComponent`. 
-When it comes to `CloudSelectComponent` and `ActionGroupComponent`, you can't just add them to the method, you need to make list of options first.
-For `CloudSelectComponent` the logic goes like this: first you define the name of the list (in our case "buttons"). After that you just choose the ID and the text each button will contain.
-You can see how it should look in the code bellow. 
-For `ActionGroupComponent`, you just need to create a list of PrimarySubmitButtonComponents, which you define as usual (see the code bellow).
-
-```java title="rules/felix/Felix.java"
-
-package agents;
-
-...
-import com.mindsmiths.armory.component.ActionGroupComponent;
-import com.mindsmiths.armory.component.DescriptionComponent;
-import com.mindsmiths.armory.component.CloudSelectComponent;
-
-import java.util.List;
-...
-
-@Data
-@NoArgsConstructor
-public class Felix extends Agent {
-    public void showSurveyScreens() {
-        Map<String, BaseTemplate> screens = Map.of(
-                "waterIntake", new TemplateGenerator ("waterIntake")
-                        .addComponent("title", new TitleComponent("How much water do you drink a day?"))
-                        .addComponent("actionGroup", new ActionGroupComponent(List.of(
-                        new PrimarySubmitButtonComponent("submit3", "1-3 glasses", "workoutQuestion"),
-                        new PrimarySubmitButtonComponent("submit4", "5-6 glasses...", "workoutQuestion"),
-                        new PrimarySubmitButtonComponent("submit5", "8 glasess or more...", "workoutQuestion"))
-                        )),
-                "workoutQuestion", new TemplateGenerator ("workoutQuestion")
-                        .addComponent("title", new TitleComponent("Do you workout?"))
-                        .addComponent("actionGroup", new ActionGroupComponent(List.of(
-                        new PrimarySubmitButtonComponent("submityes", "Hell yeah!", "workoutFrequency"),
-                        new PrimarySubmitButtonComponent("submitno", "No, but I am planning...", "chooseDays"))
-                        )),
-                "workoutFrequency", new TemplateGenerator ("workoutFrequency")
-                        .addComponent("title", new TitleComponent("How many days a week?"))
-                        .addComponent("actionGroup", new ActionGroupComponent(List.of(
-                        new PrimarySubmitButtonComponent("rarely", "1-2", "chooseDays"),
-                        new PrimarySubmitButtonComponent("sometimes", "3-4", "chooseDays"),
-                        new PrimarySubmitButtonComponent("often", "5 or more", "chooseDays"))
-                        )),
-                "chooseDays", new TemplateGenerator ("chooseDays")
-                        .addComponent("title", new TitleComponent(String.format("Okay %s , we are one step away! Choose the days that you are available for workout?", name)))
-                        .addComponent("buttons", new CloudSelectComponent("buttons", Map.of("MON", "mon", "TUE", "tue", "WED", "wed", "THU", "thu", "FRI", "fri")))
-                        .addComponent("submitDays", new PrimarySubmitButtonComponent("submitDays", "Submit", "askMail"
-                        )),
-                "askMail", new TemplateGenerator("askMail")
-                        .addComponent("title", new TitleComponent("We are done! I am going to send this info to our experts, and one of them will contact you as soon as possible! Just write down your email and we’ll be right on it!"))
-                        .addComponent("mail", new InputComponent("mail", "Write your mail here", "mail", true))
-                        .addComponent("submitMail", new PrimarySubmitButtonComponent("submitMail", "Submit", "rewardScreen"
-                        )),
-                "rewardScreen", new TemplateGenerator("rewardScreen")
-                        .addComponent("title", new TitleComponent(String.format("Thank you %s for taking your time to talk to me! You earned your first apple! 🍎 Now you’re in the apple league and you gained access to various workout tips for beginners!", name)))
-                        .addComponent("submitReward", new PrimarySubmitButtonComponent("submitReward", "Thanks", "endScreen"
-                        )),
-                "endScreen", new TemplateGenerator("endScreen")
-                        .addComponent("title", new TitleComponent("You are the best!💙"))
-                        .addComponent("description", new DescriptionComponent("To join our workout group on Discord, here is a link!"))
-                        );
-        showScreens("waterIntake", screens);
-    }
-}
-```
-
-```java title="rules/felix/Felix.drl"
-
-rule "Start survey"
-   when
-        signal: SubmitEvent(getParamAsString("submitHeight") == "completed") from entry-point "signals"
-        agent: Felix()
-   then
-        modify(agent) {
-            setAge(signal.getParamAsString("age")),
-            setWeight(signal.getParamAsString("weight")),
-            setHeight(signal.getParamAsString("height")),
-            setOnboardingStage("ONBOARDED")
-        };
-            agent.showSurveyScreens();
-            delete (signal);
-end
-```
-
-Perfect, now that you mastered building and chaining different kinds of screens, we can focus a bit more on customizing the screen layout.
