@@ -50,11 +50,11 @@ div:has(> article) {
   max-width: 50em;
 }
 
-div.language-bash .codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module::before {
+div.language-bash div[class^='codeBlockTitle']::before {
   content: url("/img/terminal.png") !important;
 }
 
-.codeBlockTitle_node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Content-styles-module::before {
+div[class^='codeBlockTitle']::before {
   content: url("/img/vscode.png");
   padding-right: 0.5em;
   position: relative;
