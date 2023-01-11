@@ -72,14 +72,15 @@ We just add the following line to ```"Handle message"```:
 ...
 rule "Handle message"
     when
+        Heartbeat(ts: timestamp) from entry-point "signals"
         message: TelegramReceivedMessage() from entry-point "signals"
         agent: Nola()
     then
         modify(agent) {
+            setLastInteractionTime(ts),
             addMessageToMemory("Human", message.getText()),
             // highlight-added-line
-            setPinged(false),
-            setLastInteractionTime(new Date())
+            setPinged(false)
         };
         agent.askGPT3();
         delete(message);
