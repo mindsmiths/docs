@@ -1,8 +1,6 @@
 name: gitleaks
 on:
-  pull_request:
   push:
-  workflow_dispatch:
 jobs:
   scan:
     name: gitleaks
@@ -20,4 +18,5 @@ jobs:
           GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}} # Only required for Organizations, not personal accounts.
       - name: Uncommit secrets
         if: ${{ failure() }}
-        run: git reset --hard ${{ github.event.before }} && git push --force
+        run: >
+          if [[ ${{github.event.before}} == "0000000000000000000000000000000000000000" ]]; then echo "Deleting branch ${{github.ref_name}}" && git push origin -d ${{github.ref_name}}; else echo "Removing all commits after ${{github.event.before}}" && git reset --hard ${{ github.event.before }} && git push --force ; fi /home/mario/mindsmiths/public/gitleaks-test/gitleaks.gitleaks.toml
