@@ -5,6 +5,94 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.5.1] - 2023-01-11
+
+This release contains the following service versions:
+- `forge-sdk==5.0.2` (Python)
+- `forge-sdk==5.0.1` (Java)
+- `forge-cli==5.0.1`
+- `rule-engine==5.0.1`
+- `heartbeat==5.0.1`
+- `cecs==5.0.1`
+
+Noteable changes **since 1.5.0**:
+
+### CLI
+
+#### Added
+- `create-agent` command that makes it easier to create new agent types
+- `new-agent`, `update-agent`, `delete-agent`, `send-heartbeat` commands that make it easier to manage agents
+- `send-event`, `send-message` and `send-agent-message` commands for manual interaction with the platform
+- `list` and `add-service` commands that use the central service registry (experimental)
+
+#### Changed
+- `create-project` now accepts project name as an argument
+- `Secrets` utility for changing the `.env` file now handles comments correctly
+
+
+### Heartbeat
+
+#### Changed
+- deprecated `HeartbeatDisabled` feature toggle (use `HeartbeatEnabled` instead)
+
+#### Fixed
+- warning log when the feature toggle was not set (now defaults to heartbeat enabled)
+
+
+### Rule Engine
+
+#### Added
+- logs now include the agent ID during agent evaluation
+- when running locally, all agents are now unlocked when the rule engine starts
+- `Salience` enum to allow for more readable salience values
+
+#### Changed
+- most dependencies are now intervals instead of exact versions
+- agent IDs have 16 characters by default (instead of 8)
+
+#### Removed
+- `CutelogLayout`
+
+
+### Python SDK
+
+#### Fixed
+- callbacks are now also `async` functions
+
+#### Added
+- `datetime.time` (de)serialization support
+- `time_to_str` and `str_to_time` utils
+
+#### Changed
+- deprecated `random_generator` (use `random_string`)
+- deprecated `get_datetime`, `get_utc_datetime`, `get_utc_date`, `get_utc_datetime_str` and `get_utc_date_str`
+  (use `now`, `today`, `now_str` and `today_str`)
+- deprecated `MongoClientKeeper` (use `Mongo` instead)
+- deprecated `Module` (use `Environment` instead)
+- logs now escape the `\n` and `\r` characters
+
+
+### Java SDK
+
+#### Added
+- (de)serialization support for Java 8 `java.time` types (including `LocalTime`) and `Optional` types
+- `strToTime` and `timeToStr` utils
+
+#### Fixed
+- `RejectedExecutionException` when shutting down the service
+- serializing only fields of a class and ignoring any additional `get*` methods
+
+#### Changed
+- most dependencies are now intervals instead of exact versions
+- deprecated `Utils.randomGenerator` (use `Utils.randomString`)
+- deprecated `getDatetime`, `getUtcDatetime`, `getUtcDate`, `getUtcDatetimeStr` and `getUtcDateStr`
+  (use `now`, `today`, `nowStr` and `todayStr`)
+- deprecated `MongoClientKeeper` (use `Mongo` instead)
+- deprecated `Module` (use `Environment` instead)
+- logs now escape the `\n` and `\r` characters
+
+
+
 ## [1.5.0] - 2022-12-21
 
 This release contains the following service versions:
