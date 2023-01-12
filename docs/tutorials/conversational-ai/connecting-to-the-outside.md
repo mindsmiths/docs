@@ -51,7 +51,7 @@ public class Nola extends Agent {
     }
 
     public void sendMessage(String text) {
-        String chatId = getConnections("telegram");
+        String chatId = getConnection("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
 }

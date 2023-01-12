@@ -31,7 +31,7 @@ For example, to increase the heartbeat frequency only for the `Smith` agent, put
 ```python
 from datetime import datetime, timedelta
 
-from forge.utils.datetime_helpers import get_utc_datetime
+from forge.utils.datetime import now
 from heartbeat import settings
 from heartbeat.base import HeartbeatStrategy
 from rule_engine.api import Evaluation
@@ -41,8 +41,8 @@ class SmithStrategy(HeartbeatStrategy):
 
     def get_next_heartbeat(self, evaluation: Evaluation) -> datetime:
         if evaluation.agentId == 'Smith':
-            return get_utc_datetime() + timedelta(seconds=5)
-        return get_utc_datetime() + timedelta(seconds=settings.HEARTBEAT_CYCLE)
+            return now() + timedelta(seconds=5)
+        return now() + timedelta(seconds=settings.HEARTBEAT_CYCLE)
 ``` 
 Don't forget to set `HEARTBEAT_STRATEGY` to `SmithStrategy` in `config.yaml`.
 
@@ -89,10 +89,19 @@ The `HeartbeatModel` data change is emitted when a new heartbeat signal is sched
 - `HEARTBEAT_LAG_ERR_MAX_EVERY_SECS` - The minimum time between lag alerts (see [Checks and alerts](#checks-and-alerts)). The default is `3600` seconds (1 hour).
 - `HEARTBEAT_CYCLE` - If using the `Uniform` strategy, the interval between heartbeats. The default is `30` seconds.
 
-There is also a feature toggle `HeartbeatDisabled` which you can use to temporarily disable heartbeats for all (or specific) agents.
+There is also a feature toggle `HeartbeatEnabled` which you can use to control heartbeats for all (or specific) agents.
 
 
 ## Changelog
+
+### [5.0.1] - 2023-01-05
+
+#### Changed
+- deprecated `HeartbeatDisabled` feature toggle (use `HeartbeatEnabled` instead)
+
+#### Fixed
+- warning log when the feature toggle was not set (now defaults to heartbeat enabled)
+
 
 ### [5.0.0] - 2022-12-09
 

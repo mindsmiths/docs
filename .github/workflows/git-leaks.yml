@@ -1,0 +1,23 @@
+name: gitleaks
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+jobs:
+  scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get config
+        run: wget https://raw.githubusercontent.com/mindsmiths/Secrets-Detection/main/gitleaks.toml  
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: gitleaks.toml
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}} # Only required for Organizations, not personal accounts.
+      - name: Uncommit secrets
+        if: ${{ failure() }}
+        run: git reset --hard ${{ github.event.before }} && git push --force
