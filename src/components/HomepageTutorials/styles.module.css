@@ -24,6 +24,6 @@ div.imageWrapper {
   margin-bottom: 2rem;
 }
 
-.tutorial:nth-child(even) {
+.tutorial:nth-child(odd) {
   flex-direction: row-reverse;
 }

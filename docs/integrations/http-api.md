@@ -8,4 +8,4 @@ You can use the _API Gateway_ service to expose HTTP endpoints from the platform
 It already offers endpoints for managing agents and sending signals out-of-the-box. You can of course extend it with additional
 endpoints if the need arises.
 
-You can find the full HTTP API specification [here](/api).
+You can find the full HTTP API specification [here](/http-api/).

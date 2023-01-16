@@ -46,9 +46,9 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: "static/httpapi/swagger.yaml",
-            url: "/httpapi/swagger.yaml",
-            route: "/api/",
+            spec: "static/http-api/swagger.yaml",
+            url: "/http-api/swagger.yaml",
+            route: "/http-api/",
           },
         ],
         // Theme Options for modifying how redoc renders them

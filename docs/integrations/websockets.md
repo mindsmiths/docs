@@ -11,4 +11,4 @@ with how many connections you open, because websockets are *not* horizontally sc
 You can use the _Websocket Adapter_ service to create a websocket server inside the platform, to which you can connect
 to from anywhere. You can also use the Forge SDK to make the communication a little easier.
 
-You can find the full specification for websockets [here](pathname:///asyncapi).
+You can find the full specification for websockets [here](pathname:///async-api).

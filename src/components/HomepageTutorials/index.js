@@ -61,6 +61,9 @@ const TutorialList = [
 function Tutorial({ Image, title, description, link }) {
   return (
     <div className={styles.tutorial + " row"}>
+      <div className={styles.imageWrapper + clsx(" col col--6")}>
+        <img className={styles.tutorialImage} src={Image} />
+      </div>
       <div className={styles.contentWrapper + clsx(" col col--6")}>
         <div className="text--left padding-horiz--md">
           <h3>{title}</h3>
@@ -69,9 +72,6 @@ function Tutorial({ Image, title, description, link }) {
             Start tutorial
           </a>
         </div>
-      </div>
-      <div className={styles.imageWrapper + clsx(" col col--6")}>
-        <img className={styles.tutorialImage} src={Image} />
       </div>
     </div>
   );
