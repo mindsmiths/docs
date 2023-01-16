@@ -5,6 +5,44 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.5.2] - 2023-01-16
+
+❗ _This release contains important fixes. Please update as soon as possible._
+
+This release contains the following service versions:
+- `forge-sdk==5.0.3` (Python)
+- `forge-sdk==5.0.2` (Java)
+- `forge-cli==5.0.2`
+- `rule-engine==5.0.2`
+- `heartbeat==5.0.1`
+- `cecs==5.0.1`
+
+Noteable changes **since 1.5.1**:
+
+### Java SDK
+
+#### Fixed
+- reverted to using exact dependency versions since intervals caused build issues
+
+
+### Python SDK
+
+#### Fixed
+- Pulsar consumer now properly processes all pending messages and closes gracefully
+- Pulsar producers are now flushed before closing
+
+
+### CLI
+
+#### Fixed
+- `consume-message` command
+- commands that send messages or events no longer need to sleep in order for messages to be flushed
+
+#### Added
+- `produce-message` now has `--num-messages` option
+
+
+
 ## [1.5.1] - 2023-01-11
 
 This release contains the following service versions:
