@@ -24,7 +24,8 @@ Estimated migration time: 5 minutes
 
 ### Mitems
 If you're using Mitems, you'll need to update the config:
-- Remove `COMMIT_TOKEN`
+- Update the version to 5.0.1 or higher
+- Change `COMMIT_TOKEN` to `DATA_HASH`
 - Change `REPO` env variable from:
 ```yaml
   mitems:
@@ -38,10 +39,12 @@ If you're using Mitems, you'll need to update the config:
 to:
 ```yaml
   mitems:
+    version: 5.0.1
     ...
     env:
       ...
       REPO: 'https://commit-bot:{{ env.COMMIT_TOKEN }}@{{ env.get("CI_REPOSITORY_URL", "").split("@")[1] }}'
+      DATA_HASH: '{{ file_hash("services/mitems/data.json") }}'
 ...
 ```
 Alternatively, put the URL of your repo with the appropriate credentials, so that Mitems has rights to clone and push to the repo.
