@@ -6,10 +6,6 @@ sidebar_position: 3
 
 Now, give this new service a try! 
 
-:::tip
-Every armory screen is built up of multiple components. You can see a breakdown of the components we have readily available for you [here](/docs/integrations/web).
-:::
-
 Let's start with something simple: a single "Hello world" screen! Just create the file java/agents/Felix.java and add the following functions:
 
 ```java title="java/agents/Felix.java"
@@ -28,6 +24,9 @@ public void showHelloScreen(BaseTemplate screen) {
                 .add(new Title("Hello world"));
    }
 ```
+:::tip
+Every armory screen is built up of multiple components. You can see a breakdown of the components we have available for you [here](/docs/integrations/web).
+:::
 
 Just import the template in the rule and use your `showScreen()` function to display it when the user clicks the Armory link:
 

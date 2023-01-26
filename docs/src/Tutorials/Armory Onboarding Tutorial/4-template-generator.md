@@ -4,16 +4,11 @@ sidebar_position: 4
 
 # Meet Felix!
 
-Instead of using the predefined screen templates, like we did in our demo rule, or you can play around and build custom screens using the template generator. 
 
-So, let's explore the `TemplateGenerator`, since you are likely to use it quite often in creating your screens.
-
-:::tip
-You can find a more detailed description of the `TemplateGenerator()` in the [docs](/docs/integrations/web).
-:::
+So, let's see how to can generate different screens in Armory.
 
 We'll take you through creating a simple agent named Felix, who will gather information about you and your workout preferences. 
-With Felix you will build onboarding screens, create a short survey for user profiling, and try out a bunch of different components.
+With Felix, you will build onboarding screens, create a short survey for user profiling, and try out a bunch of different components.
 
 Let's just jump right in!
 
