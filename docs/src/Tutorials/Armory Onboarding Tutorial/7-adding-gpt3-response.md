@@ -57,7 +57,7 @@ public class Felix extends Agent {
                 new Screen ("endScreen")
                         .add(new Header("logo.png", true))
                         .add(new Title("You are the best!💜"))
-                        .add(new Description("If you want to join our workout group on Discord, here is a <a href='https://discord.com/invite/mindsmiths'>link</a> !"))
+                        .add(new Description("If you want, you can join our workout group on Discord!"))
         );
     }
 }

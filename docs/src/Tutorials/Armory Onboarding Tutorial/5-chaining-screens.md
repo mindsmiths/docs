@@ -29,10 +29,8 @@ public class Felix extends Agent {
                 getConnection("armory"),
                 new Screen("welcome")
                         .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
-                        .add(new Image("public/JogaPuppy.png", false))
                         .add(new SubmitButton("buttonPressed", "Cool, let's go!", "askForName")),
                 new Screen("askForName")
-                        .add(new Header("logo.png", false))
                         .add(new Title("Alright! First, tell me your name?"))
                         .add(new Input("name", "Type your name here", "text"))
                         .add(new SubmitButton("buttonPressed", "Done, next!", "finishWelcome"))
@@ -73,8 +71,6 @@ end
 ```
 
 The data is only stored at the end of a procedure to allow the user to go back and forth and change their answers before submitting. 
-To allow the user to go back through the screen chain, simply set the `allowsUndo` field in the `HeaderComponent` to `true`. 
-Let's see this in the onboarding screens:
 
 ```java title="java/agents/Felix.java"
 
@@ -96,15 +92,12 @@ public class Felix extends Agent {
                 getConnection("armory"),
                 new Screen("startOnboarding")
                         .add(new Title(String.format("Nice to meet you, %s! To make a workout plan just for you, I have a few question.\nReady? 💪", name)))
-                        .add(new Image("public/GymPuppy.png", true))
                         .add(new SubmitButton("buttonPressed", "Let's go!", "askForWeight")),
                 new Screen("askForWeight")
-                        .add(new Header("logo.png", true))
                         .add(new Title("How much do you weigh in kilograms?"))
                         .add(new Input("weight", "Type your weight here", "number"))
                         .add(new SubmitButton("buttonPressed", "Next!", "askForHeight")),
                 new Screen("askForHeight")
-                        .add(new Header("logo.png", true))
                         .add(new Title("How tall are you in cm?"))
                         .add(new Input("height", "Type your height here", "number"))
                         .add(new SubmitButton("buttonPressed", "Next!", "finishOnboarding"))
@@ -113,8 +106,7 @@ public class Felix extends Agent {
 }
 ```
 
-Here you can see that we set the `allowsUndo` field in the `HeaderComponent` to `true`.
-You can also see that we are using the user's name to reference them at the start of the onboarding flow. 
+Here you can see that we are using the user's name to reference them at the start of the onboarding flow. 
 We have also added some fields to our class to store the data the user inputs on onboarding screens. The data we will process are weight and height.
 
 Okay, now you can do `forge reset` and run the code with `forge run` to see the new screens!

@@ -11,7 +11,7 @@ You might be wondering what the advantage would be for separating out the differ
 Please consider that you might not always want to use screen chains that are strictly predefined. Sometimes you want more flexibility in allowing the system to determine which screen (sequence) to show next to the user, depending on the state the user is in. 
 When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
 
-```java title="rules/felix/Felix.java"
+```java title="agents/Felix.java"
 ...
 
 import com.mindsmiths.armory.component.CloudSelect;
@@ -26,25 +26,21 @@ public class Felix extends Agent {
         ArmoryAPI.show(
                 getConnection("armory"),
                 new Screen("workoutQuestion")
-                        .add(new Header("logo.png", true))
                         .add(new Title("Do you workout?"))
                         .group("buttons")
                         .add(new SubmitButton("submityes", "Hell yeah!", "workoutFrequency"))
                         .add(new SubmitButton("submitno", "Not yet", "chooseDays")),
                 new Screen("workoutFrequency")
-                        .add(new Header("logo.png", true))
                         .add(new Title("How many days a week?"))
                         .group("buttons")
                         .add(new SubmitButton("rarely", "1-2", "chooseDays"))
                         .add(new SubmitButton("sometimes", "3-4", "chooseDays"))
                         .add(new SubmitButton("often", "5 or more", "chooseDays")),
                 new Screen("chooseDays")
-                        .add(new Header("logo.png", true))
                         .add(new Title(String.format("Okay %s, we are one step away! Choose the days that you are available for a workout?", name)))
                         .add(new CloudSelect("cloud-select").addOption("Monday", "Monday").addOption("Tuesday", "Tuesday").addOption("Wednesday", "Wednesday").addOption("Thursday","Thursday").addOption("Friday", "Friday").addOption("Saturday", "Saturday").addOption("Sunday","Sunday"))
                         .add(new SubmitButton("daysChoosen", "Go on!", "rewardScreen")),
                 new Screen("rewardScreen")
-                        .add(new Header("logo.png", true))
                         .add(new Title(String.format("Thank you %s for taking the time to talk to me! I will create your plan in a few moments!", name)))
                         .add(new SubmitButton("buttonPressed", "Cool!", "surveyCompleted"))
         );
