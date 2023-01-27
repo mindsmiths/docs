@@ -35,10 +35,10 @@ package agents;
 
 import agents.Felix;
 
-import com.mindsmiths.ruleEngine.model.Heartbeat;
-import com.mindsmiths.armory.event.UserConnected;
-import com.mindsmiths.armory.event.Submit;
-import com.mindsmiths.ruleEngine.util.Log;
+import com.mindsmiths.ruleEngine.model.Heartbeat
+import com.mindsmiths.armory.event.UserConnected
+import com.mindsmiths.armory.event.Submit
+import com.mindsmiths.ruleEngine.util.Log
 
 rule "Hello world"
    when
