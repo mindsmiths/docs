@@ -22,16 +22,24 @@ import com.mindsmiths.armory.component.InputComponent;
 public class Felix extends Agent {
     String name;
 
-    public void showWelcomeScreens() {
-        Map<String, BaseTemplate> screens = Map.of(
-                "welcome", new TemplateGenerator("welcome")      
-                    .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
-                    .addComponent("submit", new PrimarySubmitButtonComponent("submit", "Cool, let's go!", "askForName")),
-                "askForName", new TemplateGenerator("askForName")
-                    .addComponent("title", new TitleComponent("Okay, first, tell me your name? 😊"))
-                    .addComponent("name", new InputComponent("name", "Type your name here", true))
-                    .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "finish"))); // TODO: test if both ids are necessary?
-        showScreens("welcome", screens);
+        public void showOnboardingScreens() {
+        ArmoryAPI.show(
+                getConnection("armory"),
+                new Screen("startOnboarding")
+                        .add(new Title(String.format("Nice to meet you, %s! To make a workout plan just for you, I have a few question.\nReady? 💪", name)))
+                        .add(new Image("public/GymPuppy.png", true))
+                        .add(new SubmitButton("buttonPressed", "Let's go!", "askForWeight")),
+                new Screen("askForWeight")
+                        .add(new Header("logo.png", true))
+                        .add(new Title("How much do you weigh in kilograms?"))
+                        .add(new Input("weight", "Type your weight here", "number"))
+                        .add(new SubmitButton("buttonPressed", "Next!", "askForHeight")),
+                new Screen("askForHeight")
+                        .add(new Header("logo.png", true))
+                        .add(new Title("How tall are you in cm?"))
+                        .add(new Input("height", "Type your height here", "number"))
+                        .add(new SubmitButton("buttonPressed", "Next!", "finishOnboarding"))
+        );
     }
 }
 ```
