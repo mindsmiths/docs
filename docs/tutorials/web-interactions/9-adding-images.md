@@ -90,7 +90,7 @@ public class Felix extends Agent {
 
     public void showGPT3Response() {
         ArmoryAPI.show(
-            getConnection("armory"),
+                getConnection("armory"),
                 new Screen ("gptScreen")
                         .add(new Header("logo.png", true))
                         .add(new Title (this.workoutPlan))
