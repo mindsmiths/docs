@@ -8,4 +8,9 @@
 .featureSvg {
   height: 200px;
   width: 200px;
+  border-radius: 50%;
+}
+
+.featureSvg path {
+  fill: #645496d9;
 }
