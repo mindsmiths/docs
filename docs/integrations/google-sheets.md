@@ -19,7 +19,7 @@ It's based on the Google's [Cloud Platform](https://console.cloud.google.com/) a
     <div>
         <p><b>Installment:</b></p>
         <ul>
-            <li><code>pip install "gsheets-adapter[dev]~=0.5.0"</code></li>
+            <li><code>pip install "gsheets-adapter[dev]~=1.0"</code></li>
         </ul>
     </div>
     <div>
@@ -48,7 +48,7 @@ There's a couple of things you'll have to prepare before initializing the setup 
 ### Installment
 First, you'll need to pip install the Adapter with the following command:
 ```console
-pip install "gsheets-adapter[dev]~=0.5.0"
+pip install "gsheets-adapter[dev]~=1.0"
 ```
 ### Environment variables
 Here you can find out what you'll need to prearrange for setting up the Google Sheet Adapter. 
@@ -56,30 +56,22 @@ Here you can find out what you'll need to prearrange for setting up the Google S
 This data is a `json` that represents credentials to gain access to chosen Google Sheets file. 
 You'll need to go through a bit of a hassle to finally get the credentials, so let's start right away.
 
-You'll want to create a [Google Cloud](https://console.cloud.google.com/) project, if you already don't have one ready and waiting. 
-For additional help with creating a new project, check out Google's [tutorial](https://developers.google.com/workspace/guides/create-project).
-
-Next, you'll have to enable Google Sheet API in a chosen Google Cloud project. Follow this [link](https://console.cloud.google.com/flows/enableapi?apiid=sheets.googleapis.com) to enable the API or to check if it's already enabled.
-This is the process: 
-- click on **"Create credentials"**
-- select **"Application data"** and the option **"No, I'm not using them"**
-- create service account details to your preferences, just keep in mind that you have to set the role to **"Editor"**
-
-
-With this, you've created your credentials, so now you just have to access them:
-- go to the **"Credentials"** and click on the service account you just created
-- click on **"Keys"** tab, then **"Add key"** 
-- select **"Create new key"** and choose **"JSON"**
-
-This will download a file with your credentials. Last thing, you'll have to edit this downloaded file a bit - **replace** all new lines (`\n`) with `` (an empty string). 
-This edited content will be used as your Google client credentials.
+1. You'll want to create a [Google Cloud](https://console.cloud.google.com/) project, if you already don't have one ready and waiting. For additional help with creating a new project, check out Google's [tutorial](https://developers.google.com/workspace/guides/create-project).
+2. Next, you'll have to enable Google Sheet APIs in a chosen Google Cloud project. Go to the following links and enable [Google Sheets API](https://console.cloud.google.com/apis/library/sheets.googleapis.com) and [Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com) or check if they are already enabled.
+3. Click on **"Create credentials"**, select **"Application data"**, and then **"No, I'm not using them"**
+4. Create service account details to your preferences, just keep in mind that you have to set the role to **"Editor"**
+5. Credentials are now created, so let's find them. Go to **"Credentials"** and click on the service account you just created.
+6. Click on **"Keys"** tab, then **"Add key"**, where you'll select **"Create new key"** and finally - choose **"JSON"**. This will download a file with your credentials.
+7. You'll have to edit this downloaded file a bit - **replace** all new lines (`\n`) with `` (an empty string).
+8. This edited content will be used as your `GOOGLE_CLIENT_CREDENTIALS`.
 
 Now you are one big step closer to have everything ready for initializing the setup.
 
 #### GOOGLE_SPREADSHEET_ID {#google-spreadsheet-id}
-Spreadsheet id is a `string` used for identifying which spreadsheet you want to use and gain access to. For every Google Sheet file, you can find this identifier in the URL of the given spreadsheet.
-For example, if the URL s `https://docs.google.com/spreadsheets/d/1X2Y3Z/edit#gid=0`, then the `GOOGLE_SPREADSHEET_ID` is `1X2Y3Z`. 
-Usually, this id is much longer than this, you can read more about it on official [Google Sheets API Overview guide](https://developers.google.com/sheets/api/guides/concepts#spreadsheet).
+Spreadsheet id is a `string` used for identifying which spreadsheet you want to use and gain access to.
+
+1. Go to the Google Spreadsheat you want to use, and share the access to the service account you just created. You can find the email of the service account in the **"Service Accounts"** tab.
+2. For every Google Sheet file, you can find this identifier in the URL of the given spreadsheet. For example, if the URL s `https://docs.google.com/spreadsheets/d/1X2Y3Z/edit#gid=0`, then the `GOOGLE_SPREADSHEET_ID` is `1X2Y3Z`. Usually, this id is much longer than this, you can read more about it on official [Google Sheets API Overview guide](https://developers.google.com/sheets/api/guides/concepts#spreadsheet).
 
 If you have prepared both credentials and the spreadsheet id, you can initialize the setup in the console with:
 
