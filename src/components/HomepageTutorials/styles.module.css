@@ -1,0 +1,29 @@
+.tutorials {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+div.contentWrapper {
+  align-self: center;
+}
+
+div.imageWrapper {
+  text-align: center;
+}
+
+.tutorialImage {
+  border-radius: 5px;
+  max-height: 320px;
+  width: auto;
+}
+
+.tutorial {
+  padding-bottom: 4rem;
+  margin-bottom: 2rem;
+}
+
+.tutorial:nth-child(odd) {
+  flex-direction: row-reverse;
+}

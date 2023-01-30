@@ -3,20 +3,28 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
-require('dotenv').config();
+require("dotenv").config();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Mindsmiths Platform",
-  tagline: "Unleash The Power Of Autonomy",
+  title: "Mindsmiths",
+  tagline: "A platform for enhancing human-machine cooperation by building AI-first solutions",
   url: "https://docs.mindsmiths.com",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   organizationName: "mindsmiths",
   projectName: "platform-docs",
 
+  plugins: [
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        trackingID: process.env.GA_TRACKING_ID || "example",
+      },
+    ],
+  ],
   presets: [
     [
       "classic",
@@ -31,14 +39,6 @@ const config = {
         },
       }),
     ],
-    [
-      "@docusaurus/plugin-google-gtag",
-      {
-        gtag: {
-          trackingID: process.env.GA_TRACKING_ID || '',
-        },
-      },
-    ],
     // Redocusaurus config
     [
       "redocusaurus",
@@ -46,9 +46,9 @@ const config = {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: "static/httpapi/swagger.yaml",
-            url: "/httpapi/swagger.yaml",
-            route: "/api/",
+            spec: "static/http-api/swagger.yaml",
+            url: "/http-api/swagger.yaml",
+            route: "/http-api/",
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -59,12 +59,12 @@ const config = {
       },
     ],
   ],
-
+  themes: ["@easyops-cn/docusaurus-search-local"],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Docs",
+        title: "Mindsmiths",
         logo: {
           alt: "Mindsmiths Logo",
           src: "img/logo.png",
@@ -72,68 +72,40 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "src/Mindsmiths Platform/intro",
+            label: "Docs",
+            docId: 'platform/getting-started',
             position: "left",
-            label: "Platform",
+            sidebarPath: "platformSidebar",
           },
           {
             type: "doc",
-            docId: "src/Coding Environment/environment-setup",
-            position: "left",
-            label: "Environment",
-          },
-          {
-            type: "doc",
-            docId: "src/Tutorials/intro",
-            position: "left",
             label: "Tutorials",
+            docId: "tutorials/getting-started",
+            position: "left",
+            sidebarPath: "tutorialsSidebar",
           },
           {
             type: "doc",
-            docId: "src/Technical documentation/project-structure",
+            label: "Integrations",
+            docId: "integrations/getting-started",
             position: "left",
-            label: "Documentation",
+            sidebarPath: "integrationsSidebar",
           },
           {
             type: "doc",
-            docId: "src/How-to guides/intro",
-            position: "left",
-            label: "How-to",
-          },
-          {
-            href: "https://www.mindsmiths.com/",
-            label: "Mindsmiths",
+            label: "Community",
+            docId: "community",
             position: "right",
           },
         ],
       },
       footer: {
-        style: "dark",
-        links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "Platform",
-                to: "/docs/src/Mindsmiths Platform/intro",
-              },
-              {
-                label: "Tutorials",
-                to: "/docs/src/Tutorials/intro",
-              },
-            ],
-          },
-          {
-            title: "Community",
-            items: [
-              {
-                label: "Discord",
-                href: "https://discord.gg/mindsmiths",
-              },
-            ],
-          },
-        ],
         copyright: `Copyright © ${new Date().getFullYear()} Mindsmiths`,
+      },
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
       },
       prism: {
         theme: lightCodeTheme,

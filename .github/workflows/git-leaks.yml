@@ -1,0 +1,23 @@
+name: gitleaks
+on:
+  push:
+jobs:
+  scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get config
+        run: wget https://raw.githubusercontent.com/mindsmiths/Secrets-Detection/main/gitleaks.toml  
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: gitleaks.toml
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}} # Only required for Organizations, not personal accounts.
+      - name: Uncommit secrets
+        if: ${{ failure() }}
+        run: >
+          if [[ ${{github.event.before}} == "0000000000000000000000000000000000000000" ]]; then echo "Deleting branch ${{github.ref_name}}" && git push origin -d ${{github.ref_name}}; else echo "Removing all commits after ${{github.event.before}}" && git reset --hard ${{ github.event.before }} && git push --force ; fi
+  
