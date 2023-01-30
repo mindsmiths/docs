@@ -1,9 +1,15 @@
+---
+sidebar_position: 7
+---
+
+# Adding GPT3 response
+
 Now that you mastered building and chaining different kinds of screens, we can add a GPT-3 response to finish the flow.
 
 First, you should install GPT-3 adapter. 
 
 ```console
-root:/app$ pip install "gpt3-adapter[dev]==5.0.0b0"
+root:/app$ pip install "gpt3-adapter[dev]==5.0.0"
 ```
 
 To use the model, you will need to get an [OpenAI account](https://beta.openai.com/account/api-keys). Once you get the API key, run the following code in your terminal:

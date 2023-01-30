@@ -19,10 +19,18 @@ import com.mindsmiths.armory.Screen;
 
 import com.mindsmiths.armory.component.Title;
 
-public void showHelloScreen(BaseTemplate screen) {
-       getConnection("armory"),
-                .add(new Title("Hello world"));
-   }
+@Data
+@ToString(callSuper = true)
+@NoArgsConstructor
+public class Felix extends Agent {
+    public void showHelloScreen() {
+        ArmoryAPI.show(
+            getConnection("armory"),
+            new Screen ("Hello")
+                .add(new Title("Hello world!"))
+        );
+    }
+}
 ```
 :::tip
 Every armory screen is built up of multiple components. You can see a breakdown of the components we have available for you [here](/docs/integrations/web).
@@ -41,12 +49,12 @@ import com.mindsmiths.armory.event.Submit
 import com.mindsmiths.ruleEngine.util.Log
 
 rule "Hello world"
-   when
-       signal: UserConnected() from entry-point "signals"
-       agent: Felix()
-   then
-       agent.showHelloScreen("Hello world!");
-       delete(signal);
+    when
+        signal: UserConnected() from entry-point "signals"
+        agent: Felix()
+    then
+        agent.showHelloScreen();
+        delete(signal);
 end
 ```
 
