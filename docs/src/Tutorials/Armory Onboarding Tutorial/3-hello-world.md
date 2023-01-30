@@ -33,10 +33,8 @@ public class Felix extends Agent {
 }
 ```
 :::tip
-Every armory screen is built up of multiple components. You can see a breakdown of the components we have available for you [here](/docs/integrations/web).
+Every armory screen is built up of multiple components. In this case, we are only using the "Title component", but you can see a breakdown of the components we have available for you [here](/docs/integrations/web).
 :::
-
-Just import the template in the rule and use your `showScreen()` function to display it when the user clicks the Armory link:
 
 ```java title="rules/felix/Felix.drl"
 package agents;

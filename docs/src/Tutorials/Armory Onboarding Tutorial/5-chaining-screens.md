@@ -14,9 +14,9 @@ For example, in the code below, the “Cool, let's go!” button at the bottom o
 Let's take a look:
 
 ```java title="java/agents/Felix.java"
-...
 import com.mindsmiths.armory.component.Header;
 import com.mindsmiths.armory.component.Input;
+
 ...
 
 @Data
@@ -54,9 +54,10 @@ We can store the user's answers at the end of the procedure: for example, here w
 so we can fetch it off the `Submit()` using `getParamAsString("name")`, because `name` is the id of the text input component that was filled in. 
 
 ```java titile="rules/felix/Felix.drl"
-...
 import com.mindsmiths.armory.event.Submit
+
 ...
+
 rule "Start user onboarding"
     when
         signal: Submit(getParamAsString("buttonPressed") == "finishWelcome") from entry-point "signals"
@@ -73,11 +74,6 @@ end
 The data is only stored at the end of a procedure to allow the user to go back and forth and change their answers before submitting. 
 
 ```java title="java/agents/Felix.java"
-
-package agents;
-
-...
-
 @Data
 @NoArgsConstructor
 public class Felix extends Agent {
@@ -91,7 +87,7 @@ public class Felix extends Agent {
         ArmoryAPI.show(
                 getConnection("armory"),
                 new Screen("startOnboarding")
-                        .add(new Title(String.format("Nice to meet you, %s! To make a workout plan just for you, I have a few question.\nReady? 💪", name)))
+                        .add(new Title(String.format("Nice to meet you %s! Now let's make a workout plan just for you!\nReady? 💪", name)))
                         .add(new SubmitButton("buttonPressed", "Let's go!", "askForWeight")),
                 new Screen("askForWeight")
                         .add(new Title("How much do you weigh in kilograms?"))

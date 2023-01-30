@@ -12,13 +12,9 @@ With Felix, you will build onboarding screens, create a short survey for user pr
 
 Let's just jump right in!
 
-First, inside the `Felix.java` file, we create the `showOnboardingScreens()` function, add screen template, and add components we want our first screen to have.  
+First, inside the `Felix.java` file, create the `showWelcomeScreens()` function. We'll add a screen template and add the components we want our first screen to have.  
 
 ```java title="java/agents/Felix.java"
-package agents;
-
-...
-
 @Data
 @ToString(callSuper = true)
 @NoArgsConstructor
@@ -39,7 +35,7 @@ public class Felix extends Agent {
                         .add(new SubmitButton("buttonPressed", "Done, next!", "finishWelcome"))
         );
     }
-
+}
 ```
 Let's look at this code real quick: We can simply add a screen by writing `new Screen` and defining the name of the screen inside the brackets. 
 Our first screen consists of title text, an image, and a button that will eventually take us to the next screen in the sequence. 
@@ -54,7 +50,6 @@ But enough with the spoilers! Let's first add a rule that will tell the agent to
 Go to ```Felix.drl``` and add the following:
 
 ```java title="rules/felix/Felix.drl"
-...
 rule "Welcome new user"
    when
        signal: UserConnected() from entry-point "signals"

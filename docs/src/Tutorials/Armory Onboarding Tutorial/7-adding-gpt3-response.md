@@ -22,6 +22,7 @@ OpenAI API key: <YOUR API KEY>
 Now when you have GPT-3 installed, we can go on. Add the following to your rule file:
 
 ```java titile="rules/felix/Felix.drl"
+import com.mindsmiths.gpt3.completion.GPT3Completion
 
 rule "Ask GPT3 workout plan"
     salience 10
@@ -48,10 +49,10 @@ So, we are making request to GPT-3 to send us a response in `"Ask GPT3 workout p
 Now let's add screens GPT-3 response will be shown at.
 
 ```java title="rules/felix/Felix.drl"
-package agents;
-...
 import com.mindsmiths.gpt3.GPT3AdapterAPI;
+
 ...
+
 public class Felix extends Agent {
     public void showGPT3Response() {
         ArmoryAPI.show(

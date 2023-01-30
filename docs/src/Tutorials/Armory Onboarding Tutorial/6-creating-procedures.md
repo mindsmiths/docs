@@ -12,8 +12,6 @@ Please consider that you might not always want to use screen chains that are str
 When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
 
 ```java title="agents/Felix.java"
-...
-
 import com.mindsmiths.armory.component.CloudSelect;
 import com.mindsmiths.armory.component.Description;
 import com.mindsmiths.armory.component.Group;
@@ -51,7 +49,6 @@ public class Felix extends Agent {
 Let's also add the rule to activate these screens:
 
 ```java title="rules/felix/Felix.drl"
-...
 rule "Start survey"
     when
         signal: Submit(getParamAsString("buttonPressed") == "finishOnboarding") from entry-point "signals"
