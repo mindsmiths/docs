@@ -15,25 +15,29 @@ you only need to take care that the path to the image you added always starts wi
 We'll add our image on the welcome screen:
 
 ```java title="java/agents/Felix.java"
-...
 import com.mindsmiths.armory.component.ImageComponent;
 
+...
+
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
-    public void showStartScreens() {
-            Map<String, BaseTemplate> screens = Map.of(
-                    "welcome", new TemplateGenerator ("welcome")      
-                    .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
-                    .addComponent("image", new ImageComponent("/public/JogaPuppy.png"))  
-                    .addComponent("submit", new PrimarySubmitButtonComponent("Cool, let's go!", "askForName")),
-                    "askForName", new TemplateGenerator("askForName")
-                            .addComponent("title", new TitleComponent("Okay, first, tell me your name? :)"))
-                            .addComponent("name", new InputComponent("name", "Type your name here", true))
-                            .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "completed")));
-            showScreens("welcome", screens);
-        }
+
+    public void showWelcomeScreens() {
+        ArmoryAPI.show(
+                getConnection("armory"),
+                new Screen("welcome")
+                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
+                        .add(new Image("public/JogaPuppy.png", false))
+                        .add(new SubmitButton("buttonPressed", "Cool, let's go!", "askForName")),
+                new Screen("askForName")
+                        .add(new Title("Alright! First, tell me your name?"))
+                        .add(new Input("name", "Type your name here", "text"))
+                        .add(new SubmitButton("buttonPressed", "Done, next!", "finishWelcome"))
+        );
     }
+}
 ```
 
 ## Header and backbutton
@@ -45,9 +49,11 @@ Let's see this in the onboarding screens:
 We'll add different headers (with and without backbutton) to onboarding screens, but you can add it wherever you want.
 
 ```java titile="agents/Felix.java"
-package agents;
-...
+@Data
+@ToString(callSuper = true)
+@NoArgsConstructor
 public class Felix extends Agent {
+
     public void showOnboardingScreens() {
         ArmoryAPI.show(
                 getConnection("armory"),
@@ -78,19 +84,23 @@ For example, after finishing the onboarding process, Felix could redirect the us
 Just use the hyperlink notation (`<a href='link_placeholder'>text_placeholder</a>`) and add the hyperlink on any screen you want:
 
 ```java title="java/agents/Felix.java"
-...
-
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
-    public void showSurveyScreens() {
-        Map<String, BaseTemplate> screens = Map.of(
-                ...
+
+    public void showGPT3Response() {
+        ArmoryAPI.show(
+            getConnection("armory"),
+                new Screen ("gptScreen")
+                        .add(new Header("logo.png", true))
+                        .add(new Title (this.workoutPlan))
+                        .add(new SubmitButton("submitTip", "Thanks Felix!", "endScreen")),
                 new Screen ("endScreen")
                         .add(new Header("logo.png", true))
                         .add(new Title("You are the best!💜"))
-                        .add(new Description("If you want to join our workout group on Discord, here is a <a href='https://discord.com/invite/mindsmiths'>link</a> !"))
-        )
+                        .add(new Description("To join our workout group on Discord, here is a <a href='https://discord.com/invite/mindsmiths'>link</a> !"))
+        );
     }
 }
 ```

@@ -54,6 +54,7 @@ import com.mindsmiths.gpt3.GPT3AdapterAPI;
 ...
 
 public class Felix extends Agent {
+    
     public void showGPT3Response() {
         ArmoryAPI.show(
             getConnection("armory"),
@@ -72,10 +73,8 @@ public class Felix extends Agent {
 To make the GPT-3’s response slightly more interesting, we will add some more instructions to accompany the model input.
 
 ```java title="rules/felix/Felix.drl"
-package agents;
-...
-
 public class Felix extends Agent {
+
     public void askGPT3() {
             String intro = String.format("Recommend a safe workout plan to someone who is %s kg and %s cm tall, write an advice in the second-person perspective \n", weight, height);
             simpleGPT3Request(intro);
