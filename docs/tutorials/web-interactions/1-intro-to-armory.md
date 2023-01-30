@@ -4,13 +4,13 @@ sidebar_position: 1
 
 # Introduction
 
-Welcome to the tutorial about templating and web interactions!
+Welcome to the web app tutorial! // TODO: think of catchier phrasing? + are we allowed to call it web app?
 
 :::note
 If you don't have a Mindsmiths IDE, first go through the [Before we begin](/docs/tutorials/getting-started#before-we-begin) steps.
 :::
 
-In this short tutorial, you'll create a simple web-application for creating workout plans using Armory. 
+In this short tutorial, you'll create a simple workout web-application using Armory. 
 Even if you've never made your own web-app before, don't worry. We'll take you through everything step by step, and after the tutorial you'll be able to confidently create intuitive and customized web-apps. 
 
 
