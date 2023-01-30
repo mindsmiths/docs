@@ -1,12 +1,12 @@
 ---
-sidebar_position: 7
+sidebar_position: 9
 ---
 
 # Final touches...
 
 Lastly, let's see how you can add some final touches to your screens. We'll add images, headers and a redirecting functionality.
 
-## Adding images
+## Adding images and headers
 
 You can easily use images on screens. To try it out, you can add the media content somewhere in the `services/armory/public` directory, 
 and add it to your screen using the `Image` component.You can arrange the subdirectory structure inside this directory however you want, 
