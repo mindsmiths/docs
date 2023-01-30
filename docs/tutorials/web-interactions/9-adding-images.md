@@ -6,8 +6,7 @@ sidebar_position: 9
 
 Lastly, let's see how you can add some final touches to your screens. We'll add images, headers and a redirecting functionality.
 
-## Adding images and headers
-
+## Adding images
 You can easily use images on screens. To try it out, you can add the media content somewhere in the `services/armory/public` directory, 
 and add it to your screen using the `Image` component.You can arrange the subdirectory structure inside this directory however you want, 
 you only need to take care that the path to the image you added always starts with `/public/`.
@@ -16,7 +15,7 @@ We'll add our image on the welcome screen:
 
 ```java title="java/agents/Felix.java"
 ...
-import com.mindsmiths.armory.component.ImageComponent;
+import com.mindsmiths.armory.component.Image;
 
 @Data
 @NoArgsConstructor
@@ -24,8 +23,8 @@ public class Felix extends Agent {
     public void showStartScreens() {
             Map<String, BaseTemplate> screens = Map.of(
                     "welcome", new TemplateGenerator ("welcome")      
-                    .addComponent("title", new TitleComponent("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
-                    .addComponent("image", new ImageComponent("/public/JogaPuppy.png"))  
+                    .addComponent("title", new Title("Hello! I’m Felix and I’m here to help you find the best workout plan for you. Ready?"))
+                    .addComponent("image", new Image("/public/JogaPuppy.png"))  
                     .addComponent("submit", new PrimarySubmitButtonComponent("Cool, let's go!", "askForName")),
                     "askForName", new TemplateGenerator("askForName")
                             .addComponent("title", new TitleComponent("Okay, first, tell me your name? :)"))
