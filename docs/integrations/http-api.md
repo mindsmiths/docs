@@ -1,6 +1,7 @@
 ---
-sidebar_position: 7
+sidebar_position: 16
 ---
+
 
 # Http API
 You can use the _API Gateway_ service to expose HTTP endpoints from the platform to external systems.
