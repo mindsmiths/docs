@@ -6,11 +6,6 @@ sidebar_position: 6
 
 Ok, now when we have the onboarding in place, we can add the survey screens! There are no new concepts to grasp in this section - so feel free to play around with the code and build up your own survey experience using different components.
 
-You might be wondering what the advantage would be for separating out the different sequences of screens, instead of chaining them all together.
-
-Please consider that you might not always want to use screen chains that are strictly predefined. Sometimes you want more flexibility in allowing the system to determine which screen (sequence) to show next to the user, depending on the state the user is in. 
-When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
-
 ```java title="agents/Felix.java"
 @Data
 @ToString(callSuper = true)
@@ -40,7 +35,11 @@ public class Felix extends Agent {
 }
 ```
 
-Let's also add the rule to activate these screens:
+You might be wondering what is the advantage of separating out the different sequences of screens, instead of chaining them all together.
+Please consider that you might not always want to use screen chains that are strictly predefined. Sometimes you want more flexibility in allowing the system to determine which screen (sequence) to show next to the user, depending on the state the user is in. 
+When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
+
+Let's add the rule to activate `Start survey` screens:
 
 ```java title="rules/felix/Felix.drl"
 rule "Start survey"

@@ -6,7 +6,8 @@ sidebar_position: 3
 
 Now, give this new service a try! 
 
-Let's start with something simple: a single "Hello world" screen! Just create the file java/agents/Felix.java and add the following functions:
+Let's start with something simple: a single ```"Hello world"``` screen!
+First, create the file ```java/agents/Felix.java``` and add the following function:
 
 ```java title="java/agents/Felix.java"
 package agents;
@@ -35,6 +36,8 @@ public class Felix extends Agent {
 :::tip
 Every armory screen is built up of multiple components. In this case, we are only using the "Title component", but you can see a breakdown of the components we have available for you [here](/docs/integrations/web).
 :::
+
+Now that you have defined how your screen is going to look, let's add a rule in ```rules/felix/Felix.drl``` to activate that screen.
 
 ```java title="rules/felix/Felix.drl"
 package agents;

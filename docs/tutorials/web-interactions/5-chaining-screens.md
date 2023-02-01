@@ -8,8 +8,8 @@ As you can see, you can create screens really quickly with Armory's smart defaul
 But to create a real web-app experience, you usually want to create a sequence of linked screens the user can switch between.
 
 We'll now show you how to do just that: we'll add a function that shows multiple screens, specifying the transitions between them. 
-To tell Armory which screen to switch to, just specify the name of the next screen as the value of the SubmitButton. 
-For example, in the code below, the “Cool, let's go!” button at the bottom of the `"welcome"` screen leads to the screen on which we ask the user for their name (the `"askForName"` screen):
+To tell Armory which screen to switch to, just specify the name of the next screen as the value of the `SubmitButton`. 
+For example, in the code below, the `“Cool, let's go!”` button at the bottom of the `"welcome"` screen leads to the screen on which we ask the user for their name (the `"askForName"` screen):
 
 :::tip
 You can learn more about components and how to define them [here](/docs/integrations/web).
@@ -48,7 +48,8 @@ We'll add a line to start the onboarding procedure once we have the user's name,
 
 How to store data? Well, the data the user inputs during the screen sequence are transferred as values of GET parameters with the corresponding `componentId` as key.
 We can store the user's answers at the end of the procedure. For example, here we only asked for the name, which the user set through an input area. 
-We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `nameSubmitted` is the ID of the submit button that we will use as a trigger to take us to the next screen.
+We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `"nameSubmitted"` is the ID of the submit button that we will use as a trigger to take us to the next screen.
+
 ```java titile="rules/felix/Felix.drl"
 import com.mindsmiths.armory.event.Submit
 

@@ -36,9 +36,9 @@ public class Felix extends Agent {
 }
 ```
 
-## Header and backbutton
+## Header and Back button
 
-The same goes with header, but when it come to header, you need to add the media content somewhere in the `armory/src/assets` directory, 
+The same goes with header, but when adding header you need to add the media content somewhere in the `armory/src/assets` directory, 
 and add it to your screen using the `Header` component. 
 To allow the user to go back through the screen chain, simply set the `allowsUndo` field in the `Header` component to `true`. 
 Let's see this in the onboarding screens:

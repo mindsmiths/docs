@@ -19,7 +19,7 @@ root:/app$ gpt3-adapter setup
 OpenAI API key: <YOUR API KEY>
 ```
 
-Now when you have GPT-3 installed, we can go on. Add the following to your rule file:
+Now when you have GPT-3 installed, we can go on. Add the following to your to `Felix.drl` file:
 
 ```java titile="rules/felix/Felix.drl"
 import com.mindsmiths.gpt3.completion.GPT3Completion
