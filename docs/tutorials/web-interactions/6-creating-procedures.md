@@ -12,12 +12,8 @@ Please consider that you might not always want to use screen chains that are str
 When the screen to show is determined based on other circumstances, and not just the previous screen and pressed button, you can define these specific behaviors through rules.
 
 ```java title="agents/Felix.java"
-import com.mindsmiths.armory.component.CloudSelect;
-import com.mindsmiths.armory.component.Description;
-import com.mindsmiths.armory.component.Group;
-...
-
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
     public void showSurveyScreens() {
@@ -25,22 +21,20 @@ public class Felix extends Agent {
                 getConnection("armory"),
                 new Screen("workoutQuestion")
                         .add(new Title("Do you workout?"))
-                        .group("buttons")
-                        .add(new SubmitButton("submityes", "Hell yeah!", "workoutFrequency"))
-                        .add(new SubmitButton("submitno", "Not yet", "chooseDays")),
+                        .add(new SubmitButton("workoutYes", "Hell yeah!", "workoutFrequency"))
+                        .add(new SubmitButton("workoutNo", "Not yet", "chooseDays")),
                 new Screen("workoutFrequency")
                         .add(new Title("How many days a week?"))
-                        .group("buttons")
-                        .add(new SubmitButton("rarely", "1-2", "chooseDays"))
-                        .add(new SubmitButton("sometimes", "3-4", "chooseDays"))
-                        .add(new SubmitButton("often", "5 or more", "chooseDays")),
+                        .add(new SubmitButton("workoutRarely", "1-2", "chooseDays"))
+                        .add(new SubmitButton("workoutSometimes", "3-4", "chooseDays"))
+                        .add(new SubmitButton("workoutOften", "5 or more", "chooseDays")),
                 new Screen("chooseDays")
                         .add(new Title(String.format("Okay %s, we are one step away! Choose the days that you are available for a workout?", name)))
                         .add(new CloudSelect("cloud-select").addOption("Monday", "Monday").addOption("Tuesday", "Tuesday").addOption("Wednesday", "Wednesday").addOption("Thursday","Thursday").addOption("Friday", "Friday").addOption("Saturday", "Saturday").addOption("Sunday","Sunday"))
                         .add(new SubmitButton("daysChoosen", "Go on!", "rewardScreen")),
                 new Screen("rewardScreen")
-                        .add(new Title(String.format("Thank you %s for taking the time to talk to me! I will create your plan in a few moments!", name)))
-                        .add(new SubmitButton("buttonPressed", "Cool!", "surveyCompleted"))
+                        .add(new Title(String.format("Thank you %s for taking your time to talk to me! I will generate your plan in a few moments!", name)))
+                        .add(new SubmitButton("surveyCompleted", "Cool!"))
         );
     }
 }
@@ -51,7 +45,7 @@ Let's also add the rule to activate these screens:
 ```java title="rules/felix/Felix.drl"
 rule "Start survey"
     when
-        signal: Submit(getParamAsString("buttonPressed") == "finishOnboarding") from entry-point "signals"
+        signal: Submit(buttonId == "heightSubmited") from entry-point "signals"
         agent: Felix()
     then
         modify(agent){

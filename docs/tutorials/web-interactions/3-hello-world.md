@@ -17,7 +17,7 @@ import lombok.*;
 import com.mindsmiths.armory.ArmoryAPI;
 import com.mindsmiths.armory.Screen;
 
-import com.mindsmiths.armory.component.Title;
+import com.mindsmiths.armory.component.*;
 
 @Data
 @ToString(callSuper = true)
@@ -39,7 +39,7 @@ Every armory screen is built up of multiple components. In this case, we are onl
 ```java title="rules/felix/Felix.drl"
 package agents;
 
-import agents.Felix;
+package rules.felix;
 
 import com.mindsmiths.ruleEngine.model.Heartbeat
 import com.mindsmiths.armory.event.UserConnected

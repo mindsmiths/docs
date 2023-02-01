@@ -14,12 +14,8 @@ For example, in the code below, the “Cool, let's go!” button at the bottom o
 Let's take a look:
 
 ```java title="java/agents/Felix.java"
-import com.mindsmiths.armory.component.Header;
-import com.mindsmiths.armory.component.Input;
-
-...
-
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
     String name;
@@ -60,7 +56,7 @@ import com.mindsmiths.armory.event.Submit
 
 rule "Start user onboarding"
     when
-        signal: Submit(getParamAsString("buttonPressed") == "finishWelcome") from entry-point "signals"
+        signal: Submit(buttonId == "nameSubmited") from entry-point "signals"
         agent: Felix()
     then
         modify(agent){
@@ -75,6 +71,7 @@ The data is only stored at the end of a procedure to allow the user to go back a
 
 ```java title="java/agents/Felix.java"
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
     String name;
@@ -84,19 +81,19 @@ public class Felix extends Agent {
     ...
     
     public void showOnboardingScreens() {
-        ArmoryAPI.show(
-                getConnection("armory"),
-                new Screen("startOnboarding")
-                        .add(new Title(String.format("Nice to meet you %s! Now let's make a workout plan just for you!\nReady? 💪", name)))
-                        .add(new SubmitButton("buttonPressed", "Let's go!", "askForWeight")),
-                new Screen("askForWeight")
-                        .add(new Title("How much do you weigh in kilograms?"))
-                        .add(new Input("weight", "Type your weight here", "number"))
-                        .add(new SubmitButton("buttonPressed", "Next!", "askForHeight")),
-                new Screen("askForHeight")
-                        .add(new Title("How tall are you in cm?"))
-                        .add(new Input("height", "Type your height here", "number"))
-                        .add(new SubmitButton("buttonPressed", "Next!", "finishOnboarding"))
+            ArmoryAPI.show(
+                    getConnection("armory"),
+                    new Screen("startOnboarding")
+                            .add(new Title(String.format("Nice to meet you %s! Now let's make a workout plan just for you!\nReady? 💪", name)))
+                            .add(new SubmitButton("onboardingStarted", "Let's go!", "askForWeight")),
+                    new Screen("askForWeight")
+                            .add(new Title("How much do you weigh in kilograms?"))
+                            .add(new Input("weight", "Type your weight here", "number"))
+                            .add(new SubmitButton("weightSubmited", "Next!", "askForHeight")),
+                    new Screen("askForHeight")
+                            .add(new Title("How tall are you in cm?"))
+                            .add(new Input("height", "Type your height here", "number"))
+                            .add(new SubmitButton("heightSubmited", "Next!"))
         );
     }
 }
