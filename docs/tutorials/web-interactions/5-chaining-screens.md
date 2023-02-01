@@ -8,8 +8,12 @@ As you can see, you can create screens really quickly with Armory's smart defaul
 But to create a real web-app experience, you usually want to create a sequence of linked screens the user can switch between.
 
 We'll now show you how to do just that: we'll add a function that shows multiple screens, specifying the transitions between them. 
-To tell Armory which screen to switch to, just specify the name of the next screen as the value of the action component that leads to it (such as a button). 
+To tell Armory which screen to switch to, just specify the name of the next screen as the value of the SubmitButton. 
 For example, in the code below, the “Cool, let's go!” button at the bottom of the `"welcome"` screen leads to the screen on which we ask the user for their name (the `"askForName"` screen):
+
+:::tip
+You can learn more about components and how to define them [here](/docs/integrations/web).
+:::
 
 Let's take a look:
 
@@ -19,36 +23,32 @@ Let's take a look:
 @NoArgsConstructor
 public class Felix extends Agent {
     String name;
-
+    
     public void showWelcomeScreens() {
-        ArmoryAPI.show(
-                getConnection("armory"),
-                new Screen("welcome")
-                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
-                        .add(new SubmitButton("buttonPressed", "Cool, let's go!", "askForName")),
-                new Screen("askForName")
-                        .add(new Title("Alright! First, tell me your name?"))
-                        .add(new Input("name", "Type your name here", "text"))
-                        .add(new SubmitButton("buttonPressed", "Done, next!", "finishWelcome"))
-        );
-    }
+            ArmoryAPI.show(
+                    getConnection("armory"),
+                    new Screen("welcome")
+                            .add(new Title("Hello! I’m Felix, your new workout buddy. I’m here to help you get fit and healthy!\nReady?"))
+                            .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
+                    new Screen("askForName")
+                            .add(new Title("Alright! First, tell me your name?"))
+                            .add(new Input("name", "Type your name here", "text"))
+                            .add(new SubmitButton("nameSubmited", "Done, next!"))
+            );
+        }
 }
 ```
 
-As you can see, all screens defined within the `showWelcomeScreens()` function are shown to the user as part of a single procedure, starting from the screen whose name is specified as the `welcome`. 
-This means that there is no need to define any business logic in the rule engine to handle transitions between screens.
-
 With Armory, you can easily define multiple screen chains for different stages of the process. This can be beneficial if you want to store some data separately.
-For example, in the welcome screens we asked the user for a name, and we will store it after the procedure is completed, so we can use it in other screens, to add a bit of personalization to the user experience.
+For example, in the welcome screens we asked the user for a name, and we will store it after the procedure is completed, so we can use it in other screens to add a bit of personalization to the user experience.
 
 We will do this inside the `Start user onboarding` rule. 
 
 We'll add a line to start the onboarding procedure once we have the user's name, and then add a new rule to store the data at the end of welcome flow.
 
 How to store data? Well, the data the user inputs during the screen sequence are transferred as values of GET parameters with the corresponding `componentId` as key.
-We can store the user's answers at the end of the procedure: for example, here we only asked for the name which the user sets through an input area, 
-so we can fetch it off the `Submit()` using `getParamAsString("name")`, because `name` is the id of the text input component that was filled in. 
-
+We can store the user's answers at the end of the procedure. For example, here we only asked for the name, which the user set through an input area. 
+We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `nameSubmitted` is the ID of the submit button that we will use as a trigger to take us to the next screen.
 ```java titile="rules/felix/Felix.drl"
 import com.mindsmiths.armory.event.Submit
 

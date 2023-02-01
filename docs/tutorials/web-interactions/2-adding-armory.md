@@ -36,7 +36,7 @@ The URL will automatically be saved in your `.env` file, where you can find it a
 This is what adding Armory looks like in the Terminal:
 
 ```bash title="Terminal"
-$ armory setup
+root:/app$ armory setup
 What agent will handle signals? Felix
 URL of your IDE (leave empty if running locally): 
 http://workspace-ms-XXXXXXXXXX.msdev.mindsmiths.io/

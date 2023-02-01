@@ -19,26 +19,24 @@ First, inside the `Felix.java` file, create the `showWelcomeScreens()` function.
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
-    String name;
     
     public void showWelcomeScreens() {
             ArmoryAPI.show(
                     getConnection("armory"),
                     new Screen("welcome")
                             .add(new Title("Hello! I’m Felix, your new workout buddy. I’m here to help you get fit and healthy!\nReady?"))
-                            .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
-                    new Screen("askForName")
-                            .add(new Title("Alright! First, tell me your name?"))
-                            .add(new Input("name", "Type your name here", "text"))
-                            .add(new SubmitButton("nameSubmited", "Done, next!"))
-            );
-        }
+                            .add(new SubmitButton("welcomeStarted", "Cool, let's go!")),
+        );
+    }
 }
 ```
-Let's look at this code real quick: We can simply add a screen by writing `new Screen` and defining the name of the screen inside the brackets. 
+
+Let's look at this code real quick: when it comes to building screens, we need to add them in the exact order we want them to appear. 
+So, the first screen in sequence is the first one to appear. Adding screens is pretty straightforward: 
+we can simply add a screen by writing `new Screen()` and defining the name of the screen within the parentheses.
 Our first screen consists of title text, an image, and a button that will eventually take us to the next screen in the sequence. 
-The second screen contains a header and an input as well. As you can see, adding new components in Armory is pretty simple; 
-you just add the components you want to add inside the `new Screen` in the order you want them to be aligned.
+The second screen contains a header and an input, too. As you can see, adding new components in Armory is pretty simple; 
+you just add the components you want to add inside the `new Screen()`, in the order you want them to be aligned. 
 
 :::tip
 In this tutorial, we are going to use just some of the existing components. 
