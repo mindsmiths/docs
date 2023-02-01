@@ -18,7 +18,7 @@ $family-primary: "Helvetica", sans-serif;
 @import "armory-sdk/src/assets/css/default-skin.scss";
 ```
 
-You can inspect and play around with the screen elements by pressing `F12` and then `CTRL+SHIFT+C` in the browser showing the screen. 
+You can inspect and play around with the screen elements by pressing `F12` OR `CTRL+SHIFT+R` in the browser showing the screen. 
 This will allow you to quickly find out how to reference the elements you want to add to your css file.
 
 Feel free to play around and dig deeper into styling using css by yourself!
