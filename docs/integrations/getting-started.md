@@ -20,31 +20,31 @@ let us know on [Discord](https://discord.gg/mindsmiths), or tweet at us by taggi
 
 ### Communication
 
-- [Email](/docs/integrations/email)
-- [SMS](/docs/integrations/sms)
-- [WhatsApp](/docs/integrations/whatsapp)
-- [Telegram](/docs/integrations/telegram)
-- [Discord](/docs/integrations/discord)
-- [Web](/docs/integrations/web)
+- [Email](/docs/integrations/email.md)
+- [SMS](/docs/integrations/sms.md)
+- [WhatsApp](/docs/integrations/whatsapp.md)
+- [Telegram](/docs/integrations/telegram.md)
+- [Discord](/docs/integrations/discord.md)
+- [Web](/docs/integrations/web.md)
 
 
 ### Content and data
 
-- [Google Sheets](/docs/integrations/google-sheets)
-- [Content Management](/docs/integrations/content-management)
-- [Google Calendar](/docs/integrations/google-calendar)
-- [AWS S3](/docs/integrations/aws-s3)
-- [Azure Blob](/docs/integrations/azure-blob)
-- [Unleash](/docs/integrations/unleash)
+- [Google Sheets](/docs/integrations/google-sheets.md)
+- [Content Management](/docs/integrations/content-management.md)
+- [Google Calendar](/docs/integrations/google-calendar.md)
+- [AWS S3](/docs/integrations/aws-s3.md)
+- [Azure Blob](/docs/integrations/azure-blob.md)
+- [Unleash](/docs/integrations/unleash.md)
 
 
 ### Machine Learning
 
-- [OpenAI](/docs/integrations/open-ai)
-- [AutoML](/docs/integrations/automl)
+- [OpenAI](/docs/integrations/open-ai.md)
+- [AutoML](/docs/integrations/auto-ml.md)
 
 
 ### Custom integrations
 
-- [HTTP API](/docs/integrations/http-api)
-- [Websockets](/docs/integrations/websockets)
+- [HTTP API](/docs/integrations/http-api.md)
+- [Websockets](/docs/integrations/websockets.md)

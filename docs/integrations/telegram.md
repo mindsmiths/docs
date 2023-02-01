@@ -1,12 +1,12 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # Telegram
 This service enables you to integrate your project with Telegram, an open-source messaging app. If you aren't familiar wit Telegram, you can read more about it on their [website](https://telegram.org/).
 
 
-For a quick demo of how a project with included Telegram Adapter looks like, you can check out our [Conversational AI tutorial](docs/tutorials/conversational-ai/introduction).
+For a quick demo of how a project with included Telegram Adapter looks like, you can check out our [Conversational AI tutorial](docs/tutorials/conversational-ai/introduction.md).
 
 ## When to use Telegram Adapter?
 If you want to include features like sending and receiving messages, perhaps you want to offer your users a possibility of responding to your Telegram texts with buttons,
