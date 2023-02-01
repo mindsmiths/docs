@@ -17,7 +17,7 @@ One of its biggest perks is that it allows you to smoothly build in the logic yo
 Let's start by adding Armory as a new service to your project:
 
 ```bash title="Terminal"
-pip install armory~=5.1.0
+pip install armory
 armory setup
 ```
 
@@ -30,20 +30,20 @@ We'll name our agent Felix.
 In case you choose a different name, make sure to keep it consistent throughout the tutorial.
 :::
 
-As for the URL, you just use your environment URL (e.g. http://workspace-ms-XXXXXXXXXX.sandbox.mindsmiths.io) with the `XXXXXXXXXX` being the digits you have in your web IDE link. 
+As for the URL, you just use your environment URL (e.g. http://workspace-ms-XXXXXXXXXX.msdev.mindsmiths.io/) with the `XXXXXXXXXX` being the digits you have in your web IDE link. 
 The URL will automatically be saved in your `.env` file, where you can find it at any moment.
 
 This is what adding Armory looks like in the Terminal:
 
 ```bash title="Terminal"
-armory setup
+$ armory setup
 What agent will handle signals? Felix
 URL of your IDE (leave empty if running locally): 
-http://8000.workspace-ms-0000000000.sandbox.mindsmiths.io
+http://workspace-ms-XXXXXXXXXX.msdev.mindsmiths.io/
 Service successfully integrated into the project.
 ```
 
-Armory will be on: ```http://8000.workspace-ms-0000000000.sandbox.mindsmiths.io```
+Armory will be on: ```http://workspace-ms-XXXXXXXXXX.msdev.mindsmiths.io/```
 
 :::note
 Make sure that your `Runner.java` reads the configuration from `signals.yaml`:
