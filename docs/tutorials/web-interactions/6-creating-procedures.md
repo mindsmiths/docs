@@ -11,6 +11,11 @@ Ok, now when we have the onboarding in place, we can add the survey screens! The
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
+    String name;
+    Integer weight;
+    Integer height;
+
+    // highlight-added-start
     public void showSurveyScreens() {
         ArmoryAPI.show(
                 getConnection("armory"),
@@ -32,6 +37,7 @@ public class Felix extends Agent {
                         .add(new SubmitButton("surveyCompleted", "Cool!"))
         );
     }
+    // highlight-added-end
 }
 ```
 
@@ -42,6 +48,7 @@ When the screen to show is determined based on other circumstances, and not just
 Let's add the rule to activate `Start survey` screens:
 
 ```java title="rules/felix/Felix.drl"
+// highlight-added-start
 rule "Start survey"
     when
         signal: Submit(buttonId == "heightSubmited") from entry-point "signals"
@@ -54,6 +61,7 @@ rule "Start survey"
         agent.showSurveyScreens();
         delete (signal);
 end
+// highlight-added-end
 ```
 
 Perfect, have fun toying around!

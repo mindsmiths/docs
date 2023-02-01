@@ -22,6 +22,7 @@ OpenAI API key: <YOUR API KEY>
 Now when you have GPT-3 installed, we can go on. Add the following to your to `Felix.drl` file:
 
 ```java titile="rules/felix/Felix.drl"
+// highlight-added-start
 import com.mindsmiths.gpt3.completion.GPT3Completion
 
 rule "Ask GPT3 workout plan"
@@ -42,6 +43,7 @@ rule "Store workout plan"
         agent.showGPT3Response();
         delete(gpt3Result);
 end
+// highlight-added-end
 ```
 
 So, we are making request to GPT-3 to send us a response in `"Ask GPT3 workout plan"` rule, and after Gpt3 generates that response, we are storing it in `"Store workout plan"` rule.
@@ -49,6 +51,7 @@ So, we are making request to GPT-3 to send us a response in `"Ask GPT3 workout p
 Now let's add screens GPT-3 response will be shown at.
 
 ```java title="rules/felix/Felix.drl"
+// highlight-added-line
 import com.mindsmiths.gpt3.GPT3AdapterAPI;
 
 ...
@@ -58,6 +61,7 @@ import com.mindsmiths.gpt3.GPT3AdapterAPI;
 @NoArgsConstructor
 public class Felix extends Agent {
     
+    // highlight-added-start
     public void showGPT3Response() {
         ArmoryAPI.show(
             getConnection("armory"),
@@ -69,16 +73,18 @@ public class Felix extends Agent {
                         .add(new Description("If you want, you can join our workout group on Discord!"))
         );
     }
+    // highlight-added-end
 }
 ```
 To make the GPT-3’s response slightly more interesting, we will add some more instructions to accompany the model input.
 
-```java title="rules/felix/Felix.drl"
+```java title="java/agents/Felix.java"
 @Data
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
 
+    // highlight-added-start
     public void askGPT3() {
             String intro = String.format("Recommend a safe workout plan to someone who is %s kg and %s cm tall, write an advice in the second-person perspective \n", weight, height);
             simpleGPT3Request(intro);
@@ -102,6 +108,7 @@ public class Felix extends Agent {
                 null // logit bias
         );
     }
+    // highlight-added-end
 }
 ```
 

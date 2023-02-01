@@ -22,6 +22,7 @@ Let's take a look:
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
+    // highlight-added-line
     String name;
     
     public void showWelcomeScreens() {
@@ -30,10 +31,12 @@ public class Felix extends Agent {
                     new Screen("welcome")
                             .add(new Title("Hello! I’m Felix, your new workout buddy. I’m here to help you get fit and healthy!\nReady?"))
                             .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
+                    // highlight-added-start
                     new Screen("askForName")
                             .add(new Title("Alright! First, tell me your name?"))
                             .add(new Input("name", "Type your name here", "text"))
                             .add(new SubmitButton("nameSubmited", "Done, next!"))
+                    // highlight-added-end
             );
         }
 }
@@ -51,10 +54,11 @@ We can store the user's answers at the end of the procedure. For example, here w
 We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `"nameSubmitted"` is the ID of the submit button that we will use as a trigger to take us to the next screen.
 
 ```java titile="rules/felix/Felix.drl"
+ // highlight-added-line
 import com.mindsmiths.armory.event.Submit
 
 ...
-
+ // highlight-added-start
 rule "Start user onboarding"
     when
         signal: Submit(buttonId == "nameSubmited") from entry-point "signals"
@@ -66,6 +70,7 @@ rule "Start user onboarding"
         agent.showOnboardingScreens();
         delete(signal);
 end
+ // highlight-added-end
 ```
 
 The data is only stored at the end of a procedure to allow the user to go back and forth and change their answers before submitting. 
@@ -76,11 +81,13 @@ The data is only stored at the end of a procedure to allow the user to go back a
 @NoArgsConstructor
 public class Felix extends Agent {
     String name;
+    // highlight-added-start
     Integer weight;
     Integer height;
+    // highlight-added-end
 
     ...
-    
+    // highlight-added-start
     public void showOnboardingScreens() {
             ArmoryAPI.show(
                     getConnection("armory"),
@@ -97,6 +104,7 @@ public class Felix extends Agent {
                             .add(new SubmitButton("heightSubmited", "Next!"))
         );
     }
+    // highlight-added-end
 }
 ```
 
