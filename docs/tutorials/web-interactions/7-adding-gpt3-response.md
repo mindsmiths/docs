@@ -27,7 +27,7 @@ import com.mindsmiths.gpt3.completion.GPT3Completion
 rule "Ask GPT3 workout plan"
     salience 10
     when
-        signal: Submit(getParamAsString("buttonPressed") == "surveyCompleted") from entry-point "signals"
+        signal: Submit(buttonId == "surveyCompleted") from entry-point "signals"
         agent: Felix()
     then
         agent.askGPT3();
@@ -53,17 +53,18 @@ import com.mindsmiths.gpt3.GPT3AdapterAPI;
 
 ...
 
+@Data
+@ToString(callSuper = true)
+@NoArgsConstructor
 public class Felix extends Agent {
     
     public void showGPT3Response() {
         ArmoryAPI.show(
             getConnection("armory"),
                 new Screen ("gptScreen")
-                        .add(new Header("logo.png", true))
                         .add(new Title (this.workoutPlan))
-                        .add(new SubmitButton("submitTip", "Thanks Felix!", "endScreen")),
+                        .add(new SubmitButton("planSent", "Thanks Felix!", "endScreen")),
                 new Screen ("endScreen")
-                        .add(new Header("logo.png", true))
                         .add(new Title("You are the best!💜"))
                         .add(new Description("If you want, you can join our workout group on Discord!"))
         );
@@ -73,6 +74,9 @@ public class Felix extends Agent {
 To make the GPT-3’s response slightly more interesting, we will add some more instructions to accompany the model input.
 
 ```java title="rules/felix/Felix.drl"
+@Data
+@ToString(callSuper = true)
+@NoArgsConstructor
 public class Felix extends Agent {
 
     public void askGPT3() {
@@ -80,7 +84,7 @@ public class Felix extends Agent {
             simpleGPT3Request(intro);
     }
 
-public void simpleGPT3Request(String prompt) {
+    public void simpleGPT3Request(String prompt) {
             Log.info("Prompt for GPT-3:\n" + prompt);
             GPT3AdapterAPI.complete(
                 prompt, // input prompt
