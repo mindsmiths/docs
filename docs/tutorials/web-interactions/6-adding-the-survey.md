@@ -6,7 +6,7 @@ sidebar_position: 6
 
 Ok, now when we have the onboarding in place, we can add the survey screens! There are no new concepts to grasp in this section - so feel free to play around with the code and build up your own survey experience using different components.
 
-```java title="agents/Felix.java"
+```java title="java/agents/Felix.java"
 @Data
 @ToString(callSuper = true)
 @NoArgsConstructor
@@ -14,6 +14,8 @@ public class Felix extends Agent {
     String name;
     Integer weight;
     Integer height;
+
+    ...
 
     // highlight-added-start
     public void showSurveyScreens() {
@@ -48,6 +50,8 @@ When the screen to show is determined based on other circumstances, and not just
 Let's add the rule to activate `Start survey` screens:
 
 ```java title="rules/felix/Felix.drl"
+...
+
 // highlight-added-start
 rule "Start survey"
     when

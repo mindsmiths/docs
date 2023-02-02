@@ -22,9 +22,12 @@ OpenAI API key: <YOUR API KEY>
 Now when you have GPT-3 installed, we can go on. Add the following to your to `Felix.drl` file:
 
 ```java titile="rules/felix/Felix.drl"
-// highlight-added-start
+// highlight-added-line
 import com.mindsmiths.gpt3.completion.GPT3Completion
 
+...
+
+// highlight-added-start
 rule "Ask GPT3 workout plan"
     salience 10
     when
@@ -84,6 +87,8 @@ To make the GPT-3’s response slightly more interesting, we will add some more 
 @NoArgsConstructor
 public class Felix extends Agent {
 
+    ...
+    
     // highlight-added-start
     public void askGPT3() {
             String intro = String.format("Recommend a safe workout plan to someone who is %s kg and %s cm tall, write an advice in the second-person perspective \n", weight, height);

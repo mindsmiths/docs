@@ -30,6 +30,7 @@ public class Felix extends Agent {
                     getConnection("armory"),
                     new Screen("welcome")
                             .add(new Title("Hello! I’m Felix, your new workout buddy. I’m here to help you get fit and healthy!\nReady?"))
+                    // highlight-changed-line        
                             .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
                     // highlight-added-start
                     new Screen("askForName")
@@ -58,6 +59,7 @@ We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because t
 import com.mindsmiths.armory.event.Submit
 
 ...
+
  // highlight-added-start
 rule "Start user onboarding"
     when
@@ -87,6 +89,7 @@ public class Felix extends Agent {
     // highlight-added-end
 
     ...
+    
     // highlight-added-start
     public void showOnboardingScreens() {
             ArmoryAPI.show(

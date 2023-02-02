@@ -39,9 +39,9 @@ There are a couple important concepts to grasp for using Armory. We’ll look at
 ## Armory concepts
 
 Let’s start from the basics: there are three different Armory signals that are caught by the Rule engine:
-* **UserConnectedEvent**: emitted each time a user connects to Armory (opens the link)
-* **UserDisconnectedEvent**: emitted when the user disconnects from Armory (closes the link)
-* **SubmitEvent**: emitted when the user presses something on the screen (e.g. a button)
+* **UserConnected**: emitted each time a user connects to Armory (opens the link)
+* **UserDisconnected**: emitted when the user disconnects from Armory (closes the link)
+* **Submit**: emitted when the user presses something on the screen (e.g. a button)
 
 The signals are fairly straightforward. We should mention that e.g. refreshing the site emits the UserDisconnectedEvent and then the UserConnectedEvent again.
 
@@ -68,15 +68,15 @@ Of course, not all available components need to be used every time.
 The `GenericTemplate` is quite packed, but it can be much simpler than that - for example, we also provide a `TitleTemplate` which literally only contains a TitleComponent.
 
 The components are the building blocks of screens, and there are several of them predefined in the service, all implementing the `BaseComponent` interface:
-* ActionGroupComponent (groups together buttons into a list of options out of which only one can be selected)
-* BackButtonComponent
-* CloudSelectComponent (allows user to select multiple elements from a list)
-* DescriptionComponent
-* ImageComponent
-* InputComponent (roughly corresponds to HTML input element, with the data type specified by setting `type`)
-* PrimarySubmitButtonComponent (basic button, extending the `BaseSubmitButtonComponent` which triggers a `SubmitEvent`)
-* TextAreaComponent
-* TitleComponent
+* ActionGroup (groups together buttons into a list of options out of which only one can be selected)
+* BackButton
+* CloudSelect (allows user to select multiple elements from a list)
+* Description
+* Image
+* Input (roughly corresponds to HTML input element, with the data type specified by setting `type`)
+* SubmitButton (basic button, extending the `BaseSubmitButtonComponent` which triggers a `SubmitEvent`)
+* TextArea
+* Title
 
 Each component is referenced through its `componentId`. We’ll use this id later on for getting the data the user provided on a screen off the `SubmitEvent`.
 
@@ -107,7 +107,6 @@ We'll go through the logic that gets executed in the background as we integrate 
 
 You can combine elements like these in any order you like. Feel free to create some of your own templates a check them out when running `forge run`.
 
-
 ## Chaining Armory screens
 
 You can link together sequences of multiple Armory screens by specifying the transitions between them. 
@@ -115,90 +114,65 @@ You just define the name of the screen the action component takes the user to.
 For example, in the code below, the “Cool, let’s go!” button at the bottom of the welcome screen leads to the screen on 
 which we ask the user for their name:
 
-```java title="rule_engine/src/main/java/agents/Mindy.java"
-...
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-...
-import com.mindsmiths.armory.component.DescriptionComponent;
-import com.mindsmiths.armory.component.InputComponent;
-import com.mindsmiths.armory.component.PrimarySubmitButtonComponent;
-...
+```java title="rule_engine/src/main/java/agents/Felix.java"
+package agents;
+
+import com.mindsmiths.ruleEngine.model.Agent;
+import lombok.*;
+
+import com.mindsmiths.armory.ArmoryAPI;
+import com.mindsmiths.armory.Screen;
+import com.mindsmiths.armory.component.*;
+
+import com.mindsmiths.ruleEngine.util.Log;
 
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class Mindy extends Agent {
-    String name;
-    Date birthday;
-    String onboardingStage;
-    
-    ...
+public class Felix extends Agent {
 
-    public void showOnboardingScreens() {
-        Map<String, BaseTemplate> screens = Map.of(
-                "welcome", new TemplateGenerator("welcome")
-                        .addComponent("title", new TitleComponent("Welcome to the Armory demo"))
-                        .addComponent("description", new DescriptionComponent("We'll create a really simple onboarding process."))
-                        .addComponent("submit", new PrimarySubmitButtonComponent("Cool, let's go!", "askForName")),
-                "askForName", new TemplateGenerator("askForName")
-                        .addComponent("title", new TitleComponent("What's your name?"))
-                        .addComponent("name", new InputComponent("name", "Type your name here", true))
-                        .addComponent("submitName", new PrimarySubmitButtonComponent("submitName", "Done, next!", "askForBirthday")),
-                "askForBirthday", new TemplateGenerator("askForBirthday")
-                        .addComponent("title", new TitleComponent("When is your birthday?"))
-                        .addComponent("birthday", new InputComponent("birthday", "mm/dd/yyyy", "date", true))
-                        .addComponent("submitBirthday", new PrimarySubmitButtonComponent("submitBirthday", "Finish", "finishOnboarding"))
-        );
-        showScreens("welcome", screens);
-    }
+    String name;
     
-    public static Date saveAsDate(String originalValue) throws ParseException {
-     return new SimpleDateFormat("MM-dd-yyyy").parse(originalValue);
+    public void showWelcomeScreens() {
+        ArmoryAPI.show(
+                getConnection("armory"),
+                new Screen("welcome")
+                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
+                        .add(new Image("public/JogaPuppy.png", false))
+                        .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
+                new Screen("askForName")
+                        .add(new Header("logo.png", false))
+                        .add(new Title("Alright! First, tell me your name?"))
+                        .add(new Input("name", "Type your name here", "text"))
+                        .add(new SubmitButton("nameSubmited", "Done, next!"))
+        );
     }
+}
 ```
 
-After the user provides the name, the submit button has `"finishOnboarding"` as a value, which doesn’t lead to another screen, but you can still catch it in a rule and have the system react to it. 
+After the user provides the name, the submit button has `"nameSubmited"` as a value, which doesn’t lead to another screen, but you can still catch it in a rule and have the system react to it. 
 You can remove the rule showing the demo screen and add the following:
 
-```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
-package rules.mindy
+```java title="rule_engine/src/main/resources/rules/felix/Felix.drl"
+package rules.felix;
 
-import com.mindsmiths.armory.event.UserConnectedEvent
-import com.mindsmiths.armory.event.SubmitEvent
+import agents.Felix
+import com.mindsmiths.ruleEngine.model.Heartbeat
+import com.mindsmiths.armory.event.UserConnected
+import com.mindsmiths.armory.event.Submit
+import com.mindsmiths.ruleEngine.util.Log
 
-import agents.Mindy
-
-
-rule "Start onboarding"
+rule "Welcome new user"
    when
-       signal: UserConnectedEvent() from entry-point "signals"
-       agent: Mindy(onboardingStage != "onboarded")
+       signal: UserConnected() from entry-point "signals"
+       agent: Felix()
    then
-       agent.showOnboardingScreens();
-       delete(signal);
-end
-
-rule "Finish onboarding"
-   when
-       signal: SubmitEvent(getParamAsString("submitBirthday") == "finishOnboarding") from entry-point "signals"
-       agent: Mindy()
-   then
-       modify(agent) {
-         setName(signal.getParamAsString("name")),
-         setBirthday(agent.saveAsDate(signal.getParamAsString("birthday"))),
-         setOnboardingStage("onboarded")
-       };
-       agent.showThanksScreen();
+       agent.showWelcomeScreens();
        delete(signal);
 end
 ```
-As you can see, there is no need to write out a separate rule for the transition between the welcome screen and the `askForName`
-screen - this will already happen because it is specified in agent’s `showOnboardingScreens()`.
-
-The data the user provides on the screens during the onboarding (here, name and birthday date) are transferred as `GET` parameters with the variable name you
-set (`componentId`) as key, and we preferably store them all together at the end of the procedure. You see an example of this when using `signal.getParamAsString("name")`.
+As you can see, there is no need to write out a separate rule for the transition between the `welcome` screen and the `askForName`
+screen - this will already happen because it is specified in agent’s `showWelcomeScreens()`.
 
 Of course, you don’t always want to use predefined sequences of screens (although note that you can just as easily 
 implement slightly more complex condition-based branching in logic, as long as certain actions always lead to the same outcomes). 
@@ -206,37 +180,62 @@ Sometimes you want more flexibility in allowing the system to determine which sc
 state the user is in.
 
 When the screen to show is determined based on other circumstances and not the fact if/which submit action the user made, you can capture this behavior through a rule.
-For example, we can add a "Thank you" screen to be shown after the onboarding process is complete:
+With Armory, you can easily define multiple screen chains for different stages of the process. This can be beneficial if you want to store some data separately.
+For example, in the welcome screens we asked the user for a name, and we want to store it after the procedure is completed, 
+so we can use it in other screens to add a bit of personalization to the user experience. We will do this inside the `Start user onboarding` rule. 
+
+We'll add a line to start the onboarding procedure once we have the user's name, and then add a new rule to store the data at the end of welcome flow.
+
+How to store data? Well, the data the user inputs during the screen sequence are transferred as values of GET parameters with the corresponding `componentId` as key.
+We can store the user's answers at the end of the procedure. For example, here we only asked for the name, which the user set through an input area. 
+We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `"nameSubmitted"` is the ID of the submit button that we will use as a trigger to take us to the next screen.
+
 
 ```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
 ...
-rule "Finish onboarding"
-   ...
-   then
-   ...
-       agent.showThanksScreen();
-   ...
-    
-rule "Show screen on refresh after onboarding"
-    salience -10
+
+rule "Start user onboarding"
     when
-        signal: UserConnectedEvent() from entry-point "signals"
-        agent: Mindy()
+        signal: Submit(buttonId == "nameSubmited") from entry-point "signals"
+        agent: Felix()
     then
-        agent.showThanksScreen();
+        modify(agent){
+            setName(signal.getParamAsString("name"))
+            };
+        agent.showOnboardingScreens();
         delete(signal);
 end
 ```
 
 With the implementation in agent’s java class:
-```java title="rule_engine/src/main/java/agents/Mindy.java"
+```java title="rule_engine/src/main/java/agents/Felix.java"
 ...
 @Data
+@ToString(callSuper = true)
 @NoArgsConstructor
-public class Mindy extends Agent {
-    ...
-    public void showThanksScreen() {
-        showScreen(new TitleTemplate(String.format("Thanks, %s!", name)));
+public class Felix extends Agent {
+    String name;
+    Integer weight;
+    Integer height;
+
+    public void showOnboardingScreens() {
+            ArmoryAPI.show(
+                    getConnection("armory"),
+                    new Screen("startOnboarding")
+                            .add(new Title(String.format("Nice to meet you %s! Now let's make a workout plan just for you!\nReady? 💪", name)))
+                            .add(new Image("public/GymPuppy.png", false))
+                            .add(new SubmitButton("onboardingStarted", "Let's go!", "askForWeight")),
+                    new Screen("askForWeight")
+                            .add(new Header("logo.png", true))
+                            .add(new Title("How much do you weigh in kilograms?"))
+                            .add(new Input("weight", "Type your weight here", "number"))
+                            .add(new SubmitButton("weightSubmited", "Next!", "askForHeight")),
+                    new Screen("askForHeight")
+                            .add(new Header("logo.png", true))
+                            .add(new Title("How tall are you in cm?"))
+                            .add(new Input("height", "Type your height here", "number"))
+                            .add(new SubmitButton("heightSubmited", "Next!"))
+        );
     }
 }
 ```
