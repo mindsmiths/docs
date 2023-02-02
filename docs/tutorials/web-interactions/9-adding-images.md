@@ -44,7 +44,7 @@ To allow the user to go back through the screen chain, simply set the `allowsUnd
 Let's see this in the onboarding screens:
 We'll add different headers (with and without backbutton) to onboarding screens, but you can add it wherever you want.
 
-```java titile="agents/Felix.java"
+```java titile="java/agents/Felix.java"
 @Data
 @ToString(callSuper = true)
 @NoArgsConstructor

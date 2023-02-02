@@ -14,6 +14,18 @@ $body-size: 18px;
 $primary: #cb9cf9;
 $family-primary: "Helvetica", sans-serif;
 
+h2 {
+    text-align: center;
+}
+
+div.CloudSelect div.field.has-addons {
+    justify-content: center;
+}
+
+div {
+    text-align: center;
+}
+
 @import "armory-sdk/src/assets/css/override.scss";
 @import "armory-sdk/src/assets/css/default-skin.scss";
 ```
