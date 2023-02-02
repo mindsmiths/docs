@@ -26,7 +26,7 @@ There are a couple important concepts to grasp for using Armory. We’ll look at
     <div>
         <p><b>Installment:</b></p>
         <ul>
-            <li><code>pip install "armory[dev]~=5.0.0b0"</code></li>
+            <li><code>pip install "armory"</code></li>
         </ul>
     </div>
     <div>
@@ -47,25 +47,12 @@ The signals are fairly straightforward. We should mention that e.g. refreshing t
 
 To connect to Armory, the user needs a unique`connectionId`. This id is part of that user’s URL, and will be randomly generated if not set in advance. 
 
-
-## Armory templates and components
+`UNDER CONSTRUCTION`
+## Armory templates and components 
 
 As mentioned, Armory already comes with a number of predefined templates and components for building screens. Once you get a hang of how they work, you are welcome to add more custom implementations.
 
-Templates are basically defined by:
-* **templateName**
-* **componentOrdering**
-
-Templates are usually named by the components they contain, e.g. `TitleButtonTemplate` contains a `TitleComponent` and a list of `PrimarySubmitButtonComponents`.
-The order in which these components are displayed on the screen is specified via the `componentOrdering` list.
-All templates implement the `BaseTemplate` interface.
-
-Templates are really easy to define using the `TemplateGenerator`, so we only provide a couple of them out-of-the-box. 
-One example is the `GenericTemplate` which contains the following components (in that order of appearance, if actually used on the screen): 
-back button, title, image, description text, area for text input, area for data input, and a group of action components (e.g. buttons). 
-Of course, not all available components need to be used every time.
-
-The `GenericTemplate` is quite packed, but it can be much simpler than that - for example, we also provide a `TitleTemplate` which literally only contains a TitleComponent.
+The `GenericTemplate` is quite packed, but it can be much simpler than that - for example, we also provide a `TitleTemplate` which literally only contains a `Title` component.
 
 The components are the building blocks of screens, and there are several of them predefined in the service, all implementing the `BaseComponent` interface:
 * ActionGroup (groups together buttons into a list of options out of which only one can be selected)
@@ -74,38 +61,11 @@ The components are the building blocks of screens, and there are several of them
 * Description
 * Image
 * Input (roughly corresponds to HTML input element, with the data type specified by setting `type`)
-* SubmitButton (basic button, extending the `BaseSubmitButtonComponent` which triggers a `SubmitEvent`)
+* SubmitButton (basic button which triggers a `SubmitEvent`)
 * TextArea
 * Title
 
 Each component is referenced through its `componentId`. We’ll use this id later on for getting the data the user provided on a screen off the `SubmitEvent`.
-
-## Template generator
-
-We mentioned you can always use one of the predefined templates to create screens, such as the `TitleTemplate`:
-```BaseTemplate screen = new TitleTemplate("Hello, world!");```
-
-But assuming you’ll often want to create your own layouts, we’ll now focus a bit more on the `TemplateGenerator`. Let’s look at an example of how we can use it to create a new template:
-
-```java
-new TemplateGenerator("exampleTemplate")
-            .addComponent("title", new TitleComponent("Screen Title"))
-            .addComponent("description", new DescriptionComponent("Here is where we put the description."))
-            .addComponent("input", new InputComponent("name", "Type your name…", true))
-            .addComponent("actionGroup", new ActionGroupComponent(List.of(
-                        new PrimarySubmitButtonComponent("inputId1", "Option 1", "NextScreen1"),
-                        new PrimarySubmitButtonComponent("inputId2", "Option 2", "NextScreen2")
-)));
-```
-
-Let’s break down this code a little before writing up the actual code: when instantiating a `TemplateGenerator`, the first thing we can optionally set (```"exampleTemplate"```) 
-is the screen name, and then we add the components we want our template to contain. Here we chose to have a title, description,
-input field and a group of buttons. The components are added in the form of HashMap with a string identifier as key (usually “input1”, 
-“input2” etc. in case of repeating components) and the component itself as value.
-
-We'll go through the logic that gets executed in the background as we integrate the actual screens to our project.
-
-You can combine elements like these in any order you like. Feel free to create some of your own templates a check them out when running `forge run`.
 
 ## Chaining Armory screens
 
