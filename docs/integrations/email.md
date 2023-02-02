@@ -52,3 +52,47 @@ email-adapter setup
 When prompted, enter your **'email address'**, and **'App password'** generated with the steps described in the prerequisites.
 
 And that's it! You can now send emails for the project via your Gmail account! 
+
+## How to use Email Adapter
+Putting an Email Adapter into practice is straightforward and easy. The best way to show you how this works is to demonstrate an example. Let's say that our java agent is named Smith. First, we will define a method on agent Smith as:
+```java
+import java.io.IOException;
+import java.util.List;
+import com.mindsmiths.emailAdapter.NewEmail;
+import com.mindsmiths.emailAdapter.EmailAdapterAPI;
+...
+public void sendEmail(List<String> recipients, String emailTitle, String emailText) throws IOException {
+        NewEmail email = new NewEmail();
+        email.setRecipients(recipients);
+        email.setSubject(emailTitle);
+        email.setPlainText(emailText);
+
+        EmailAdapterAPI.newEmail(email);
+    }
+```
+Method `sendEmail` accepts three parameters: a list of strings `recipients`, i.e., a list of email addresses that will receive an email. The remaining two parameters are strings, `emailTitle` and `emailText`, whose names are self-explanatory. 
+
+The code above can be broken into two parts. First, we create `NewEmail` class and set attributes. This class has multiple attributes (not all of them are required), such as:
+```java
+private java.util.List<java.lang.String> recipients;
+private java.lang.String plainText;
+private java.lang.String htmlText;
+private java.util.List<java.lang.String> cc;
+private java.lang.String subject;
+...
+```
+The second part is sending an email using `EmailAdapterAPI.newEmail()` method. Lastly, do not forget to add `IOException`. Otherwise, the method won't work.
+
+Now, writing a rule that calls the above-defined method remains. For example, let's say that Smith has a boolean `timeToSendEmail` flag, which will trigger the corresponding rule when the value of a flag is `true`:
+```java
+rule "Send email"
+    when
+        agent: Smith(timeToSendEmail == true)
+    then
+        agent.sendEmail(List.of('cool_guy@mindsmiths.com'), "This is very important email!", "Some cool text goes here");
+        modify(agent) { setTimeToSendEmail(false) };
+end
+```
+Note that after the rule was triggered, we set `timeToSendEmail` to `false` to prevent infinite rule triggering.
+
+As you can see, there are more attributes on `NewEmail` class besides these three that we have used. If you feel confident enough, try sending an HTML template. In that way, you can customize the email to your liking.
