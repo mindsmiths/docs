@@ -81,7 +81,7 @@ private java.util.List<java.lang.String> cc;
 private java.lang.String subject;
 ...
 ```
-The second part is sending an email using `EmailAdapterAPI.newEmail()` method. Lastly, do not forget to add `IOException`. Otherwise, the method won't work.
+The second part is sending an email using `EmailAdapterAPI.newEmail()` method. Lastly, do not forget to add `throws IOException`. Otherwise, the method won't work.
 
 Now, writing a rule that calls the above-defined method remains. For example, let's say that Smith has a boolean `timeToSendEmail` flag, which will trigger the corresponding rule when the value of a flag is `true`:
 ```java
