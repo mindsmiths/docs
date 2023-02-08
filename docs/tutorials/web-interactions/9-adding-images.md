@@ -30,7 +30,7 @@ public class Felix extends Agent {
                 new Screen("askForName")
                         .add(new Title("Alright! First, tell me your name?"))
                         .add(new Input("name", "Type your name here", "text"))
-                        .add(new SubmitButton("nameSubmited", "Done, next!"))
+                        .add(new SubmitButton("nameSubmitted", "Done, next!"))
         );
     }
 }
@@ -63,13 +63,13 @@ public class Felix extends Agent {
                         .add(new Header("logo.png", true))
                         .add(new Title("How much do you weigh in kilograms?"))
                         .add(new Input("weight", "Type your weight here", "number"))
-                        .add(new SubmitButton("weightSubmited", "Next!", "askForHeight")),
+                        .add(new SubmitButton("weightSubmitted", "Next!", "askForHeight")),
                 new Screen("askForHeight")
                         // highlight-added-line
                         .add(new Header("logo.png", true))
                         .add(new Title("How tall are you in cm?"))
                         .add(new Input("height", "Type your height here", "number"))
-                        .add(new SubmitButton("heightSubmited", "Next!"))
+                        .add(new SubmitButton("heightSubmitted", "Next!"))
         );
     }
 }

@@ -121,14 +121,29 @@ new Screen("customerOnboarding")
         .add(new Description("Welcome! We would like to get to know you a bit better. Can you start by telling us your name?"))
         .add(new Input("name", "Type your name here...", "text"))
         .group("bottom")
-        .add(new SubmitButton("submitName", "Next"))
+        .add(new SubmitButton("submitName", "Done"))
 ```
 
 We'll show you how to create these templates and custom components in the next section.
 
+Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). You can find plenty of examples of screen linking in the Armory tutorial[TODO add link].
+
 ## Custom components and templates [TODO]
 
-You can easily create new custom components directly from the Java code using `CustomComponent`. This class just contains a map of parameters
+You can easily create new custom components directly from Java using `CustomComponent`. The parameters of the component are specified as a map in its `params` field:
+```java
+new Screen("documentUpload")
+    .add(new CustomComponent("FileUpload"))
+```
+The Vue counterpart of the component gets generated automatically based on the parameters you set, you just need to do these steps:
+1. Create the components directory in `services/armory/src/components` [TODO include by default?]
+2. Add the name of your custom component in the `App.vue` file:
+```java title="services/armory/src/App.vue"
+...
+    getCustomComponents() {
+      return {FileUpload};
+...
+```
 
 Templates are really easy to define using the `TemplateGenerator`, so we only provide a couple of them out-of-the-box. 
 One example is the `GenericTemplate` which contains the following components (in that order of appearance, if actually used on the screen): 
@@ -136,139 +151,3 @@ back button, title, image, description text, area for text input, area for data 
 Of course, not all available components need to be used every time.
 
 The `GenericTemplate` is quite packed, but it can be much simpler than that - for example, we also provide a `TitleTemplate` which literally only contains a TitleComponent.
-
-## Chaining Armory screens
-
-Finally, you can link together sequences of multiple Armory screens by specifying the transitions between them. 
-You just define the name of the screen the action component takes the user to. 
-For example, in the code below, the “Cool, let’s go!” button at the bottom of the welcome screen leads to the screen on 
-which we ask the user for their name:
-
-```java title="rule_engine/src/main/java/agents/Felix.java"
-package agents;
-
-import com.mindsmiths.ruleEngine.model.Agent;
-import lombok.*;
-
-import com.mindsmiths.armory.ArmoryAPI;
-import com.mindsmiths.armory.Screen;
-import com.mindsmiths.armory.component.*;
-
-import com.mindsmiths.ruleEngine.util.Log;
-
-@Data
-@ToString(callSuper = true)
-@NoArgsConstructor
-public class Felix extends Agent {
-
-    String name;
-    
-    public void showWelcomeScreens() {
-        ArmoryAPI.show(
-                getConnection("armory"),
-                new Screen("welcome")
-                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
-                        .add(new Image("public/JogaPuppy.png", false))
-                        .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
-                new Screen("askForName")
-                        .add(new Header("logo.png", false))
-                        .add(new Title("Alright! First, tell me your name?"))
-                        .add(new Input("name", "Type your name here", "text"))
-                        .add(new SubmitButton("nameSubmited", "Done, next!"))
-        );
-    }
-}
-```
-
-After the user provides the name, the submit button has `"nameSubmited"` as a value, which doesn’t lead to another screen, but you can still catch it in a rule and have the system react to it. 
-You can remove the rule showing the demo screen and add the following:
-
-```java title="rule_engine/src/main/resources/rules/felix/Felix.drl"
-package rules.felix;
-
-import agents.Felix
-import com.mindsmiths.ruleEngine.model.Heartbeat
-import com.mindsmiths.armory.event.UserConnected
-import com.mindsmiths.armory.event.Submit
-import com.mindsmiths.ruleEngine.util.Log
-
-rule "Welcome new user"
-   when
-       signal: UserConnected() from entry-point "signals"
-       agent: Felix()
-   then
-       agent.showWelcomeScreens();
-       delete(signal);
-end
-```
-As you can see, there is no need to write out a separate rule for the transition between the `welcome` screen and the `askForName`
-screen - this will already happen because it is specified in agent’s `showWelcomeScreens()`.
-
-Of course, you don’t always want to use predefined sequences of screens (although note that you can just as easily 
-implement slightly more complex condition-based branching in logic, as long as certain actions always lead to the same outcomes). 
-Sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the 
-state the user is in.
-
-When the screen to show is determined based on other circumstances and not the fact if/which submit action the user made, you can capture this behavior through a rule.
-With Armory, you can easily define multiple screen chains for different stages of the process. This can be beneficial if you want to store some data separately.
-For example, in the welcome screens we asked the user for a name, and we want to store it after the procedure is completed, 
-so we can use it in other screens to add a bit of personalization to the user experience. We will do this inside the `Start user onboarding` rule. 
-
-We'll add a line to start the onboarding procedure once we have the user's name, and then add a new rule to store the data at the end of welcome flow.
-
-How to store data? Well, the data the user inputs during the screen sequence are transferred as values of GET parameters with the corresponding `componentId` as key.
-We can store the user's answers at the end of the procedure. For example, here we only asked for the name, which the user set through an input area. 
-We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `"nameSubmitted"` is the ID of the submit button that we will use as a trigger to take us to the next screen.
-
-
-```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
-...
-
-rule "Start user onboarding"
-    when
-        signal: Submit(buttonId == "nameSubmited") from entry-point "signals"
-        agent: Felix()
-    then
-        modify(agent){
-            setName(signal.getParamAsString("name"))
-            };
-        agent.showOnboardingScreens();
-        delete(signal);
-end
-```
-
-With the implementation in agent’s java class:
-```java title="rule_engine/src/main/java/agents/Felix.java"
-...
-@Data
-@ToString(callSuper = true)
-@NoArgsConstructor
-public class Felix extends Agent {
-    String name;
-    Integer weight;
-    Integer height;
-
-    public void showOnboardingScreens() {
-            ArmoryAPI.show(
-                    getConnection("armory"),
-                    new Screen("startOnboarding")
-                            .add(new Title(String.format("Nice to meet you %s! Now let's make a workout plan just for you!\nReady? 💪", name)))
-                            .add(new Image("public/GymPuppy.png", false))
-                            .add(new SubmitButton("onboardingStarted", "Let's go!", "askForWeight")),
-                    new Screen("askForWeight")
-                            .add(new Header("logo.png", true))
-                            .add(new Title("How much do you weigh in kilograms?"))
-                            .add(new Input("weight", "Type your weight here", "number"))
-                            .add(new SubmitButton("weightSubmited", "Next!", "askForHeight")),
-                    new Screen("askForHeight")
-                            .add(new Header("logo.png", true))
-                            .add(new Title("How tall are you in cm?"))
-                            .add(new Input("height", "Type your height here", "number"))
-                            .add(new SubmitButton("heightSubmited", "Next!"))
-        );
-    }
-}
-```
-
-Test the code with `forge run`!
-Now that you've mastered building and chaining different kinds of screens, you are ready to dig into the frontend part: how to quickly and easily customize your screens and add some more advanced components.

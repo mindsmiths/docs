@@ -55,7 +55,7 @@ Let's add the rule to activate `Start survey` screens:
 // highlight-added-start
 rule "Start survey"
     when
-        signal: Submit(buttonId == "heightSubmited") from entry-point "signals"
+        signal: Submit(buttonId == "heightSubmitted") from entry-point "signals"
         agent: Felix()
     then
         modify(agent){
