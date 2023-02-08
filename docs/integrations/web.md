@@ -92,7 +92,7 @@ This is what adding Armory looks like in the Terminal:
 
 ```bash title="Terminal"
 root:/app$ armory setup
-What agent will handle signals? Felix
+What agent will handle signals?
 URL of your IDE (leave empty if running locally): 
 http://workspace-ms-XXXXXXX.msdev.mindsmiths.io/
 Service successfully integrated into the project.
