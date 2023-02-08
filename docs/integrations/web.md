@@ -9,9 +9,13 @@ You can use these pages to display content to your users, or to collect data fro
 
 The service for this is called **Armory**.
 
-There are a couple important concepts to grasp for using Armory. We’ll look at them in turn.
+## When to use Armory?
 
-<details>
+Armory allows you to create an app-like experience for your users quickly and easily, with sequences of linked screens. 
+This provides the feeling of user guidance through the process you are modeling. One of its biggest perks is that it 
+allows you to smoothly build in the logic you need and try out various components, with minimum code.
+
+<!-- <details>
   <summary>Setup details</summary>
 <div>
     <div><p><b>Environment variables:</b></p>
@@ -34,9 +38,9 @@ There are a couple important concepts to grasp for using Armory. We’ll look at
         <ul><li><p><code>armory setup</code></p></li></ul>
     </div>
   </div>
-</details>
+</details> -->
 
-## Armory concepts
+## Core features
 
 Let’s start from the basics: there are three different Armory signals that are caught by the Rule engine:
 * **UserConnected**: emitted each time a user connects to Armory (opens the link)
@@ -45,9 +49,8 @@ Let’s start from the basics: there are three different Armory signals that are
 
 The signals are fairly straightforward. We should mention that e.g. refreshing the site emits the UserDisconnectedEvent and then the UserConnectedEvent again.
 
-To connect to Armory, the user needs a unique`connectionId`. This id is part of that user’s URL, and will be randomly generated if not set in advance. 
+To connect to Armory, the user needs a unique `connectionId`. This id is part of that user’s URL, and will be randomly generated if not set in advance. 
 
-`UNDER CONSTRUCTION`
 ## Armory templates and components 
 
 As mentioned, Armory already comes with a number of predefined templates and components for building screens. Once you get a hang of how they work, you are welcome to add more custom implementations.
@@ -67,138 +70,56 @@ The components are the building blocks of screens, and there are several of them
 
 Each component is referenced through its `componentId`. We’ll use this id later on for getting the data the user provided on a screen off the `SubmitEvent`.
 
-## Chaining Armory screens
+## Setup
 
-You can link together sequences of multiple Armory screens by specifying the transitions between them. 
-You just define the name of the screen the action component takes the user to. 
-For example, in the code below, the “Cool, let’s go!” button at the bottom of the welcome screen leads to the screen on 
-which we ask the user for their name:
+Adding Armory to your project is pretty straightforward. Let's jump right to it.   
 
-```java title="rule_engine/src/main/java/agents/Felix.java"
-package agents;
+### Installment
 
-import com.mindsmiths.ruleEngine.model.Agent;
-import lombok.*;
+```bash title="Terminal"
+root:/app$ pip install armory
+root:/app$ armory setup
+```
 
-import com.mindsmiths.armory.ArmoryAPI;
-import com.mindsmiths.armory.Screen;
-import com.mindsmiths.armory.component.*;
+This latter command will prompt you to:
+* Choose the agent handling signals coming from Armory
+* Provide the Armory site URL, which you'll use to access Armory
 
-import com.mindsmiths.ruleEngine.util.Log;
+We'll name our agent Felix.
+:::caution
+In case you choose a different name, make sure to keep it consistent throughout the tutorial.
+:::
 
-@Data
-@ToString(callSuper = true)
-@NoArgsConstructor
-public class Felix extends Agent {
+As for the URL, you just use your environment URL (e.g. http://workspace-ms-XXXXXXX.msdev.mindsmiths.io/) with the `XXXXXXX` being the digits you have in your web IDE link. 
+The URL will automatically be saved in your `.env` file, where you can find it at any moment.
 
-    String name;
-    
-    public void showWelcomeScreens() {
-        ArmoryAPI.show(
-                getConnection("armory"),
-                new Screen("welcome")
-                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
-                        .add(new Image("public/JogaPuppy.png", false))
-                        .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
-                new Screen("askForName")
-                        .add(new Header("logo.png", false))
-                        .add(new Title("Alright! First, tell me your name?"))
-                        .add(new Input("name", "Type your name here", "text"))
-                        .add(new SubmitButton("nameSubmited", "Done, next!"))
-        );
+This is what adding Armory looks like in the Terminal:
+
+```bash title="Terminal"
+root:/app$ armory setup
+What agent will handle signals? Felix
+URL of your IDE (leave empty if running locally): 
+http://workspace-ms-XXXXXXX.msdev.mindsmiths.io/
+Service successfully integrated into the project.
+```
+
+Armory will be on: ```http://workspace-ms-XXXXXXX.msdev.mindsmiths.io/```
+
+:::note
+Make sure that your `Runner.java` reads the configuration from `signals.yaml`:
+
+```java title="java/Runner.java"
+    public void initialize() {
+        configureSignals(getClass().getResourceAsStream("config/signals.yaml"));
+        ...
     }
-}
 ```
+:::
 
-After the user provides the name, the submit button has `"nameSubmited"` as a value, which doesn’t lead to another screen, but you can still catch it in a rule and have the system react to it. 
-You can remove the rule showing the demo screen and add the following:
+Finally, run `forge init` to make sure all dependencies are in place. 
 
-```java title="rule_engine/src/main/resources/rules/felix/Felix.drl"
-package rules.felix;
+Congratulations, you can now use Armory in your project! Let's find out how we can actually use it and make an awesome onboarding flow.
 
-import agents.Felix
-import com.mindsmiths.ruleEngine.model.Heartbeat
-import com.mindsmiths.armory.event.UserConnected
-import com.mindsmiths.armory.event.Submit
-import com.mindsmiths.ruleEngine.util.Log
+## How to use?
 
-rule "Welcome new user"
-   when
-       signal: UserConnected() from entry-point "signals"
-       agent: Felix()
-   then
-       agent.showWelcomeScreens();
-       delete(signal);
-end
-```
-As you can see, there is no need to write out a separate rule for the transition between the `welcome` screen and the `askForName`
-screen - this will already happen because it is specified in agent’s `showWelcomeScreens()`.
-
-Of course, you don’t always want to use predefined sequences of screens (although note that you can just as easily 
-implement slightly more complex condition-based branching in logic, as long as certain actions always lead to the same outcomes). 
-Sometimes you want more flexibility in allowing the system to determine which screen to show to the user depending on the 
-state the user is in.
-
-When the screen to show is determined based on other circumstances and not the fact if/which submit action the user made, you can capture this behavior through a rule.
-With Armory, you can easily define multiple screen chains for different stages of the process. This can be beneficial if you want to store some data separately.
-For example, in the welcome screens we asked the user for a name, and we want to store it after the procedure is completed, 
-so we can use it in other screens to add a bit of personalization to the user experience. We will do this inside the `Start user onboarding` rule. 
-
-We'll add a line to start the onboarding procedure once we have the user's name, and then add a new rule to store the data at the end of welcome flow.
-
-How to store data? Well, the data the user inputs during the screen sequence are transferred as values of GET parameters with the corresponding `componentId` as key.
-We can store the user's answers at the end of the procedure. For example, here we only asked for the name, which the user set through an input area. 
-We can fetch it off the `Submit()` using `buttonId == "nameSubmitted"` because the `"nameSubmitted"` is the ID of the submit button that we will use as a trigger to take us to the next screen.
-
-
-```java title="rule_engine/src/main/resources/rules/mindy/Mindy.drl"
-...
-
-rule "Start user onboarding"
-    when
-        signal: Submit(buttonId == "nameSubmited") from entry-point "signals"
-        agent: Felix()
-    then
-        modify(agent){
-            setName(signal.getParamAsString("name"))
-            };
-        agent.showOnboardingScreens();
-        delete(signal);
-end
-```
-
-With the implementation in agent’s java class:
-```java title="rule_engine/src/main/java/agents/Felix.java"
-...
-@Data
-@ToString(callSuper = true)
-@NoArgsConstructor
-public class Felix extends Agent {
-    String name;
-    Integer weight;
-    Integer height;
-
-    public void showOnboardingScreens() {
-            ArmoryAPI.show(
-                    getConnection("armory"),
-                    new Screen("startOnboarding")
-                            .add(new Title(String.format("Nice to meet you %s! Now let's make a workout plan just for you!\nReady? 💪", name)))
-                            .add(new Image("public/GymPuppy.png", false))
-                            .add(new SubmitButton("onboardingStarted", "Let's go!", "askForWeight")),
-                    new Screen("askForWeight")
-                            .add(new Header("logo.png", true))
-                            .add(new Title("How much do you weigh in kilograms?"))
-                            .add(new Input("weight", "Type your weight here", "number"))
-                            .add(new SubmitButton("weightSubmited", "Next!", "askForHeight")),
-                    new Screen("askForHeight")
-                            .add(new Header("logo.png", true))
-                            .add(new Title("How tall are you in cm?"))
-                            .add(new Input("height", "Type your height here", "number"))
-                            .add(new SubmitButton("heightSubmited", "Next!"))
-        );
-    }
-}
-```
-
-Test the code with `forge run`!
-Now that you've mastered building and chaining different kinds of screens, you are ready to dig into the frontend part: how to quickly and easily customize your screens and add some more advanced components.
+You can find the Armory tutorial [here](/docs/tutorials/Armory-tutorial). 

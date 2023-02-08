@@ -7,10 +7,9 @@ sidebar_position: 2
 ## Wait... So what is Armory?
 
 Armory is the Mindsmiths implementation of a templating system used for building web-applications.
-It allows you to create an app-like experience for your users quickly and easily, with sequences of linked screens. 
-This provides the feeling of user guidance through the process you are modeling. 
-One of its biggest perks is that it allows you to smoothly build in the logic you need, and try out various components quickly and easily, with minimum code. 
-
+If you are looking to create an app-like experience for your users, Armory is the perfect tool for you. 
+With Armory, you can easily and quickly create sequences of linked screens, providing your users with a guided experience. 
+The best part is that you don't need to write a lot of code to try out different components and add the necessary logic. 
 
 ## Adding Armory to your project
 
