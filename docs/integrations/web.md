@@ -26,7 +26,7 @@ Using Armory is very simple, but there are a couple basic concepts you need to g
     <div>
         <p><b>Installment:</b></p>
         <ul>
-            <li><code>pip install "armory[dev]~=5.0.0"</code></li>
+            <li><code>pip install "armory"</code></li>
         </ul>
     </div>
     <div>
@@ -126,9 +126,11 @@ new Screen("customerOnboarding")
 
 We'll show you how to create these templates and custom components in the next section.
 
-Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). You can find plenty of examples of screen linking in the Armory tutorial[TODO add link].
+Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/Armory-tutorial).
 
-## Custom components
+## Creating components and templates
+
+### Custom components
 
 Let's take a look at how you can add new custom components to your screens. Let's say you wanted to add a component for uploading a document to your screen.
 The steps are as follows:
@@ -188,7 +190,7 @@ new Screen("uploadDocument")
 ```
 In case the component needs some parameters, those are simply added as key-value pairs to the `CustomComponent` params field. For example, this is how you would fill in the data for the component consisting of some label and a description that goes with it: `new CustomComponent("LabeledDescription").addParam("label", "Attendees:").addParam("description", "There will be 270 attenedees at the event.")`).
 
-## Custom templates
+### Custom templates
 
 As mentioned, you can also quickly create custom templates, which allow you to easily reuse the formatting on multiple screens.
 
@@ -206,5 +208,5 @@ div.CenteredContent {
 }
 ...
 ```
-
+[TODO add more instructions about scss, or improve it in the tutorial and point there?]
 That's it, you can now apply this template to any screen using the `setTemplate()` function!
