@@ -128,26 +128,83 @@ We'll show you how to create these templates and custom components in the next s
 
 Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). You can find plenty of examples of screen linking in the Armory tutorial[TODO add link].
 
-## Custom components and templates [TODO]
+## Custom components
 
-You can easily create new custom components directly from Java using `CustomComponent`. The parameters of the component are specified as a map in its `params` field:
-```java
-new Screen("documentUpload")
-    .add(new CustomComponent("FileUpload"))
-```
-The Vue counterpart of the component gets generated automatically based on the parameters you set, you just need to do these steps:
+Let's take a look at how you can add new custom components to your screens. Let's say you wanted to add a component for uploading a document to your screen.
+The steps are as follows:
 1. Create the components directory in `services/armory/src/components` [TODO include by default?]
-2. Add the name of your custom component in the `App.vue` file:
+2. Add the component in vue, for example create the file:
+```vue title="services/armory/src/components/FileUpload.vue"
+<template>
+  <div class="file is-boxed">
+    <label class="file-label">
+      <input class="file-input" type="file" name="resume" />
+      <span class="file-cta">
+        <span class="file-icon">
+          <i class="fas fa-upload"></i>
+        </span>
+        <span class="file-label"> Choose a file… </span>
+      </span>
+    </label>
+  </div>
+</template>
+
+<script>
+import BaseValue from "armory-sdk/src/components/base/BaseValue";
+
+export default {
+  name: "FileUpload",
+  extends: BaseValue,
+  props: {
+    placeholder: {
+      type: String,
+      default: "",
+    },
+  },
+};
+</script>
+
+<style></style>
+```
+
+:::tip
+The HTML you see in the `<template>...</template>` node was taken from this [website](https://bulma.io/documentation/). There are plenty of such resources out there, if you're not too crafty with HTML yourself!
+:::
+
+3. Finally, add your custom component to the `App.vue` file:
 ```java title="services/armory/src/App.vue"
+...
+import FileUpload from "./components/FileUpload.vue";
 ...
     getCustomComponents() {
       return {FileUpload};
 ...
 ```
 
-Templates are really easy to define using the `TemplateGenerator`, so we only provide a couple of them out-of-the-box. 
-One example is the `GenericTemplate` which contains the following components (in that order of appearance, if actually used on the screen): 
-back button, title, image, description text, area for text input, area for data input, and a group of action components (e.g. buttons). 
-Of course, not all available components need to be used every time.
+You can now just use your custom component directly in Java using the `CustomComponent` class:
+```java
+new Screen("uploadDocument")
+    .add(new CustomComponent("FileUpload"))
+```
+In case the component needs some parameters, those are simply added as key-value pairs to the `CustomComponent` params field. For example, this is how you would fill in the data for the component consisting of some label and a description that goes with it: `new CustomComponent("LabeledDescription").addParam("label", "Attendees:").addParam("description", "There will be 270 attenedees at the event.")`).
 
-The `GenericTemplate` is quite packed, but it can be much simpler than that - for example, we also provide a `TitleTemplate` which literally only contains a TitleComponent.
+## Custom templates
+
+As mentioned, you can also quickly create custom templates, which allow you to easily reuse the formatting on multiple screens.
+
+Let's take a look at how to create the `CenteredContent` template we mentioned in the section above. You just need to open the `skin.scss` file and add the following:
+```scss title="services/armory/src/assets/css/skin.scss"
+...
+div.CenteredContent {
+    .group#centered {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: center;
+        padding-bottom: 55px;
+    }
+}
+...
+```
+
+That's it, you can now apply this template to any screen using the `setTemplate()` function!
