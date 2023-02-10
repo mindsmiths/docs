@@ -15,7 +15,7 @@ Armory allows you to create an app-like experience for your users quickly and ea
 This provides the feeling of user guidance through the process you are modeling. One of its biggest perks is that it 
 allows you to smoothly build in the logic you need and try out various components, with minimum code.
 
-<!-- <details>
+<details>
   <summary>Setup details</summary>
 <div>
     <div><p><b>Environment variables:</b></p>
@@ -38,7 +38,7 @@ allows you to smoothly build in the logic you need and try out various component
         <ul><li><p><code>armory setup</code></p></li></ul>
     </div>
   </div>
-</details> -->
+</details>
 
 ## Core features
 

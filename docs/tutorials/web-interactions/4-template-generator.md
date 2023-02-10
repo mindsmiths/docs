@@ -4,7 +4,6 @@ sidebar_position: 4
 
 # Meet Felix!
 
-
 So, let's see how to generate various screens in Armory.
 
 We'll take you through creating a simple agent named Felix, who will gather information about you and your workout preferences. 
