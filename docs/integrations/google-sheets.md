@@ -105,6 +105,15 @@ First, let's get familiar with the terminology.
 </details>
 
 - About the other one, R1C1 notation, you can learn more [here](https://developers.google.com/sheets/api/guides/concepts).
+
+In order of easier tracking all the ways of using the Google Sheet Adapter, we've created a simple [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1PLeZOMswMquutGjnvPw7kXwnUcTDxYiY4ucHxuHXFUo/edit?usp=sharing) which we'll use as an example for all features demonstration.
+
+We have a sheet `Goods` with 4 columns defined: `ID`, `NAME`, `WEIGHT IN KG` and `PRICE IN EUR`.
+
+![Gsheet example](/img/gsheet/sheet-example.png)
+
+The Google Sheet Adapter's main features are to **extract data** from a given spreadsheet and to **update** it with new data.
+
 ### Extracting data
 Use the `getSpreadsheet()` method to extract data from a given spreadsheet. It takes two arguments: `spreadsheetId` and `range.`
 Both are optional. As always, `spreadsheetId` is the ID you can retrieve from the Google Sheets URL, and `range`  is an argument for comma-separated sheet names from where to retrieve values. Here you can pass something like one of the [A1 notation examples](integrations/google-sheets#How-to-use-Google-Sheet-Adapter). 
@@ -119,8 +128,12 @@ The keys of the map are the column names, and the values are the values of the c
 The whole Spreadsheet would look something like this:
 ```python
 Spreadsheet = {
-        "Customers": [{"First name": "John", "Last name": "Doe"}, {"First name": "Jane", "Doe"}, ...],
-        "Goods": [{"Item": "Banana", "Weight in kg": 10, "Price in euros": 1.0}, {"Item": "Apple", "Weight in kg": 10, "Price in euros": 3.0}, {"Item": "Orange", "Weight in kg": 5, "Price in euros": 2.0}]
+        "Customers": [{"First name": "John", "Last name": "Doe"}, 
+                      {"First name": "Jane", "Doe"}, ...],
+        
+        "Goods": [{"ID": "JOj5xgcs", "NAME": "Banana", "WEIGHT IN KG": 1.0, "PRICE IN EUR": 0.99}, 
+                  {"ID": "7huCnRB7", "NAME": "Apple", "WEIGHT IN KG": 5.0, "PRICE IN EUR": 2.49},
+                  {"ID": "AimJC2o3", "NAME": "Orange", "WEIGHT IN KG": 3.0, "PRICE IN EUR": 3.29}, ...]                 
 }
 ```
 
@@ -188,12 +201,39 @@ public void updateItems(List<Map<String, String>> sheet) {
 You can see that all you need for retrieving the data is a simple loop that iterates over the list of maps (representing rows) and retrieves the data from the corresponding cells.
 
 ### Changing values in a spreadsheet
-To change values in a spreadsheet, you can use the `updateSpreadsheet()` method. It takes three arguments: `spreadsheetId`, `values` and `range`.
+To change values in a spreadsheet, you can use the `updateSheet()` method. 
+It takes three arguments: `spreadsheetId`, `values` and `range`.
+
 The `spreadsheetId` is the same as before, it's optional and if not provided, the default one will be used.
 The `values` argument is a list of lists of strings, where each list of strings represents a row in the spreadsheet.
 The `range` argument is the same as before. 
+
 You'll need to set both `values` and `range`, they are not optional in this case.
 With defining `range` you can specify the exact cells in the spreadsheet where you want to change the values.
 Data that you put in the `values` argument will be written to the spreadsheet starting from the cell you specified in `range`.
 
-More about updating sheets will be added soon.
+Sheet update varies mostly depending on the `range` you define. Usually, there are three most common scenarios:
+1. appending a new row to the sheet (e.g. adding a new student)
+2. updating a specific cell (e.g. updating a student's GPA)
+3. updating a specific row (e.g. completely updating student's data)
+
+Once you define the `range`, you'll have to adjust `values` according to the range.
+If you're updating a cell, then your `values` will be a list of lists with one element.
+It will look something like this: `List.of(List.of("Banana"))`.
+If you're updating a row, then your `values` will be a list of lists with one element, which is a list of strings.
+When updating the sheet, it's important to keep track of the order of the columns.
+
+Also, what you'll want to keep in mind is defining how you will know which row you want to update. You can always get the latest data by first retriving the data with `getSpreadsheet()` and then use it to find the row you want.
+Other option is to keep track of the row number for each  `Student` object in a `Map` on an `Agent`.
+
+Here you can see an example of how to use the `updateSheet()` method:
+```java
+    public void updateStudentGPA(Student student, Spreadsheet spreadsheet) {
+        String range;
+        
+        String sheetId = (order.getSetup().equals(OrderSetup.SPECIAL)) ? "Specials!J" + orderSheet.get(order.getOrderId()) : "Orders!J" + orderSheet.get(order.getOrderId());
+        GSheetsAdapterAPI.updateSheet(List.of(List.of(order.getStatus().toString().toUpperCase())), sheetId);
+    }
+```
+
+If you would like to add a new `Student` to the `Students` sheet, you can
