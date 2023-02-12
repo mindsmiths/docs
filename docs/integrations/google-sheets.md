@@ -110,7 +110,7 @@ In order of easier tracking all the ways of using the Google Sheet Adapter, we'v
 
 We have a sheet `Goods` with 4 columns defined: `ID`, `NAME`, `WEIGHT IN KG` and `PRICE IN EUR`.
 
-![Gsheet example](/img/gsheet/sheet-example.png)
+[//]: # (![Gsheet example]&#40;/img/gsheet/sheet-example.png&#41;)
 
 The Google Sheet Adapter's main features are to **extract data** from a given spreadsheet and to **update** it with new data.
 
@@ -173,7 +173,7 @@ public class Agent extends Agent {
   ...
 
   public void processSpreadsheet(Spreadsheet spreadsheet) {
-    updateItems(spreadsheet.getSheets().get("Items"));
+    updateItems(spreadsheet.getSheets().get("Goods"));
   }
   ...
 }
@@ -213,27 +213,34 @@ With defining `range` you can specify the exact cells in the spreadsheet where y
 Data that you put in the `values` argument will be written to the spreadsheet starting from the cell you specified in `range`.
 
 Sheet update varies mostly depending on the `range` you define. Usually, there are three most common scenarios:
-1. appending a new row to the sheet (e.g. adding a new student)
-2. updating a specific cell (e.g. updating a student's GPA)
-3. updating a specific row (e.g. completely updating student's data)
+1. appending a new row to the sheet (e.g. adding a new item)
+2. updating a specific cell (e.g. updating a item's price)
+3. updating a specific row (e.g. completely updating item's data)
 
 Once you define the `range`, you'll have to adjust `values` according to the range.
 If you're updating a cell, then your `values` will be a list of lists with one element.
 It will look something like this: `List.of(List.of("Banana"))`.
-If you're updating a row, then your `values` will be a list of lists with one element, which is a list of strings.
+If you're updating a row, then your `values` will be a list of lists with more elements, with every element fitting the corresponding column. Bear in mind that **the order of elements is important**.
 When updating the sheet, it's important to keep track of the order of the columns.
 
 Also, what you'll want to keep in mind is defining how you will know which row you want to update. You can always get the latest data by first retriving the data with `getSpreadsheet()` and then use it to find the row you want.
-Other option is to keep track of the row number for each  `Student` object in a `Map` on an `Agent`.
+Other option is to keep track of the row number for each `Item` object in a `Map` on an `Agent`. You should always have an unique identifier for each row, so you can easily find the row you wish to update.
 
 Here you can see an example of how to use the `updateSheet()` method:
 ```java
-    public void updateStudentGPA(Student student, Spreadsheet spreadsheet) {
-        String range;
+    public void updateItemsPrice(Item item, Spreadsheet spreadsheet) {
+        String range = "Goods!D";
+        Integer row = 1;
+        for (Map<String, String> rawItem : spreadsheet.getSheets().get("Goods")) {
+            row++;
+            if (rawItem.get("ID").equals(item.getID())) {
+                range += String.valueOf(row);
+                break;
+            }
+        }
         
-        String sheetId = (order.getSetup().equals(OrderSetup.SPECIAL)) ? "Specials!J" + orderSheet.get(order.getOrderId()) : "Orders!J" + orderSheet.get(order.getOrderId());
-        GSheetsAdapterAPI.updateSheet(List.of(List.of(order.getStatus().toString().toUpperCase())), sheetId);
+        GSheetsAdapterAPI.updateSheet(List.of(List.of(item.getPriceInEur().toString())), range);
     }
 ```
-
-If you would like to add a new `Student` to the `Students` sheet, you can
+You can see how we again iterate through a spreadsheet to find the row we want to update. With that, we can define the range, and simply call the `updateSheet()` method.
+Another sidenote, if you wish to update multiple cells in a row, while also leaving some as before, you can add an empty string to the `values` list, and the selected column will be skipped.
