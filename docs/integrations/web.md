@@ -39,34 +39,40 @@ Using Armory is very simple, but there are a couple basic concepts you need to g
 ## Armory events 
 
 Let’s start from the basics - there are three different signals Armory as a service uses to communicate with the platform:
-* **UserConnected**: event emitted each time a user connects to an Armory screen (opens the link)
-* **UserDisconnected**: event emitted when the user disconnects from an Armory screen (closes the link)
+* **UserConnected**: event emitted each time a user connects to Armory (opens the link)
+* **UserDisconnected**: event emitted when the user disconnects from Armory (closes the link)
 * **Submit**: event emitted when the user presses something on the screen (e.g. a button)
 
-These signals are fairly straightforward. We should mention that e.g. refreshing the site emits the `UserDisconnected` and then the `UserConnected` event again.
-Since the screens are generated dynamically, these events allow us to control what (next) gets shown to the user.
+:::note
+Note that e.g. refreshing the site emits the `UserDisconnected` and then the `UserConnected` event again.
+:::
+
+These signals are fairly straightforward. Since the screens are generated dynamically, these events allow us to control what (next) gets shown to the user.
 
 :::note
-when connecting to Armory, the user has a unique `connectionId`. This id is part of that user’s Armory URL, and will be randomly generated if not set for that user in advance.
+When connecting to Armory, the user has a unique `connectionId`. This id is part of that user’s Armory URL, and will be randomly generated if not set for that user in advance.
 :::
 
 ## Armory components and screens
 
 As mentioned, Armory already comes with a number of "smart defaults", in the form of predefined components and styleguide for screen design. 
-We'll go over them briefly, but once you get a hang of how things work, you are welcome to add more custom implementations[TODO insert link] and play around with the styling[TODO insert link] yourself.
+We'll go over them briefly, but once you get a hang of how things work, you are welcome to add more [custom implementations](/docs/integrations/web#custom-components) and play around with the [styling](/docs/integrations/web#custom-templates) yourself.
 
 You can show the screens you create using `ArmoryAPI.show()`, which takes the mentioned user connection id and the screen(s) to show, for example:
 ```java
 ArmoryAPI.show(
     getConnection("armory"),
-    new Screen("HelloScreen").add(new Title("Hello there!"))
+    new Screen("welcomeScreen")
+        .add(new Title("Hello there! What's your name? 😊"))
+        .add(new Input("name", "Type your name here...", "text"))
+        .add(new SubmitButton("submitName", "Submit"))
 );
 ```
 
 But let's first learn how to create those screens!
 
 ### Components
-The components are the building blocks of screens, and there are several you can use out-of-the-box, all implementing the `BaseComponent` interface:
+The components are the building blocks of screens, and there are several you can use out-of-the-box:
 * BackButton: component used in Screen headers
 * CloudSelect: a cool multi-select component
 * Description
@@ -88,8 +94,8 @@ rule "Save customer name"
         delete (signal);
 end
 ```
-[TODO add screenshots + tutorial references]
-All data within a linked sequence of screens[TODO insert link] is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
+[TODO add screenshots]
+All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
 ### Screens
 But what do we do with these components, and how can we assemble them to create screens? For this we use Armory's `Screen` class, to which we simply add the components in the order we want them to appear on the screen.
@@ -98,30 +104,27 @@ We should mention that there are some default standards when it comes to spatial
 
 You can easily override these standard practices by using the `group()` function, which allows you to create a group of components you want to "stick closer together" on the screen. Check it out:
 ```java
-new Screen("customerOnboarding")
+new Screen("welcomeScreen")
         .add(new Header("logo.png", true))
-        .add(new Title("Tell us about yourself"))
+        .add(new Title("Hello there!"))
         .group("center")
-        .add(new Description("Welcome! We would like to get to know you a bit better. Can you start by telling us your name?"))
+        .add(new Description("What's your name? 😊"))
         .add(new Input("name", "Type your name here...", "text"))
         .group("bottom")
-        .add(new SubmitButton("submitName", "Next"))
+        .add(new SubmitButton("submitName", "Submit"))
 ```
 
 This will group the `Description` and `Input` component around the screen center, push the button to the bottom, leaving the `Header` and `Title` by default at the top.
 
-The last function we're going to mention here is `setTemplate()`. If you create some specific screen layout you would like to apply to multiple screens (such as content centering, the order of components on the screen), you can create a template and just set it for all screens you want by writing `.setTemplate("TemplateName")` before adding the components:
+The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
+
+When you define this custom screen layout within a template, you can apply it to any screen by calling `.setTemplate("CustomTemplateName")` before adding the components:
 
 ```java
-new Screen("customerOnboarding")
+new Screen("welcomeScreen")
+        // highlight-changed-line
         .setTemplate("CenteredContent")
-        .add(new Header("logo.png", true))
-        .add(new Title("Tell us about yourself"))
-        .group("center")
-        .add(new Description("Welcome! We would like to get to know you a bit better. Can you start by telling us your name?"))
-        .add(new Input("name", "Type your name here...", "text"))
-        .group("bottom")
-        .add(new SubmitButton("submitName", "Done"))
+...
 ```
 
 We'll show you how to create these templates and custom components in the next section.
@@ -170,15 +173,16 @@ export default {
 ```
 
 :::tip
-The HTML you see in the `<template>...</template>` node was taken from this [website](https://bulma.io/documentation/). There are plenty of such resources out there, if you're not too crafty with HTML yourself!
+The HTML you see in the `<template>...</template>` node was taken from this [website](https://bulma.io/documentation/). Keep in mind that there are plenty of such resources out there if you're not too crafty with HTML yourself!
 :::
 
 3. Finally, add your custom component to the `App.vue` file:
 ```java title="services/armory/src/App.vue"
 ...
-import FileUpload from "./components/FileUpload.vue";
+import FileUpload from "./components/FileUpload";
 ...
     getCustomComponents() {
+    // highlight-changed-line
       return {FileUpload};
 ...
 ```
@@ -188,7 +192,13 @@ You can now just use your custom component directly in Java using the `CustomCom
 new Screen("uploadDocument")
     .add(new CustomComponent("FileUpload"))
 ```
-In case the component needs some parameters, those are simply added as key-value pairs to the `CustomComponent` params field. For example, this is how you would fill in the data for the component consisting of some label and a description that goes with it: `new CustomComponent("LabeledDescription").addParam("label", "Attendees:").addParam("description", "There will be 270 attenedees at the event.")`).
+
+In case you need to pass the component some parameters, those are simply added as key-value pairs to the `CustomComponent` params field. For example, you can see that our new `FileUpload` component has an optional `placeholder` that can be passed as a param:
+```java
+new Screen("uploadDocument")
+    // highlight-changed-line
+    .add(new CustomComponent("FileUpload").addParam("placeholder", "Upload file here"))
+```
 
 ### Custom templates
 
@@ -208,5 +218,9 @@ div.CenteredContent {
 }
 ...
 ```
-[TODO add more instructions about scss, or improve it in the tutorial and point there?]
+
+:::note
+If you're looking for some scss basics, you can check out this [website](https://sass-lang.com/guide).
+:::
+
 That's it, you can now apply this template to any screen using the `setTemplate()` function!
