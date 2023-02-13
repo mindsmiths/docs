@@ -36,7 +36,7 @@ public class Felix extends Agent {
                     new Screen("askForName")
                             .add(new Title("Alright! First, tell me your name?"))
                             .add(new Input("name", "Type your name here", "text"))
-                            .add(new SubmitButton("nameSubmited", "Done, next!"))
+                            .add(new SubmitButton("nameSubmitted", "Done, next!"))
                     // highlight-added-end
             );
         }
@@ -63,7 +63,7 @@ import com.mindsmiths.armory.event.Submit
  // highlight-added-start
 rule "Start user onboarding"
     when
-        signal: Submit(buttonId == "nameSubmited") from entry-point "signals"
+        signal: Submit(buttonId == "nameSubmitted") from entry-point "signals"
         agent: Felix()
     then
         modify(agent){
@@ -100,11 +100,11 @@ public class Felix extends Agent {
                     new Screen("askForWeight")
                             .add(new Title("How much do you weigh in kilograms?"))
                             .add(new Input("weight", "Type your weight here", "number"))
-                            .add(new SubmitButton("weightSubmited", "Next!", "askForHeight")),
+                            .add(new SubmitButton("weightSubmitted", "Next!", "askForHeight")),
                     new Screen("askForHeight")
                             .add(new Title("How tall are you in cm?"))
                             .add(new Input("height", "Type your height here", "number"))
-                            .add(new SubmitButton("heightSubmited", "Next!"))
+                            .add(new SubmitButton("heightSubmitted", "Next!"))
         );
     }
     // highlight-added-end
