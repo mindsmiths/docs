@@ -78,7 +78,7 @@ The components are the building blocks of screens, and there are several you can
 * Description
 * Header: component that normally contains a logo and the `BackButton` (enabled by setting the `allowsBack` field to `true`)
 * Image
-* Input: component that roughly corresponds to the HTML input element, with the input data type specified by setting `type`
+* Input: component that roughly corresponds to the [HTML input element](https://www.w3schools.com/html/html_form_input_types.asp), with the input data type specified by setting `type`
 * SubmitButton: basic button component, triggers a `Submit` event
 * TextArea: component for longer text input
 * Title
@@ -129,7 +129,8 @@ new Screen("welcomeScreen")
 
 We'll show you how to create these templates and custom components in the next section.
 
-Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/Armory-tutorial).
+Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
+You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions).
 
 ## Creating components and templates
 
@@ -137,7 +138,7 @@ Keep in mind that you can link together sequences of multiple Armory screens by 
 
 Let's take a look at how you can add new custom components to your screens. Let's say you wanted to add a component for uploading a document to your screen.
 The steps are as follows:
-1. Create the components directory in `services/armory/src/components` [TODO include by default?]
+1. Create the components directory in `services/armory/src/components`
 2. Add the component in vue, for example create the file:
 ```vue title="services/armory/src/components/FileUpload.vue"
 <template>
