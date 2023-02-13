@@ -94,7 +94,7 @@ rule "Save customer name"
         delete (signal);
 end
 ```
-[TODO add screenshots]
+
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
 ### Screens
@@ -130,7 +130,7 @@ new Screen("welcomeScreen")
 We'll show you how to create these templates and custom components in the next section.
 
 Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
-You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions).
+You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions/introduction).
 
 ## Creating components and templates
 
