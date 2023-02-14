@@ -43,6 +43,11 @@ allows you to smoothly build in the logic you need and try out various component
 ## Core features
 
 
+- Intuitive templating system for building web-applications
+- Ability to create sequences of linked screens
+- Quick and easy to try out different components
+- Flexibility to add necessary logic
+- Guided user experience
 
 ## Armory components and screens
 
