@@ -114,6 +114,7 @@ This will group the `Description` and `Input` component around the screen center
 
 The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
 
+
 When you define this custom screen layout within a template, you can apply it to any screen by calling `.setTemplate("CustomTemplateName")` before adding the components:
 
 ```java
