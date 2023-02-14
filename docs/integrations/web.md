@@ -43,11 +43,10 @@ allows you to smoothly build in the logic you need and try out various component
 ## Core features
 
 
-- Intuitive templating system for building web-applications
-- Ability to create sequences of linked screens
-- Quick and easy to try out different components
-- Flexibility to add necessary logic
-- Guided user experience
+- Build web applications using an intuitive templating system
+- Create sequences of linked screens 
+- Add various different components quickly and easily
+- Provide guided user experience
 
 ## Armory components and screens
 
@@ -81,7 +80,7 @@ The components are the building blocks of screens, and there are several you can
 
 Components that are used to collect some sort of input or activity from the user (text areas, buttons etc.) are referenced through the `inputId`. For example, here is a rule that registers the user entered their name and submitted it by pressing a button:
 ```java
-rule "Save customer name"
+rule "Save user name"
     when
         signal: Submit(buttonId == "submitName", name: getParamAsString("name")) from entry-point "signals"
         agent: Customer()
@@ -110,7 +109,14 @@ new Screen("welcomeScreen")
         .add(new SubmitButton("submitName", "Submit"))
 ```
 
+
 This will group the `Description` and `Input` component around the screen center, push the button to the bottom, leaving the `Header` and `Title` by default at the top.
+Here you can see how it looks. The first screen is the default screen, while the second screen includes the `group` component.
+
+![graphic](Screen.png#center)
+
+
+## Creating components and templates
 
 The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
 
@@ -128,8 +134,6 @@ We'll show you how to create these templates and custom components in the next s
 
 Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
 You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions/introduction).
-
-## Creating components and templates
 
 ### Custom components
 
