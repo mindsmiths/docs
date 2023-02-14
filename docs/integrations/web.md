@@ -140,7 +140,7 @@ Let's take a look at how you can add new custom components to your screens. Let'
 The steps are as follows:
 1. Create the components directory in `services/armory/src/components`
 2. Add the component in vue, for example create the file:
-```vue title="services/armory/src/components/FileUpload.vue"
+```javascript title="services/armory/src/components/FileUpload.vue"
 <template>
   <div class="file is-boxed">
     <label class="file-label">
@@ -178,7 +178,7 @@ The HTML you see in the `<template>...</template>` node was taken from this [web
 :::
 
 3. Finally, add your custom component to the `App.vue` file:
-```java title="services/armory/src/App.vue"
+```javascript title="services/armory/src/App.vue"
 ...
 import FileUpload from "./components/FileUpload";
 ...
