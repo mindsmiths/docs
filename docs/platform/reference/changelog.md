@@ -5,6 +5,54 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.5.3] - 2023-02-02
+
+This release contains the following service versions:
+- `forge-sdk==5.0.4` (Python)
+- `forge-sdk==5.0.3` (Java)
+- `forge-cli==5.0.4`
+- `rule-engine==5.0.3`
+- `heartbeat==5.0.1`
+- `cecs==5.0.1`
+
+Noteable changes **since 1.5.2**:
+
+### CLI
+
+#### Fixed
+- build doesn't crash if there's an empty `clients/java/` folder
+- logs are streamed live into `forge.log`
+- `forge run` doesn't build excluded services
+
+#### Changed
+- config, dockerfiles and manifests are now rendered with the basic set of built-in values and filters (`project`, `env`, `os`, `json`, `read_file`, `file_hash`, `b64encode` and `b64decode`)
+
+#### Added
+- `forge run` got the `-ll/--log-level` option
+
+
+### Rule Engine
+
+#### Fixed
+- `UnsupportedOperationException` when there were pending signals
+- `IllegalStateException` when shutting down
+- emitting agent data changes only when there were changes
+
+
+### Python SDK
+
+#### Fixed
+- `Module` now works correctly during migration to `Environment`
+
+
+### Java SDK
+
+#### Changed
+- updated `pulsar-client` dependency to `2.11.0`
+- removed `netty` and `aircompressor` version overrides
+
+
+
 ## [1.5.2] - 2023-01-16
 
 ❗ _This release contains important fixes. Please update as soon as possible._

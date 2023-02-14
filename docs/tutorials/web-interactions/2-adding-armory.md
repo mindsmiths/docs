@@ -16,8 +16,8 @@ The best part is that you don't need to write a lot of code to try out different
 Let's start by adding Armory as a new service to your project:
 
 ```bash title="Terminal"
-root:/app$ pip install armory
-root:/app$ armory setup
+pip install armory
+armory setup
 ```
 
 This latter command will prompt you to:

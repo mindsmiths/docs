@@ -27,7 +27,7 @@ public class Felix extends Agent {
     public void showHelloScreen() {
         ArmoryAPI.show(
             getConnection("armory"),
-            new Screen ("Hello")
+            new Screen("Hello")
                 .add(new Title("Hello world!"))
         );
     }

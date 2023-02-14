@@ -56,7 +56,7 @@ Your bot token (from BotFather): <YOUR BOT TOKEN>
 What agent will handle signals? Nola
 ```
 
-## How to use?
+## How to use Telegram Adapter?
 
 There are 4 different static methods you can utilize from `TelegramAdapterApi`:
 1. `sendMessage(String chatId, String text, KeyboardData keyboardData, List[MediaData] mediaList, bool messageReanswerable)`
