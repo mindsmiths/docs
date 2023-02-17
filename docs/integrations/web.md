@@ -121,9 +121,10 @@ Here you can see how it looks. The first screen is the default screen, while the
 ### Custom components
 
 Let's take a look at how you can add new custom components to your screens. Let's say you wanted to add a component for uploading a document to your screen.
+
 The steps are as follows:
 1. Create the components directory in `services/armory/src/components`
-2. Add the component in vue, for example create the file:
+2. Add the component in Vue by creating a `.vue` file in the directory:
 ```javascript title="services/armory/src/components/FileUpload.vue"
 <template>
   <div class="file is-boxed">
@@ -193,13 +194,12 @@ Let's take a look at how to create the `CenteredContent` template we mentioned i
 ```scss title="services/armory/src/assets/css/skin.scss"
 ...
 div.CenteredContent {
-    .group#centered {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         justify-content: center;
         padding-bottom: 55px;
-    }
+        background-color: whitesmoke;
 }
 ...
 ```
@@ -219,10 +219,8 @@ new Screen("welcomeScreen")
 ...
 ```
 
-We'll show you how to create these templates and custom components in the next section.
-
-Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
+Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` 
+(e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
 You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions/introduction).
 
-
-That's it, you can now apply your custom template to any screen using the `setTemplate()` function!
+That's it, you can now apply your custom template to any screen you want!
