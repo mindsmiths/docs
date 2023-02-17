@@ -118,23 +118,6 @@ Here you can see how it looks. The first screen is the default screen, while the
 
 ## Creating components and templates
 
-The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
-
-
-When you define this custom screen layout within a template, you can apply it to any screen by calling `.setTemplate("CustomTemplateName")` before adding the components:
-
-```java
-new Screen("welcomeScreen")
-        // highlight-changed-line
-        .setTemplate("CenteredContent")
-...
-```
-
-We'll show you how to create these templates and custom components in the next section.
-
-Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
-You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions/introduction).
-
 ### Custom components
 
 Let's take a look at how you can add new custom components to your screens. Let's say you wanted to add a component for uploading a document to your screen.
@@ -225,4 +208,21 @@ div.CenteredContent {
 If you're looking for some scss basics, you can check out this [website](https://sass-lang.com/guide).
 :::
 
-That's it, you can now apply this template to any screen using the `setTemplate()` function!
+The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
+
+When you define this custom screen layout within a template, you can apply it to any screen by calling `.setTemplate("CustomTemplateName")` before adding the components:
+
+```java
+new Screen("welcomeScreen")
+        // highlight-changed-line
+        .setTemplate("CenteredContent")
+...
+```
+
+We'll show you how to create these templates and custom components in the next section.
+
+Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
+You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions/introduction).
+
+
+That's it, you can now apply your custom template to any screen using the `setTemplate()` function!
