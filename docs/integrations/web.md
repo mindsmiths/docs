@@ -190,7 +190,7 @@ new Screen("uploadDocument")
 
 As mentioned, you can also quickly create custom templates, which allow you to easily reuse the formatting on multiple screens.
 
-Let's take a look at how to create the `CenteredContent` template we mentioned in the section above. You just need to open the `skin.scss` file and add the following:
+Let's take a look at how to create the custom template. For simplicity's sake, let's call it `CustomTemplate`. You just need to open the `skin.scss` file and add the following:
 ```scss title="services/armory/src/assets/css/skin.scss"
 ...
 div.CenteredContent {
@@ -199,7 +199,7 @@ div.CenteredContent {
         flex-grow: 1;
         justify-content: center;
         padding-bottom: 55px;
-        background-color: whitesmoke;
+        background: ghostwhite;
 }
 ...
 ```
@@ -215,9 +215,13 @@ When you define this custom screen layout within a template, you can apply it to
 ```java
 new Screen("welcomeScreen")
         // highlight-changed-line
-        .setTemplate("CenteredContent")
+        .setTemplate("CustomTemplate")
 ...
 ```
+
+Here you can see how it looks like.
+
+![graphic](Screen2.png#center)
 
 Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` 
 (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
