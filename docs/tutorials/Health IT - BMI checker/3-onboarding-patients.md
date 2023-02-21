@@ -99,4 +99,5 @@ public class Patient extends Agent {
         String chatId = connections.get("telegram");
         TelegramAdapterAPI.sendMessage(chatId, text);
     }
+}
 ```
