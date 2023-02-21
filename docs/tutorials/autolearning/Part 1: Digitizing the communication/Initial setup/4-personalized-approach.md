@@ -15,7 +15,11 @@ As mentioned, the onboarding steps for storing the name, height and age informat
 Since the rules follow the same logic, we'll only look at the code for storing the child's name:
 
 ```java title="rules/patient/Patient.drl"
-...
+package rules.patient;
+
+import agents.Doctor
+import agents.Patient
+
 rule "Welcome message"
     salience 100
     when

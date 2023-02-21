@@ -12,24 +12,26 @@ As mentioned, in this demo we're onboarding two types of users:
 You can find the welcome rules in the corresponding `.drl` files for the two agent types (`Patient.drl` and `Doctor.drl`):
 You will notice that the two welcome rules look fairly similar, as both types of users simply register in the system by contacting your bot on Telegram:
 ```java title="rules/doctor/Doctor.drl"
+package rules.doctor;
+
+import agents.Doctor
+
 rule "Welcome doctor"
     when
-        initialize: Initialize() from entry-point "agent-created"
-        message: TelegramReceivedMessage() from entry-point "signals"
+        signal: Initialize() from entry-point "signals"
         doctor: Doctor()
     then
-        String welcomeText = Utils.randomChoice(Doctor.welcomeTexts);
-        doctor.sendMessage(welcomeText);
-        delete(initialize);
-        delete(message);
+        doctor.sendMessage("Welcome, doctor!");
+        delete(signal);
 end
+
 ```
 
 As we said, this is because we made a simplification in the design of the demo: the first person to register will always be the doctor, and every next person will by default be registered as a patient.
 
 Since we always have a single doctor, we also hardcoded the agent’s id to make the inter-agent communication easier. 
 The rest of the `Doctor.java` file should already look familiar to you from the previous tutorial, as it's only used for communication over Telegram:
-```java title="java/agents/Doctor.drl"
+```java title="java/agents/Doctor.java"
 package agents;
 
 import lombok.Data;
@@ -44,14 +46,14 @@ import com.mindsmiths.telegramAdapter.TelegramAdapterAPI;
 public class Doctor extends Agent {
     public static String ID = "DOCTOR";
 
-    public Doctor(String connectionName, String connectionId) {
-        super(connectionName, connectionId);
-        this.id = Doctor.ID;
+    public Doctor() {
+        id = ID;
     }
 
     public void sendMessage(String text) {
-        TelegramAdapterAPI.sendMessage(connections.get("telegram"), text);
+        TelegramAdapterAPI.sendMessage(getConnection("telegram"), text);
     }
+
 }
 ```
 
