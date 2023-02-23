@@ -9,7 +9,7 @@ To top it all off, let’s have some more fun with your agent’s identity!
 We’ll make things a bit more interesting by adding multiple personality options for Nola.
 
 
-We first define some new personalities in a separate file, ```java/java/Personality.java```:
+We first define some new personalities in a separate file, ```java/models/Personality.java```:
 
 
 ```java title="java/models/Personality.java"
