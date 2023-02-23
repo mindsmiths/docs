@@ -20,7 +20,7 @@ it is also unrealistic to give your agent unlimited memory.
 So let’s implement the simplest way to control memory size by hardcoding the number of previous interactions we want to maintain.
 Add the following to ```Nola.java```:
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 ...
 // highlight-added-line
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ Salience can also be negative, which is useful for writing catch-all rules that 
 All other components should already be familiar to you.
 The only thing we still need to do is add the function for resetting the memory to ```Nola.java```.
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 @Getter
 @Setter
 public class Nola extends Agent {
@@ -139,7 +139,7 @@ end
 We read off the current time from the heartbeat - the periodic system pulse - and compare it to the last time the user sent a message.
 For that we will also need to start tracking these interaction times. First we add `lastInteractionTime`:
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 ...
 // highlight-added-line
 import java.time.LocalDateTime;

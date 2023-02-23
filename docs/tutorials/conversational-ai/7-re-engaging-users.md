@@ -41,7 +41,7 @@ By setting it to ```true```, you **avoid triggering the rule multiple times** an
 With ```addInstruction(...)``` you explicitly instruct GPT-3 on what kind of message you want it to generate for re-engaging the user.
 We also need to add ```pinged``` and ```addInstruction``` to ```Nola.java```:
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 ...
 
 @Getter

@@ -33,10 +33,10 @@ Now that you have the communication channel set up between Forge and the outside
 
 The only thing Nola will know how to do at first is repeat after you: whatever message you send her, she will echo the same text back. Let’s start!
 
-We start with defining the class of the agent we want to create. Next to `Smith.java`, create a new file with the agent name you picked, for example ```models/agents/Nola.java``` and paste in the following, adapting the agent name:
+We start with defining the class of the agent we want to create. Next to `Smith.java`, create a new file with the agent name you picked, for example ```java/agents/Nola.java``` and paste in the following, adapting the agent name:
 
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 package agents;
 
 import com.mindsmiths.ruleEngine.model.Agent;

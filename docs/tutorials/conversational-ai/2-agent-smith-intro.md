@@ -55,12 +55,12 @@ It says the following:
 
 **A heartbeat** is just a mechanism for periodical evaluation of facts about an agent. It’s used for constant monitoring of the current situation in the system and taking proactive and independent actions.
 Notice that all the rules referring specifically to the agent of type Smith are located in the smith subdirectory. Only those rules are evaluated when evaluating Smith. This applies to other agents as well, so make sure to watch out for this.
-You can also see the agent’s class, i.e. the agent’s data model, that’s defined in `models/agents/Smith.java`:
+You can also see the agent’s class, i.e. the agent’s data model, that’s defined in `java/agents/Smith.java`:
 
 
 <!----  https://github.com/facebook/docusaurus/issues/3318 ---->
 
-```java title="models/agents/Smith.java"
+```java title="java/agents/Smith.java"
 package agents;
 
 import com.mindsmiths.ruleEngine.model.Agent;
