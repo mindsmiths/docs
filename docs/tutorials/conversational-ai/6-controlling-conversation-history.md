@@ -181,7 +181,7 @@ end
 
 :::caution
 Although you could use `LocalDateTime.now()` to get the current time, it is not recommended to use it in rules.
-Insead, always use the `timestamp` from the `Heartbeat`.
+Instead, always use the `timestamp` from the `Heartbeat`.
 :::
 
 And there we go! Nola will now automatically reset the conversation history if the user stops writing back.

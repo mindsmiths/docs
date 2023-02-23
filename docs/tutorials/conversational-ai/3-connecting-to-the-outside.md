@@ -25,6 +25,8 @@ Once you get the bot token, run the following code to integrate the telegram ada
 telegram-adapter setup
 ```
 
+When prompted to choose which agent should be set to handle signals for the freshly made telegram bot, type in the name of your agent. In this example we are using Nola, in your example you should use your agent.
+
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
 
 ## Creating Nola - the interactive agent
