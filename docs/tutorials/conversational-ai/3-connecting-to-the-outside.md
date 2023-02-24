@@ -25,6 +25,8 @@ Once you get the bot token, run the following code to integrate the telegram ada
 telegram-adapter setup
 ```
 
+When prompted to choose which agent should be set to handle signals for the freshly made telegram bot, type in the name of your agent. In this example we are using Nola, in your example you should use your agent.
+
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
 
 ## Creating Nola - the interactive agent
@@ -33,10 +35,10 @@ Now that you have the communication channel set up between Forge and the outside
 
 The only thing Nola will know how to do at first is repeat after you: whatever message you send her, she will echo the same text back. Let’s start!
 
-We start with defining the class of the agent we want to create. Next to `Smith.java`, create a new file with the agent name you picked, for example ```models/agents/Nola.java``` and paste in the following, adapting the agent name:
+We start with defining the class of the agent we want to create. Next to `Smith.java`, create a new file with the agent name you picked, for example ```java/agents/Nola.java``` and paste in the following, adapting the agent name:
 
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 package agents;
 
 import com.mindsmiths.ruleEngine.model.Agent;

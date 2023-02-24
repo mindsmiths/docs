@@ -10,9 +10,9 @@ The core functionality is still getting the patient the expert opinion on the qu
 Here is where you jump in! We’ll  start with implementing the rules needed for setting up the communication between the patient and the doctor.
 We start from defining the signal for passing the relevant information between the agents. You can think of signals as a sort of a package containing certain data that our Patient agent sends to the Doctor agent, so it can pass this data on to the doctor user.
 
-We create a new file models/signals/BMIMeasurement.java and paste in the following:
+We create a new file java/signals/BMIMeasurement.java and paste in the following:
 
-```java title="models/signals/BMIMeasurement.java"
+```java title="java/signals/BMIMeasurement.java"
 package signals;
 
 import lombok.Data;

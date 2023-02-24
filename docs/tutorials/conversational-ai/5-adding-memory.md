@@ -8,7 +8,7 @@ Right now Nola can only respond to your last message and won’t remember the pr
 
 So let’s simply add memory to Nola’s model:
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 @Getter
 @Setter
 public class Nola extends Agent {

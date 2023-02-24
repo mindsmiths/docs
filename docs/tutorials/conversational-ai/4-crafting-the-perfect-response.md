@@ -62,7 +62,7 @@ As you can see, the type of signal we react to in the new rule is a ```GPT3Compl
 
 To make the GPT-3’s response slightly more interesting, we will add some more instructions to accompany the model input. We’ll shape the model’s responses as a conversation between a human and a friendly AI. Take a look:
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 package agents;
 
 ...

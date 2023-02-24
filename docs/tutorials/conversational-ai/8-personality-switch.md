@@ -9,10 +9,10 @@ To top it all off, let’s have some more fun with your agent’s identity!
 We’ll make things a bit more interesting by adding multiple personality options for Nola.
 
 
-We first define some new personalities in a separate file, ```models/models/Personality.java```:
+We first define some new personalities in a separate file, ```java/models/Personality.java```:
 
 
-```java title="models/models/Personality.java"
+```java title="java/models/Personality.java"
 package models;
 
 import lombok.Getter;
@@ -68,7 +68,7 @@ and how they should act (e.g. ```"You are Tony Stark and you are interviewing a 
 
 Once you choose the personalities, you need to add the adaptations in ```Nola.java``` class:
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 ...
 // highlight-added-start
 import java.util.Arrays;
