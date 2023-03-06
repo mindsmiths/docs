@@ -5,6 +5,81 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.5.4] - 2023-03-06
+
+This release contains the following service versions:
+- `forge-sdk==5.0.6` (Python)
+- `forge-sdk==5.0.6` (Java)
+- `forge-cli==5.0.7`
+- `rule-engine==5.0.6`
+- `heartbeat==5.0.4`
+- `cecs==5.0.2`
+
+Noteable changes **since 1.5.3**:
+
+### Java SDK
+
+### Fixed
+- serializing `LocalTime` to MongoDB
+- faking time
+- empty `Store` prefix
+
+### Changed
+- replaced shutdown hooks with explicit `close()` calls
+
+### Added
+- `callbackData` field to all `Message` signals
+
+
+### Python SDK
+
+#### Fixed
+- logger `replace` error when logging non-str objects
+
+#### Changed
+- replaced shutdown hooks with explicit `close()` calls
+
+#### Added
+- `callbackData` field to all `Message` signals
+
+
+### Rule Engine
+
+#### Fixed
+- `IllegalStateException` when shutting down
+
+#### Added
+- `RuleEngineAPI.removePendingSignals` to remove pending signals from an agent
+
+
+### CLI
+
+#### Fixed
+- `set-fake-now`, `reset-fake-now` and `delete-topics` commands can now be run in sandbox environments
+
+#### Added
+- `forge run` and `forge run-service` now check if there's a hanging service process and kill it before proceeding
+- `forge kill` to kill all hanging processes
+- `forge remove-pending-signals` to remove pending signals from an agent
+
+
+### Heartbeat
+
+#### Fixed
+- service freeze on database failure
+- graceful shutdown on interrupt signal
+
+#### Changed
+- heartbeats ignore fake time to provide consistent experience when testing
+
+
+### Cecs
+
+#### Fixed
+- ignore markers in Java
+
+
+
 ## [1.5.3] - 2023-02-02
 
 This release contains the following service versions:
