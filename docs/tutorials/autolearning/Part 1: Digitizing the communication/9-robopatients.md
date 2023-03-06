@@ -21,7 +21,7 @@ You can control the number of RoboPatients you want to create by changing the va
 When a new fake user is created, a new RoboPatient agent is created for it. This agent's role is similar as the real Patient agent's, in as much as it forwards the BMI requests to the Doctor agent. You can check out what the code looks like in `java/agents/roboPatient.java`.
 
 We just need to add the rules for that agent, so go ahead and create the `roboPatient` directory in `rules` and add a `RoboPatient.drl` file. Now let's think about what our RoboPatient agent should be capable of in comparison to the Patient agent: 
- there is obviously no need for onboarding or re-engagement, and there is no need to send the actual doctor's responses back to the fake user requesting them.
+there is obviously no need for onboarding or re-engagement, and there is no need to send the actual doctor's responses back to the fake user requesting them.
 
 So, we'll just create the rules for registering new fake patients in the system and sending the BMI requests to the Doctor. 
 We'll also include the rule for processing the received Doctor replies, but the `sendMessage()` function will only log that a reply was received instead of forwarding it to the fake patient:
@@ -38,7 +38,6 @@ import agents.roboPatient.RoboPatient
 import signals.BMIMeasurement
 import signals.BMIResponse
 import utils.BMIUtils
-
 
 rule "Register robopatient created"
     salience 100

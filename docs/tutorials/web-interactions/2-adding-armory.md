@@ -9,16 +9,15 @@ sidebar_position: 2
 Armory is the Mindsmiths implementation of a templating system used for building web-applications.
 If you are looking to create an app-like experience for your users, Armory is the perfect tool for you. 
 With Armory, you can easily and quickly create sequences of linked screens, providing your users with a guided experience. 
-The best part is that you don't need to write a lot of code to try out different components and add the necessary logic.
-
+The best part is that you don't need to write a lot of code to try out different components and add the necessary logic. 
 
 ## Adding Armory to your project
 
 Let's start by adding Armory as a new service to your project:
 
 ```bash title="Terminal"
-root:/app$ pip install armory
-root:/app$ armory setup
+pip install armory
+armory setup
 ```
 
 This latter command will prompt you to:

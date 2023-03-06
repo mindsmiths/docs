@@ -7,9 +7,7 @@ sidebar_position: 7
 Mindsmiths Platform supports dynamically generated web pages.
 You can use these pages to display content to your users, and to collect the data they input.
 
-We call this web templating service **Armory**.
-
-Using Armory is very simple, but there are a couple basic concepts you need to grasp before you start. We look at each of those concepts below.
+We call this web templating service **Armory**. Using Armory is very simple, but there are a couple basic concepts you need to grasp before you start. We look at each of those concepts below.
 
 <details>
   <summary>Setup details</summary>
@@ -36,22 +34,19 @@ Using Armory is very simple, but there are a couple basic concepts you need to g
   </div>
 </details>
 
-## Armory events 
+## When to use Armory?
 
-Let’s start from the basics - there are three different signals Armory as a service uses to communicate with the platform:
-* **UserConnected**: event emitted each time a user connects to Armory (opens the link)
-* **UserDisconnected**: event emitted when the user disconnects from Armory (closes the link)
-* **Submit**: event emitted when the user presses something on the screen (e.g. a button)
+Armory allows you to create an app-like experience for your users quickly and easily, with sequences of linked screens. 
+This provides the feeling of user guidance through the process you are modeling. One of its biggest perks is that it 
+allows you to smoothly build in the logic you need and try out various components, with minimum code.
 
-:::note
-Note that e.g. refreshing the site emits the `UserDisconnected` and then the `UserConnected` event again.
-:::
+## Core features
 
-These signals are fairly straightforward. Since the screens are generated dynamically, these events allow us to control what (next) gets shown to the user.
 
-:::note
-When connecting to Armory, the user has a unique `connectionId`. This id is part of that user’s Armory URL, and will be randomly generated if not set for that user in advance.
-:::
+- Build web applications using an intuitive templating system
+- Create sequences of linked screens 
+- Add various different components quickly and easily
+- Provide guided user experience
 
 ## Armory components and screens
 
@@ -85,7 +80,7 @@ The components are the building blocks of screens, and there are several you can
 
 Components that are used to collect some sort of input or activity from the user (text areas, buttons etc.) are referenced through the `inputId`. For example, here is a rule that registers the user entered their name and submitted it by pressing a button:
 ```java
-rule "Save customer name"
+rule "Save user name"
     when
         signal: Submit(buttonId == "submitName", name: getParamAsString("name")) from entry-point "signals"
         agent: Customer()
@@ -94,7 +89,7 @@ rule "Save customer name"
         delete (signal);
 end
 ```
-[TODO add screenshots]
+
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
 ### Screens
@@ -114,33 +109,23 @@ new Screen("welcomeScreen")
         .add(new SubmitButton("submitName", "Submit"))
 ```
 
+
 This will group the `Description` and `Input` component around the screen center, push the button to the bottom, leaving the `Header` and `Title` by default at the top.
+Here you can see how it looks. The first screen is the default screen, while the second screen includes the `group` component.
 
-The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
+![graphic](Screen.png#center)
 
-When you define this custom screen layout within a template, you can apply it to any screen by calling `.setTemplate("CustomTemplateName")` before adding the components:
-
-```java
-new Screen("welcomeScreen")
-        // highlight-changed-line
-        .setTemplate("CenteredContent")
-...
-```
-
-We'll show you how to create these templates and custom components in the next section.
-
-Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
-You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions).
 
 ## Creating components and templates
 
 ### Custom components
 
 Let's take a look at how you can add new custom components to your screens. Let's say you wanted to add a component for uploading a document to your screen.
+
 The steps are as follows:
 1. Create the components directory in `services/armory/src/components`
-2. Add the component in vue, for example create the file:
-```vue title="services/armory/src/components/FileUpload.vue"
+2. Add the component in Vue by creating a `.vue` file in the directory:
+```javascript title="services/armory/src/components/FileUpload.vue"
 <template>
   <div class="file is-boxed">
     <label class="file-label">
@@ -178,7 +163,7 @@ The HTML you see in the `<template>...</template>` node was taken from this [web
 :::
 
 3. Finally, add your custom component to the `App.vue` file:
-```java title="services/armory/src/App.vue"
+```javascript title="services/armory/src/App.vue"
 ...
 import FileUpload from "./components/FileUpload";
 ...
@@ -205,17 +190,16 @@ new Screen("uploadDocument")
 
 As mentioned, you can also quickly create custom templates, which allow you to easily reuse the formatting on multiple screens.
 
-Let's take a look at how to create the `CenteredContent` template we mentioned in the section above. You just need to open the `skin.scss` file and add the following:
+Let's take a look at how to create the custom template. For simplicity's sake, let's call it `CustomTemplate`. You just need to open the `skin.scss` file and add the following:
 ```scss title="services/armory/src/assets/css/skin.scss"
 ...
 div.CenteredContent {
-    .group#centered {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
         justify-content: center;
         padding-bottom: 55px;
-    }
+        background: ghostwhite;
 }
 ...
 ```
@@ -224,4 +208,23 @@ div.CenteredContent {
 If you're looking for some scss basics, you can check out this [website](https://sass-lang.com/guide).
 :::
 
-That's it, you can now apply this template to any screen using the `setTemplate()` function!
+The last function we're going to mention here is `setTemplate()`. Sometimes, you need a lot of custom logic relating to the screen layout. Some simpler examples of this include content centering, fixed custom order of components on the screen etc.
+
+When you define this custom screen layout within a template, you can apply it to any screen by calling `.setTemplate("CustomTemplateName")` before adding the components:
+
+```java
+new Screen("welcomeScreen")
+        // highlight-changed-line
+        .setTemplate("CustomTemplate")
+...
+```
+
+Here you can see how it looks like.
+
+![graphic](Screen2.png#center)
+
+Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` 
+(e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
+You can find plenty of examples of screen linking in the Armory [tutorial](/docs/tutorials/web-interactions/introduction).
+
+That's it, you can now apply your custom template to any screen you want!
