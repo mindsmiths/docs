@@ -19,11 +19,11 @@ sidebar_position: 6
 - catching button clicks
 - receiving messages
 
-## Setup
-- TO-DO
 ### Installment
 ```shell
-discord-adapter setup ??
+pip install "discord-adapter[dev]~=5.0"
+
+discord-adapter setup
 ```
 ### Environment variables
 - `DISCORD_BOT_TOKEN`
