@@ -7,9 +7,14 @@ sidebar_position: 7
 Mindsmiths Platform supports dynamically generated web pages.
 You can use these pages to display content to your users, and to collect the data they input.
 
-We call this web templating service **Armory**.
+We call this web templating service **Armory**. Using Armory is very simple, but there are a couple basic concepts you need to grasp before you start. We look at each of those concepts below.
 
-Using Armory is very simple, but there are a couple basic concepts you need to grasp before you start. We look at each of those concepts below.
+## When to use Armory?
+
+Armory allows you to create an app-like experience for your users quickly and easily, with sequences of linked screens. 
+This provides the feeling of user guidance through the process you are modeling. One of its biggest perks is that it 
+allows you to smoothly build in the logic you need and try out various components, with minimum code.
+
 
 <details>
   <summary>Setup details</summary>
@@ -36,6 +41,12 @@ Using Armory is very simple, but there are a couple basic concepts you need to g
   </div>
 </details>
 
+## Core features
+
+Let’s start from the basics: there are three different Armory signals that are caught by the Rule engine:
+* **UserConnected**: emitted each time a user connects to Armory (opens the link)
+* **UserDisconnected**: emitted when the user disconnects from Armory (closes the link)
+* **Submit**: emitted when the user presses something on the screen (e.g. a button)
 ## Armory events 
 
 Let’s start from the basics - there are three different signals Armory as a service uses to communicate with the platform:
