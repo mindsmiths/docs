@@ -15,9 +15,9 @@ All we need to do is have Nola send a signal to Smith whenever a new agent of th
 
 For this we just need to define a new signal. Signals are nothing else but Java classes that contain the data we want to communicate.
 Signals directed at a particular receiver are called `Messages`.
-So let's create a new directory and file in which we'll structure our message, `models/signals/AgentCreated.java`:
+So let's create a new directory and file in which we'll structure our message, `java/signals/AgentCreated.java`:
 
-```java title="models/signals/AgentCreated.java"
+```java title="java/signals/AgentCreated.java"
 package signals;
 
 import com.mindsmiths.ruleEngine.model.Agent;

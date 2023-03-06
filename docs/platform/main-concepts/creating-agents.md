@@ -11,7 +11,7 @@ To create a new type of agent, you just need to define two things:
 ## Defining the agent's data model
 The agent's data model defines the fields and methods which the agent can use in the rules. For example:
 
-```java title="models/agents/Doctor.java"
+```java title="java/agents/Doctor.java"
 package agents;
 
 import com.mindsmiths.ruleEngine.model.Agent;
@@ -108,7 +108,7 @@ You can do this in:
 - On an event (see [Registering for events](#registering-for-events))
 
 For example:
-```java title="models/Runner.java"
+```java title="java/Runner.java"
 import agents.Doctor;
 import com.mindsmiths.ruleEngine.runner.RuleEngineService;
 import com.mindsmiths.ruleEngine.util.Agents;
@@ -173,10 +173,10 @@ You can see all available strategies in the `com.mindsmiths.ruleEngine.mapping` 
 
 
 ### In Runner.java
-A more powerful alternative is registering signals in `models/Runner.java`. Here you can write custom Java code to execute when the event is received.
+A more powerful alternative is registering signals in `java/Runner.java`. Here you can write custom Java code to execute when the event is received.
 
 For example:
-```java title="models/Runner.java"
+```java title="java/Runner.java"
 import agents.Doctor;
 import com.mindsmiths.ruleEngine.runner.RuleEngineService;
 import com.mindsmiths.ruleEngine.util.Agents;
