@@ -23,12 +23,12 @@ public class Felix extends Agent {
         ArmoryAPI.show(
                 getConnection("armory"),
                 new Screen("welcome")
-                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
+                        .add(new Title("I’m Felix and I’m here to help you get fit and healthy! Ready?"))
                         // highlight-added-line
                         .add(new Image("public/JogaPuppy.png", false))
                         .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
                 new Screen("askForName")
-                        .add(new Title("Alright! First, tell me your name?"))
+                        .add(new Title("Alright! What's your name? 😊"))
                         .add(new Input("name", "Type your name here", "text"))
                         .add(new SubmitButton("nameSubmitted", "Done, next!"))
         );

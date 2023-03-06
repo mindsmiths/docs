@@ -24,7 +24,7 @@ public class Felix extends Agent {
                     getConnection("armory"),
                     new Screen("welcome")
                             .add(new Title("Hello! I’m Felix, your new workout buddy. I’m here to help you get fit and healthy!\nReady?"))
-                            .add(new SubmitButton("welcomeStarted", "Cool, let's go!")),
+                            .add(new SubmitButton("welcomeStarted", "Cool, let's go!"))
         );
     }
 }

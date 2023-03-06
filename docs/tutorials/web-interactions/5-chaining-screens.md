@@ -34,7 +34,7 @@ public class Felix extends Agent {
                             .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
                     // highlight-added-start
                     new Screen("askForName")
-                            .add(new Title("Alright! First, tell me your name?"))
+                            .add(new Title("Alright! What's your name? 😊"))
                             .add(new Input("name", "Type your name here", "text"))
                             .add(new SubmitButton("nameSubmitted", "Done, next!"))
                     // highlight-added-end
