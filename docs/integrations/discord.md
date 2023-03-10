@@ -4,25 +4,42 @@ sidebar_position: 6
 
 # Discord
 
+[Discord](https://discord.com/) is a free voice, video, and text chat app for wide spectre of users. 
+It's a perfect tool for community building and arranging communication with your users. With it, you can build servers that are open for public, or you can create a private, invite-only servers which are intended for smaller, closer  groups.
 ## When to use Discord Adapter?
-- HITL
-- When u need easy to use communication channel
+
+The most common use case is for the **HITL** feature implementation. HITL (_Human-in-the-loop_) feature is used when you need to include
+a human to take over a part of the communication with the user. HITL taking over usually happens when the user steps away from the assumed flow
+or when the user has questions that the designated intelligent agent can't answer.
+
+Discord Adapter is an excellent tool for this use case because it allows you to create a channel for each user and assign a human to interact with them when needed.
+This way, you can easily support your users and provide them with the best possible experience.
+
+What often occurs is that your users interact with their agents via WhatsApp. Discord Adapter enables having a backup of every user's conversation history stored in a channel on a Discord server.
+Moreover, a designated person who operates as a HITL can, at any time, step into the conversation and take over the interaction with the user. The best part is that this happens instantly. The user doesn't even have to be aware of the takeover.
+
+Generally, Discord Adapter can be used for any use case where you need to **create a communication channel** which enables user-friendly and diverse interaction with your users.
+Using this adapter, you can integrate the Platform with Discord, track every message, include tagging users, create unique roles, incorporate multiple bots to handle communication, add buttons, simplify communication with the users, and much more!
 
 ## Core features
 
-- one primary bot, multiple sender bots
-- just list them here
-- creating guilds, categories, channels
-- sending, editing, deleting messages
-- replying to messages
-- managing roles
-- catching button clicks
+- sending, editing, and deleting text messages via Discord
 - receiving messages
+- replying to a specific messages
+- adding and managing one primary (admin) bot, as well as multiple sender bots
+- creating [guilds](https://discord.com/developers/docs/resources/guild), [categories](https://discord.com/moderation/208-channel-categories-and-names), [channels](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
+- managing different [roles](https://support.discord.com/hc/en-us/articles/214836687-Role-Management-101)
+- catching [button](https://discord.com/developers/docs/interactions/message-components#buttons) clicks
+
+## Setup
 
 ### Installment
+First you need to install discord adapter with the following command:
 ```shell
 pip install "discord-adapter[dev]~=5.0"
-
+```
+After this, we've prepared the setup command which will arrange everything for you:
+```shell
 discord-adapter setup
 ```
 ### Environment variables
@@ -45,7 +62,15 @@ discord-adapter setup
 - on the bottom of site u will see url, open it in new window
 - select your server and click `authorize`
 
+## Why would you want to incorporate multiple bots?
+- TO DO
+- explain the purpose of using multiple bots, what are the benefits of using them
+- if there are any things a dev should be aware of when using multiple bots, mention them here
+- give an example of a use case
+- it would be great to provide a picture/screenshot of a communication, so it's easier to understand how this feature works
+
 ## Discord adapter supported functions
+Here 
 - first import `com.mindsmiths.discordAdapter.DiscordAdapterAPI`
 -     public static SendDirectMessage sendDirectMessage(String text, String chatId)
 -     public static SendChannelMessage sendChannelMessage(String text, String channelId)
