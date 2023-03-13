@@ -47,25 +47,76 @@ discord-adapter setup
 - `DISCORD_SENDER_BOT_TOKENS`
 
 ## How to create a Discord bot
-- go to https://discord.com/developers/applications
-- click `New application`
-- name the bot
-- go to the `Bot` menu and click `Add Bot`
-- u can get your bot token by clicking `View token`
-- copy bot token into .env file of project
-- on same scroll down and toggle: 'Presence Intent', 'Server Members Intent', 'Message Content Intent'
+TL;DR: you'll need to create a new application, then create a bot, and finally get the bot token.
 
-## How to add Discord bot to your discord server
-- go to your bot on discord developers site
-- go to `OAuth2` menu -> `Url Generator`
-- press `bot` and `add permissions` that your bot will have in channel
-- on the bottom of site u will see url, open it in new window
-- select your server and click `authorize`
+First you'll have to [register for a Discord account](https://discord.com/register). 
+When you finish with your registration or if you already have a Discord account, you can begin with following these steps:
+
+1. Visit [Dicord's developers site](https://discord.com/developers/applications) and log in with your Discord account
+2. Click to the `New application` button - you need an application to create a bot
+<div style={{textAlign:'center'}}>
+
+   ![image](/img/discord/create-discord-bot1.png)
+</div>
+
+3. Give your app a name and click `Create`
+<div style={{textAlign:'center'}}>
+
+   ![image](/img/discord/create-discord-bot2.png)
+</div>
+
+4. This will lead you to the newly created app menu, where you should click to the `Bot` side-option and continue with `Add Bot` and confirm this action
+<div style={{textAlign:'center'}}>
+
+  ![image](/img/discord/create-discord-bot3.png)
+</div>
+
+5. After creating a bot, you can now specify its name (optionally, you can set an avatar and experiment with other bot options)
+6. On the same menu, scroll down and toggle: 'Presence Intent', 'Server Members Intent', 'Message Content Intent'
+<div style={{textAlign:'center'}}>
+
+   ![image](/img/discord/create-discord-bot4.png)
+</div>
+7. You can get your bot token by clicking `View token`
+<div style={{textAlign:'center'}}>
+
+  ![image](/img/discord/create-discord-bot5.png)
+</div>
+
+:::caution
+You can only see the API key once, so make sure to copy it and save it somewhere safe, so you can use it whenever you'll need to.
+
+Also, make sure to keep your bot token secret, as it can be used to control your bot.
+:::
+
+## Adding a bot to a server
+1. Go to the chosen app on Discord's [developers site](https://discord.com/developers/applications)
+2. Click on the `OAuth2` menu and choose the `Url Generator` sub-menu
+<div style={{textAlign:'center'}}>
+
+   ![image](/img/discord/create-discord-bot6.png)
+</div>
+
+3. Select `bot` within the `SCOPES` category, go to the `BOT PERMISSIONS` category that poped up and choose what options you want to authorize
+<div style={{textAlign:'center'}}>
+
+  ![image](/img/discord/create-discord-bot7.png)
+</div>
+
+:::info
+
+You don't have to select the ones shown on the image above, choose the ones that suit your use case
+
+:::
+4. On the bottom of the page, you'll see a `GENERATED URL`, which you need to copy and open in a new window
+5. Select the server you want to add the bot to and click `Authorize`
 
 ## Why would you want to incorporate multiple bots?
 - TO DO
+- TODO - one bot can be on multiple servers, this is important to mention
+  TODO - we need to explain the GUILD_ID principle, when is it necessary to use it
 - explain the purpose of using multiple bots, what are the benefits of using them
-- if there are any things a dev should be aware of when using multiple bots, mention them here
+- if there are anything a dev should be aware of when using multiple bots, mention them here
 - give an example of a use case
 - it would be great to provide a picture/screenshot of a communication, so it's easier to understand how this feature works
 
