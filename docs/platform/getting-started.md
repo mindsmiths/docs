@@ -21,6 +21,10 @@ The easiest way to get started is to go through our [tutorials](/docs/tutorials/
 They will guide you through the process of creating your first AI-powered agents, integrating with
 state-of-the-art machine learning models, and connecting to the outside world.
 
+### Quickstart
+
+If you've already got your hands on the Web IDE and want to try the Platform out before starting with the tutorials, we've got you covered.
+Here's a Quickstart guide to help you demonstrate the Platform's powers in less than 5 minutes.
 
 ### Learn about the platform
 
@@ -32,6 +36,7 @@ The Mindsmiths Platform documentation is divided into several sections:
 4. [Reference](/docs/platform/reference/faq) - FAQ, changelog, migration guide and versioning principles.
 
 For integrations with other services, see the [Integrations](/docs/integrations/getting-started) section.
+
 
 ### Something missing?
 
