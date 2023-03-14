@@ -4,6 +4,40 @@ sidebar_position: 7
 
 # Web
 
+Mindsmiths platform allows developers to easily create beautiful user experiences on the web.
+This integration provides a seamless connection between our platform and web-based interfaces, giving developers the ability to create intuitive and engaging interfaces for their solutions.
+
+Here, we'll cover all the information needed to get started with building web interfaces, including step-by-step instructions, best practices, and examples.
+
+Let's get started!
+
+## Getting started
+
+The integration for building web interfaces is called **Armory**. It is a web templating service that allows you to create dynamic web applications using an intuitive templating system.
+
+<div class="code-preview">
+  <img src="/img/integrations/web/armory-screen-structure.png" />
+
+  ```java
+  ArmoryAPI.show(
+      getConnection("armory"),
+      new Screen("welcome")
+          .add(new Title("Welcome to Armory ❤️"))
+          .add(new Description(
+              "Armory has predefined components that make it easy to create new screens." +
+              "Here, we're just using a title, description and a submit button."
+          ))
+          .add(new SubmitButton("submit", "Cool, let's go!"))
+  );
+  ```
+</div>
+
+Getting started
+Integration features
+Best practices
+Examples
+Troubleshooting
+
 Mindsmiths Platform supports dynamically generated web pages.
 You can use these pages to display content to your users, and to collect the data they input.
 
@@ -12,15 +46,6 @@ We call this web templating service **Armory**. Using Armory is very simple, but
 <details>
   <summary>Setup details</summary>
 <div>
-    <div><p><b>Environment variables:</b></p>
-        <ul>
-            <li>SECRET_KEY</li>
-            <li>DEBUG</li>
-            <li>ALLOW_EVERYONE</li>
-            <li>SITE_URL</li>
-            <li>INTERNAL_SITE_URL</li>
-        </ul>
-    </div>
     <div>
         <p><b>Installment:</b></p>
         <ul>
@@ -31,6 +56,15 @@ We call this web templating service **Armory**. Using Armory is very simple, but
         <p><b>Initialize setup:</b></p>
         <ul><li><p><code>armory setup</code></p></li></ul>
     </div>
+    <div><p><b>Environment variables:</b></p>
+        <ul>
+            <li>SECRET_KEY</li>
+            <li>DEBUG</li>
+            <li>ALLOW_EVERYONE</li>
+            <li>SITE_URL</li>
+            <li>INTERNAL_SITE_URL</li>
+        </ul>
+    </div>
   </div>
 </details>
 
@@ -39,6 +73,7 @@ We call this web templating service **Armory**. Using Armory is very simple, but
 Armory allows you to create an app-like experience for your users quickly and easily, with sequences of linked screens. 
 This provides the feeling of user guidance through the process you are modeling. One of its biggest perks is that it 
 allows you to smoothly build in the logic you need and try out various components, with minimum code.
+
 
 ## Core features
 
@@ -68,15 +103,15 @@ But let's first learn how to create those screens!
 
 ### Components
 The components are the building blocks of screens, and there are several you can use out-of-the-box:
-* BackButton: component used in Screen headers
-* CloudSelect: a cool multi-select component
-* Description
-* Header: component that normally contains a logo and the `BackButton` (enabled by setting the `allowsBack` field to `true`)
-* Image
-* Input: component that roughly corresponds to the [HTML input element](https://www.w3schools.com/html/html_form_input_types.asp), with the input data type specified by setting `type`
-* SubmitButton: basic button component, triggers a `Submit` event
-* TextArea: component for longer text input
-* Title
+* `BackButton`: component used in Screen headers
+* `CloudSelect`: a cool multi-select component
+* `Description`
+* `Header`: component that normally contains a logo and the `BackButton` (enabled by setting the `allowsBack` field to `true`)
+* `Image`
+* `Input`: component that roughly corresponds to the [HTML input element](https://www.w3schools.com/html/html_form_input_types.asp), with the input data type specified by setting `type`
+* `SubmitButton`: basic button component, triggers a `Submit` event
+* `TextArea`: component for longer text input
+* `Title`
 
 Components that are used to collect some sort of input or activity from the user (text areas, buttons etc.) are referenced through the `inputId`. For example, here is a rule that registers the user entered their name and submitted it by pressing a button:
 ```java
@@ -113,8 +148,9 @@ new Screen("welcomeScreen")
 This will group the `Description` and `Input` component around the screen center, push the button to the bottom, leaving the `Header` and `Title` by default at the top.
 Here you can see how it looks. The first screen is the default screen, while the second screen includes the `group` component.
 
-![graphic](Screen.png#center)
+![Armory screen structure](/img/integrations/web/armory-screen-chaining.png)
 
+[graphic](/img/integrations/web/Screen.png#center)
 
 ## Creating components and templates
 
@@ -220,8 +256,7 @@ new Screen("welcomeScreen")
 ```
 
 Here you can see how it looks like.
-
-![graphic](Screen2.png#center)
+![graphic](/img/integrations/web/Screen2.png#center)
 
 Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` 
 (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
