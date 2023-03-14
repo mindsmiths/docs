@@ -83,7 +83,7 @@ When you finish with your registration or if you already have a Discord account,
   ![image](/img/discord/create-discord-bot5.png)
 </div>
 
-:::caution
+:::caution Store the token somewhere safe
 You can only see the API key once, so make sure to copy it and save it somewhere safe, so you can use it whenever you'll need to.
 
 Also, make sure to keep your bot token secret, as it can be used to control your bot.
@@ -103,7 +103,7 @@ Also, make sure to keep your bot token secret, as it can be used to control your
   ![image](/img/discord/create-discord-bot7.png)
 </div>
 
-:::info
+:::info Picking the right permissions
 
 You don't have to select the ones shown on the image above, choose the ones that suit your use case
 
@@ -111,8 +111,16 @@ You don't have to select the ones shown on the image above, choose the ones that
 4. On the bottom of the page, you'll see a `GENERATED URL`, which you need to copy and open in a new window
 5. Select the server you want to add the bot to and click `Authorize`
 
-## Why would you want to incorporate multiple bots?
-- TO DO
+## Incorporating multiple bots
+
+Using more than one bot in your Discord server will simplify keeping track of the communication between users and your agents.
+This also helps with the separation of concers, as each bot can be assigned to a specific task they have.
+
+For example, one bot can be used to send messages to the users, while other can be used to receive messages from the users. 
+You can also have another bot that will notify a specific persona to take action after some unexpected event.
+
+Also, Discord allows you to have a single bot on multiple servers, which is also one way for you to organize your client communication.
+
 - TODO - one bot can be on multiple servers, this is important to mention
   TODO - we need to explain the GUILD_ID principle, when is it necessary to use it
 - explain the purpose of using multiple bots, what are the benefits of using them
