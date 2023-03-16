@@ -112,9 +112,9 @@ And, that's it! Have fun building new user experiences with Armory.
 P.S. You can find the entire code on our GitHub → `https://github.com/mindsmiths/examples/tree/main/felix`!
 
 :::note 
-If you want to spare some time, here you can find `Felix.drl` file: ``https://github.com/mindsmiths/examples/tree/main/felix/services/rule_engine/src/main/resources/rules/felix``, 
-and here is `Felix.java` file: ``https://github.com/mindsmiths/examples/blob/main/felix/services/rule_engine/src/main/java/agents/Felix.java``. 
-Images and `scss` file can be found here: ``https://github.com/mindsmiths/examples/tree/main/felix/services/armory``.
+If you want to spare some time, here you can find `Felix.drl` file → ``https://github.com/mindsmiths/examples/tree/main/felix/services/rule_engine/src/main/resources/rules/felix``, 
+and here is `Felix.java` file → ``https://github.com/mindsmiths/examples/blob/main/felix/services/rule_engine/src/main/java/agents/Felix.java``. 
+Images and `scss` file can be found here → ``https://github.com/mindsmiths/examples/tree/main/felix/services/armory``.
 :::
 
 Enjoy!
