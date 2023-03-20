@@ -111,6 +111,16 @@ You don't have to select the ones shown on the image above, choose the ones that
 4. On the bottom of the page, you'll see a `GENERATED URL`, which you need to copy and open in a new window
 5. Select the server you want to add the bot to and click `Authorize`
 
+## Connecting to a Channel
+To establish a connection with your Discord channel, you need a `channelId`.
+This is a unique identifier of the channel, which is used to send messages to the channel.
+
+Getting this identifier is easy, you just need to go to the channel you want to connect to, and type in the mention of your channel, preceded by a backslash.
+For example, if you want to connect to the channel named `general`, you need to type `\#general` and send the message.
+
+You will get something like this: `<#123456789012345678>`. The number in the brackets is your `channelId`.
+Same goes for `chatId` and `guildId`, which is the unique identifier of the server you want to connect to.
+
 ## Incorporating multiple bots
 
 Using more than one bot in your Discord server will simplify keeping track of the communication between users and your agents.
@@ -129,97 +139,155 @@ Also, Discord allows you to have a single bot on multiple servers, which is also
 - it would be great to provide a picture/screenshot of a communication, so it's easier to understand how this feature works
 
 ## Discord adapter supported functions
-Here 
-- first import `com.mindsmiths.discordAdapter.DiscordAdapterAPI`
--     public static SendDirectMessage sendDirectMessage(String text, String chatId)
--     public static SendChannelMessage sendChannelMessage(String text, String channelId)
-    - ```java
-      public void sendMessage(String text){
-              SendChannelMessage channelMessage = DiscordAdapterAPI.sendChannelMessage(text, channelId);
-              String replyMessageId = channelMessage.getId();
-      }
+Here first import `com.mindsmiths.discordAdapter.DiscordAdapterAPI`
 
-    - optional fields are `List<Button> buttons`, `String botToken`
-    - `botToken` always goes last, if it is empty  discod adapter uses primary bot, otherwise it uses bot with that bot token
--     public static EditChannelMessage editChannelMessage(String channelId, String messageId, String text)
-  - optional fields are `String text`, `List<Button> buttons`
-  - to edit message u first need to catch message and save it`s id
+Then you can use the following functions for sending messages:
+- `public static SendDirectMessage sendDirectMessage(String text, String chatId)`
+- `public static SendChannelMessage sendChannelMessage(String text, String channelId)`
+
+For example, a `sendMessage` function in your Agent class could look like this:
+
+```java
+  public void sendMessage(String text){
+          SendChannelMessage channelMessage = DiscordAdapterAPI.sendChannelMessage(text, channelId);
+          String replyMessageId = channelMessage.getId();
+  }
+```
+:::note
+- The fields `List<Button> buttons` and `String botToken` are optional
+- The field `botToken` specifies which bot receives the message and it always goes last, otherwise if it is empty the Discord adapter uses your primary bot
+:::
+
+When editing, deleting or replying to messages, we need to catch its `messageId`:
+```
+  public static EditChannelMessage editChannelMessage(String channelId, String messageId, String text)
+  public static DeleteChannelMessage deleteChannelMessage(String channelId, String messageId)
+  public static ReplyToChannelMessage replyToChannelMessage(String channelId, String messageId, String text)
+```
+
+The following function updates the role of a user:
+
 -     public static UpdateRole updateRole(String guildId, Role role)
--     public static CreateGuildCategory createGuildCategory(String guildId, String name, int position)
--     public static CreateGuildChannel createGuildChannel(String guildId, String categoryId, String name)
--     public static DeleteChannelMessage deleteChannelMessage(String channelId, String messageId)
--     public static DeleteChannel deleteChannel(String channelId)
--     public static ReplyToChannelMessage replyToChannelMessage(String channelId, String messageId, String text)
-  - to reply to message u first need to catch message and save it`s id
-  - ```java
-      public void replyToMessage(String replyMessageId, String text){
-              DiscordAdapterAPI.replyToChannelMessage(hitlChannelId, replyMessageId, text);
-      }
--     public static CreateGuild createGuild(String guildName, String defaultChannelName)
--     public static GetGuild getGuild(String guildId) 
-   -    to catch guild u write something like this
-   - ```java
-      import com.mindsmiths.discordAdapter.callbacks.DiscordGuildQueryResult
-     
-      rule "example"
-      when
-        signal: DiscordGuildQueryResult(success == true, guild: guild) from entry-point "signals"
-      then
-      // do something
-      end
--     public static DeleteGuild deleteGuild(String guildId)
--     public static GetAllGuildIds getAllGuildIds()
-  - ```java
-        import com.mindsmiths.discordAdapter.callbacks.DiscordAllGuildsReply
-         
-        rule "example"
-        when
-           signal: DiscordAllGuildsReply(success == true, guildIds: guildIds) from entry-point "signals"
-        then
-        // do something
-        end
+
+Lastly, we also have the following functions for creating, deleting and getting guilds:
+
+- `public static CreateGuildCategory createGuildCategory(String guildId, String name, int position)`
+- `public static CreateGuildChannel createGuildChannel(String guildId, String categoryId, String name)`
+- `public static DeleteChannel deleteChannel(String channelId)`
+- `public static CreateGuild createGuild(String guildName, String defaultChannelName)`
+- `public static GetGuild getGuild(String guildId)`
+- `public static DeleteGuild deleteGuild(String guildId)`
+- `public static GetAllGuildIds getAllGuildIds()`
+
+Here is a simple example of how you could catch a signal from the Discord adapter in your project:
+
+```java     
+  import com.mindsmiths.discordAdapter.callbacks.DiscordGuildQueryResult
+  
+  rule "Catching query result"
+  when
+    signal: DiscordGuildQueryResult(success == true, guild: guild) from entry-point "signals"
+  then
+  // do something
+  end
+```
+
+
+Here is a list of all the possible signals for you to incorporate into your project:
+
+<details>
+  <summary>Available signals</summary>
+  <div>
+    <div><p><b>Callbacks:</b></p></div>
+      <ul>
+        <li>DiscordGuildQueryResult</li>
+        <li>DiscordAllGuildsReply</li>
+        <li>DiscordGuildCreated</li>
+        <li>DiscordGuildDeleted</li>
+        <li>DiscordGuildCategoryCreated</li>
+        <li>DiscordGuildChannelCreated</li>
+        <li>DiscordChannelDeleted</li>
+        <li>DiscordRoleUpdated</li>
+        <li>DiscordMessageSent</li>
+        <li>DiscordMessageEdited</li>
+        <li>DiscordMessageDeleted</li>
+        <li>DiscordMessageReplied</li>
+      </ul>
+  </div>
+  <div>  
+    <div><p><b>Messages:</b></p></div>
+      <ul>
+        <li>DiscordReceivedMessage</li>
+        <li>DiscordSentMessage</li>
+        <li>DiscordButtonPressed</li>
+        <li>CreateGuild</li>
+        <li>CreateGuildCategory</li>
+        <li>CreateGuildChannel</li>
+        <li>DeleteChannel</li>
+        <li>DeleteGuild</li>
+        <li>DeleteChannelMessage</li>
+        <li>EditChannelMessage</li>
+        <li>GetAllGuildIds</li> 
+        <li>GetGuild</li>
+        <li>ReplyToChannelMessage</li>
+        <li>SendChannelMessage</li> 
+        <li>SendDirectMessage</li>  
+        <li>UpdateRole</li>
+      </ul> 
+  </div>
+</details>
+
+
 ## Interactions (receiving messages, button responses)
-- RECEIVING MESSAGES
-  - in `Runner.java` add following
-    - ```java
-      ...
-      import com.mindsmiths.discordAdapter.message.DiscordReceivedMessage
-      ...
-      public void initialize() {
-          ...
-          configureSignals(Events.on(DiscordReceivedMessage.class).sendTo(YOUR_AGENT));
-      }
-  - in `something.drl` file of agent u want to handle event
-    - next rule triggers on word 'activate' if u want to receive all messages remove `content.equalsIgnoreCase("activate")` 
-    - ```java
-      import com.mindsmiths.discordAdapter.message.DiscordReceivedMessage
-      ...
-      rule "Recieved message"
-      when
-          message: DiscordReceivedMessage(content: content, content.equalsIgnoreCase("activate")) from entry-point "signals"
-      then
-      //  do something
-          delete(message);
-      end
-- BUTTON RESPONSES
-  - in `Runner.java` add following
-    - ```java
-      ...
-      import com.mindsmiths.discordAdapter.message.DiscordButtonPressed;
-      ...
-      public void initialize() {
-         ...
-         configureSignals(Events.on(DiscordButtonPressed.class).sendTo(YOUR_AGENT));
-        }
-  - in `something.drl` file of agent u want to handle event
-    - ```java
-      import com.mindsmiths.discordAdapter.message.DiscordButtonPressed
-      ...
-      rule "Button pressed"
-      when
-         signal: DiscordButtonPressed(button: button, (button.customId == YOUR_BUTTON_ID), message: message) from entry-point "signals"
-         Message(content: content, channelId: channel.id, messageId: discordId) from message
-      then
-         // do something
-         delete(signal);
-      end
+
+Another thing you will need to do to enable communication with the Discord adapter is to add the following to your `Runner.java` file:
+
+```java
+...
+import com.mindsmiths.discordAdapter.message.DiscordReceivedMessage
+...
+public void initialize() {
+  ...
+  configureSignals(Events.on(DiscordReceivedMessage.class).sendTo(YOUR_AGENT));
+}
+```
+
+This will allow you to catch the `DiscordReceivedMessage` signal in your Agent class.
+
+You can create a rule that triggers on word 'activate', which is just one of the possibilities for initializing a connection with the Discord adapter:
+```java
+import com.mindsmiths.discordAdapter.message.DiscordReceivedMessage
+...
+rule "Message received"
+    when
+        message: DiscordReceivedMessage(content: content, content.equalsIgnoreCase("activate")) from entry-point "signals"
+    then
+        // do something
+        delete(message);
+end
+```
+
+Same with `DiscordReceivedMessage`, you should add the same signal recognition implementation for `DiscordButtonPressed` in your `Runner.java`:
+
+```java
+...
+import com.mindsmiths.discordAdapter.message.DiscordButtonPressed;
+...
+public void initialize() {
+   ...
+   configureSignals(Events.on(DiscordButtonPressed.class).sendTo(YOUR_AGENT));
+  }
+```
+And the coresponding rule in your Agent class:
+```java
+import com.mindsmiths.discordAdapter.message.DiscordButtonPressed
+...
+rule "Button pressed"
+    when
+        signal: DiscordButtonPressed(button: button, (button.customId == YOUR_BUTTON_ID), message: message) from entry-point "signals"
+        Message(content: content, channelId: channel.id, messageId: discordId) from message
+    then
+        // do something
+        delete(signal);
+end
+```
