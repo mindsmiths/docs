@@ -66,9 +66,9 @@ import com.mindsmiths.gpt3.GPT3AdapterAPI;
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
-        String workoutPlan;
-    
     // highlight-added-start
+    String workoutPlan;
+    
     public void showGPT3Response() {
         ArmoryAPI.show(
             getConnection("armory"),
