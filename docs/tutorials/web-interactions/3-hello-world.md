@@ -12,12 +12,12 @@ First, create the file ```java/agents/Felix.java``` and add the following functi
 ```java title="java/agents/Felix.java"
 package agents;
 
-import com.mindsmiths.ruleEngine.model.Agent;
 import lombok.*;
+
+import com.mindsmiths.ruleEngine.model.Agent;
 
 import com.mindsmiths.armory.ArmoryAPI;
 import com.mindsmiths.armory.Screen;
-
 import com.mindsmiths.armory.component.*;
 
 @Data
@@ -40,14 +40,13 @@ Every armory screen is built up of multiple components. In this case, we are onl
 Now that you have defined how your screen is going to look, let's add a rule in ```rules/felix/Felix.drl``` to activate that screen.
 
 ```java title="rules/felix/Felix.drl"
-package agents;
-
 package rules.felix;
 
 import com.mindsmiths.ruleEngine.model.Heartbeat
 import com.mindsmiths.armory.event.UserConnected
 import com.mindsmiths.armory.event.Submit
 import com.mindsmiths.ruleEngine.util.Log
+import agents.Felix
 
 rule "Hello world"
     when

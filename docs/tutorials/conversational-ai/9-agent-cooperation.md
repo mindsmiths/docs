@@ -87,3 +87,10 @@ That’s it! Write **forge reset** in the Terminal first to clear the database a
 :::tip
 If you want to learn more about signals, check out the [documentation](/docs/platform/advanced-concepts/service-communication).
 :::
+
+P.S. You can find the entire code on our GitHub → `https://github.com/mindsmiths/examples/tree/main/nola`!
+
+:::note 
+To spare you some time - here is `Nola.drl` file → ``https://github.com/mindsmiths/examples/tree/main/nola/services/rule_engine/src/main/resources/rules/nola``, 
+and here is `Nola.java` file → ``https://github.com/mindsmiths/examples/blob/main/nola/services/rule_engine/src/main/java/agents/Nola.java``. 
+:::
