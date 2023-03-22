@@ -6,6 +6,30 @@ sidebar_position: 6
 
 [Discord](https://discord.com/) is a free voice, video, and text chat app for wide spectre of users. 
 It's a perfect tool for community building and arranging communication with your users. With it, you can build servers that are open for public, or you can create a private, invite-only servers which are intended for smaller, closer  groups.
+
+<details>
+  <summary>Setup details</summary>
+  <div>
+    <div><p><b>Environment variables:</b></p></div>
+      <ul>
+        <li>DISCORD_BOT_TOKEN</li>
+        <li>DISCORD_SENDER_BOT_TOKENS</li>
+      </ul>
+  </div>
+  <div>
+    <div><p><b>Installment:</b></p></div>
+      <ul>
+        <li><code>pip install "discord-adapter[dev]~=5.0.1"</code></li>
+      </ul>
+  </div>
+  <div>
+    <div><p><b>Initialize setup:</b></p></div>
+      <ul>
+        <li><p><code>discord-adapter setup</code></p></li>
+      </ul>
+  </div>
+</details>
+
 ## When to use Discord Adapter?
 
 The most common use case is for the **HITL** feature implementation. HITL (_Human-in-the-loop_) feature is used when you need to include
@@ -38,10 +62,7 @@ First you need to install discord adapter with the following command:
 ```shell
 pip install "discord-adapter[dev]~=5.0"
 ```
-After this, we've prepared the setup command which will arrange everything for you:
-```shell
-discord-adapter setup
-```
+
 ### Environment variables
 - `DISCORD_BOT_TOKEN`
 - `DISCORD_SENDER_BOT_TOKENS`
@@ -111,6 +132,14 @@ You don't have to select the ones shown on the image above, choose the ones that
 4. On the bottom of the page, you'll see a `GENERATED URL`, which you need to copy and open in a new window
 5. Select the server you want to add the bot to and click `Authorize`
 
+After you have set up your bot and server, you can initialize the setup in the console with:
+
+```shell
+discord-adapter setup
+```
+
+Then you will paste your `DISCORD_BOT_TOKEN` and write the name of the agent that will handle all the signals.
+
 ## Connecting to a Channel
 To establish a connection with your Discord channel, you need a `channelId`.
 This is a unique identifier of the channel, which is used to send messages to the channel.
@@ -118,7 +147,7 @@ This is a unique identifier of the channel, which is used to send messages to th
 Getting this identifier is easy, you just need to go to the channel you want to connect to, and type in the mention of your channel, preceded by a backslash.
 For example, if you want to connect to the channel named `general`, you need to type `\#general` and send the message.
 
-You will get something like this: `<#123456789012345678>`. The number in the brackets is your `channelId`.
+You will get something like this: `<#123456789012345678>`. The number after the hashtag is your `channelId`.
 Same goes for `chatId` and `guildId`, which is the unique identifier of the server you want to connect to.
 
 ## Incorporating multiple bots
@@ -159,25 +188,47 @@ For example, a `sendMessage` function in your Agent class could look like this:
 :::
 
 When editing, deleting or replying to messages, we need to catch its `messageId`:
+
 ```
-  public static EditChannelMessage editChannelMessage(String channelId, String messageId, String text)
-  public static DeleteChannelMessage deleteChannelMessage(String channelId, String messageId)
-  public static ReplyToChannelMessage replyToChannelMessage(String channelId, String messageId, String text)
+public static EditChannelMessage editChannelMessage(String channelId, String messageId, String text)  
 ```
+```
+public static ReplyToChannelMessage replyToChannelMessage(String channelId, String messageId, String text)
+```
+```
+public static DeleteChannelMessage deleteChannelMessage(String channelId, String messageId)
+```  
 
 The following function updates the role of a user:
 
--     public static UpdateRole updateRole(String guildId, Role role)
+```
+public static UpdateRole updateRole(String guildId, Role role)
+```
 
 Lastly, we also have the following functions for creating, deleting and getting guilds:
 
-- `public static CreateGuildCategory createGuildCategory(String guildId, String name, int position)`
-- `public static CreateGuildChannel createGuildChannel(String guildId, String categoryId, String name)`
-- `public static DeleteChannel deleteChannel(String channelId)`
-- `public static CreateGuild createGuild(String guildName, String defaultChannelName)`
-- `public static GetGuild getGuild(String guildId)`
-- `public static DeleteGuild deleteGuild(String guildId)`
-- `public static GetAllGuildIds getAllGuildIds()`
+```
+public static CreateGuildCategory createGuildCategory(String guildId, String name, int position)
+```
+```
+public static CreateGuildChannel createGuildChannel(String guildId, String categoryId, String name)
+```
+```
+public static DeleteChannel deleteChannel(String channelId)
+```
+```
+public static CreateGuild createGuild(String guildName, String defaultChannelName)
+```
+```
+public static GetGuild getGuild(String guildId)
+```
+```
+public static GetAllGuildIds getAllGuildIds()
+```
+```
+public static DeleteGuild deleteGuild(String guildId)
+```
+
 
 Here is a simple example of how you could catch a signal from the Discord adapter in your project:
 
@@ -192,8 +243,7 @@ Here is a simple example of how you could catch a signal from the Discord adapte
   end
 ```
 
-
-Here is a list of all the possible signals for you to incorporate into your project:
+And here is a list of all the possible signals for you to incorporate into your project:
 
 <details>
   <summary>Available signals</summary>
