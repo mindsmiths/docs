@@ -1,6 +1,6 @@
----
+_---
 sidebar_position: 7
----
+---_
 
 # Heartbeat
 The heartbeat service sends a regular heartbeat signal to each and every agent. It wakes up the agent and re-evaluates its rules.
