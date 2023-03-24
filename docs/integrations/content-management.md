@@ -30,7 +30,9 @@ In Mitems there are **items** which are made of **elements**. Both have name com
 
 
 :::tip
-Be careful when naming your components, because you they are integrated in you project with `.json file` and you will need to use them while implementing funcionalities.
+Be careful when naming your components, because you they are 
+integrated in you project with `.json file` 
+and you will need to use them while implementing funcionalities.
 :::
 
 
