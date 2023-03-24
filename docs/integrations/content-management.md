@@ -13,7 +13,7 @@ Using Mitems is as simple as its running. There are a few important steps to do:
 
 1. You need to run Mitems from [Mindsmiths Platform](https://docs.mindsmiths.com/docs/platform/getting-started) in terminal using the following command:
 ```console
-forge run-service mitems"
+forge run-service mitems
 ```
 2. You should find Mitems at **Ports** in bottom right corner and open it to get window like this one:
 
@@ -29,9 +29,12 @@ In Mitems there are **items** which are made of **elements**. Both have name com
 ![graphic](elements.png#center)
 
 
+
+
 :::tip
 Be careful when naming your components, because you they are integrated in you project with `.json file` and you will need to use them while implementing funcionalities.
 :::
+
 
 
 There are a few useful functions that can make your life easier while coding. 
