@@ -37,7 +37,7 @@ There are a few useful functions that can make your life easier while coding.
 - `Templating.recursiveRender(Mitems.getText("demo.demo-item.text-demo"), Map.of("demo", Mitems.getText("demo.demo-item.text-demo")))` is very useful for creating HTML outputs where you can easily integrate variables from your code to Mitems.
 
 
-:::tip
+::: tip
 Be careful when naming your components, because you they are 
 integrated in you project with `.json file` 
 and you will need to use them while implementing funcionalities.
