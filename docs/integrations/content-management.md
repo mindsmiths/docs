@@ -5,19 +5,19 @@ sidebar_position: 9
 # Content Management
 
 ## Mitems
-Mitems is user-friendly text manager that makes your coding easier. It is simple interface where you connect your back-end aplication with its front-end part.
+Mitems is a user-friendly service used for text management which enables cooperation between developers and product owners. It is simple interface where you connect your back-end aplication with its front-end part.
 Mitems is often used for product specification where you can easily find components of your code by their unique name or functionality.
 
 ## How to use Mitems?
 Using Mitems is as simple as its running. There are a few important steps to do:
 
 1. You need to run Mitems from [Mindsmiths Platform](https://docs.mindsmiths.com/docs/platform/getting-started) in terminal using the following command:
-```console
+```shell
 forge run-service mitems
 ```
 2. You should find Mitems at **Ports** in bottom right corner and open it to get window like this one:
 
-![graphic](mitems.png#center)
+![graphic](../../static/img/integrations/mitems/mitems.png#center)
 
 More details about elements and their use, you can find in section below - **Components and main functions**.
 
@@ -26,7 +26,7 @@ More details about elements and their use, you can find in section below - **Com
 
 In Mitems there are **items** which are made of **elements**. Both have name component but elements also have type which can be text, HTML, JSON or option type.
 
-![graphic](elements.png#center)
+![graphic](../../static/img/integrations/mitems/elements.png#center)
 
 
 
@@ -37,12 +37,12 @@ There are a few useful functions that can make your life easier while coding.
 - `Templating.recursiveRender(Mitems.getText("demo.demo-item.text-demo"), Map.of("demo", Mitems.getText("demo.demo-item.text-demo")))` is very useful for creating HTML outputs where you can easily integrate variables from your code to Mitems.
 
 
-::: tip
-Be careful when naming your components, because you they are 
-integrated in you project with `.json file` 
-and you will need to use them while implementing funcionalities.
-:::
+:::tip
 
+Be careful when naming your components, because they are integrated in you project with `.json file` 
+and you will need to use them while implementing functionalities.
+
+:::
 
 ## When to use Mitems?
 
