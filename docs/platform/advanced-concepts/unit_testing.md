@@ -10,106 +10,126 @@ With writing a test for each of the separate units, you can quickly check if som
 
 Mindsmiths Platform is providing a set of tools to help you write unit tests for your code.
 
-## Writing unit tests
+## Writing unit tests for agents
 
-You'll need to set up your project for unit tests:
-  1. create a `test` directory in your project
-     - this is how the path to the test directory should look like `services/rule_engine/src/test`
+### Migration guide for platform versions below `1.5.5`
 
-  2. when in the `test` directory, you'll have to create your test classes
-     - each test class needs to extend the `AgentTest class` 
-     - also, every test function should be annotated with `@Test`
+If you are using a platform version below `1.5.5`, you'll need to add the following line to `services/rule_engine/pom.xml`:
+```xml
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+        <configuration>
+            <systemPropertyVariables>
+                // highlight-added-line
+                <projectSlug>YOUR_PROJECT_SLUG</projectSlug>
+                <buildDirectory>${project.build.directory}</buildDirectory>
+            </systemPropertyVariables>
+        </configuration>      
+    </plugin>
+```
+You can find the project slug in your `config.yaml` under `PROJECT_SLUG`.
+
+Make sure you're using `rule-engine` version `5.0.8` or higher.
+
+You'll also need to create the following file structure:
+```
+services/
+└── rule_engine/
+    └── src/
+        └── main/
+        // highlight-added-start
+        └── test/
+            └── java/
+                └── TestMyAgent.java   // your test class
+            └── resources/
+                └── test.json        // you can put summary files here
+        // highlight-added-end
+```
+
+### Getting started
+To write a unit test for your agent, you'll need to create a test class which extends `AgentTest` class.
 
 There's support for two types of tests: 
 - from summary
 - from agent and facts
 
 ### Test from summary
-This type of test uses agent summary as an input.
+This type of test uses agent's summary as an input.
 
-For this you'll need to create a `.json` file in the `resources` directory and use `runFromSummary` function with the belonging signature:
-
-```java
-    public AgentTestResult runFromSummary(String path, Optional[List<Pair<Object, String>> signals]);
+For this you'll need to create a `.json` file in the `test/resources` directory, for example:
+```json title="test/resources/smith/test_heartbeat.json"
+{
+  "agentId": "SMITH",
+  "facts": {
+    "agents#Smith": {
+      "SMITH": {
+        "id": "SMITH",
+        "connections": {},
+        "type": "Smith"
+      }
+    }
+  }
+}
 ```
+We recommend creating a subdirectory with your agent's name and putting the summary file there.
 
-Here below you can see an example of creating a function which serves as a test from summary.
-```java
-package test;
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
+You can then create a test in `test/java`, for example:
+```java title="test/java/TestSmithWithSummary.java"
+import agents.Smith;
 import com.mindsmiths.ruleEngine.testing.AgentTest;
 import com.mindsmiths.ruleEngine.testing.AgentTestResult;
+import org.junit.jupiter.api.Test;
 
-import agents.Customer;
+import java.util.List;
 
-public class TestAgentIdNotNull extends AgentTest {
-    
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class TestSmithWithSummary extends AgentTest {
+
     @Test
-    public void testAgentIdNotNull() {
-        String path = "test.json";
-        AgentTestResult<Customer> result = runFromSummary(path);
-        assertNotNull(result.getAgent().getId());
+    public void testHeartbeat() {
+        AgentTestResult<Smith> result = runFromSummary("smith/test_heartbeat.json");
+        assertTrue(result.getRulesFired().contains("Heartbeat"));
     }
 }
 ```
 
 ### Test from agents and facts
-This type of test uses agents and facts as an input and for this we'll use `run` function.
-```java
-    public AgentTestResult run(T agent, List<Pair<Object, String>> signals, Optional[List<Object> facts]);
-```
+This type of test uses instances of agent, facts and signals as inputs.
 
-An example of creating a function which serves as a test from agent and facts:
-```java
-package test;
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
+For example:
+```java title="test/java/TestSmith.java"
+import agents.Smith;
 import com.mindsmiths.ruleEngine.testing.AgentTest;
 import com.mindsmiths.ruleEngine.testing.AgentTestResult;
-
-import agents.Customer;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestCustomerIsActive extends AgentTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TestSmith extends AgentTest {
 
     @Test
-    public void testCustomerIsActive() {
-        Customer myAgent = new Customer();
-        AgentTestResult<Customer> result = run(myAgent, List.of());
-        assertFalse(result.getAgent().isActive());
+    public void testAgentId() {
+        assertEquals("SMITH", new Smith().getId());
+    }
+
+    @Test
+    public void testHeartbeat() {
+        AgentTestResult<Smith> result = run(new Smith(), List.of());
+        assertTrue(result.getRulesFired().contains("Heartbeat"));
     }
 }
 ```
 
-- `AgentTestResult` object has the following properties:
-  - `T agent`
+### Test result
+The`AgentTestResult` object has the following properties:
+  - `Agent agent`
   - `List<Object> facts`
   - `List<String> rulesFired`
 
-You can utilize these properties when using `assert` functions like `assertFalse`, `assertNotNull`, etc.
-
-## Migration guide for all `forge-sdk` versions below `1.5.8`
-
-If you are using `forge-sdk` version below `1.5.8`, you'lll need to add the following line to `pom.xml`:
-
-```xml
-    ...
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M7</version>
-            <configuration>
-                <systemPropertyVariables>
-                    ****<projectSlug>YOUR_PROJECT_SLUG</projectSlug>****
-                    <buildDirectory>${project.build.directory}</buildDirectory>
-                </systemPropertyVariables>
-            </configuration>      
-        </plugin>
-    ...
-```
+You can use asserts to verify the result of your test.
