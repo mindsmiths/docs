@@ -34,7 +34,7 @@ You can find the project slug in your `config.yaml` under `PROJECT_SLUG`.
 Make sure you're using `rule-engine` version `5.0.8` or higher.
 
 You'll also need to create the following file structure:
-```
+```shell
 services/
 └── rule_engine/
     └── src/
