@@ -9,9 +9,9 @@ sidebar_position: 1
 
 This release contains the following service versions:
 - `forge-sdk==5.0.7` (Python)
-- `forge-sdk==5.0.8` (Java)
+- `forge-sdk==5.0.9` (Java)
 - `forge-cli==5.0.8`
-- `rule-engine==5.0.8`
+- `rule-engine==5.0.9`
 - `heartbeat==5.0.4`
 - `cecs==5.0.2`
 
