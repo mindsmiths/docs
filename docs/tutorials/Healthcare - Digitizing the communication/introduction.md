@@ -18,11 +18,6 @@ That's why at first it requires expert knowledge from a doctor who will evaluate
 By enabling effective communication and collaboration between agents, we can build a system that is capable of handling complex problems in a more efficient and effective way than a single agent could on its own.
 
 This is a slightly more complex use case compared to the first tutorial, but we’ll get through it together step by step,
-taking care to implement all three core agent characteristics. Let's have a look!
+taking care to implement all three core agent characteristics. 
 
-:::note
-No matter how complex our systems get, we always want our agents to display these three core characteristics in communication with end users:
-- I know you (and that's why I can take care of your specific needs)
-- I have the expertise (and that's why my advice is relevant)
-- I care about you (and that's why I'm proactively reaching out to you).
-:::
+Let's have a look!

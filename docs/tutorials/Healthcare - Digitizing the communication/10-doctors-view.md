@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 11
 ---
 
 # Doctor's view
