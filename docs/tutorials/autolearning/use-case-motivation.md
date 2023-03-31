@@ -4,37 +4,42 @@ sidebar_position: 2
 
 # Use case motivation: BMI health check
 
-As mentioned, we want to create a system that can help parents take care of their child’s health by keeping their weight in check.
+Our goal is to develop a system that helps parents take care of their child's health by keeping their weight in check. 
+In the real world, a parent might ask a doctor whether their child has obesity issues based on their age, height, and weight. 
+In a digitized setup, this communication could occur online through a web form, email, or chat platform.
 
+However, our aim is to go beyond simply digitizing doctor-patient communication. We want to build a more comprehensive system 
+that can help doctors manage their workload and provide personalized recommendations to patients. 
+To do this, first sep is to use a multi-agent approach to manage the complexity of the problem.
 
-In the real world, you can imagine a scenario in which a parent asks a doctor whether their child has obesity issues based on the child’s age, height and weight.
-In the digitized setup, this communication could happen online via some web form, email or a chat platform.
+When dealing with realistic problems, the system's setup becomes more intricate. In such scenarios, 
+the multi-agent approach can help us manage the complexity by dividing the desired behavior into numerous agents. 
+Each agent is specifically assigned to cater to the user's needs or a particular set of features.
+This approach allows for a more manageable and scalable system. It can handle numerous requests while providing personalized recommendations to the users.
+In the following sections, we will delve deeper into the different components of the multi-agent system and explore how they work together to assist parents 
+and doctors in managing child obesity issues.
 
+![graphic](multiagents.png#center)
 
-But we want to do more than just digitize the doctor-patient communication: 
-we want to automate parts of the process so that the system could learn to perform at the same level of quality as the human expert,
-while providing the feeling of care and security for the patient.
-We'll use a machine learning (ML) algorithm that will first track the doctor’s decisions and learn from the responses they send to the patients’ queries.
-As the available data sample grows larger, the model will gradually learn to predict verdicts on whether the child is obese or not with approximately the same accuracy as the human expert.
-Once the estimated confidence for the predictions is high enough, the model will take over the doctor’s 
-workload and only ask them for opinion in edge cases that still require human attention.
+As you can see in the graphic above, there are multiple entities interacting in our system: there are multiple patients that want to get a reply from the doctor, 
+and a single doctor that needs to handle all patient queries.
 
-Let's visualize our system in a graphic:
+We will build a multi-agent system to tackle this problem, where different agents have distinct roles and responsibilities. 
 
-![graphic](bmi-guidance-graphic.png#center)
+![graphic](multiagentsystems.png#center)
 
-So, the patient requests first go to the ML component and then get forwarded to the doctor if needed, which in the beginning will basically be all the time. 
-In the beginning, the doctor's input is both passed to the model as training data, and communicated back to the patients. 
-Alternatively, once the model is good enough, the model verdict is just sent to the patient and never reaches the doctor.
+In this case, we'll have two types of agents: one for doctors and another for patients.
 
-When modelling realistic problems, the setup you need to capture with your system also becomes more layered.
-The multi-agent approach allows you to manage the complexity more easily by breaking down the desired behaviour into a multitude of agents, 
-each dedicated specifically to the needs of the user (or a specific set of features) it is assigned to.
+:::note
+As you can see in the graphics, each person will have their own agent. You might be wondering why we only have two types of agents when each patient has their own. 
+The reason is that even though each patient has their own agent, all of those agents belong to the same category: patient agents.
+:::
 
-As you can see in the graphic above, there are multiple entities interacting in our system: 
-there are multiple patients that want to get a reply from the doctor, and a single doctor that needs to handle all patient queries.
+The doctor's agent will handle BMI queries from patients, analyze the data, and provide a diagnosis (obese or not obese). 
+On the other hand, the patient's agent will collect the necessary information from the patient, such as weight, and pass it on to the doctor's agent for analysis.
+It will also remind patients to send their weight from time to time to ensure that the data is up to date.
 
-Although this may seem as a radically different use case, we’ll actually just continue building on the concepts and principles you learned in the first tutorial. 
-Among other things, we will also be using GPT-3, and we’ll be communicating through Telegram Messenger. 
+While this use case may seem radically different, we'll continue building on the concepts and principles you learned in the first tutorial. 
+Additionally, we'll use GPT-3 and communicate through Telegram Messenger, among other things.
 
 Let's start!
