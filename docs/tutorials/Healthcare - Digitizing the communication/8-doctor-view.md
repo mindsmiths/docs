@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 ---
 
 # Doctor's view
@@ -8,15 +8,18 @@ Our aim now is closing the interaction loop: we want the doctor to give their op
 To contact the doctor, we’ll add the "Evaluate BMI request" rule to the `Doctor.drl` file. This rule will send the calculated BMI value and age of the child to the doctor's Telegram:
 
 ```java title="rules/doctor/Doctor.drl"
+import signals.BMIMeasurement
+import signals.BMIResponse
+
 ...
 
 rule "Ask doctor for opinion on BMI"
-    when
-        signal: BMIMeasurement() from entry-point "signals"
-        agent: Doctor()
-    then
-        agent.sendBMIMeasurement(signal);
-        insert(signal);
+  when
+      signal: BMIMeasurement() from entry-point "signals"
+      agent: Doctor()
+  then
+      agent.sendBMIMeasurement(signal);
+      insert(signal);
 end
 ```
 
@@ -31,7 +34,7 @@ import signals.BMIMeasurement;
 @Setter
 public class Doctor extends Agent {
 
-    public void sendBMIMeasurement(BMIMeasurement bmi) {
+public void sendBMIMeasurement(BMIMeasurement bmi) {
         TelegramAdapterAPI.sendMessage(
                 getConnection("telegram"),
                 "Can you help me with this case?\n" +
@@ -55,6 +58,11 @@ To process the doctor’s answer and communicate it back to the patient, we need
 ```java title="rules/doctor/Doctor.drl"
 ...
 
+import com.mindsmiths.telegramAdapter.TelegramKeyboardAnswered
+import signals.BMIResponse
+
+...
+
 rule "Process doctor's answer"
    when
        signal: TelegramKeyboardAnswered(answer: answer, requestId: referenceId) from entry-point "signals"
@@ -66,8 +74,11 @@ rule "Process doctor's answer"
        agent.sendMessage("Thanks!");
        delete(signal);
  end
+```
 
-As you can notice, we’re again sending the response to the Patient in the form of a new signal, so let’s define it:
+As we used the keyboard to get the doctor’s evaluation, the type of incoming signal we now expect is TelegramKeyboardAnswered(), 
+making sure the answer we fetched is matched to a specific request (BMIMeasurement(id == answer.referenceId)). In the then part, 
+we just need to interpret the answer (answer.getAnswer().equals("YES")) and send it to the Patient agent we received the initial signal from (bmi.getFrom()).
 
 ```java title="java/signals/BMIResponse.java"
 package signals;
@@ -85,10 +96,12 @@ public class BMIResponse extends Message {
     private boolean isObese;
 }
 ```
+As you can see, the signal contains both the data the patient sent and the doctor's answer. To finish fully digitizing the patient-doctor communication, 
+all that’s left to do is to process the received reply from the Doctor and send it to the patient.
 
-And finally, let's add a rule for sending doctor's answer to the patient.
+We are going to write a new rule "BMI request answered" that reacts to the received signal and notifies the patient, updating the time the patient last received a response:
 
-```java title="rules/doctor/Doctor.drl"
+```java title="rules/patient/Patient.drl"
 rule "Send answer to the patient"
     when
         Heartbeat(now: timestamp) from entry-point "signals"
@@ -97,7 +110,7 @@ rule "Send answer to the patient"
     then
         agent.sendMessage(
             String.format(
-                "Your child with its current weight (%.1f kg) is %s",
+                "Your child with its current weight (%.1f kg) is %s.",
                 measurement.getWeight(), response ? "obese" : "not obese"
             )
         );
@@ -105,3 +118,8 @@ rule "Send answer to the patient"
         delete(signal);
 end
 ```
+
+Notice that in all the rules we wrote, we delete the signal after processing, same as we did before.
+
+And that’s it, you can now try out the whole communication loop! 
+Just register one user as doctor, and another as a patient, and try creating a couple bmi requests and responses!

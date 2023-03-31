@@ -11,6 +11,7 @@ we can again use the GPT-3 model to make interactions with users more natural:
 
 ```java title="rules/patient/Patient.drl"
 ...
+////////////////////////// GPT-3 rules //////////////////////////
 
 rule "Engage patient"
     when
@@ -32,10 +33,10 @@ rule "Send GPT3 response"
 end
 
 ```
-
 The main premise behind this feature is that you can’t make a real impact on someone’s life with a purely reactive approach: 
-you need to proactively show you care about the user and their problems. 
-
+you need to proactively show you care about the user and their problems. Ideally, you want to encourage your users to continuously care for their child’s health 
+and regularly send updated weight data. For demonstrative purposes, we’ll keep the time passed since the last checkup at 1 minute 
+and send a reminder to the user to check their child’s weight again. In real life, of course, this would more likely be a weekly or monthly cycle.
 
 We also use GPT-3 for asking the user to correct their answer if they send something 
 we didn’t expect in a certain context based on our input validation function:
@@ -97,7 +98,8 @@ You can again control this through the input prompt you send to GPT-3, so let’
     }
 }
 ```
-As you can see, you’re tweaking GPT-3 to generate different messages based on the context: if the agent was expecting the answer for the child’s height, it will respond differently than if the onboarding process is complete and the system only expects updates on the child’s current weight.
+As you can see, you’re tweaking GPT-3 to generate different messages based on the context: if the agent was expecting the answer for the child’s height, 
+it will respond differently than if the onboarding process is complete and the system only expects updates on the child’s current weight.
 
 And that’s all there is to it: you can now run FORGE RUN to try these features out, so you can get familiar with the user experience the patients in your system will go through.
 

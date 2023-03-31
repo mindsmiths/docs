@@ -4,10 +4,10 @@ sidebar_position: 2
 
 # First steps
 
-o allow you to jump over to the more exciting parts of the development as soon as possible, we’ve already prepared the initial steps of the implementation. 
+To allow you to jump over to the more exciting parts of the development as soon as possible, we’ve already prepared the initial steps of the implementation. 
 Of course, you can always try to implement this part from scratch, or extend it in any way you want!
 
-Your starting point is on the branch [name-of-the-branch], so go ahead nad check out to it from the Terminal:
+Your starting point is on the branch [name-of-the-branch], so go ahead and check out to it from the Terminal:
 
 ```console
 git clone <repo-link>

@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # Building trust: I have the expertise
 
 Personalization and proactivity are immensely important, but they are just support mechanisms for improving the user experience. 
@@ -10,12 +14,45 @@ certain data that our Patient agent sends to the Doctor agent, so it can pass th
 We create a new file java/signals/BMIMeasurement.java and paste in the following:
 
 ```java title="java/signals/BMIMeasurement.java"
+package signals;
+
+import lombok.*;
+
+import com.mindsmiths.sdk.core.api.Message;
 
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class BMIMeasurement extends Message {
+    private Integer age;
+    private Double weight;
+    private Integer height;
+}
+```
+As you can see, BMIMeasurement is a type of signal that contains the data on a child’s age, height and weight, and the calculateBMI() function that calculates BMI without taking age into account.
 
+We now need to write the Patient agent’s rule for sending this signal to the Doctor:
 
+```java title="rules/patient/Patient.drl"
+rule "Process weight"
+    when
+        Heartbeat(now: timestamp) from entry-point "signals"
+        signal: TelegramReceivedMessage(text: text, BMIUtils.isValidWeight(text)) from entry-point "signals"
+        agent: Patient(height != null)
+    then
+        double weight = Double.parseDouble(text);
+        BMIMeasurement bmiMeasurement = new BMIMeasurement(agent.getAge(), weight, agent.getHeight());
 
-
+        agent.sendMessage("Thanks! I'll get back to you as soon as I check with the doctor.");
+        agent.send(Doctor.ID, bmiMeasurement);
+        modify(agent) {
+            setWeight(weight),
+            setLastInteractionTime(now),
+            setAttemptedReengagement(false)
+            };
+        delete(signal);
+end
 
 ```
 

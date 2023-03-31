@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Welcome patient
+# Welcome patients
 
 ## Personalized approach: I know you
 
@@ -20,7 +20,7 @@ Since the rules follow the same logic, we'll only look at the code for storing t
 ```java title="rules/patient/Patient.drl"
 package rules.patient;
 
-
+////////////////////////// Getting child name //////////////////////////
 rule "Ask for name"
     when
         signal: TelegramReceivedMessage() from entry-point "signals"
@@ -41,6 +41,8 @@ rule "Set name"
         delete(signal);
 end
 
+////////////////////////// Getting child age//////////////////////////
+
 rule "Ask for age"
     when
         agent: Patient(waitingForAnswer != true, name != null, age == null)
@@ -59,6 +61,8 @@ rule "Set age"
         modify(agent) {setWaitingForAnswer(false), setAge(Integer.parseInt(text))};
         delete(signal);
 end
+
+////////////////////////// Getting child height //////////////////////////
 
 rule "Ask for height"
     when
@@ -81,11 +85,16 @@ end
 ```
 You'll notice we ask the user for information and store it through a series of rule pairs.
 
-Notice that the "Welcome message" and "Ask for name" rules react to the same message: since the welcome rule doesn't delete the incoming Telegram message signal, the rule asking for the name fires as well right after it. We ensure this order by setting a higher salience for the welcome rule. We also set the waitingForAnswer to true to indicate we're expecting some response from the user. The fact that the name is null tells us which stage we are in, i.e. that we're looking to find out the child's name next.
+Notice that the "Welcome message" and "Ask for name" rules react to the same message: since the welcome rule doesn't delete the incoming Telegram message signal, 
+the rule asking for the name fires as well right after it. We ensure this order by setting a higher salience for the welcome rule. 
+We also set the waitingForAnswer to true to indicate we're expecting some response from the user. The fact that the name is null tells us which stage we are in, 
+i.e. that we're looking to find out the child's name next.
 
-Once the user sends us the answer, we just need to check it's a valid name, and we can set it as the variable value. We also re-set the waitingForAnswer to false, so we can proceed with asking the user for the next piece of information, i.e. the child's age.
+Once the user sends us the answer, we just need to check it's a valid name, and we can set it as the variable value. We also re-set the waitingForAnswer to false, 
+so we can proceed with asking the user for the next piece of information, i.e. the child's age.
 
-The implementation is very simple, and all onboarding rules follow the same pattern: we ask the information we need, setting the waitingForAnswer flag to true, and then set the value of the variable when we receive an answer.
+The implementation is very simple, and all onboarding rules follow the same pattern: we ask the information we need, setting the waitingForAnswer flag to true, 
+and then set the value of the variable when we receive an answer.
 
 Once we have all the info, we send the user an overview with all the data they've provided so far, and set the last interaction time to the current time:
 
