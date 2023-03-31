@@ -9,12 +9,14 @@ As mentioned, in this demo we're onboarding two types of users:
 - patients 
 - doctors
 
-You can find the welcome rules in the corresponding `.drl` files for the two agent types (`Patient.drl` and `Doctor.drl`). Let's go through doctor `.drl` and `java` files first.
+You can find the welcome rules in the corresponding `.drl` files for the two agent types (`Patient.drl` and `Doctor.drl`). 
+Let's go through doctor `.drl` and `java` files first.
 
 ```java title="rules/doctor/Doctor.drl"
 package rules.doctor;
 
 import com.mindsmiths.ruleEngine.model.Initialize
+import com.mindsmiths.telegramAdapter.events.TelegramReceivedMessage
 
 import agents.Doctor
 
@@ -49,11 +51,6 @@ public class Doctor extends Agent {
 
     public void sendMessage(String text) {
         TelegramAdapterAPI.sendMessage(getConnection("telegram"), text);
-    }
-
-    public Double calculateBMI(Integer height, Double weight) {
-        Double heightMeters = height / 100.0;
-        return weight / (heightMeters * heightMeters);
     }
 }
 ```

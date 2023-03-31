@@ -19,7 +19,9 @@ rule "Ask for weight"
         modify(agent){setWaitingForAnswer(true)};
 end
 ```
+
 This rule is very similar to our onboarding rules, and don't forget to add the `weight` field to our Patient agent model, so we can store it:
+
 ```java title="java/agents/Patient.java"
 public class Patient extends Agent {
     ...
