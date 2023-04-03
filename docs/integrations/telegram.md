@@ -23,7 +23,7 @@ or you just want to explore ways of communicating with your clients, Telegram Ad
 
 ## Setup
 In a few easy steps, you'll quickly go through the setup process. 
-### Installment
+### Installation
 First, you'll need to pip install the Adapter with the following command:
 ```console
 pip install "telegram-adapter[dev]"

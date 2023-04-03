@@ -17,7 +17,7 @@ It's based on the Google's [Cloud Platform](https://console.cloud.google.com/) a
         </ul>
     </div>
     <div>
-        <p><b>Installment:</b></p>
+        <p><b>Installation:</b></p>
         <ul>
             <li><code>pip install "gsheets-adapter[dev]~=1.0"</code></li>
         </ul>
@@ -45,7 +45,7 @@ In a nutshell, use it for any kind of Google Sheets data manipulation.
 
 ## Setup
 There's a couple of things you'll have to prepare before initializing the setup process, all of them are explained in details as it follows:  
-### Installment
+### Installation
 First, you'll need to pip install the Adapter with the following command:
 ```console
 pip install "gsheets-adapter[dev]~=1.0"

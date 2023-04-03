@@ -22,7 +22,7 @@ We call this web templating service **Armory**. Using Armory is very simple, but
         </ul>
     </div>
     <div>
-        <p><b>Installment:</b></p>
+        <p><b>Installation:</b></p>
         <ul>
             <li><code>pip install "armory"</code></li>
         </ul>
