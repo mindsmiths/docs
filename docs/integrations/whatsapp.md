@@ -18,7 +18,7 @@ It can be used for facilitating communication with your users.
         </ul>
     </div>
     <div>
-        <p><b>Installment:</b></p>
+        <p><b>Installation:</b></p>
         <ul>
             <li><code>pip install "infobip-adapter[dev]~=5.0.0b0"</code></li>
         </ul>
@@ -42,7 +42,7 @@ Here you can find more about how to use it, what exactly can you use it for and 
 
 ## Setup
 Setting up Infobip Adapter is quick and easy, you'll just need to look for a couple of things on Infobip's portal. Follow the instructions bellow, and you'll be done with the setup in no time. 
-### Installment
+### Installation
 Start with pip installing the adapter with the following command:
 ```console
 pip install "infobip-adapter[dev]~=5.0.0b0"

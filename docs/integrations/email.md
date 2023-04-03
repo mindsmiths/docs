@@ -15,7 +15,7 @@ If your project requires sending emails, then Email Adapter is your friend. Sett
         </ul>
     </div>
     <div>
-        <p><b>Installment:</b></p>
+        <p><b>Installation:</b></p>
         <ul>
             <li><code>pip install "email-adapter[dev]~=5.0.1"</code></li>
         </ul>
@@ -38,7 +38,7 @@ Before we start with a setup process, you need to do a couple of things on your 
 5. A window with the password will pop up. Copy your password because it will be required for the setup process.
 
 
-## Installment
+## Installation
 First, install the adapter using the following command:
 ```console
 pip install "email-adapter[dev]~=5.0.1"
