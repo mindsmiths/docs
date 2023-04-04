@@ -153,19 +153,13 @@ Same goes for `chatId` and `guildId`, which is the unique identifier of the serv
 ## Incorporating multiple bots
 
 Using more than one bot in your Discord server will simplify keeping track of the communication between users and your agents.
-This also helps with the separation of concers, as each bot can be assigned to a specific task they have.
+This also helps with the separation of concerns, as each bot can be assigned to a specific task they have.
 
 For example, one bot can be used to send messages to the users, while other can be used to receive messages from the users. 
 You can also have another bot that will notify a specific persona to take action after some unexpected event.
 
 Also, Discord allows you to have a single bot on multiple servers, which is also one way for you to organize your client communication.
 
-- TODO - one bot can be on multiple servers, this is important to mention
-  TODO - we need to explain the GUILD_ID principle, when is it necessary to use it
-- explain the purpose of using multiple bots, what are the benefits of using them
-- if there are anything a dev should be aware of when using multiple bots, mention them here
-- give an example of a use case
-- it would be great to provide a picture/screenshot of a communication, so it's easier to understand how this feature works
 
 ## Discord adapter supported functions
 Here first import `com.mindsmiths.discordAdapter.DiscordAdapterAPI`
@@ -304,7 +298,7 @@ public void initialize() {
 
 This will allow you to catch the `DiscordReceivedMessage` signal in your Agent class.
 
-You can create a rule that triggers on word 'activate', which is just one of the possibilities for initializing a connection with the Discord adapter:
+You can create a rule that triggers on key-word 'activate', which is just one of the possibilities for initializing a connection with the Discord adapter:
 ```java
 import com.mindsmiths.discordAdapter.message.DiscordReceivedMessage
 ...
