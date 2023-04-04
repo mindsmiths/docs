@@ -180,3 +180,5 @@ That's it, you can now start the system! Once the model gets good enough, all th
 > 
 > Have fun!
 :::
+
+P.S. You can find the entire code on our GitHub → `https://github.com/mindsmiths/examples/tree/main/bmi-guidance`!

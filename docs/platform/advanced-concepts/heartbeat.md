@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Heartbeat
@@ -93,6 +93,24 @@ There is also a feature toggle `HeartbeatEnabled` which you can use to control h
 
 
 ## Changelog
+
+### [5.0.4] - 2023-03-02
+
+#### Changed
+- heartbeats ignore fake time to provide consistent experience when testing
+
+
+### [5.0.3] - 2023-02-24
+
+#### Fixed
+- service freeze on database failure
+
+
+### [5.0.2] - 2023-02-23
+
+#### Fixed
+- graceful shutdown on interrupt signal
+
 
 ### [5.0.1] - 2023-01-05
 

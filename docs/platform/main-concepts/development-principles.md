@@ -21,7 +21,7 @@ sidebar_position: 4
 - When it comes to **user-centricity**, optimizing for each individual user sits at the very core of the multi-agent systems.
 - Building a simulation in which you don't aim to optimize for the system as a whole - each type of agent cares for their own persona, and each agent optimizes for their specific set of goals.
 - This approach is in opposition to relying on monolithic large deep learning models trained on heaps of data for developing smart solutions. The agents pursuing their own goals should achieve the optimal performance for the system as a whole.
-- Goals and behaviours defined through our agents the capacity to have a personalized approach for every user, tuned to their history, specific situation and preferences, as opposed to predefined scripted behaviors.
+- Goals and behaviours defined through our agents possess the capacity to have a personalized approach for every user, tuned to their history, specific situation and preferences, as opposed to predefined scripted behaviors.
 - All learning and customization of the process can be done specifically for that individual user.
 
 ### Constant evaluation: Declarative programming paradigm
@@ -36,7 +36,7 @@ sidebar_position: 4
 ## Advantages of rule engines: simplification, flexibility, readability
 - The structure of rule engines enables you to break down highly complex scenarios into sets of very simple conditions and spares you the trouble of foreseeing all specific circumstances under which certain events might occur.
 - The rules themselves are written using declarative programming. This gives you much more freedom in how you structure the logic, because the rules that fire in evaluations are determined by the data.
-- The declarative programming paradigm allows you to express a piece of logic without explicitly specifying the flow of execution: the order of execution governed _only_ by the conditions the rules declare.
+- The declarative programming paradigm allows you to express a piece of logic without explicitly specifying the flow of execution: the order of execution is governed _only_ by the conditions the rules declare.
 - Each rule should be as simple as possible: they should be independent of each other, highly separable and only contain the minimal information necessary. 
 - This makes rules more easily maintainable and the system more easily extendable.
 - Moreover, together with the fact that rules are written in a sort of a "meta-language", this makes rules easy to read for people of different backgrounds.

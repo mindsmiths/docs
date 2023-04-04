@@ -23,12 +23,12 @@ public class Felix extends Agent {
         ArmoryAPI.show(
                 getConnection("armory"),
                 new Screen("welcome")
-                        .add(new Title("Hello! I’m Felix and I’m here to help you get as hot as hell! Ready?"))
+                        .add(new Title("I’m Felix and I’m here to help you get fit and healthy! Ready?"))
                         // highlight-added-line
                         .add(new Image("public/JogaPuppy.png", false))
                         .add(new SubmitButton("welcomeStarted", "Cool, let's go!", "askForName")),
                 new Screen("askForName")
-                        .add(new Title("Alright! First, tell me your name?"))
+                        .add(new Title("Alright! What's your name? 😊"))
                         .add(new Input("name", "Type your name here", "text"))
                         .add(new SubmitButton("nameSubmitted", "Done, next!"))
         );
@@ -108,3 +108,15 @@ public class Felix extends Agent {
 Hit `forge run` to try out your new features!
 
 And, that's it! Have fun building new user experiences with Armory. 
+
+P.S. You can find the entire code on our GitHub → `https://github.com/mindsmiths/examples/tree/main/felix`!
+
+:::note 
+If you want to spare some time, here you can find `Felix.drl` file → ``https://github.com/mindsmiths/examples/tree/main/felix/services/rule_engine/src/main/resources/rules/felix``, 
+and here is `Felix.java` file → ``https://github.com/mindsmiths/examples/blob/main/felix/services/rule_engine/src/main/java/agents/Felix.java``. 
+Images and `scss` file can be found here → ``https://github.com/mindsmiths/examples/tree/main/felix/services/armory``.
+:::
+
+Enjoy!
+
+

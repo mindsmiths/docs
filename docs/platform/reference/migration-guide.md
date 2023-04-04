@@ -5,6 +5,29 @@ sidebar_position: 2
 # Migration guide
 
 
+## [1.5.4 -> 1.5.5] - 2023-03-29
+Estimated migration time: 1 minute
+
+### Project template
+Add the following line to `services/rule_engine/pom.xml`:
+```xml
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+        <configuration>
+            <systemPropertyVariables>
+                // highlight-added-line
+                <projectSlug>YOUR_PROJECT_SLUG</projectSlug>
+                <buildDirectory>${project.build.directory}</buildDirectory>
+            </systemPropertyVariables>
+        </configuration>      
+    </plugin>
+```
+You can find the project slug in your `config.yaml` under `PROJECT_SLUG`.
+
+
+
 ## [1.5.0 beta -> 1.5.0] - 2022-12-21
 Estimated migration time: 5 minutes
 

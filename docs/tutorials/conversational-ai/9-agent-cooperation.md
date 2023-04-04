@@ -15,9 +15,9 @@ All we need to do is have Nola send a signal to Smith whenever a new agent of th
 
 For this we just need to define a new signal. Signals are nothing else but Java classes that contain the data we want to communicate.
 Signals directed at a particular receiver are called `Messages`.
-So let's create a new directory and file in which we'll structure our message, `models/signals/AgentCreated.java`:
+So let's create a new directory and file in which we'll structure our message, `java/signals/AgentCreated.java`:
 
-```java title="models/signals/AgentCreated.java"
+```java title="java/signals/AgentCreated.java"
 package signals;
 
 import com.mindsmiths.ruleEngine.model.Agent;
@@ -86,4 +86,11 @@ That’s it! Write **forge reset** in the Terminal first to clear the database a
 
 :::tip
 If you want to learn more about signals, check out the [documentation](/docs/platform/advanced-concepts/service-communication).
+:::
+
+P.S. You can find the entire code on our GitHub → `https://github.com/mindsmiths/examples/tree/main/nola`!
+
+:::note 
+To spare you some time - here is `Nola.drl` file → ``https://github.com/mindsmiths/examples/tree/main/nola/services/rule_engine/src/main/resources/rules/nola``, 
+and here is `Nola.java` file → ``https://github.com/mindsmiths/examples/blob/main/nola/services/rule_engine/src/main/java/agents/Nola.java``. 
 :::

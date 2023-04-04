@@ -15,15 +15,31 @@ We will use an existing integration with Telegram as a way for your system to co
 pip install "telegram-adapter[dev]"
 ```
 
-Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). To find it, just click on the contact search icon and type in "BotFather". Send the bot a message "/newbot" to create a new bot. 
+Great! You now need a Telegram bot that you can use for testing. You can create one using Telegram’s [BotFather](https://core.telegram.org/bots). 
 
-We called our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you picked.
+:::note 
+#### Here's a step-by-step guide on how to create a Telegram bot:
+
+1. Open Telegram and search for the `"BotFather"` bot.
+
+2. Type (or click on) `/start` to begin the conversation with BotFather.
+
+3. Type (or click on) `/newbot` to create a new bot.
+
+4. Follow the instructions provided by BotFather to set the name and username for your new bot. You can use any name you'd like, but the username has to be
+You will receive a token that you'll use to interact with your bot.
+:::
+
+We named our agent Nola, but this name is completely arbitrary, so feel free to choose something in line with the character you picked.
+
 
 Once you get the bot token, run the following code to integrate the telegram adapter with the platform:
 
 ```bash title="Terminal"
 telegram-adapter setup
 ```
+
+When prompted to choose which agent should be set to handle signals for the freshly made telegram bot, type in the name of your agent. In this example we are using Nola, in your example you should use your agent.
 
 You’re all set! You now have a way to communicate with the platform through your Telegram bot.
 
@@ -33,10 +49,10 @@ Now that you have the communication channel set up between Forge and the outside
 
 The only thing Nola will know how to do at first is repeat after you: whatever message you send her, she will echo the same text back. Let’s start!
 
-We start with defining the class of the agent we want to create. Next to `Smith.java`, create a new file with the agent name you picked, for example ```models/agents/Nola.java``` and paste in the following, adapting the agent name:
+We start with defining the class of the agent we want to create. Next to `Smith.java`, create a new file with the agent name you picked, for example ```java/agents/Nola.java``` and paste in the following, adapting the agent name:
 
 
-```java title="models/agents/Nola.java"
+```java title="java/agents/Nola.java"
 package agents;
 
 import com.mindsmiths.ruleEngine.model.Agent;

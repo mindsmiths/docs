@@ -53,8 +53,11 @@ So, we are making request to GPT-3 to send us a response in `"Ask GPT3 workout p
 
 Now let's add screens GPT-3 response will be shown at.
 
-```java title="rules/felix/Felix.drl"
+
+```java title="java/agents/Felix.java"
 // highlight-added-line
+import com.mindsmiths.ruleEngine.util.Log;
+import java.util.List;
 import com.mindsmiths.gpt3.GPT3AdapterAPI;
 
 ...
@@ -63,8 +66,9 @@ import com.mindsmiths.gpt3.GPT3AdapterAPI;
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class Felix extends Agent {
-    
     // highlight-added-start
+    String workoutPlan;
+    
     public void showGPT3Response() {
         ArmoryAPI.show(
             getConnection("armory"),
