@@ -10,7 +10,7 @@ In a digitized setup, this communication could occur online through a web form, 
 
 However, our aim is to go beyond simply digitizing doctor-patient communication. We want to build a more comprehensive system 
 that can help doctors manage their workload and provide personalized recommendations to patients. 
-To do this, first sep is to use a multi-agent approach to manage the complexity of the problem.
+To do this, first step is to use a multi-agent approach to manage the complexity of the problem.
 
 When dealing with realistic problems, the system's setup becomes more intricate. In such scenarios, 
 the multi-agent approach can help us manage the complexity by dividing the desired behavior into numerous agents. 
@@ -19,7 +19,7 @@ This approach allows for a more manageable and scalable system. It can handle nu
 In the following sections, we will delve deeper into the different components of the multi-agent system and explore how they work together to assist parents 
 and doctors in managing child obesity issues.
 
-![graphic](multiagents.png#center)
+![graphic](../../../static/img/tutorials/doctor-patient/multiagents.png#center)
 
 As you can see in the graphic above, there are multiple entities interacting in our system: there are multiple patients that want to get a reply from the doctor, 
 and a single doctor that needs to handle all patient queries. Each agent cares only for the needs of the user it is assigned to, instead of being concerned with searching for optimal solutions at system level.
@@ -28,17 +28,17 @@ Looking at the principles behind the implementation, there is nothing especially
 
 So instead of guiding you through typing out the code yourself, we want to draw your attention to some principles of developing smart and emotionally intelligent agents. 
 The key moment is shifting the focus to the users themselves: what would a patient want from their agent in order to feel comfortable and cared for? 
-As opposed to that, would the doctor need from their agent? Their roles in real life are different, so the logic implemented by the agents necessarily differ as well.
+As opposed to that, what would the doctor need from their agent? Their roles in real life are different, so the logic implemented by the agents necessarily differ as well.
 
 Generally speaking, we argue that there are three key components the users look for and appreciate in this kind of digital relationships:
 
-I KNOW YOU (personalized approach)
-I CARE ABOUT YOU (proactive care)
-I HAVE THE EXPERTISE (relevant expert knowledge)
+- **I KNOW YOU** _(personalized approach)_
+- **I CARE ABOUT YOU** _(proactive care)_
+- **I HAVE THE EXPERTISE** _(relevant expert knowledge)_
 
 We'll demonstrate these characteristics throughout the implementation of the communication between the agents and the users.
 
-![graphic](multiagentsystems.png#center)
+![graphic](../../../static/img/tutorials/doctor-patient/mutliagentsystem.png#center)
 
 In our mutltiagent system, there are two types of agents: one for doctors and another for patients.
 
