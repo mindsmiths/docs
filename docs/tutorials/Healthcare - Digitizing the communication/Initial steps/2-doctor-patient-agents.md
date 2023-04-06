@@ -19,7 +19,7 @@ This approach allows for a more manageable and scalable system. It can handle nu
 In the following sections, we will delve deeper into the different components of the multi-agent system and explore how they work together to assist parents 
 and doctors in managing child obesity issues.
 
-![graphic](../../../static/img/tutorials/doctor-patient/multiagents.png#center)
+![graphic](../../../../static/img/tutorials/doctor-patient/multiagents.png#center)
 
 As you can see in the graphic above, there are multiple entities interacting in our system: there are multiple patients that want to get a reply from the doctor, 
 and a single doctor that needs to handle all patient queries. Each agent cares only for the needs of the user it is assigned to, instead of being concerned with searching for optimal solutions at system level.
@@ -38,7 +38,7 @@ Generally speaking, we argue that there are three key components the users look 
 
 We'll demonstrate these characteristics throughout the implementation of the communication between the agents and the users.
 
-![graphic](../../../static/img/tutorials/doctor-patient/mutliagentsystem.png#center)
+![graphic](../../../../static/img/tutorials/doctor-patient/mutliagentsystem.png#center)
 
 In our mutltiagent system, there are two types of agents: one for doctors and another for patients.
 

@@ -5,6 +5,8 @@ sidebar_position: 7
 # Let's get rolling: BMI checkup
 
 With the onboarding and engagement processes in place, we can move on to implementing the code for the BMI checkup.
+Personalization and proactivity are immensely important, but they are just support mechanisms for improving the user experience. 
+The core functionality is still getting the patient the expert opinion on whether their child has obesity issues or not.
 
 So, let's pick up where we left off and ask the user to send us the child's weight:
 
@@ -15,7 +17,7 @@ rule "Ask for weight"
     when
         agent: Patient(waitingForAnswer == false, height != null, weight == null)
     then
-        agent.sendMessage("We can track your kid's weight together to see if there are any issues. Send me your kid's weight.");
+        agent.sendMessage("We can track your kid's weight together to see if there are any issues. Send me your child's weight.");
         modify(agent){setWaitingForAnswer(true)};
 end
 ```
@@ -55,10 +57,18 @@ public class BMIMeasurement extends Message {
 }
 ```
 
-Your Patient agent can now send the BMI data to the Doctor agent. To keep the problem "two-dimensional" (basing the doctor's decision along two axes: age and BMI), 
-we include the function for BMI calculation in the signal. 
+So, let's add a rule that sends the data to the Doctor.
 
-So, let's add a rule that sends the data to the Doctor:
+Same as before, the rule contains the verification that the received number is a valid weight value, otherwise the "Process invalid value" rule will ask the user for a different input. 
+The only other condition that needs to be satisfied is that the `height` variable is already filled in, so we are sure we’re in the context where we’re expecting to receive 
+a `weight` value. 
+
+It is actually the `then` part of the rule that is more interesting to us: there we create a new `BMIMeasurement` signal and fill it in with the necessary data 
+(age, height and weight). In the next line we then send the signal to the agent with the `Doctor.ID`.
+
+The rest of the rule is again more familiar to you: we send a "thank you" message to our user, and use modify to memorize the child’s current weight, 
+set the `lastInteractionTime` to the current time and enable proactive engagement by setting the `waitingForAnswer` flag to false. 
+After that, we delete the received message with the child’s weight.
 
 ```java title="rules/patient/Patient.drl"
 
@@ -81,11 +91,6 @@ rule "Process weight"
         delete(signal);
 end
 ```
-
-What happens here is that we receive an updated weight value, build a BMIMeasurement signal, and send it to the Doctor.
-Since we only have a single Doctor agent in this demo, we can just identify the agent by using the hardcoded static Doctor.ID. 
-Also, notice that we only use the condition height != null, so we can use the rule in every case the user sends us their child's weight, 
-regardless of the fact that this variable is already filled with some previous value.
 
 That's it! When the doctor's agent receives the signal from the Patient agent, it can decide what to do with the received data. 
 This will be our next step: implementing the processing of the received singal on the Doctor's side.

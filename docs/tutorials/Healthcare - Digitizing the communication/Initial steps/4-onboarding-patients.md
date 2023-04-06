@@ -40,53 +40,11 @@ rule "Set name"
         modify(agent) {setWaitingForAnswer(false), setName(text)};
         delete(signal);
 end
-
-////////////////////////// Getting child age//////////////////////////
-
-rule "Ask for age"
-    when
-        agent: Patient(waitingForAnswer != true, name != null, age == null)
-    then
-        agent.sendMessage(
-                String.format("Lovely, how old is %s?", agent.getName())
-        );
-        modify(agent) {setWaitingForAnswer(true)};
-end
-
-rule "Set age"
-    when
-        signal: TelegramReceivedMessage(text: text, BMIUtils.isValidAge(text)) from entry-point "signals"
-        agent: Patient(waitingForAnswer == true, name!= null, age == null)
-    then
-        modify(agent) {setWaitingForAnswer(false), setAge(Integer.parseInt(text))};
-        delete(signal);
-end
-
-////////////////////////// Getting child height //////////////////////////
-
-rule "Ask for height"
-    when
-        agent: Patient(waitingForAnswer != true, age != null, height == null)
-    then
-        agent.sendMessage(
-                String.format("And how tall is %s in cm?", agent.getName())
-        );
-        modify(agent) {setWaitingForAnswer(true)};
-end
-
-rule "Set height"
-    when
-        signal: TelegramReceivedMessage(text: text, BMIUtils.isValidHeight(text)) from entry-point "signals"
-        agent: Patient(waitingForAnswer == true, age != null, height == null)
-    then
-        modify(agent) {setWaitingForAnswer(false), setHeight(Integer.parseInt(text))};
-        delete(signal);
-end
 ```
 You'll notice we ask the user for information and store it through a series of rule pairs.
 
-Notice that the "Welcome message" and "Ask for name" rules react to the same message: since the welcome rule doesn't delete the incoming Telegram message signal, 
-the rule asking for the name fires as well right after it. We ensure this order by setting a higher salience for the welcome rule. 
+The first rule checks if the user has sent us a message. If he has, we can start with the onboarding process.
+We send the user a welcome message, and then ask them for the child's name.
 We also set the waitingForAnswer to true to indicate we're expecting some response from the user. The fact that the name is null tells us which stage we are in, 
 i.e. that we're looking to find out the child's name next.
 

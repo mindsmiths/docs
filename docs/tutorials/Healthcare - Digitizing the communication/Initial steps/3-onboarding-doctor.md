@@ -10,6 +10,12 @@ As mentioned, in this demo we're onboarding two types of users:
 - patients 
 - doctors
 
+Since we will have two types of users, each with their own agent, you will have to register two Telegram bots.
+As we suppose that you have already created one Telegram bot using the instructions from the previous tutorial, 
+you will need to find a second phone number to register the second bot. So for the purposes of this tutorial,
+we encourage you to ask your wife or husband, your son or daughter, your mother, father, neighbour, friend or enemy for 
+their phone while you are completing this tutorial.
+
 You can find the welcome rules in the corresponding `.drl` files for the two agent types (`Patient.drl` and `Doctor.drl`). 
 Let's go through doctor `.drl` and `java` files first.
 

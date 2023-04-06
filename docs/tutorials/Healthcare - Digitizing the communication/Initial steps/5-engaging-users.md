@@ -69,7 +69,6 @@ You can again control this through the input prompt you send to GPT-3, so let’
     private String name;
     private Integer age;
     private Integer height;
-    private Double weight;
     private boolean waitingForAnswer;
 
     private LocalDateTime lastInteractionTime;
