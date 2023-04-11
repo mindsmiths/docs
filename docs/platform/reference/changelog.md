@@ -5,6 +5,26 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.6.0] - 2023-04-11
+
+This release contains the following service versions:
+- `forge-sdk==5.0.8` (Python)
+- `forge-sdk==5.0.9` (Java)
+- `forge-cli==5.0.9`
+- `rule-engine==5.0.9`
+- `heartbeat==5.0.4`
+- `control-panel==0.0.1`
+- `cecs==5.0.2`
+
+Noteable changes **since 1.5.5**:
+
+### Control Panel
+
+#### Added
+- initial version (beta)
+
+
+
 ## [1.5.5] - 2023-03-29
 
 This release contains the following service versions:

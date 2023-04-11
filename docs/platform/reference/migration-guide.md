@@ -5,6 +5,73 @@ sidebar_position: 2
 # Migration guide
 
 
+## [1.5.5 -> 1.6.0] - 2023-04-11
+Estimated migration time: 5 minutes
+
+### Project template
+1. Create a new empty file `services/control_panel/configuration.yaml` (create the directory)
+2. Add the following lines to `config/config.yaml`:
+```yaml
+services:
+  ...
+// highlight-added-start
+  control-panel:
+    type: django
+    version: 0.0.1
+    https: true
+    db:
+      postgres: true
+    image:
+      static: true
+    env:
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_PASSWORD: '{{ env.CONTROL_PANEL_ADMIN_PASSWORD | default("admin") }}'
+      SITE_URL: '{{ "control-panel." + env.get("HOST_DOMAIN", "") }}'
+      INTERNAL_SITE_URL: http://control-panel
+      SECRET_KEY: KiOx1YWV1AaDdXmj6PdiFdsXi9iiGUghYskxeUxAQSAEODkB4E
+      REPO: 'https://commit-bot:{{ env.COMMIT_TOKEN }}@{{ env.get("CI_REPOSITORY_URL", "").split("@")[1] }}'
+      BRANCH: '{{ env.CI_COMMIT_BRANCH }}'
+      DATA_HASH: '{{ file_hash("services/control_panel/configuration.yaml") }}'
+    resources:
+      cpu: 25m
+      memory: 150Mi
+// highlight-added-end
+```
+3. Add the following lines to `config/local.config.yaml`:
+```yaml
+global:
+  env:
+    ...
+    REDIS_CLIENT_HOST: {{ env.REDIS_CLIENT_HOST }}
+    REDIS_CLIENT_PORT: {{ env.REDIS_CLIENT_PORT }}
+
+// highlight-added-line
+    INTERNAL_CONTROL_PANEL_URL: '{{ env.CONTROL_PANEL_URL | default("http://localhost:8100", true) }}'
+
+...
+
+services:
+
+// highlight-added-start
+  control-panel:
+    port: 8100
+    env:
+      SITE_URL: '{{ env.CONTROL_PANEL_URL | default("http://localhost:8100", true) }}'
+// highlight-added-end
+```
+4. Add the following lines to `config/production.config.yaml` **and** `config/sandbox.config.yaml`:
+```yaml
+// highlight-added-start
+services:
+
+  rule-engine:
+    env:
+      JDK_JAVA_OPTIONS: -XX:MaxHeapSize=300M
+// highlight-added-end
+```
+5. Run `forge init`
+
+
 ## [1.5.4 -> 1.5.5] - 2023-03-29
 Estimated migration time: 1 minute
 
