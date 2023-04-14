@@ -27,7 +27,7 @@ Let us know on our Discord server if you have any suggestions or feedback.
 On the agent management page, you can see all your agents and their lock state.
 
 The agent details view shows the agent's connections by default. You can customize this view by clicking on the cog icon in the top right corner, and adding a regex.
-For example, if your agent has an `accessToken` field, you can add it to the view with this regex: `/accessToken"."([a-zA-Z0-9]+)"/gm`
+For example, if your agent has an `name` field, you can add it to the view with this regex: `/name"."([a-zA-Z0-9]+)"/gm`
 
 
 ## Configuration
@@ -40,31 +40,47 @@ You can use this feature to dynamically change certain parameters in your projec
 ### Using the configuration
 First make sure you have `control-panel-api` (Python) or `control-panel-client` (Java) in your dependencies.
 
-After that, you just need to create a `ConfigClient` instance and call `get` with the key you want to retrieve.
-`ConfigClient` is a singleton, so you don't have to worry about creating multiple instances.
+After that, you just need to call `Config.get(key)` with the key you want to retrieve.
 
-During the first instantiation, it makes a GET request to fetch the configuration, and starts a message consumer in a new thread to listen for any changes.
+On first use, it makes a GET request to fetch the configuration, and starts a message consumer in a new thread to listen for any changes.
 After that, it is cached in memory, so you don't have to worry about performance.
 Make sure you have the control panel service running, otherwise it will retry the request and eventually throw an exception.
 
 #### Python
 ```python
-from control_panel.api import ConfigClient
+from control_panel.api import Config
 
-config = ConfigClient()
-config.get("myKey")
+Config.get("key")
+Config.get("key", "default")
+```
+
+You can also get nested values using dot notation:
+```python
+Config.get("screens.0.header.text")
 ```
 
 #### Java
 ```java
-import com.mindsmiths.controlPanel.ConfigClient;
+import com.mindsmiths.controlPanel.Config;
 
-ConfigClient config = new ConfigClient();
-config.get("myKey");
+Config.get("key");
+Config.get("key", "default", String.class);
+Config.get("screens.0.header.text", String.class);
 ```
 
 
 ## Changelog
+
+## [0.0.2] - 2023-04-14
+
+### Fixed
+- reading YAML with Jinja2 tags in values
+- removed excess logging
+
+### Added
+- `Config` static class for ease of use
+- nested "dot" get
+
 
 ### [0.0.1] - 2023-04-11
 
