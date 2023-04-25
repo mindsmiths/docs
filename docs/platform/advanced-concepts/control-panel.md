@@ -71,13 +71,23 @@ Config.get("screens.0.header.text", String.class);
 
 ## Changelog
 
-## [0.0.2] - 2023-04-14
+### [0.0.3] - 2023-04-25
 
-### Fixed
+#### Added
+- terminal (alpha)
+- send heartbeat action
+- agent details config example
+- panel disconnected warning
+- minor fixes
+
+
+### [0.0.2] - 2023-04-14
+
+#### Fixed
 - reading YAML with Jinja2 tags in values
 - removed excess logging
 
-### Added
+#### Added
 - `Config` static class for ease of use
 - nested "dot" get
 

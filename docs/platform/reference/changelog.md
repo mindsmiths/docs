@@ -5,6 +5,49 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.6.1] - 2023-04-25
+
+This release contains the following service versions:
+- `forge-sdk==5.0.9` (Python)
+- `forge-sdk==5.0.10` (Java)
+- `forge-cli==5.0.10`
+- `rule-engine==5.0.10`
+- `heartbeat==5.0.4`
+- `control-panel==0.0.3`
+- `cecs==5.0.2`
+
+Noteable changes **since 1.6.0**:
+
+### CLI
+
+#### Fixed
+- hang after a failed build
+
+
+### Control Panel
+
+#### Added
+- terminal (alpha)
+- send heartbeat action
+
+
+### Rule Engine
+
+#### Added
+- `Agents.deleteAgent(agentId)`
+- `Agents.getCreateOrDelete`
+- `Agents.getCreateOrDeleteByConnection`
+- utilities for agent tests (`assertRuleFired`, `assertRuleNotFired`, `getFactsOfType`, ...)
+- `Agent.removeConnection`
+
+
+### Java SDK
+
+#### Added
+- `Utils.setFakeTime` for tests
+
+
+
 ## [1.6.0] - 2023-04-11
 
 This release contains the following service versions:

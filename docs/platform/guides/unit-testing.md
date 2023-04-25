@@ -92,7 +92,7 @@ public class TestSmithWithSummary extends AgentTest {
     @Test
     public void testHeartbeat() {
         AgentTestResult<Smith> result = runFromSummary("smith/test_heartbeat.json");
-        assertTrue(result.getRulesFired().contains("Heartbeat"));
+        result.assertRuleFired("Heartbeat");
     }
 }
 ```
@@ -121,7 +121,7 @@ public class TestSmith extends AgentTest {
     @Test
     public void testHeartbeat() {
         AgentTestResult<Smith> result = run(new Smith(), List.of());
-        assertTrue(result.getRulesFired().contains("Heartbeat"));
+        result.assertRuleFired("Heartbeat");
     }
 }
 ```

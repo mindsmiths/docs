@@ -476,3 +476,286 @@ Utils.datetimeInTimezone(localDateTime, timezone)
 localDateTime.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of(timezone))
 ```
 You can convert the resulting `ZonedDateTime` to a `LocalDateTime` with `zonedDateTime.toLocalDateTime()`, which discards the timezone information, but retains the date and time.
+
+
+## Changelog
+
+### [5.0.10] - 2023-04-25
+
+#### Added
+- `Agents.deleteAgent(agentId)`
+- `Agents.getCreateOrDelete`
+- `Agents.getCreateOrDeleteByConnection`
+- utilities for agent tests (`assertRuleFired`, `assertRuleNotFired`, `getFactsOfType`, ...)
+- `Agent.removeConnection`
+
+#### Changed
+- using `forge-sdk==5.0.10`
+
+
+### [5.0.9] - 2023-03-30
+
+#### Fixed
+- connection errors for Redis and Mongo when unit testing agents
+
+
+### [5.0.8] - 2023-03-28
+
+#### Added
+- unit testing agents with `AgentTest`
+
+#### Changed
+- using `forge-sdk==5.0.8`
+
+
+### [5.0.7] - 2023-03-16
+
+#### Changed
+- using `forge-sdk==5.0.7` (which fixes PostHog)
+
+
+### [5.0.6] - 2023-02-24
+
+#### Changed
+- using `forge-sdk==5.0.6` (which fixes fake time)
+
+
+### [5.0.5] - 2023-02-23
+
+#### Added
+- `RuleEngineAPI.removePendingSignals` to remove pending signals from an agent
+
+
+### [5.0.4] - 2023-02-14
+
+#### Fixed
+- `IllegalStateException` when shutting down
+
+
+### [5.0.3] - 2023-01-23
+
+#### Fixed
+- `UnsupportedOperationException` when there were pending signals
+- `IllegalStateException` when shutting down
+- emitting agent data changes only when there were changes
+
+#### Changed
+- using `forge-sdk==5.0.3`
+
+
+### [5.0.2] - 2023-01-16
+
+#### Fixed
+- reverted to using exact dependency versions since intervals caused build issues
+
+
+### [5.0.1] - 2023-01-05
+
+#### Added
+- logs now include the agent ID during agent evaluation
+- when running locally, all agents are now unlocked when the rule engine starts
+- `Salience` enum to allow for more readable salience values
+
+#### Changed
+- most dependencies are now intervals instead of exact versions
+- agent IDs have 16 characters by default (instead of 8)
+
+#### Removed
+- `CutelogLayout`
+
+
+### [5.0.0] - 2022-12-09
+
+#### Changed
+- compatible with SDK 5.0
+
+
+### [5.0.0b5] - 2022-12-08
+
+#### Changed
+- deprecated `Agent.addConnection` (use `Agent.setConnection`)
+- upgraded dependencies (`forge-sdk==5.0.0b1`, `io.github.classgraph==4.8.151`)
+
+#### Removed
+- `json-simple` dependency
+
+
+### [5.0.0b4] - 2022-11-15
+
+#### Added
+- stopping agent evaluation with `Agents.stopEvaluation()`
+- `unlockAllAgents` and `lockAllAgents` APIs
+
+
+### [5.0.0b3] - 2022-11-15
+
+#### Added
+- `GetAgentByConnection` for `signals.yaml`
+
+
+### [5.0.0b2] - 2022-11-14
+
+#### Fixed
+- `ConncurrentModificationExeption` when clearing entry points
+
+
+### [5.0.0b1] - 2022-11-09
+
+#### Fixed
+- `getByConnection` and `getOrCreateByConnection` now return the correct agent instance instead of a generic `Agent`
+
+
+### [5.0.0b0] - 2022-10-19
+
+#### Changed
+- `GetOrCreateByConnection` can recursively find fields
+- `Agents.getOrCreateByConnection` automatically sets the connection when creating agent
+
+#### Added
+- `GetOrCreate` strategy
+
+
+### [5.0.0a11] - 2022-10-17
+
+#### Changed
+- Agents have a random `id` by default
+- using `forge-sdk==5.0.0a8`
+
+
+### [5.0.0a10] - 2022-10-13
+
+#### Fixed
+- data change events now also insert the object and change type into the session
+
+
+### [5.0.0a9] - 2022-10-12
+
+#### Fixed
+- subscriptions now handle `null` correctly
+
+#### Added
+- data change events now also insert the object and change type into the session
+
+
+### [5.0.0a8] - 2022-10-11
+
+#### Changed
+- project MUST include `kmodule.xml` (BREAKING)
+
+#### Fixed
+- signals sometimes wouldn't be inserted into the session correctly
+
+
+### [5.0.0a7] - 2022-10-06
+
+#### Changed
+- using `forge-sdk==5.0.0a6`
+
+
+### [5.0.0a6] - 2022-10-05
+
+#### Fixed
+- "empty object is not a valid value" error
+
+
+### [5.0.0a5] - 2022-10-03
+
+#### Changed
+- using `forge-sdk==5.0.0a5`
+
+
+### [5.0.0a4] - 2022-09-21
+
+#### Changed
+- using `forge-sdk==5.0.0a4`
+
+
+### [5.0.0a3] - 2022-09-19
+
+#### Changed
+- using `forge-sdk==5.0.0a3`
+
+
+### [5.0.0a2] - 2022-09-15
+
+#### Changed
+- using `forge-sdk==5.0.0a2`
+
+
+### [5.0.0a1] - 2022-09-07
+
+#### Changed
+- using the "address" concept when messaging
+
+
+### [4.0.0a21] - 2022-09-13
+
+#### Changed
+- using `forge-sdk==4.0.0a11`
+
+
+### [4.0.0a20] - 2022-06-22
+
+#### Added
+- `Agents.getOrCreate`
+
+#### Changed
+- `Agents.getOrCreateByConnection` needs an Agent instance instead of class
+- `util.Util` removed (functionality moved to `forge-sdk`)
+- using `forge-sdk==4.0.0a10`
+
+
+### [4.0.0a19] - 2022-06-14
+
+#### Fixed
+- updating the `agent` collection on changes to the agent
+
+
+### [4.0.0a18] - 2022-06-13
+
+#### Added
+- `agentId` index for the summary collection
+- `drools_processing` metric
+
+#### Changed
+- (!) rule packages no longer ignore the "Agent" suffix - they need to be the same as the agent's class (ignoring case)
+- `entryPoint` in subscriptions is now required
+- `deleteAgent` doesn't throw an error if the agent doesn't exist
+- using `forge-sdk==4.0.0a9`
+
+#### Removed
+- facts annotated with `DataModel` are no longer saved/updated in their own collections
+
+
+### [4.0.0a17] - 2022-06-07
+
+#### Fixed
+- `Agents.get` returns the agent in the correct class
+
+#### Added
+- APIs for creating, updating and deleting agents
+- API for sending signals to agents
+- Signals and agents are automatically registered and converted
+
+#### Changed
+- using `forge-sdk==4.0.0a8`
+
+#### Removed
+- `className` field on `Agent`
+
+
+### [4.0.0a16] - 2022-05-20
+
+#### Added
+- Infinite loop guard (limits number of rule firings)
+
+#### Changed
+- New fact serialization method (fixes problems with `JsonNode`)
+- Updated `forge-sdk` to `4.0.0a7`
+- Updated `drools` to `7.68.0.Final`
+
+
+### [4.0.0a0] - 2022-02-04
+
+#### Added
+- `UserEvaluation` API
