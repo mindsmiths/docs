@@ -5,7 +5,8 @@ sidebar_position: 3
 # SMS
 
 Infobip Adapter enables sending and receiving SMS messages by using [Infobip's APIs](https://www.infobip.com/docs/api/channels/sms) and integrating it with the Platform. 
-It can be used for facilitating communication with your users.
+It can be used for facilitating communication with your users. Keep in mind that in order to avoid blacklisting and filtering, [appropriate number type](https://www.infobip.com/docs/api/platform/numbers) should be used and [registered](https://www.infobip.com/docs/api/platform/numbers/number-registration).
+We recommend using A2P 10DLC for US.
 
 <details>
   <summary>Setup details</summary>
@@ -36,7 +37,8 @@ If your project involves direct communication with your users and you want to us
 Here you can find more about how to use it, what exactly can you use it for and how can you set it up in your project.
 
 ## Core features
-- Sending fully-featured textual messages with or without shortening URL for the attached links to users
+- Sending fully-featured SMS textual messages with or without shortening URL for the attached links to users
+- Receiving SMS textual messages from users
 - Receiving delivery reports for messages sent (eg. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED)
 
 ## Setup
