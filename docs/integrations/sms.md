@@ -70,68 +70,59 @@ In the following example, we'll show you how to set up a simple rule for receivi
 Please note that the link **will not** be shortened by **default**, but you can use Infobip's URL shortener by adding **true** as the last parameter in the **sendSmsTextMessage** function.
 For more information on the domains used to shorten your links, please visit [Default URL Shortening](https://www.infobip.com/docs/url-shortening#default-url-shortening-how-url-shortening-works)
 
-<details>
-  <summary>These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.</summary>
-  <div>
-    <div><p><b>class InfobipSmsSentMessage(Event):</b></p>
-        <ul>
-            <li>from_: str = Field(None, alias='from')</li>
-            <li>to: str</li>
-            <li>messageId: str</li>
-            <li>text: str</li>
-            <li>callbackData: Optional[str] = None</li>
-        </ul>
-    </div>
-    <div><p><b>class InfobipSmsReceivedMessage(Event):</b></p>
-        <ul>
-            <li>from_: str = Field(None, alias='from')</li>
-            <li>to: str</li>
-            <li>messageId: str</li>
-            <li>text: str</li>
-            <li>cleanText: str</li>
-            <li>keyword: str</li>
-            <li>receivedAt: datetime</li>
-        </ul>
-    </div>
-    <div><p><b>class InfobipSmsReceivedReport(Event):</b></p>
-        <ul>
-            <li>to: str</li>
-            <li>sentAt: datetime</li>
-            <li>doneAt: datetime</li>
-            <li>status: ReportStatus</li>
-            <li>error: ReportError</li>
-        </ul>
-    </div>
-  </div>
-</details>
-<details>
-  <summary>These are Data Models for SMS Received Messages and Delivery Reports with Endpoints</summary>
-  <div>
-    <div><p><b>SMS messages that you receive will be directed to the endpoint /sms-received-message.</b></p>
-    <p><b>class SmsReceivedMessage(DataModel):</b></p>
-        <ul>
-            <li>from_: str = Field(None, alias='from')</li>
-            <li>to: str</li>
-            <li>messageId: str</li>
-            <li>text: str</li>
-            <li>cleanText: str</li>
-            <li>keyword: str</li>
-            <li>receivedAt: datetime</li>
-        </ul>
-    </div>
-    <div><p><b>Delivery reports will be directed to the endpoint /sms-delivery-report.</b></p>
-    <p><b>class SmsReceivedReport(DataModel):</b></p>
-        <ul>
-            <li>messageId: str</li>
-            <li>to: str</li>
-            <li>sentAt: datetime</li>
-            <li>doneAt: datetime</li>
-            <li>status: ReportStatus</li>
-            <li>error: ReportError</li>
-        </ul>
-    </div>
-  </div>
-</details>
+<br></br>
+**These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.**
+```console
+class InfobipSmsSentMessage(Event):
+    from_: str = Field(None, alias='from')
+    to: str
+    messageId: str
+    text: str
+    callbackData: Optional[str] = None
+```
+```console
+class InfobipSmsReceivedMessage(Event):
+    from_: str = Field(None, alias='from')
+    to: str
+    messageId: str
+    text: str
+    cleanText: str
+    keyword: str
+    receivedAt: datetime
+```
+```console
+class InfobipSmsReceivedReport(Event):
+    to: str
+    sentAt: datetime
+    doneAt: datetime
+    status: ReportStatus
+    error: ReportError
+```
+<br></br>
+**These are Data Models for SMS Received Messages and Delivery Reports with Endpoints.**
+
+SMS messages that you receive will be directed to the endpoint /sms-received-message
+```console
+class SmsReceivedMessage(DataModel):
+    from_: str = Field(None, alias='from')
+    to: str
+    messageId: str
+    text: str
+    cleanText: str
+    keyword: str
+    receivedAt: datetime
+```
+<br></br>
+Delivery reports will be directed to the endpoint /sms-delivery-report
+```console
+class SmsReceivedReport(DataModel):
+    messageId: str
+    to: str
+    sentAt: datetime
+    doneAt: datetime
+    status: ReportStatus
+    error: ReportError
+```
 
 To begin, it is important to outline certain guidelines regarding the process of **URL shortening**:
 
@@ -140,7 +131,7 @@ To begin, it is important to outline certain guidelines regarding the process of
 - Infobip **advises against** using **3rd party URL shorteners**, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
 - By default, the **shortenUrl** parameter is set to **false**, meaning that your URL will **not** be shortened.
 - If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling InfobipAdapterAPI.sendSmsTextMessage(phone, text, **true**).
-
+<br></br>
 ```console
 rule "Example rule for sending sms messages"
     when
