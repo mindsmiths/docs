@@ -55,7 +55,7 @@ For retrieving the API key, go to the [Infobip Portal](https://portal.infobip.co
 #### INFOBIP_PHONE_NUMBER{#infobip-phone-num}
 Add your phone number used as sender - go to the [Infobip Portal](https://portal.infobip.com/apps/sms) and copy your phone number (eg. 38598123456)
 #### INFOBIP_MESSAGE_RECEIVING_BASE_URL{#infobip-message-receiving_base_url}
-For receiving SMS messages and SMS delivery reports - make sure to set your receiving base URL here.
+Set your receiving base URL for SMS messages and delivery reports to: INFOBIP_MESSAGE_RECEIVING_BASE_URL.
 
 When you have everything ready, you can start with the setup:
 ```console
@@ -66,6 +66,7 @@ infobip-adapter setup
 Using **Infobip Adapter** is easy!
 In the following example, we'll show you how to set up a simple rule for receiving an **SMS message** from a user, and replying to it with a **custom message** and a **link**.
 Please note that the link **will not** be shortened by **default**, but you can use Infobip's URL shortener by adding **true** as the last parameter in the **sendSmsTextMessage** function.
+For more information on the domains used to shorten your links, please visit [Default URL Shortening](https://www.infobip.com/docs/url-shortening#default-url-shortening-how-url-shortening-works)
 
 <details>
   <summary>These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.</summary>
@@ -134,7 +135,7 @@ To begin, it is important to outline certain guidelines regarding the process of
 
 - Shortening your URLs is crucial as SMS messages have a **160-character limit**.
 - Studies reveal that users are wary of long URLs with multiple parameters, which they deem untrustworthy and spammy, causing them to hesitate and decrease click-through rates.
-- Infobip advises **against** using 3rd party URL shorteners, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
+- Infobip **advises against** using **3rd party URL shorteners**, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
 - By default, the **shortenUrl** parameter is set to **false**, meaning that your URL will **not** be shortened.
 - If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling InfobipAdapterAPI.sendSmsTextMessage(phone, text, **true**).
 
