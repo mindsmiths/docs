@@ -16,7 +16,7 @@ We recommend using A2P 10DLC for US.
             <li>INFOBIP_BASE_URL</li>
             <li>INFOBIP_API_KEY</li>
             <li>INFOBIP_PHONE_NUMBER</li>
-            <li>INFOBIP_MESSAGE_RECEIVING_BASE_URL</li>
+            <li>INFOBIP_ADAPTER_BASE_URL</li>
         </ul>
     </div>
     <div>
@@ -56,7 +56,7 @@ Go to the [Infobip API docs](https://www.infobip.com/docs/api), log in to your a
 For retrieving the API key, go to the [Infobip Portal](https://portal.infobip.com/login/?callback=https%3A%2F%2Fportal.infobip.com%2Fdev%2Fapi-keys) and generate a new API key with role set to **Public API**.
 #### INFOBIP_PHONE_NUMBER{#infobip-phone-num}
 Add your phone number used as sender - go to the [Infobip Portal](https://portal.infobip.com/apps/sms) and copy your phone number (eg. 38598123456)
-#### INFOBIP_MESSAGE_RECEIVING_BASE_URL{#infobip-message-receiving_base_url}
+#### INFOBIP_ADAPTER_BASE_URL{#infobip-adapter-base-url}
 Set your receiving base URL for SMS messages and delivery reports to: INFOBIP_MESSAGE_RECEIVING_BASE_URL.
 
 When you have everything ready, you can start with the setup:
@@ -94,7 +94,9 @@ end
 InfobipAdapterAPI.sendSmsTextMessage(phone, text, true)
 ```
 
-**These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.**
+<details>
+<summary>These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.</summary>
+
 ```console
 class InfobipSmsSentMessage(Event):
     from_: str = Field(None, alias='from')
@@ -121,10 +123,13 @@ class InfobipSmsReceivedReport(Event):
     status: ReportStatus
     error: ReportError
 ```
+</details>
 
 **These are Data Models for SMS Received Messages and Delivery Reports with Endpoints.**
 
-**SMS messages** that you receive will be directed to the endpoint /sms-received-message
+<details>
+<summary>SMS messages that you receive will be directed to the endpoint /sms-received-message</summary>
+
 ```console
 class SmsReceivedMessage(DataModel):
     from_: str = Field(None, alias='from')
@@ -134,9 +139,13 @@ class SmsReceivedMessage(DataModel):
     cleanText: str
     keyword: str
     receivedAt: datetime
-```
 
-**Delivery reports** will be directed to the endpoint /sms-delivery-report
+```
+</details>
+
+<details>
+<summary>Delivery reports will be directed to the endpoint /sms-delivery-report</summary>
+
 ```console
 class SmsReceivedReport(DataModel):
     messageId: str
@@ -145,4 +154,12 @@ class SmsReceivedReport(DataModel):
     doneAt: datetime
     status: ReportStatus
     error: ReportError
+
 ```
+</details>
+
+To receive text messages from a specific number on Infobip, you need to create a **webhook URL**. This URL is created by combining your **INFOBIP_ADAPTER_BASE_URL** with **/sms-received-message** endpoint.
+
+For example, if your **INFOBIP_ADAPTER_BASE_URL** is "https://infobip_adapter_base_url.com", then your webhook URL would be "https://infobip_adapter_base_url.com/sms_received_message".
+
+After creating your webhook URL, set it up on Infobip's platform for the specific number you want to receive messages from. You can do this by accessing the [Infobip portal](https://portal.infobip.com/apps/sms).
