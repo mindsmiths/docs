@@ -70,7 +70,30 @@ In the following example, we'll show you how to set up a simple rule for receivi
 Please note that the link **will not** be shortened by **default**, but you can use Infobip's URL shortener by adding **true** as the last parameter in the **sendSmsTextMessage** function.
 For more information on the domains used to shorten your links, please visit [Default URL Shortening](https://www.infobip.com/docs/url-shortening#default-url-shortening-how-url-shortening-works)
 
-<br></br>
+```console
+rule "Example rule for sending sms messages"
+    when
+        signal: InfobipSmsReceivedMessage() from entry-point "signals"
+        ClientAgent(phone: getConnection("phone"))
+    then
+
+        String text = "This is a text message with a test link!! " + "https://media.licdn.com/dms/image/C560BAQHs7NgrupDBzA/company-logo_200_200/0/1585518354036?e=2147483647&v=beta&t=DP90UsvlwvWy78Hx4Herv82QLqVwtuptG1ZC8vLVQXM";
+        InfobipAdapterAPI.sendSmsTextMessage(phone, text);
+        delete(signal);
+end
+```
+
+**It is important to outline certain guidelines regarding the process of URL shortening**:
+
+- Shortening your URLs is crucial as SMS messages have a **160-character limit**.
+- Studies reveal that users are wary of long URLs with multiple parameters, which they deem untrustworthy and spammy, causing them to hesitate and decrease click-through rates.
+- Infobip **advises against** using **3rd party URL shorteners**, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
+- By default, the **shortenUrl** parameter is set to **false**, meaning that your URL will **not** be shortened.
+- If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling 
+```console
+InfobipAdapterAPI.sendSmsTextMessage(phone, text, true)
+```
+
 **These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.**
 ```console
 class InfobipSmsSentMessage(Event):
@@ -98,10 +121,10 @@ class InfobipSmsReceivedReport(Event):
     status: ReportStatus
     error: ReportError
 ```
-<br></br>
+
 **These are Data Models for SMS Received Messages and Delivery Reports with Endpoints.**
 
-SMS messages that you receive will be directed to the endpoint /sms-received-message
+**SMS messages** that you receive will be directed to the endpoint /sms-received-message
 ```console
 class SmsReceivedMessage(DataModel):
     from_: str = Field(None, alias='from')
@@ -112,8 +135,8 @@ class SmsReceivedMessage(DataModel):
     keyword: str
     receivedAt: datetime
 ```
-<br></br>
-Delivery reports will be directed to the endpoint /sms-delivery-report
+
+**Delivery reports** will be directed to the endpoint /sms-delivery-report
 ```console
 class SmsReceivedReport(DataModel):
     messageId: str
@@ -122,25 +145,4 @@ class SmsReceivedReport(DataModel):
     doneAt: datetime
     status: ReportStatus
     error: ReportError
-```
-
-To begin, it is important to outline certain guidelines regarding the process of **URL shortening**:
-
-- Shortening your URLs is crucial as SMS messages have a **160-character limit**.
-- Studies reveal that users are wary of long URLs with multiple parameters, which they deem untrustworthy and spammy, causing them to hesitate and decrease click-through rates.
-- Infobip **advises against** using **3rd party URL shorteners**, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
-- By default, the **shortenUrl** parameter is set to **false**, meaning that your URL will **not** be shortened.
-- If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling InfobipAdapterAPI.sendSmsTextMessage(phone, text, **true**).
-<br></br>
-```console
-rule "Example rule for sending sms messages"
-    when
-        signal: InfobipSmsReceivedMessage() from entry-point "signals"
-        ClientAgent(phone: getConnection("phone"))
-    then
-
-        String text = "This is a text message with a test link!! " + "https://media.licdn.com/dms/image/C560BAQHs7NgrupDBzA/company-logo_200_200/0/1585518354036?e=2147483647&v=beta&t=DP90UsvlwvWy78Hx4Herv82QLqVwtuptG1ZC8vLVQXM";
-        InfobipAdapterAPI.sendSmsTextMessage(phone, text);
-        delete(signal);
-end
 ```
