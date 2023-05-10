@@ -160,6 +160,6 @@ class SmsReceivedReport(DataModel):
 
 To receive text messages from a specific number on Infobip, you need to create a **webhook URL**. This URL is created by combining your **INFOBIP_ADAPTER_BASE_URL** with **/sms-received-message** endpoint.
 
-For example, if your **INFOBIP_ADAPTER_BASE_URL** is "https://infobip_adapter_base_url.com", then your webhook URL would be "https://infobip_adapter_base_url.com/sms_received_message".
+For example, if your **INFOBIP_ADAPTER_BASE_URL** is **https://infobip_adapter_base_url.com**, then your webhook URL would be **https://infobip_adapter_base_url.com/sms_received_message**.
 
 After creating your webhook URL, set it up on Infobip's platform for the specific number you want to receive messages from. You can do this by accessing the [Infobip portal](https://portal.infobip.com/apps/sms).
