@@ -5,8 +5,14 @@ sidebar_position: 3
 # SMS
 
 Infobip Adapter enables sending and receiving SMS messages by using [Infobip's APIs](https://www.infobip.com/docs/api/channels/sms) and integrating it with the Platform. 
-It can be used for facilitating communication with your users. Keep in mind that in order to avoid blacklisting and filtering, [appropriate number type](https://www.infobip.com/docs/api/platform/numbers) should be used and [registered](https://www.infobip.com/docs/api/platform/numbers/number-registration).
-We recommend using A2P 10DLC for US.
+It can be used for facilitating communication with your users. 
+
+:::note
+
+Remember, it's crucial to ensure you don't get blacklisted or filtered. To do this, you should use and register the [appropriate type of number](https://www.infobip.com/docs/api/platform/numbers). 
+We particularly suggest the use of A2P 10DLC for those operating within the United States.
+
+:::
 
 <details>
   <summary>Setup details</summary>
@@ -37,9 +43,10 @@ If your project involves direct communication with your users and you want to us
 Here you can find more about how to use it, what exactly can you use it for and how can you set it up in your project.
 
 ## Core features
-- Sending fully-featured SMS textual messages with or without shortening URL for the attached links to users
+- Sending SMS textual messages with URL shortening
+- Sending SMS textual messages without URL shortening
 - Receiving SMS textual messages from users
-- Receiving delivery reports for messages sent (eg. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED)
+- Receiving delivery reports for messages sent to user(eg. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED)
 
 ## Setup
 Setting up Infobip Adapter is quick and easy, you'll just need to look for a couple of things on Infobip's portal. Follow the instructions bellow, and you'll be done with the setup in no time. 
@@ -67,8 +74,13 @@ infobip-adapter setup
 ## How to use Infobip Adapter
 Using **Infobip Adapter** is easy!
 In the following example, we'll show you how to set up a simple rule for receiving an **SMS message** from a user, and replying to it with a **custom message** and a **link**.
+
+:::note
+
 Please note that the link **will not** be shortened by **default**, but you can use Infobip's URL shortener by adding **true** as the last parameter in the **sendSmsTextMessage** function.
 For more information on the domains used to shorten your links, please visit [Default URL Shortening](https://www.infobip.com/docs/url-shortening#default-url-shortening-how-url-shortening-works)
+
+:::
 
 ```console
 rule "Example rule for sending sms messages"
@@ -82,6 +94,7 @@ rule "Example rule for sending sms messages"
         delete(signal);
 end
 ```
+:::caution
 
 **It is important to outline certain guidelines regarding the process of URL shortening**:
 
@@ -89,10 +102,13 @@ end
 - Studies reveal that users are wary of long URLs with multiple parameters, which they deem untrustworthy and spammy, causing them to hesitate and decrease click-through rates.
 - Infobip **advises against** using **3rd party URL shorteners**, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
 - By default, the **shortenUrl** parameter is set to **false**, meaning that your URL will **not** be shortened.
-- If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling 
+- If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling
+
 ```console
 InfobipAdapterAPI.sendSmsTextMessage(phone, text, true)
 ```
+
+:::
 
 <details>
 <summary>These event classes are used to represent incoming and outgoing SMS messages, as well as delivery reports.</summary>
