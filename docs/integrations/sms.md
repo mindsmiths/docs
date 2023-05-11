@@ -4,13 +4,12 @@ sidebar_position: 3
 
 # SMS
 
-Infobip Adapter enables sending and receiving SMS messages by using [Infobip's APIs](https://www.infobip.com/docs/api/channels/sms) and integrating it with the Platform. 
+**Infobip Adapter** enables sending and receiving SMS messages by using [Infobip's APIs](https://www.infobip.com/docs/api/channels/sms) and integrating it with the Platform. 
 It can be used for facilitating communication with your users. 
 
 :::note
 
-Remember, it's crucial to ensure you don't get blacklisted or filtered. To do this, you should use and [register](https://www.infobip.com/docs/10dlc/10dlc-registration) the [appropriate type of number](https://www.infobip.com/docs/api/platform/numbers). 
-We particularly suggest the use of A2P 10DLC for those operating within the United States. 
+Remember, it's crucial to ensure you don't get blacklisted or filtered. To do this, you should use and [register](https://www.infobip.com/docs/10dlc/10dlc-registration) the [appropriate type of number](https://www.infobip.com/docs/api/platform/numbers).
 
 :::
 
@@ -54,13 +53,6 @@ Here you can find more about how to use it, what exactly can you use it for and 
 
 :::tip
 
-If `INFOBIP_SMS_DELIVERY_REPORTING_ENABLED` has no value set, it will default to **false** and will **not** 
-shorten the **URL** inside the text body of the SMS message.
-
-:::
-
-:::tip
-
 **Number Formatting**
 
 It is **strongly recommended** to use the **E.164** number format. **E.164** numbers are internationally standardized to a **15-digit max. length**.
@@ -87,11 +79,11 @@ Go to the [Infobip API docs](https://www.infobip.com/docs/api), log in to your a
 #### INFOBIP_API_KEY{#infobip-api-key}
 For retrieving the API key, go to the [Infobip Portal](https://portal.infobip.com/login/?callback=https%3A%2F%2Fportal.infobip.com%2Fdev%2Fapi-keys) and generate a new API key with role set to **Public API**.
 #### INFOBIP_PHONE_NUMBER{#infobip-phone-num}
-Add your phone number used as sender - go to the [Infobip Portal](https://portal.infobip.com/apps/sms) and copy your phone number (eg. 38598123456)
+Add your phone number used as sender - go to the [Infobip Portal](https://portal.infobip.com/apps/sms) and copy your phone number (eg. **38598123456**)
 #### INFOBIP_ADAPTER_BASE_URL{#infobip-adapter-base-url}
-Set your receiving base URL for SMS messages and delivery reports to: INFOBIP_MESSAGE_RECEIVING_BASE_URL.
+If needed, you can set **custom URL** for receiving **SMS messages** and **delivery reports** using ```INFOBIP_ADAPTER_BASE_URL```.
 
-When you have everything ready, you can start with the setup:
+When you have everything ready, you can start with the **setup**:
 ```console
 infobip-adapter setup
 ```
@@ -99,13 +91,6 @@ infobip-adapter setup
 ## How to use Infobip Adapter
 Using **Infobip Adapter** is easy!
 In the following example, we'll show you how to set up a simple rule for receiving an **SMS message** from a user, and replying to it with a **custom message** and a **link**.
-
-:::note
-
-Please note that the link **will not** be shortened by **default**, but you can use Infobip's URL shortener by adding **true** as the last parameter in the **sendSmsTextMessage** function.
-For more information on the domains used to shorten your links, please visit [Default URL Shortening](https://www.infobip.com/docs/url-shortening#default-url-shortening-how-url-shortening-works)
-
-:::
 
 ```console
 rule "Example rule for replying to received SMS messages"
@@ -119,6 +104,21 @@ rule "Example rule for replying to received SMS messages"
         delete(signal);
 end
 ```
+
+:::note
+
+Please note that the link **will not** be shortened by **default**, but you can use **Infobip's URL shortener** by adding **true** as the last parameter in the **sendSmsTextMessage** function.
+
+
+```console
+InfobipAdapterAPI.sendSmsTextMessage(phone, text, true)
+```
+
+For more information on the domains used to shorten your links, please visit [Default URL Shortening](https://www.infobip.com/docs/url-shortening#default-url-shortening-how-url-shortening-works)
+
+
+:::
+
 :::caution
 
 **It is important to outline certain guidelines regarding the process of URL shortening**:
@@ -127,11 +127,7 @@ end
 - Studies reveal that users are wary of long URLs with multiple parameters, which they deem untrustworthy and spammy, causing them to hesitate and decrease click-through rates.
 - Infobip **advises against** using **3rd party URL shorteners**, as they may be blacklisted by mobile network operators or spam filters, leading to your messages being blocked or labeled as spam.
 - By default, the **shortenUrl** parameter is set to **false**, meaning that your URL will **not** be shortened.
-- If a URL exceeds **23 characters**, simply add **true** as the last parameter when calling
-
-```console
-InfobipAdapterAPI.sendSmsTextMessage(phone, text, true)
-```
+- If a URL exceeds **23 characters**, it is recommended to add use URL shortening.
 
 :::
 
@@ -199,11 +195,11 @@ class SmsReceivedReport(DataModel):
 ```
 </details>
 
-To receive text messages from a specific number on Infobip, you need to create a **webhook URL**. This URL is created by combining your **INFOBIP_ADAPTER_BASE_URL** with **/sms-received-message** endpoint.
+To receive text messages from a specific number on Infobip, you need to create a **webhook URL**. This **URL** is created by combining your ```INFOBIP_ADAPTER_BASE_URL``` with ```/sms-received-message``` endpoint.
 
-For example, if your **INFOBIP_ADAPTER_BASE_URL** is **https://infobip_adapter_base_url.com**, then your webhook URL would be **https://infobip_adapter_base_url.com/sms_received_message**.
+For example, if your ```INFOBIP_ADAPTER_BASE_URL``` is ```https://infobip_adapter_base_url.com```, then your webhook URL would be ```https://infobip_adapter_base_url.com/sms_received_message```.
 
-After creating your webhook URL, set it up on Infobip's platform for the specific number you want to receive messages from. You can do this by accessing the [Infobip portal](https://portal.infobip.com/apps/sms).
+After creating your **webhook URL**, set it up on Infobip's platform for the specific number you want to receive messages from. You can do this by accessing the [Infobip portal](https://portal.infobip.com/apps/sms).
 
 <details>
     <summary>Upon <b>delivery failure</b>, <b>Infobip</b> has a system in place to <b>retry</b> sending SMS messages following a specific logic</summary>
