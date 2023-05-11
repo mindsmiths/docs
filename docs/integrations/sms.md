@@ -205,27 +205,30 @@ For example, if your **INFOBIP_ADAPTER_BASE_URL** is **https://infobip_adapter_b
 
 After creating your webhook URL, set it up on Infobip's platform for the specific number you want to receive messages from. You can do this by accessing the [Infobip portal](https://portal.infobip.com/apps/sms).
 
-:::info
+<details>
+    <summary>Upon <b>delivery failure</b>, <b>Infobip</b> has a system in place to <b>retry</b> sending SMS messages following a specific logic</summary>
+    <div>
+        <div><p>If, for any reason, your <b>INFOBIP_ADAPTER_BASE_URL</b> becomes <b>unavailable</b>, Infobip will continue its efforts to forward the message based on the following formula:
+                <b>1min + (1min * retryNumber * retryNumber)</b>. The strategy for the first few retry attempts is illustrated in the <b>list</b> below.</p>
+<ul>
+<li><b>Attempt 0:</b> This is the <b>initial attempt</b>. If it turns out to be <b>unsuccessful</b>, the <b>first retry</b> will be initiated after <b>1 minute</b>. <b>Cumulative time: 1 minute.</b></li>
 
-**Push Retry Cycle**
+<li><b>Retry 1:</b> The <b>second</b> attempt is scheduled <b>2 minutes</b> after the <b>first</b>. <b>Cumulative time: 3 minutes.</b></li>
 
-If your **INFOBIP_ADAPTER_BASE_URL** is **unavailable** for any reason, forward attempts will be made according to formula:
-**1min + (1min * retryNumber * retryNumber)**. Examples for first few retry attempts are shown in the list below.
+<li><b>Retry 2:</b> The <b>third</b> attempt occurs <b>5 minutes</b> after the <b>second</b>. <b>Cumulative time: 8 minutes.</b></li>
 
-**Retry 0:** The **initial attempt** is made. If **unsuccessful**, the **first retry** occurs after **1 minute**. **Cumulative time: 1 minute.**
+<li><b>Retry 3:</b> The <b>fourth</b> attempt is made <b>10 minutes</b> after the <b>third</b>. <b>Cumulative time: 18 minutes.</b></li>
 
-**Retry 1:** The **second** retry is scheduled **2 minutes** after the **first**. **Cumulative time: 3 minutes.**
+<li><b>Retry 4:</b> The <b>fifth</b> attempt is triggered <b>17 minutes</b> after the <b>fourth</b>. <b>Cumulative time: 35 minutes.</b></li>
 
-**Retry 2:** The **third** retry takes place **5 minutes** after the **second**. **Cumulative time: 8 minutes.**
+<li><b>Retry 5:</b> The <b>sixth</b> attempt happens <b>26 minutes</b> after the <b>fifth</b>. <b>Cumulative time: 1 hour and 1 minute.</b></li>
 
-**Retry 3:** The **fourth** retry happens **10 minutes** after the **third**. **Cumulative time: 18 minutes.**
+<li><b>Retry 6:</b> The <b>seventh</b> attempt takes place <b>37 minutes</b> after the <b>sixth</b>. <b>Cumulative time: 1 hour and 38 minutes.</b></li>
+</ul>
+</div>
+<p>
+It's important to note that this retry process extends up to the <b>20th</b> attempt. If the <b>INFOBIP_ADAPTER_BASE_URL</b> remains <b>unavailable</b> for the <b>entire retry period</b>, the message will regrettably be <b>lost</b>. The <b>final retry</b> is set <b>41 hours</b> and <b>30 minutes</b> after the <b>initial attempt</b>.
+</p>
+    </div>
+</details>
 
-**Retry 4:** The **fifth** retry is initiated **17 minutes** after the **fourth**. **Cumulative time: 35 minutes.**
-
-**Retry 5:** The **sixth** retry occurs **26 minutes** after the **fifth**. **Cumulative time: 1 hour and 1 minute.**
-
-**Retry 6:** The **seventh** retry takes place **37 minutes** after the **sixth**. **Cumulative time: 1 hour and 38 minutes.**
-
-Please note that this process continues up to the **20th** retry. If the **INFOBIP_ADAPTER_BASE_URL** remains **unavailable** for the **entire retry period**, the **data** will unfortunately be **lost**. The **final retry** is scheduled **41 hours** and **30 minutes** after the **initial attempt**.
-
-:::
