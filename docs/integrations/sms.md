@@ -23,7 +23,11 @@ We particularly suggest the use of A2P 10DLC for those operating within the Unit
             <li>INFOBIP_API_KEY</li>
             <li>INFOBIP_PHONE_NUMBER</li>
             <li>INFOBIP_ADAPTER_BASE_URL</li>
+            <li>INFOBIP_SMS_DELIVERY_REPORTING_ENABLED</li>
         </ul>
+<p>
+If no value is set, INFOBIP_SMS_DELIVERY_REPORTING_ENABLED will default to False.
+</p>
     </div>
     <div>
         <p><b>Installation:</b></p>
@@ -39,14 +43,21 @@ We particularly suggest the use of A2P 10DLC for those operating within the Unit
 </details>
 
 ## When to use Infobip Adapter?
-If your project involves direct communication with your users and you want to use WhatsApp or SMS text messages as preferred chanel for communication, then integrating Infobip Adapter is the way to go.
+If your project involves direct communication with your users and you want to use WhatsApp or SMS text messages as preferred channel for communication, then integrating Infobip Adapter is the way to go.
 Here you can find more about how to use it, what exactly can you use it for and how can you set it up in your project.
 
 ## Core features
 - Sending SMS textual messages with URL shortening
-- Sending SMS textual messages without URL shortening
+- Sending SMS textual messages without URL shortening 
 - Receiving SMS textual messages from users
 - Receiving delivery reports for messages sent to user(eg. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED)
+
+:::tip
+
+If `INFOBIP_SMS_DELIVERY_REPORTING_ENABLED` has no value set, it will default to **false** and will **not** 
+shorten the **URL** inside the text body of the SMS message.
+
+:::
 
 ## Setup
 Setting up Infobip Adapter is quick and easy, you'll just need to look for a couple of things on Infobip's portal. Follow the instructions bellow, and you'll be done with the setup in no time. 
@@ -83,7 +94,7 @@ For more information on the domains used to shorten your links, please visit [De
 :::
 
 ```console
-rule "Example rule for sending sms messages"
+rule "Example rule for replying to received SMS messages"
     when
         signal: InfobipSmsReceivedMessage() from entry-point "signals"
         ClientAgent(phone: getConnection("phone"))
