@@ -59,6 +59,20 @@ shorten the **URL** inside the text body of the SMS message.
 
 :::
 
+:::tip
+
+**Number Formatting**
+
+It is **strongly recommended** to use the **E.164** number format. **E.164** numbers are internationally standardized to a **15-digit max. length**.
+
+Phone numbers must start with a **country code**, followed by a **network code**, then the **subscriber number**. **Plus prefixes +** are **not** required.
+
+Phone numbers that are not **E.164** formatted may work, depending on the handset or network.
+
+Example: a **Croatian number** is formatted as **385981234567**, while a **UK number** is formatted as **447712345678**.
+
+:::
+
 ## Setup
 Setting up Infobip Adapter is quick and easy, you'll just need to look for a couple of things on Infobip's portal. Follow the instructions bellow, and you'll be done with the setup in no time. 
 ### Installation
