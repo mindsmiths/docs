@@ -9,8 +9,8 @@ It can be used for facilitating communication with your users.
 
 :::note
 
-Remember, it's crucial to ensure you don't get blacklisted or filtered. To do this, you should use and register the [appropriate type of number](https://www.infobip.com/docs/api/platform/numbers). 
-We particularly suggest the use of A2P 10DLC for those operating within the United States.
+Remember, it's crucial to ensure you don't get blacklisted or filtered. To do this, you should use and [register](https://www.infobip.com/docs/10dlc/10dlc-registration) the [appropriate type of number](https://www.infobip.com/docs/api/platform/numbers). 
+We particularly suggest the use of A2P 10DLC for those operating within the United States. 
 
 :::
 
@@ -190,3 +190,28 @@ To receive text messages from a specific number on Infobip, you need to create a
 For example, if your **INFOBIP_ADAPTER_BASE_URL** is **https://infobip_adapter_base_url.com**, then your webhook URL would be **https://infobip_adapter_base_url.com/sms_received_message**.
 
 After creating your webhook URL, set it up on Infobip's platform for the specific number you want to receive messages from. You can do this by accessing the [Infobip portal](https://portal.infobip.com/apps/sms).
+
+:::info
+
+**Push Retry Cycle**
+
+If your **INFOBIP_ADAPTER_BASE_URL** is **unavailable** for any reason, forward attempts will be made according to formula:
+**1min + (1min * retryNumber * retryNumber)**. Examples for first few retry attempts are shown in the list below.
+
+**Retry 0:** The **initial attempt** is made. If **unsuccessful**, the **first retry** occurs after **1 minute**. **Cumulative time: 1 minute.**
+
+**Retry 1:** The **second** retry is scheduled **2 minutes** after the **first**. **Cumulative time: 3 minutes.**
+
+**Retry 2:** The **third** retry takes place **5 minutes** after the **second**. **Cumulative time: 8 minutes.**
+
+**Retry 3:** The **fourth** retry happens **10 minutes** after the **third**. **Cumulative time: 18 minutes.**
+
+**Retry 4:** The **fifth** retry is initiated **17 minutes** after the **fourth**. **Cumulative time: 35 minutes.**
+
+**Retry 5:** The **sixth** retry occurs **26 minutes** after the **fifth**. **Cumulative time: 1 hour and 1 minute.**
+
+**Retry 6:** The **seventh** retry takes place **37 minutes** after the **sixth**. **Cumulative time: 1 hour and 38 minutes.**
+
+Please note that this process continues up to the **20th** retry. If the **INFOBIP_ADAPTER_BASE_URL** remains **unavailable** for the **entire retry period**, the **data** will unfortunately be **lost**. The **final retry** is scheduled **41 hours** and **30 minutes** after the **initial attempt**.
+
+:::
