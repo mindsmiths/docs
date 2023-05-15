@@ -66,9 +66,9 @@ Example: a **Croatian number** is formatted as **385981234567**, while a **UK nu
 :::
 
 ## Setup
-Setting up Infobip Adapter is quick and easy, you'll just need to look for a couple of things on Infobip's portal. Follow the instructions bellow, and you'll be done with the setup in no time. 
+Setting up **Infobip Adapter** is quick and easy, you'll just need to look for a couple of things on **Infobip's portal**. Follow the instructions bellow, and you'll be done with the setup in no time. 
 ### Installation
-Start with pip installing the adapter with the following command:
+Start with **pip installing** the adapter with the following command:
 ```console
 pip install "infobip-adapter~=5.2.1"
 ```
