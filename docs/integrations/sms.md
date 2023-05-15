@@ -31,7 +31,7 @@ If no value is set, INFOBIP_SMS_DELIVERY_REPORTING_ENABLED will default to False
     <div>
         <p><b>Installation:</b></p>
         <ul>
-            <li><code>pip install "infobip-adapter[dev]~=5.2.1"</code></li>
+            <li><code>pip install "infobip-adapter~=5.2"</code></li>
         </ul>
     </div>
     <div>
@@ -49,7 +49,7 @@ Here you can find more about how to use it, what exactly can you use it for and 
 - Sending SMS textual messages with URL shortening
 - Sending SMS textual messages without URL shortening 
 - Receiving SMS textual messages from users
-- Receiving delivery reports for messages sent to user(eg. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED)
+- Receiving delivery reports for messages sent to user(eg. **PENDING**, **UNDELIVERABLE**, **DELIVERED**, **EXPIRED**, **REJECTED**)
 
 :::tip
 
@@ -66,11 +66,11 @@ Example: a **Croatian number** is formatted as **385981234567**, while a **UK nu
 :::
 
 ## Setup
-Setting up Infobip Adapter is quick and easy, you'll just need to look for a couple of things on Infobip's portal. Follow the instructions bellow, and you'll be done with the setup in no time. 
+Setting up **Infobip Adapter** is quick and easy, you'll just need to look for a couple of things on **Infobip's portal**. Follow the instructions bellow, and you'll be done with the setup in no time. 
 ### Installation
-Start with pip installing the adapter with the following command:
+Start with **pip installing** the adapter with the following command:
 ```console
-pip install "infobip-adapter[dev]~=5.2.1"
+pip install "infobip-adapter~=5.2"
 ```
 ### Environment variables
 Prepare the following data, you'll need to have it ready once you start with initializing the setup process.
