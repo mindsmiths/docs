@@ -49,7 +49,7 @@ Here you can find more about how to use it, what exactly can you use it for and 
 - Sending SMS textual messages with URL shortening
 - Sending SMS textual messages without URL shortening 
 - Receiving SMS textual messages from users
-- Receiving delivery reports for messages sent to user(eg. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED)
+- Receiving delivery reports for messages sent to user(eg. **PENDING**, **UNDELIVERABLE**, **DELIVERED**, **EXPIRED**, **REJECTED**)
 
 :::tip
 
