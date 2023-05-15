@@ -31,7 +31,7 @@ If no value is set, INFOBIP_SMS_DELIVERY_REPORTING_ENABLED will default to False
     <div>
         <p><b>Installation:</b></p>
         <ul>
-            <li><code>pip install "infobip-adapter~=5.2.1"</code></li>
+            <li><code>pip install "infobip-adapter~=5.2"</code></li>
         </ul>
     </div>
     <div>
@@ -70,7 +70,7 @@ Setting up **Infobip Adapter** is quick and easy, you'll just need to look for a
 ### Installation
 Start with **pip installing** the adapter with the following command:
 ```console
-pip install "infobip-adapter~=5.2.1"
+pip install "infobip-adapter~=5.2"
 ```
 ### Environment variables
 Prepare the following data, you'll need to have it ready once you start with initializing the setup process.
