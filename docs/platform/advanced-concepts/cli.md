@@ -146,6 +146,12 @@ This will run "some shell command" as a shell command, with all the necessary en
 
 ## Changelog
 
+### [5.0.11] - 2023-05-16
+
+#### Fixed
+- get_image_name command now generates image name based on ENVIRONMENT_NAME variable
+
+
 ### [5.0.10] - 2023-04-25
 
 #### Fixed
