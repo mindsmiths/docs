@@ -146,6 +146,12 @@ This will run "some shell command" as a shell command, with all the necessary en
 
 ## Changelog
 
+### [5.0.12] - 2023-05-18
+
+#### Fixed
+- bug where ENVIRONMENT variable wouldn't get loaded in get_image_name function
+
+
 ### [5.0.11] - 2023-05-16
 
 #### Changed
