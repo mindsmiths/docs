@@ -146,6 +146,12 @@ This will run "some shell command" as a shell command, with all the necessary en
 
 ## Changelog
 
+### [5.0.13] - 2023-05-18
+
+#### Fixed
+- bug where get_image_name function would return wrong name for specific images
+
+
 ### [5.0.12] - 2023-05-18
 
 #### Fixed
