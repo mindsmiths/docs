@@ -146,6 +146,15 @@ This will run "some shell command" as a shell command, with all the necessary en
 
 ## Changelog
 
+### [5.1.0] - 2023-06-09
+
+#### Changed
+- `https` is `True` by default (❗BREAKING)
+
+#### Added
+- `--enabled` option to `forge get-services` to get only enabled services
+
+
 ### [5.0.13] - 2023-05-18
 
 #### Fixed

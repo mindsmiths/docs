@@ -480,6 +480,22 @@ You can convert the resulting `ZonedDateTime` to a `LocalDateTime` with `zonedDa
 
 ## Changelog
 
+### [5.0.12] - 2023-06-09
+
+#### Added
+- `Rule fire limit reached` exception prints which rules were fired
+
+#### Fixed
+- `Agents.deleteAgent(agentId)` did not emit a data change signal
+- sending huge messages would freeze the producer
+
+
+### [5.0.11] - 2023-05-23
+
+#### Fixed
+- `NullPointerException` regarding `sender` in `AgentIdLogPattern`
+
+
 ### [5.0.10] - 2023-04-25
 
 #### Added

@@ -5,6 +5,44 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.7.0] - 2023-06-09
+
+This release contains the following service versions:
+- `forge-sdk==5.0.10` (Python)
+- `forge-sdk==5.0.11` (Java)
+- `forge-cli==5.1.0`
+- `rule-engine==5.0.12`
+- `heartbeat==5.0.5`
+- `control-panel==0.0.6`
+- `cecs==5.0.2`
+
+Noteable changes **since 1.6.1**:
+
+### CLI
+
+#### Changed
+- `https` is `true` by default now for exposed services (❗may be breaking)
+
+
+### Control Panel
+
+#### Fixed
+- YAML wasn't loading on startup
+- terminal was not working
+
+
+### Rule Engine
+
+#### Fixed
+- sending huge messages would freeze the producer
+- `NullPointerException` regarding `sender` in `AgentIdLogPattern`
+- `Agents.deleteAgent(agentId)` did not emit a data change signal
+
+#### Added
+- `Rule fire limit reached` exception prints which rules were fired
+
+
+
 ## [1.6.1] - 2023-04-25
 
 This release contains the following service versions:

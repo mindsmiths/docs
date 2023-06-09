@@ -94,6 +94,12 @@ There is also a feature toggle `HeartbeatEnabled` which you can use to control h
 
 ## Changelog
 
+### [5.0.5] - 2023-04-13
+
+#### Added
+- registering for `Agent` changes
+
+
 ### [5.0.4] - 2023-03-02
 
 #### Changed

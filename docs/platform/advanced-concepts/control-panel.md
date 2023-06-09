@@ -71,6 +71,24 @@ Config.get("screens.0.header.text", String.class);
 
 ## Changelog
 
+### [0.0.6] - 2023-06-08
+
+#### Fixed
+- terminal wasn't working
+
+
+### [0.0.5] - 2023-05-15
+
+#### Fixed
+- initial YAML loading error
+
+
+### [0.0.4] - 2023-05-05
+
+#### Fixed
+- git commit script incorrect generation
+
+
 ### [0.0.3] - 2023-04-25
 
 #### Added
