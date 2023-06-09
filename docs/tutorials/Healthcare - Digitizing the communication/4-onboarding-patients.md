@@ -2,23 +2,42 @@
 sidebar_position: 5
 ---
 
-# Welcome patients
+# Adding patients
 
 ## Personalized approach: I know you
 
 Context is extremely important when building relationships with users: to avoid scripting out the system behavior into fixed scenarios, 
-you always want your system to know exactly who the person you are talking to is, what some relevant aspects of the previous interactions are and what the current context of their needs is.
+you always want your system to know exactly who the person it is talking to is, what some relevant aspects of the previous interactions are and what the current context of their needs is.
 
-At the very basic level, this simply means giving the agent sufficient information about the user they are assigned to by defining some onboarding process.
+At the very basic level, this simply means giving the agent sufficient information about the user through an onboarding process.
 In this demo, our user keeps track of their child's weight, so we'll store some relevant data for a more personalized experience, 
 i.e. the child’s name, height and age, and then iteratively update the weight to the latest provided value.
 
-As mentioned, the onboarding steps for storing the name, height and age information are already written out for you in Patient.java and Patient.drl files.
+As mentioned, the onboarding steps for storing the name, height and age information are already written out for you in `Patient.java` and `Patient.drl` files.
 
-Since the rules follow the same logic, we'll only look at the code for storing the child's name:
+Since all onboarding rules follow the same logic, we'll only look at the code of the first one for storing the child's name:
 
 ```java title="rules/patient/Patient.drl"
 package rules.patient;
+
+import org.apache.commons.lang3.math.NumberUtils
+
+import com.mindsmiths.ruleEngine.model.Initialize
+import com.mindsmiths.telegramAdapter.events.TelegramReceivedMessage
+
+import agents.Patient
+
+////////////////////////// Welcome patient //////////////////////////
+rule "Welcome message"
+    salience 100
+    when
+        initialize: Initialize() from entry-point "agent-created"
+        message: TelegramReceivedMessage() from entry-point "signals"
+        agent: Patient()
+    then
+        agent.sendMessage("Welcome to the Clinic!");
+        delete(initialize);
+end
 
 ////////////////////////// Getting child name //////////////////////////
 rule "Ask for name"
@@ -40,48 +59,7 @@ rule "Set name"
         modify(agent) {setWaitingForAnswer(false), setName(text)};
         delete(signal);
 end
-
-////////////////////////// Getting child age//////////////////////////
-
-rule "Ask for age"
-    when
-        agent: Patient(waitingForAnswer != true, name != null, age == null)
-    then
-        agent.sendMessage(
-                String.format("Lovely, how old is %s?", agent.getName())
-        );
-        modify(agent) {setWaitingForAnswer(true)};
-end
-
-rule "Set age"
-    when
-        signal: TelegramReceivedMessage(text: text, BMIUtils.isValidAge(text)) from entry-point "signals"
-        agent: Patient(waitingForAnswer == true, name!= null, age == null)
-    then
-        modify(agent) {setWaitingForAnswer(false), setAge(Integer.parseInt(text))};
-        delete(signal);
-end
-
-////////////////////////// Getting child height //////////////////////////
-
-rule "Ask for height"
-    when
-        agent: Patient(waitingForAnswer != true, age != null, height == null)
-    then
-        agent.sendMessage(
-                String.format("And how tall is %s in cm?", agent.getName())
-        );
-        modify(agent) {setWaitingForAnswer(true)};
-end
-
-rule "Set height"
-    when
-        signal: TelegramReceivedMessage(text: text, BMIUtils.isValidHeight(text)) from entry-point "signals"
-        agent: Patient(waitingForAnswer == true, age != null, height == null)
-    then
-        modify(agent) {setWaitingForAnswer(false), setHeight(Integer.parseInt(text))};
-        delete(signal);
-end
+...
 ```
 You'll notice we ask the user for information and store it through a series of rule pairs.
 
