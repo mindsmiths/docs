@@ -480,6 +480,13 @@ You can convert the resulting `ZonedDateTime` to a `LocalDateTime` with `zonedDa
 
 ## Changelog
 
+
+### [5.1.0] - 2023-06-26
+
+#### Changed
+- using `forge-sdk==5.1.0` (better signal deserialization)
+
+
 ### [5.0.12] - 2023-06-09
 
 #### Added

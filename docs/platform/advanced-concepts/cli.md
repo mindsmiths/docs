@@ -146,6 +146,20 @@ This will run "some shell command" as a shell command, with all the necessary en
 
 ## Changelog
 
+
+### [5.1.2] - 2023-06-26
+
+#### Fixed
+- sometimes other services would accidentally pick up environment variables from the current service
+
+
+### [5.1.1] - 2023-06-20
+
+#### Added
+- `forge check` command which runs CECS checks on the project
+- `cecs` is now a dependency of `forge-cli` so no need to install it separately
+
+
 ### [5.1.0] - 2023-06-09
 
 #### Changed

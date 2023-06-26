@@ -5,6 +5,48 @@ sidebar_position: 1
 # Changelog
 
 
+## [1.8.0] - 2023-06-26
+
+This release contains the following service versions:
+- `forge-sdk==5.1.0` (Python)
+- `forge-sdk==5.1.0` (Java)
+- `forge-cli==5.1.2`
+- `rule-engine==5.1.0`
+- `heartbeat==5.0.5`
+- `control-panel==0.0.6`
+- `cecs==5.0.3`
+
+Noteable changes **since 1.7.0**:
+
+### CLI
+
+#### Fixed
+- sometimes other services would accidentally pick up environment variables from the current service
+
+#### Added
+- `forge check` command which runs CECS checks on the project
+
+
+### CECS
+
+#### Added
+- significant performance improvements
+
+
+### Java SDK
+
+#### Changed
+- signal deserialization now uses class names to map the signals to correct classes (fixes `replyTo`)
+
+
+### Python SDK
+
+#### Changed
+- API builders send `messageType` in `PascalCase` instead of `UPPER_SNAKE_CASE`
+- callbacks now support functions (in module root), and service methods can be passed in as static members or as strings
+
+
+
 ## [1.7.0] - 2023-06-09
 
 This release contains the following service versions:
