@@ -113,8 +113,7 @@ new Screen("welcomeScreen")
 This will group the `Description` and `Input` component around the screen center, push the button to the bottom, leaving the `Header` and `Title` by default at the top.
 Here you can see how it looks. The first screen is the default screen, while the second screen includes the `group` component.
 
-![graphic](Screen.png#center)
-
+![graphic](/img/web/Screen.png#center)
 
 ## Creating components and templates
 
@@ -221,7 +220,7 @@ new Screen("welcomeScreen")
 
 Here you can see how it looks like.
 
-![graphic](Screen2.png#center)
+![graphic](/img/web/Screen2.png#center)
 
 Keep in mind that you can link together sequences of multiple Armory screens by specifying the transitions between them: the easiest way to do this is by setting the name of the next screen you want to go to as the value of the `SubmitButton` 
 (e.g. `new SubmitButton("submitName", "Done", "askAddress")` takes the user to the screen where they will be asked to set their address). 
