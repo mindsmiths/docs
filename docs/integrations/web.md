@@ -15,11 +15,6 @@ We look at each of those concepts below.
 <div>
     <div><p><b>Environment variables:</b></p>
         <ul>
-            <li>SECRET_KEY</li>
-            <li>DEBUG</li>
-            <li>ALLOW_EVERYONE</li>
-            <li>SITE_URL</li>
-            <li>INTERNAL_SITE_URL</li>
             <li>ARMORY_SITE_URL</li>
         </ul>
     </div>
@@ -138,11 +133,7 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
     </div>
 </details>
 
-:::info
 
-
-
-:::
 Finally, here are some examples that show how the two different ways of building screens are used in rules. First one is covering the manual way, while the other is covering the configuration file way.
 
 ```java
@@ -242,12 +233,36 @@ TODO - is this a buttonId or inputId?
 
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
-### Screens
-But what do we do with these components, and how can we assemble them to create screens? For this we use Armory's `Screen` class, to which we simply add the components in the order we want them to appear on the screen.
+### Templates and screen's layout
+How do we organize different components, and how can we assemble them to create a great user experience?
 
-We should mention that there are some default standards when it comes to spatial organization of the components on screens: all components apart from the action ones (e.g. buttons taking you to the next screen) gravitate towards top of the screen. The action components are anchored to the bottom of the screen, to avoid screens shifting in size depending on how many components they contain.
+Now is the right time to mention that there are some default standards when it comes to spatial organization of the components on screens, and we refer to it as **default template**.
+The default template manifests in a way that all components apart from the action ones (e.g. buttons taking you to the next screen) gravitate towards top of the screen.
+The action components are anchored to the bottom of the screen, to avoid screens shifting in size depending on how many components they contain.
 
-You can easily override these standard practices by using the `group()` function, which allows you to create a group of components you want to "stick closer together" on the screen. Check it out:
+It's convenient to organize your screens this way when you want to fill the entire screen with the components.
+
+Another template that comes predefined is the **centered template**. It's used when you want to group components around the center of the screen.
+Centered template looks best when there's only a few components on the screen - most commonly a header, title and a button. On the following scheme you can see compare these two different screens' layouts:
+
+![image](/img/armory/default-template.png#left)
+![image](/img/armory/centered-content-template.png#right)
+
+If you are interested in how would one apply a template to a screen, check out the following example:
+
+![image](/img/armory/default-screen-preview.png#left)
+![image](/img/armory/centered-screen-preview.png#right)
+
+
+![image](/img/armory/default-content-config.png#center)
+![image](/img/armory/centered-content-config.png#center)
+
+If the predefined templates don't work well for your case, there's an option of creating your own templates, [here](#custom-components) you can learn how to do it.
+But if you want another quick solution, you can easily override these standard practices by using the `group()` function, 
+which allows you to create a group of components you want to "stick closer together" on the screen. 
+
+Check out our next example:
+
 ```java
 new Screen("welcomeScreen")
         .add(new Header("logo.png", true))
@@ -258,7 +273,6 @@ new Screen("welcomeScreen")
         .group("bottom")
         .add(new SubmitButton("submitName", "Submit"))
 ```
-
 
 This will group the `Description` and `Input` component around the screen center, push the button to the bottom, leaving the `Header` and `Title` by default at the top.
 Here you can see how it looks. The first screen is the default screen, while the second screen includes the `group` component.
