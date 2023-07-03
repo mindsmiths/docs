@@ -335,3 +335,23 @@ rule "Button pressed"
         delete(signal);
 end
 ```
+
+## Cleaning up
+
+For discord servers used in local development, it's useful to periodically clean them. That's because `discord-adapter` creates new channels for every `forge reset` and forgets the old ones, leading to dead channels.
+
+To do this, make sure you have `discord-adapter[dev]` installed. If not, run the following:
+```shell
+pip install "discord-adapter[dev]~=5.0"
+```
+
+To delete all channels and groups just run the following command:
+```shell
+discord-adapter delete-all-channels
+```
+
+You will be asked for the GUILD ID (i.e. discord server where to delete channels and groups). Once you type the GUILD ID of your discord server, all channels and groups should get deleted.
+
+:::note
+- For deletion to work, in your `.env` needs to be a `DISCORD_BOT_TOKEN` whose bot **has Administrator access to the server**
+:::
