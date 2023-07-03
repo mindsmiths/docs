@@ -350,7 +350,7 @@ To delete all channels and groups just run the following command:
 discord-adapter delete-all-channels
 ```
 
-You will be asked for the GUILD ID (i.e. discord server where to delete channels and groups). Once you type the GUILD ID of your discord server, all channels and groups should get deleted.
+You will be asked for the `GUILD_ID` (i.e. discord server where to delete channels and groups). Once you type the `GUILD_ID` of your discord server, all channels and groups should get deleted.
 
 :::note
 - For deletion to work, in your `.env` needs to be a `DISCORD_BOT_TOKEN` whose bot **has Administrator access to the server**
