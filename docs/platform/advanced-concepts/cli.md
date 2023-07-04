@@ -147,6 +147,12 @@ This will run "some shell command" as a shell command, with all the necessary en
 ## Changelog
 
 
+### [5.1.3] - 2023-07-04
+
+#### Added
+- support for Python 3.11 (requires `forge-sdk>=5.1.1`)
+
+
 ### [5.1.2] - 2023-06-26
 
 #### Fixed

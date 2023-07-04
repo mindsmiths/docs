@@ -480,6 +480,14 @@ You can convert the resulting `ZonedDateTime` to a `LocalDateTime` with `zonedDa
 
 ## Changelog
 
+### [5.1.1] - 2023-07-04
+
+#### Fixed
+- cron utils had problems with timezones
+
+#### Changed
+- using `forge-sdk==5.1.1` (signal builders)
+
 
 ### [5.1.0] - 2023-06-26
 
