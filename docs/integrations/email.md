@@ -10,8 +10,8 @@ If your project requires sending emails, then Email Adapter is your friend. Sett
   <div>
     <div><p><b>Environment variables:</b></p>
         <ul>
-            <li>Email address to use (sender)</li>
-            <li>App password of corresponding Google Account</li>
+            <li>PROJECT_EMAIL_ADDRESS</li>
+            <li>PROJECT_EMAIL_PASSWORD</li>
         </ul>
     </div>
     <div>
