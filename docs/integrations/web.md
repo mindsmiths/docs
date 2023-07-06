@@ -76,7 +76,7 @@ We'll go over them briefly, but once you get a hang of how things work, you are 
 Let's start with building the screens. There are two ways to build screens - manually or through a configuration file.
 
 If you want to build screens **manually**, you need to use the `Screen` class, which takes the screen name as a parameter. After you define a Screen, you can gradually build up components on it.
-For forming a flow, you just put all the screens in a list and connect them with the `SubmitButton` component. Read more about linking screens [here](TODO).
+For forming a flow, you just put all the screens in a list and connect them with the `SubmitButton` component.
 
 :::tip First screen
 
@@ -231,8 +231,6 @@ This type of event also contains values of all the components that have been pre
 - `public JsonNode getParam(String param)`
 
 :::
-
-TODO - is this a buttonId or inputId?
 
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
