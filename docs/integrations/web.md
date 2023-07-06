@@ -86,22 +86,23 @@ The flow's starting point can be defined with setting the `firstScreen` paramete
 
 On the other hand, when you're building the screens using a **configuration file**, then you'll put all the screens' specification inside a `.yaml` file.
 This configuration file can be defined in a separate file, or within the [Control Panel](../platform/advanced-concepts/control-panel.md) service through the Configuration editor.
-Another option is to define the configuration through the [Dashboard](TODO). 
+Another option is to define the configuration through the Dashboard. 
 
 In each of these cases, you'll need to build the screens first before showing them. You'll use the `ArmoryAPI.buildScreens()` method for that. 
 This method takes the first screen name and the configuration file as parameters, and returns a list of screens.
 
 If you want to fill some of the components with personalized data, you can pass the `context` parameter to the `buildScreens()` method. 
 In the `context`, which is actually a dictionary, you can define the key-value pairs that will be used to fill parts of the components text parameter.
+
 <details>
   <summary>How to use <code>ArmoryAPI.buildScreens()</code> </summary>
 <div>
     <div><p><b>ArmoryAPI.buildScreens()</b></p>
         <ul>
-            <li><code>public static List&lt;Screen&gt buildScreens(String firstScreen, JsonNode screensSpec)</code></li>
-            <li><code>public static List&lScreen&gt buildScreens(String firstScreen, Map&lt;String, Object&gt; context, JsonNode screensSpec)</code></li>
-            <li><code>public static List&lScreen&gt buildScreens(String firstScreen, JsonNode screensSpec, List&ltHistoryItem&gt history)</code></li>
-            <li><code>public static List&lScreen&gt buildScreens(String firstScreen, Map&lt;String, Object> context, JsonNode screensSpec, List&ltHistoryItem&gt history)</code></li>
+            <li><code>public static List&lt;Screen&gt; buildScreens(String firstScreen, JsonNode screensSpec)</code></li>
+            <li><code>public static List&lt;Screen&gt; buildScreens(String firstScreen, Map&lt;String, Object&gt; context, JsonNode screensSpec)</code></li>
+            <li><code>public static List&lt;Screen&gt; buildScreens(String firstScreen, JsonNode screensSpec, List&lt;HistoryItem&gt; history)</code></li>
+            <li><code>public static List&lt;Screen&gt; buildScreens(String firstScreen, Map&lt;String, Object> context, JsonNode screensSpec, List&lt;HistoryItem&gt; history)</code></li>
         </ul>
     </div>
   </div>
@@ -195,6 +196,8 @@ The components are the building blocks of screens, and there are several you can
 * Nested Toggle: you guessed it, it's a toggle that shows/hides other components
 * Image
 * SubmitButton: basic button component, triggers a `Submit` event
+* QrcodeScanner: component that allows the user to scan a QR code
+* Loader: component that allows the user to upload a file
 
 Components that are used to collect some sort of input or activity from the user (text areas, buttons, select components etc.) are referenced through the `inputId`.
 You can even make all of these components obligatory by setting its default value of the `required` field to `true`.
