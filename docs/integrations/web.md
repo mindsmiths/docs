@@ -192,7 +192,7 @@ The components are the building blocks of screens, and there are several you can
 * CloudSelect: a cool multi-select component
 * Quantity select: component for specifying quantities
 * Toggle: component that imitates a switch
-* Nested Toggle: you guessed it, it's a toggle inside a toggle
+* Nested Toggle: you guessed it, it's a toggle that shows/hides other components
 * Image
 * SubmitButton: basic button component, triggers a `Submit` event
 
