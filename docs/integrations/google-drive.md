@@ -8,6 +8,26 @@ sidebar_position: 8
 
 The GDrive Adapter is a tool that simplifies the integration of Google Drive with your application.
 
+<details>
+  <summary>Setup details</summary>
+  <div>
+    <div><p><b>Environment variables:</b></p>
+        <ul>
+            <li>GOOGLE_CLIENT_CREDENTIALS</li>
+        </ul>
+    </div>
+    <div>
+        <p><b>Installation:</b></p>
+        <ul>
+            <li><code>pip install "gdrive-adapter[dev]"</code></li>
+        </ul>
+    </div>
+    <div>
+        <p><b>Initialize setup:</b></p>
+        <ul><li><p><code>gdrive-adapter setup</code></p></li></ul>
+    </div>
+  </div>
+</details>
 
 ## Core features
 
@@ -22,7 +42,7 @@ The GDrive Adapter is a tool that simplifies the integration of Google Drive wit
 </ul>
 
 
-## Setup
+## Installation
 
 To install the adapter package, use the following command:
 
