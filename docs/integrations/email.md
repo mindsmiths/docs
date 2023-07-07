@@ -17,7 +17,7 @@ If your project requires sending emails, then Email Adapter is your friend. Sett
     <div>
         <p><b>Installation:</b></p>
         <ul>
-            <li><code>pip install "email-adapter[dev]~=5.0.1"</code></li>
+            <li><code>pip install "email-adapter[dev]~=5.0.3"</code></li>
         </ul>
     </div>
     <div>
