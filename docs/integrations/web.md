@@ -234,6 +234,37 @@ This type of event also contains values of all the components that have been pre
 
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
+But, let's break it down for every component, so you can get a better idea of when and how to use them, as well as how they look like.
+
+#### TextArea
+
+This component is used in cases where you need users to enter a longer text, such as a comment or a description.
+
+Here's a yaml example of how to use it:
+
+```yaml
+  - TextArea:
+      inputId: "feedback-on-event"
+      placeholder: "Tell us your feedback!"
+      value: "{{ attendee.previousFeedback }}"
+      required: true
+```
+
+- `inputId` is used for ... this field needs to be set
+- `placeholder` is when you need to..., this is optional (TODO check this in armory's code!!)
+- `value` is for setting ...
+- `required` field is used for ... it's true/false value, and it's optional ETC.
+
+
+Here's how it looks like:
+![image](/img/armory/text-area-example-1.png#center)
+![image](/img/armory/text-area-example-2.png#center)
+
+See how when the TextArea is empty and there is no text entered, the placeholder text is shown, while the Button is inactive because TextArea is set as required. 
+When the user starts typing, the placeholder text disappears and the text is shown in the TextArea, and the Button becomes active, enabling users to continue with the flow.
+
+TODO: Continue here with the rest of the components.
+
 ### Templates and screen's layout
 How do we organize different components, and how can we assemble them to create a great user experience?
 
