@@ -233,11 +233,26 @@ This type of event also contains values of all the components that have been pre
 
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
-Another quick note regarding one of the parameters used in many components, `required`. 
+
+
+Quick note regarding one of the parameters used in many components, `required`. 
 This parameter is used to set whether the component is required or not.
 If the component is set to required, users can only progress within the flow if they interact with it accordingly.
 
-But, let's break it down for every component, so you can get a better idea of when and how to use them, as well as how they look like.
+Here is an example of a screen where the `TextArea` is set as required.
+See how when the TextArea is empty and there is no text entered, the placeholder text is shown, while the Button is inactive because TextArea is set as required.
+
+![image](/img/armory/components/required-demonstration-1.png#center)
+
+When the user starts typing, the placeholder text disappears and the text is shown in the TextArea, and the Button becomes active, enabling users to continue with the flow.
+
+![image](/img/armory/components/required-demonstration-2.png#center)
+
+
+
+But now, let's break it down for every component, so you can get a better idea of when and how to use them, as well as how they look like.
+
+We will demonstrate the components by groups, with the corresponding example of the screen they are used in provided in the end.
 
 #### Header
 
@@ -253,8 +268,6 @@ This component is used for displaying a logo and a back button. It's placed at t
   - `logo` is used for setting the logo image. If not set, the logo won't be shown
   - `allowsBack` is used for setting whether the back button is shown or not. It's optional, and if not set, the back button won't be shown
 
-![image](/img/armory/components/header-title-description-input.png#center)
-
 #### Title
 
 This component is used for displaying a title.
@@ -267,8 +280,6 @@ This component is used for displaying a title.
 - REQUIRED
     - `text` is used for setting the title text
 
-![image](/img/armory/components/header-title-description-input.png#center)
-
 #### Description
 
 This component is used for displaying a description.
@@ -279,8 +290,6 @@ This component is used for displaying a description.
 ```
 - REQUIRED
   - `text` is used for setting the description text
-
-![image](/img/armory/components/header-title-description-input.png#center)
 
 #### Input
 
@@ -327,8 +336,6 @@ This component is used for triggering a `Submit` event. It's used in cases where
   - `nextScreen` is used for setting the next screen that will be shown after the button is pressed
   - `customClasses` is used for setting custom css classes for the button
 
-![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
-
 #### ImageUpload
 
 This component is used in cases where you need users to upload an image.
@@ -349,8 +356,6 @@ This component is used in cases where you need users to upload an image.
   - `uploadedText` is used for setting the text that will be shown on the button when the image is uploaded
   - `value` is used for setting the default value of the image
   - `required` is used for setting whether the image is required or not
-
-![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
 
 #### CloudSelect
 
@@ -374,8 +379,6 @@ This component is used in cases where you need users to select multiple values f
   - `required` is used for setting whether the select is required or not
   - `options` is used for setting the options that will be shown in the select
   - `label` is used for setting the label text
-
-![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
 
 #### RangeSlider
 
@@ -417,8 +420,6 @@ This component is used in cases where you need to display an image.
   - `src` is used for setting the image source
 - OPTIONAL
   - `classes` is used for setting custom css classes for the image
-
-![image](/img/armory/components/image-select.png#center)
 
 #### Select
 
@@ -474,8 +475,6 @@ This component is used in cases where you need users to select either true of fa
   - `leftLabel` is used for setting whether the label is on the left or right side of the toggle
   - `type` is used for setting whether the toggle corresponds to the primary color scheme
   - `classes` is used for setting custom css classes for the toggle
-
-![image](/img/armory/components/nestedtoggleOFF-toggle-radioselect-quantityselect.png#center)
 
 #### NestedToggle
 
@@ -539,8 +538,6 @@ This component is used in cases where you need users to select one value from pr
   - `classes` is used for setting custom css classes for the select
   - `required` is used for setting whether the select is required or not
 
-![image](/img/armory/components/nestedtoggleOFF-toggle-radioselect-quantityselect.png#center)
-
 #### QuantitySelect
 
 This component is used in cases where you need users to select a quantity from a predefined range.
@@ -603,8 +600,6 @@ This component is used in cases where you need users to scan a QR code.
   - `streamApiNotSupportedError` is used for setting the error message that will be shown if the QR code scanning is not supported
   - `insecureContextError` is used for setting the error message that will be shown if the QR code scanning is not supported
   - `timeoutMs` is used for setting the timeout in milliseconds
-
-![image](/img/armory/components/qrcodescanner-textarea.png#center)
 
 #### TextArea
 
