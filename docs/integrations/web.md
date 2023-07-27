@@ -191,13 +191,12 @@ The components are the building blocks of screens, and there are several you can
 * TextArea: component for longer text input
 * Select: choose one option from a list
 * CloudSelect: a cool multi-select component
-* Quantity select: component for specifying quantities
+* QuantitySelect: component for specifying quantities
 * Toggle: component that imitates a switch
-* Nested Toggle: you guessed it, it's a toggle that shows/hides other components
+* NestedToggle: you guessed it, it's a toggle that shows/hides other components
 * Image
 * SubmitButton: basic button component, triggers a `Submit` event
 * QrcodeScanner: component that allows the user to scan a QR code
-* Loader: component that allows the user to upload a file
 
 Components that are used to collect some sort of input or activity from the user (text areas, buttons, select components etc.) are referenced through the `inputId`.
 You can even make all of these components obligatory by setting its default value of the `required` field to `true`.
@@ -234,36 +233,401 @@ This type of event also contains values of all the components that have been pre
 
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
 
+Another quick note regarding one of the parameters used in many components, `required`. 
+This parameter is used to set whether the component is required or not.
+If the component is set to required, users can only progress within the flow if they interact with it accordingly.
+
 But, let's break it down for every component, so you can get a better idea of when and how to use them, as well as how they look like.
+
+#### Header
+
+This component is used for displaying a logo and a back button. It's placed at the top of the screen.
+
+```yaml
+- Header:
+    src: "logo.png"
+    allowsBack: true
+```
+
+- OPTIONAL
+  - `logo` is used for setting the logo image. If not set, the logo won't be shown
+  - `allowsBack` is used for setting whether the back button is shown or not. It's optional, and if not set, the back button won't be shown
+
+![image](/img/armory/components/header-title-description-input.png#center)
+
+#### Title
+
+This component is used for displaying a title.
+
+```yaml
+- Title:
+    text: "Hello there!"
+```
+
+- REQUIRED
+    - `text` is used for setting the title text
+
+![image](/img/armory/components/header-title-description-input.png#center)
+
+#### Description
+
+This component is used for displaying a description.
+
+```yaml
+- Description:
+    text: "Are you ready to get started?"
+```
+- REQUIRED
+  - `text` is used for setting the description text
+
+![image](/img/armory/components/header-title-description-input.png#center)
+
+#### Input
+
+This component is used for collecting user input. It's used in cases where you need users to enter a short text.
+
+```yaml
+- Input:
+    inputId: "first-name"
+    placeholder: "Type your first name here..."
+    type: "text"
+    value: "{{ customer.firstName }}"
+    required: true
+    label: "First name"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `placeholder` is used for setting the placeholder text
+  - `type` is used for setting the input type
+  - `value` is used for setting the default value of the input
+  - `required` is used for setting whether the input is required or not
+  - `label` is used for setting the label text
+
+![image](/img/armory/components/header-title-description-input.png#center)
+
+#### SubmitButton
+
+This component is used for triggering a `Submit` event. It's used in cases where you need users to submit the data they entered.
+
+```yaml
+- SubmitButton:
+    inputId: "submit-name"
+    text: "Submit"
+    nextScreen: "next-screen-id"
+    customClasses:
+      - "highlighted"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `text` is used for setting the button text
+  - `nextScreen` is used for setting the next screen that will be shown after the button is pressed
+  - `customClasses` is used for setting custom css classes for the button
+
+![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
+
+#### ImageUpload
+
+This component is used in cases where you need users to upload an image.
+
+```yaml
+- ImageUpload:
+    inputId: "image-upload"
+    uploadText: "Upload image"
+    uploadedText: "Image uploaded"
+    value: "{{user.defaultImage}}"
+    required: true
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `uploadText` is used for setting the text that will be shown on the button until the image is uploaded
+  - `uploadedText` is used for setting the text that will be shown on the button when the image is uploaded
+  - `value` is used for setting the default value of the image
+  - `required` is used for setting whether the image is required or not
+
+![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
+
+#### CloudSelect
+
+This component is used in cases where you need users to select multiple values from predefined options.
+
+```yaml
+- CloudSelect:
+    inputId: "preferencesSelect"
+    required: true
+    label: "Select your preferences"
+    options:
+      - text: "Natural beauties"
+        value: "nature"
+      - text: "Relaxing"
+        value: "relaxing"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `required` is used for setting whether the select is required or not
+  - `options` is used for setting the options that will be shown in the select
+  - `label` is used for setting the label text
+
+![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
+
+#### RangeSlider
+
+This component is used in cases where you need users to select values from a predefined range.
+
+```yaml
+- RangeSlider:
+    inputId: "range-slider"
+    value: {{user.previousValue}}
+    minValue: 0
+    maxValue: 100
+    step: 1
+    required: true
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `minValue` is used for setting the minimum value of the slider
+  - `maxValue` is used for setting the maximum value of the slider
+- OPTIONAL
+  - `value` is used for setting the default values of the slider
+  - `step` is used for setting the step of the slider
+  - `required` is used for setting whether the slider is required or not
+
+![image](/img/armory/components/cloudselect-rangeslider-imageupload-submitbutton.png#center)
+
+#### Image
+
+This component is used in cases where you need to display an image.
+
+```yaml
+- Image:
+    src: "https://clipart-library.com/data_images/6103.png"
+    classes: 
+      - "highlighted" 
+```
+
+- REQUIRED
+  - `src` is used for setting the image source
+- OPTIONAL
+  - `classes` is used for setting custom css classes for the image
+
+![image](/img/armory/components/image-select.png#center)
+
+#### Select
+
+This component is used in cases where you need users to select one value from predefined options.
+
+```yaml
+  - Select:
+      inputId: "select"
+      placeholder: "Select animal"
+      value: {{user.selectedAnimal}}
+      required: true
+      options:
+        - "Duck"
+        - "Cow"
+        - "Dog"
+      classes:
+        - "highlighted"
+      label: "What animal is this?"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `options` is used for setting the options that will be shown in the select
+- OPTIONAL
+  - `placeholder` is used for setting the placeholder text
+  - `value` is used for setting the default value of the select
+  - `required` is used for setting whether the select is required or not
+  - `classes` is used for setting custom css classes for the select
+  - `label` is used for setting the label text
+
+![image](/img/armory/components/image-select.png#center)
+
+#### Toggle
+
+This component is used in cases where you need users to select either true of false for a specified field.
+
+```yaml
+- Toggle:
+    inputId: "toggle"
+    label: "Toggle example"
+    value: "{{user.previousToggleChoice}}"
+    leftLabel: false
+    type: "is-primary"
+    classes:
+      - "highlighted"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `label` is used for setting the label text
+- OPTIONAL
+  - `value` is used for setting the default value of the toggle
+  - `leftLabel` is used for setting whether the label is on the left or right side of the toggle
+  - `type` is used for setting whether the toggle corresponds to the primary color scheme
+  - `classes` is used for setting custom css classes for the toggle
+
+![image](/img/armory/components/nestedtoggleOFF-toggle-radioselect-quantityselect.png#center)
+
+#### NestedToggle
+
+This component is used in cases where you need users to select either true of false for a specified field, and show/hide other components based on the toggle's value.
+
+```yaml
+- NestedToggle:
+    inputId: "nested-toggle"
+    label: "Show child component"
+    value: "{{user.previousNestedToggleChoice}}"
+    leftLabel: false
+    type: "is-primary"
+    classes:
+      - "highlighted"
+    childComponents:
+        - Description:
+            text: "Hello there!"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `label` is used for setting the label text
+  - `childComponents` is used for setting the components that will be shown/hidden based on the toggle's value
+- OPTIONAL
+  - `value` is used for setting the default value of the toggle
+  - `leftLabel` is used for setting whether the label is on the left or right side of the toggle
+  - `type` is used for setting whether the toggle corresponds to the primary color scheme
+  - `classes` is used for setting custom css classes for the toggle
+
+![image](/img/armory/components/nestedtoggleOFF-toggle-radioselect-quantityselect.png#center)
+
+Once the toggle is set to true, the child component will be shown.
+
+![image](/img/armory/components/nestedtoggleON-toggle-radioselect-quantityselect.png#center)
+
+#### RadioSelect
+
+This component is used in cases where you need users to select one value from predefined options.
+
+```yaml
+- RadioSelect:
+    inputId: "radio-select"
+    value: "{{user.previousRadioSelectChoice}}"
+    options:
+      - text: "Cheapest option"
+        value: "cost1"
+      - text: "Balanced option"
+        value: "cost2"
+      - text: "Luxury option"
+        value: "cost3"
+    classes:
+      - "highlighted"
+    required: true
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `options` is used for setting the options that will be shown in the select
+- OPTIONAL
+  - `value` is used for setting the default value of the select
+  - `classes` is used for setting custom css classes for the select
+  - `required` is used for setting whether the select is required or not
+
+![image](/img/armory/components/nestedtoggleOFF-toggle-radioselect-quantityselect.png#center)
+
+#### QuantitySelect
+
+This component is used in cases where you need users to select a quantity from a predefined range.
+
+```yaml
+- QuantitySelect:
+    inputId: "quantity-select"
+    label: "Select quantity: "
+    value: "3"
+    minValue: 0
+    maxValue: 10
+    step: 1
+    required: false
+    classes:
+    - "highlighted"
+    format: "${value}"
+    type: "is-primary"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `label` is used for setting the label text
+  - `value` is used for setting the default value of the select
+- OPTIONAL
+  - `minValue` is used for setting the minimum value of the select
+  - `maxValue` is used for setting the maximum value of the select
+  - `step` is used for setting the step of the select
+  - `required` is used for setting whether the select is required or not
+  - `classes` is used for setting custom css classes for the select
+  - `format` is used for setting the format of the select
+  - `type` is used for setting whether the select corresponds to the primary color scheme
+
+![image](/img/armory/components/nestedtoggleOFF-toggle-radioselect-quantityselect.png#center)
+
+#### QrcodeScanner
+
+This component is used in cases where you need users to scan a QR code.
+
+```yaml
+- QrcodeScanner:
+    inputId: "qrcode-scanner"
+    notAllowedError: "Camera access not allowed"
+    notFoundError: "QR code not found"
+    notSupportedError: "QR code scanning not supported"
+    notReadableError: "QR code not readable"
+    overconstrainedError: "Camera access not allowed"
+    streamApiNotSupportedError: "QR code scanning not supported"
+    insecureContextError: "QR code scanning not supported"
+    timeoutMs: 5000
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `notAllowedError` is used for setting the error message that will be shown if the camera access is not allowed
+  - `notFoundError` is used for setting the error message that will be shown if the QR code is not found
+  - `notSupportedError` is used for setting the error message that will be shown if the QR code scanning is not supported
+  - `notReadableError` is used for setting the error message that will be shown if the QR code is not readable
+  - `overconstrainedError` is used for setting the error message that will be shown if the camera access is not allowed
+  - `streamApiNotSupportedError` is used for setting the error message that will be shown if the QR code scanning is not supported
+  - `insecureContextError` is used for setting the error message that will be shown if the QR code scanning is not supported
+  - `timeoutMs` is used for setting the timeout in milliseconds
+
+![image](/img/armory/components/qrcodescanner-textarea.png#center)
 
 #### TextArea
 
 This component is used in cases where you need users to enter a longer text, such as a comment or a description.
 
-Here's a yaml example of how to use it:
-
 ```yaml
   - TextArea:
       inputId: "feedback-on-event"
-      placeholder: "Tell us your feedback!"
+      placeholder: "Tell us about you!"
       value: "{{ attendee.previousFeedback }}"
       required: true
+      label: "Feedback"
 ```
 
-- `inputId` is used for ... this field needs to be set
-- `placeholder` is when you need to..., this is optional (TODO check this in armory's code!!)
-- `value` is for setting ...
-- `required` field is used for ... it's true/false value, and it's optional ETC.
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `placeholder` is used for setting the placeholder text
+  - `value` is used for setting the default value of the text area
+  - `required` is used for setting whether the text area is required or not
+  - `label` is used for setting the label text
 
-
-Here's how it looks like:
-![image](/img/armory/text-area-example-1.png#center)
-![image](/img/armory/text-area-example-2.png#center)
-
-See how when the TextArea is empty and there is no text entered, the placeholder text is shown, while the Button is inactive because TextArea is set as required. 
-When the user starts typing, the placeholder text disappears and the text is shown in the TextArea, and the Button becomes active, enabling users to continue with the flow.
-
-TODO: Continue here with the rest of the components.
+![image](/img/armory/components/qrcodescanner-textarea.png#center)
 
 ### Templates and screen's layout
 How do we organize different components, and how can we assemble them to create a great user experience?
