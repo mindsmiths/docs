@@ -39,7 +39,113 @@ next section.
 
 ### APIs
 
-Marija's part
+APIs are a very important part of the Dashboard. They are used for communication between the Dashboard and other services,
+especially the Rule Engine (RE). 
+The Dashboard API is a set of functions that can be called from other services to create, update, and delete objects in the Dashboard database;
+Since the Dashboard is the owner of the database, it is the only service that can perform these actions. All the other services
+can create, update, and delete Django objects only through the Dashboard API. 
+
+The API structure is defined within the 'api/api_builder.py' file, where all the API endpoints for communication with other services are declared. 
+The implementation of these endpoints can be found in the 'apps/service.py' file.
+
+The Dashboard API, written in Python, can be directly used by any service written in Python. 
+However, for services written in other languages such as Java, we need to define corresponding API endpoints 
+in those services and invoke the Dashboard API from there. It's important to note that these Java-based API 
+endpoints must share the same names as the Python endpoints. These are housed within the 'clients/java/src' folder.
+
+Let's say we want to model an Event object. We create a Django model of event in 'apps/models.py' file.
+
+```python
+
+class Event(BaseModel):
+    name = models.CharField(max_length=256)
+    status = models.CharField(max_length=256, choices=EVENT_STATUS)
+    ...
+```
+In this model, the 'status' field can hold one of three values - 'new', 'in progress', and 'done'. 
+Now, suppose the RE needs to update the event's status from 'new' to 'in-progress' at the start of the event. 
+However, the RE is not authorized to modify the status field directly within the database as the Dashboard is the designated owner of the object.
+RE must call Dashboard API when it wants to change the status of the event.
+
+To do this we will need to take the following steps:
+1. Define API endpoint in api_builder.py
+2. Provide the implementation for this endpoint in the 'service.py' file
+3. Define API endpoint and payload in java
+4. Call Dashboard API from the RE
+
+So let's start with defining API endpoint in api_builder.py:
+
+```python
+@api_interface
+class EventDashboardAPI(BaseAPI):
+    service_id = "event_dashboard"
+
+    @staticmethod
+    def set_event_status(eventId: str, status: str) -> None:
+        """
+        Set event status
+        :param eventId: event id
+        :param status: new status
+        :return: None
+        """
+
+```
+Next, we need to provide the implementation for this endpoint in the 'service.py' file. 
+:::caution
+Keep in mind, all parameters should be in camelCase for both Python and Java.
+:::
+
+
+```python
+class EventDashboardListener(BaseService):
+
+    @api
+    async def set_event_status(self, eventId: str, status: str) -> None:
+        def _set_event_status():
+            event = Event.objects.get(id=eventId)
+            event.status = status
+            event.save()
+        await sync_to_async(_set_event_status)()
+
+```
+
+And lastly we must define API endpoint and payload in java.
+
+```java
+public class EventDashboardAPI {
+
+    private static final String serviceId = "event_dashboard";
+
+    public static void setEventStatus(String eventId, String status) {
+        new SetEventStatus(eventId, status).send(serviceId);
+    }
+
+}
+```
+
+```java
+public class SetEventStatus extends Message {
+    private String eventId;
+    private String status;
+}
+```
+
+Now we can call Dashboard API from the RE.
+
+```java
+
+import com.mindsmiths.eventDashboard.EventDashboardAPI;
+
+rule "Set event status to started"
+    when
+        signal: EventStarted(eventId: eventId) from entry-point "signals"
+        event: Event(id == eventId, status == "new")
+    then
+        EventDashboardAPI.setEventStatus(eventId, "in progress");
+    end
+
+```
+
 
 ### Emitting signals
 
