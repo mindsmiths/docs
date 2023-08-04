@@ -178,32 +178,62 @@ end
 
 Here you can take a look how will the config look like, in comparison with the manual build-up.
 
-![image](/img/armory/config-exmple.png)
+```yaml
+screens:
+  welcome:
+    - Title:
+        text: "Hello there!"
+    - Description:
+        text: "Are you ready to get started?"
+    - SubmitButton:
+        inputId: "start"
+        text: "Let's go!"
+        nextScreen: "ask-for-name"
+  ask-for-name:
+    - Title:
+        text: "What's your name? 😊"
+    - Input:
+        inputId: "first-name"
+        placeholder: "Type your first name here..."
+        type: "text"
+        required: true
+        label: "First name"
+    - Input:
+        inputId: "last-name"
+        placeholder: "Type your last name here..."
+        type: "text"
+        required: true
+        label: "Last name"
+    - SubmitButton:
+        inputId: "submit-name"
+        text: "Submit"
+```
 
 Next step - exploring all the different components that come predefined with Armory!
 
 ### Components
 The components are the building blocks of screens, and there are several you can use out-of-the-box:
-* Header: component that normally contains a logo and the `BackButton` (enabled by setting the `allowsBack` field to `true`)
-* Title
-* Description
-* Input: component that roughly corresponds to the [HTML input element](https://www.w3schools.com/html/html_form_input_types.asp), with the input data type specified by setting `type`
-* TextArea: component for longer text input
-* Select: choose one option from a list
-* CloudSelect: a cool multi-select component
-* Quantity select: component for specifying quantities
-* Toggle: component that imitates a switch
-* Nested Toggle: you guessed it, it's a toggle that shows/hides other components
-* Image
-* SubmitButton: basic button component, triggers a `Submit` event
-* QrcodeScanner: component that allows the user to scan a QR code
-* Loader: component that allows the user to upload a file
+* **Header**: component that normally contains a logo and the `BackButton` (enabled by setting the `allowsBack` field to `true`)
+* **Title**
+* **Description**
+* **Input**: component that roughly corresponds to the [HTML input element](https://www.w3schools.com/html/html_form_input_types.asp), with the input data type specified by setting `type`
+* **TextArea**: component for longer text input
+* **Select**: choose one option from a list
+* **CloudSelect**: a cool multi-select component
+* **QuantitySelect**: component for specifying quantities
+* **RadioSelect**: component for choosing one option from a list, but with radio buttons
+* **Toggle**: component that imitates a switch
+* **NestedToggle**: you guessed it, it's a toggle that shows/hides other components
+* **Image**
+* **SubmitButton**: basic button component, triggers a `Submit` event
+* **QrcodeScanner**: component that allows the user to scan a QR code
 
 Components that are used to collect some sort of input or activity from the user (text areas, buttons, select components etc.) are referenced through the `inputId`.
 You can even make all of these components obligatory by setting its default value of the `required` field to `true`.
 If a component is set to required, users can only progress within the flow if they interact with it accordingly.  
 
-For example, here is a rule that registers the user entered their name and submitted it by pressing a button:
+If you're wondering how to access the input user submitted, the next rule will serve as an example.
+
 ```java
 rule "Save user name"
     when
@@ -215,8 +245,10 @@ rule "Save user name"
 end
 ```
 
-On each press of a `SubmitButton`, a `Submit` event is triggered. You can catch a specific `Submit` event inside a rule using the defined `buttonId`, as seen in the example above.
-This type of event also contains values of all the components that have been previously filled out. You can access them by using the `getParamAs____()` functions, which all take the `inputId` of the component as a parameter.
+The previous rule registers users entering their name and submitting it by pressing a button.
+With each press of a `SubmitButton`, a `Submit` event is triggered. You can catch a specific `Submit` event inside a rule using the defined `buttonId`, as seen in the example above.
+This type of event also contains values of all the components that have been previously filled out. You can access them 
+by using the `getParamAs____()` functions, which all take the `inputId` of the component as a parameter.
 
 :::info Type of the `getParamAs____()` functions
 
@@ -233,6 +265,428 @@ This type of event also contains values of all the components that have been pre
 :::
 
 All data within a [linked sequence of screens](/docs/tutorials/web-interactions/chaining-screens) is transferred via GET parameters, and you can store them in bulk when a button with a certain `buttonId` is pressed.
+
+But now, let's break it down for every component, so you can get a better idea of when and how to use them, as well as how they look like.
+For this case, let's create an onboarding flow and try to use all the available components, and maybe even a few custom ones.
+We will demonstrate the components by groups, with the corresponding example of the screen they are used in provided in the end.
+
+Let's start with the components that are most frequently used. On the next image, you can see a screen with the following components:
+Header, Title, Description, Input and SubmitButton.
+
+<img src="/img/armory/components/basic-components.png#center" alt="basic component" tag="image-basic" id="image-basic"/>
+
+#### Header
+
+This component is used for displaying a logo and a back button. It's always  placed at the top of the screen.
+
+On the previous image, you can see how it looks like when the logo is set, and the back button is enabled.
+
+```yaml
+- Header:
+    src: "logo.png"
+    allowsBack: true
+```
+
+- OPTIONAL
+  - `src` is used for setting the path to logo image. If not set, the logo won't be shown
+  - `allowsBack` is used for setting whether the back button is shown or not. If not set, the back button won't be shown
+
+#### Title
+
+Title component is used for displaying a text that you want to emphasize in a way on the screen.
+Titles have text bolded, and the font size is on the larger side.
+
+```yaml
+- Title:
+    text: "Hi, there 🫣"
+```
+
+- REQUIRED
+    - `text` is used for setting the text which will be shown in the title
+
+#### Description
+
+This component is used for displaying a text with a slighter less accentuated look. Compared to a `Title`, 
+it has a smaller font, and it isn't bolded.
+
+```yaml
+- Description:
+    text: "Let's get to know each other"
+```
+- REQUIRED
+  - `text` is used for setting the description text
+
+#### Input
+
+This component is used for collecting user's input, especially in cases where you need users to enter a short amount of text.
+
+```yaml
+- Input:
+    label: "First name"
+    inputId: "first-name"
+    type: "text"
+    placeholder: "Jane"
+    value: "{{ user.firstName}}"
+    required: true
+```
+
+- REQUIRED
+  - `inputId` is an identifier used for referencing the component in the code
+- OPTIONAL
+  - `placeholder` is used for setting the placeholder text, this will be shown as an example of what the user should enter and will disappear once the user starts typing
+  - `type` is used for setting the input type, different versions can be found [here](https://www.w3schools.com/tags/att_input_type.asp)
+  - `value` is used for setting the default value of the input and can be additionally edited from the user's side
+  - `required` is used for setting whether the input is required or not
+  - `label` is used for setting the label text, which will be shown directly above the input and serves as an description of the specific input field
+
+#### SubmitButton
+
+SubmitButton component enables users to progress through the flow and allows them to submit their various input. 
+Once the user clicks on it, this will automatically trigger a `Submit` event.
+This way, it can easily be addressed in the code and used for redirecting the user to another screen, or for storing the data they entered.
+
+```yaml
+- SubmitButton:
+    inputId: "start"
+    text: "Continue"
+    nextScreen: "onboarding-description"
+    customClasses:
+      - "highlighted"
+```
+
+- REQUIRED
+  - `inputId` is an identifier used for referencing the component in the code
+- OPTIONAL
+  - `text` is used for setting the button's text
+  - `nextScreen` is used for setting the next screen that will be shown after the button is pressed
+  - `customClasses` is used for setting custom css classes for the button
+
+Also, if you look again at the [image above](#image-basic), SubmitButton on the left screen is inactive at first, because user hasn't entered any input yet.
+As soon as the users starts with entering the data, the button becomes active and can be pressed, which is demonstrated on the right screen.
+
+Besides the classic input components, Armory comes with many different solutions ready for users to interact with and enabling them to enter requested information
+in different occasions. Let's take a look at some of them. 
+
+#### TextArea
+
+This component is used in cases where you need users to enter a longer text, such as a comment or a description.
+
+![image](/img/armory/components/text-area.png#center)
+
+```yaml
+- TextArea:
+    inputId: "user-bio"
+    label: "Write your bio here 🤩"
+    placeholder: "I'm Jane, junior software developer who just started here at Mindsmiths..."
+    required: true
+    value: "{{ user.bio }}"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `placeholder` is used for setting the placeholder text
+  - `value` is used for setting the default value of the text area
+  - `required` is used for setting whether the text area is required or not
+  - `label` is used for setting the label text
+
+There are a few different ways users can select one or more items from the given options, so get ready because we're about 
+to go through each one.
+
+#### Select
+
+This component is used in cases where you need users to select one value from predefined options, and you don't want all 
+the options to be straightly listed. Instead, they'll be listed as a part of a dropdown menu.
+
+![image](/img/armory/components/select.png#center)
+
+```yaml
+- Select:
+    inputId: "language"
+    placeholder: "Pick one"
+    value: "{{ user.language }}"
+    required: true
+    options:
+      - "Python"
+      - "Java"
+      - "Rust"
+      - "C++"
+      - "Javascript"
+      - "Other"
+    label: "Which of these are you most familiar with?"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `options` is used for setting the options that will be shown in the select
+- OPTIONAL
+  - `placeholder` is used for setting the placeholder text
+  - `value` is used for setting the default value of the select
+  - `required` is used for setting whether the select is required or not
+  - `classes` is used for setting custom css classes for the select
+  - `label` is used for setting the label text
+
+#### CloudSelect
+
+This component is used in cases where you need users to select multiple values from predefined options.
+
+![image](/img/armory/components/cloud-select.png#center)
+
+```yaml
+- CloudSelect:
+    inputId: "preferencesSelect"
+    required: true
+    label: "You can select more than one"
+    options:
+      - text: "Proactivity"
+        value: "proactivity"
+      - text: "Reliability"
+        value: "detail"
+      - text: "Problem solver"
+        value: "solver"
+      - text: "Flexible"
+        value: "flexible"
+      - text: "Collaborative"
+        value: "collaborative"
+      - text: "Dedicated"
+        value: "dedicated"
+      - text: "Teamwork"
+        value: "teamwork"
+      - text: "Creativity"
+        value: "creativeity"
+      - text: "Detail oriented"
+        value: "flexible"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `required` is used for setting whether the select is required or not
+  - `options` is used for setting the options that will be shown in the select, for each option, you have to 
+  - `label` is used for setting the label text
+
+#### RadioSelect
+
+This component is used in cases where you need users to select one value from predefined options, and you need all of them 
+to be listed on the screen.
+
+![image](/img/armory/components/radio-select.png#center)
+
+```yaml
+- RadioSelect:
+    inputId: "position"
+    required: true
+    options:
+      - value: "backend-dev"
+        text: "Backend developer"
+      - value: "frontend-dev"
+        text: "Frontend developer"
+      - value: "cloud-engineer"
+        text: "Cloud engineer"
+      - value: "fullstack-developer"
+        text: "Fullstack developer"
+    classes:
+      - "highlighted"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `options` is used for setting the options that will be shown in the select
+- OPTIONAL
+  - `value` is used for setting the default value of the select
+  - `classes` is used for setting custom css classes for the select
+  - `required` is used for setting whether the select is required or not
+
+#### QuantitySelect
+
+This component is used in cases where you need users to select a quantity from a predefined range.
+
+![image](/img/armory/components/quantity-selector.png#center)
+
+```yaml
+- QuantitySelect:
+    inputId: "quantity-select"
+    label: "Preferred working hours: "
+    value: "8"
+    minValue: 4
+    maxValue: 12
+    step: 1
+    required: false
+    classes:
+      - "highlighted"
+    format: "{value}h"
+    type: "is-primary"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `label` is used for setting the label text
+  - `value` is used for setting the default value of the select
+- OPTIONAL
+  - `minValue` is used for setting the minimum value of the select
+  - `maxValue` is used for setting the maximum value of the select
+  - `step` is used for setting the step of the select
+  - `required` is used for setting whether the select is required or not
+  - `classes` is used for setting custom css classes for the select
+  - `format` is used for setting the format of the select
+  - `type` is used for setting whether the select corresponds to the primary color scheme
+
+#### RangeSlider
+
+Range slider component is used in cases where you need users to select a scope from a predefined range.
+
+![image](/img/armory/components/range-slider.png#center)
+
+```yaml
+- RangeSlider:
+    inputId: "workload-hours"
+    minValue: 20
+    maxValue: 60
+    value: "{{ user.workloadHours }}"
+    step: 2
+    required: true
+    label: "Somewhere between ${lowerValue} and ${upperValue} hours"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `minValue` is used for setting the minimum value of the slider
+  - `maxValue` is used for setting the maximum value of the slider
+- OPTIONAL
+  - `value` is used for setting the default values of the slider
+  - `step` is used for setting the step of the slider
+  - `required` is used for setting whether the slider is required or not
+
+#### ImageUpload
+
+This component is used in cases where you need users to upload an image in  your flow.
+
+![image](/img/armory/components/image-uploader.png#center)
+
+```yaml
+- ImageUpload:
+    inputId: "image-upload"
+    uploadText: "Upload image"
+    uploadedText: "Image uploaded"
+    value: "{{ user.defaultImage }}"
+    required: true
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `uploadText` is used for setting the text that will be shown on the button until the image is uploaded
+  - `uploadedText` is used for setting the text that will be shown on the button when the image is uploaded
+  - `value` is used for setting the default value of the image
+  - `required` is used for setting whether the image is required or not
+
+
+#### Image
+
+This component is used in cases where you need to display an image.
+
+![image](/img/armory/components/image.png#center)
+
+```yaml
+- Image:
+    src: "discord-logo.png"
+    classes: 
+      - "highlighted" 
+```
+
+- REQUIRED
+  - `src` is used for setting the path to the image source
+- OPTIONAL
+  - `classes` is used for setting custom css classes for the image
+
+#### Toggles
+
+Toggles are used in scenarios where you need users to select either true of false value for a specified field.
+Armory supports two version of toggles - regular and a nested one. The following image demonstrates both.
+
+<img src="/img/armory/components/toggles.png#center" alt="toggles" tag="toggles" id="toggles"/>
+
+```yaml
+- Toggle:
+    inputId: "toggle"
+    label: "Toggle example"
+    value: "{{user.previousToggleChoice}}"
+    leftLabel: false
+    type: "is-primary"
+    classes:
+      - "highlighted"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `label` is used for setting the label text
+- OPTIONAL
+  - `value` is used for setting the default value of the toggle
+  - `leftLabel` is used for setting whether the label is on the left or right side of the toggle
+  - `type` is used for setting whether the toggle corresponds to the primary color scheme
+  - `classes` is used for setting custom css classes for the toggle
+
+#### NestedToggle
+
+This component is used in cases where you need users to select either true of false for a specified field, and show/hide other components based on the chosen value.
+
+```yaml
+- NestedToggle:
+    inputId: "nested-toggle"
+    label: "Want to leave your repo?"
+    value: "{{ user.previousNestedToggleChoice }}"
+    leftLabel: true
+    type: "is-primary"
+    classes:
+      - "highlighted"
+    childComponents:
+      - Input:
+          type: "url"
+          placeholder: "https://github.com/mindsmiths/docs"
+          value: "{{ user.repoUrl }}"
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+  - `label` is used for setting the label text
+  - `childComponents` is used for setting the components that will be shown/hidden based on the toggle's value
+- OPTIONAL
+  - `value` is used for setting the default value of the toggle
+  - `leftLabel` is used for setting whether the label is on the left or right side of the toggle
+  - `type` is used for setting whether the toggle corresponds to the primary color scheme
+  - `classes` is used for setting custom css classes for the toggle
+
+Once the toggle is set to true, the child component will be shown, as it is demonstrated on the [image above](#toggles).
+
+#### QrcodeScanner
+
+This component is used in cases where you need users to scan a QR code.
+
+```yaml
+- QrcodeScanner:
+    inputId: "qrcode-scanner"
+    notAllowedError: "Camera access not allowed"
+    notFoundError: "QR code not found"
+    notSupportedError: "QR code scanning not supported"
+    notReadableError: "QR code not readable"
+    overconstrainedError: "Camera access not allowed"
+    streamApiNotSupportedError: "QR code scanning not supported"
+    insecureContextError: "QR code scanning not supported"
+    timeoutMs: 5000
+```
+
+- REQUIRED
+  - `inputId` is used for referencing the component in the code
+- OPTIONAL
+  - `notAllowedError` is used for setting the error message that will be shown if the camera access is not allowed
+  - `notFoundError` is used for setting the error message that will be shown if the QR code is not found
+  - `notSupportedError` is used for setting the error message that will be shown if the QR code scanning is not supported
+  - `notReadableError` is used for setting the error message that will be shown if the QR code is not readable
+  - `overconstrainedError` is used for setting the error message that will be shown if the camera access is not allowed
+  - `streamApiNotSupportedError` is used for setting the error message that will be shown if the QR code scanning is not supported
+  - `insecureContextError` is used for setting the error message that will be shown if the QR code scanning is not supported
+  - `timeoutMs` is used for setting the timeout in milliseconds
+
 
 ### Templates and screen's layout
 How do we organize different components, and how can we assemble them to create a great user experience?
