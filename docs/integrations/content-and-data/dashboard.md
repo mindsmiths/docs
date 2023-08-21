@@ -17,9 +17,6 @@ easily-readable way. Given that the Dashboard is a Django-based service, it is h
 * emits models to other services (predominantly to the [Rule Engine](/docs/platform/advanced-concepts/rule-engine.md))
 * operates as a gateway to external databases, salesforces, Google Sheets tables, etc.
 
-## Setup
-
-TBD
 
 ## How to use the Dashboard?
 
@@ -33,14 +30,14 @@ in the side menu bar.
 
 
 Adding a Django model through a graphical interface, as explained above, is not the only way to insert an object into a database.
-A very common use case is calling one of the API functions directly from the Rule Engine (RE) that creates or updates Django objects. 
+A very common use case is calling one of the API functions directly from the Rule Engine (**RE**) that creates or updates Django objects. 
 These API methods are usually short Python functions that use Django packages, but more about APIs and how they work in the
 next section.
 
 ### APIs
 
-APIs are a very important part of the Dashboard. They are used for communication between the Dashboard and other services,
-especially the Rule Engine (RE). 
+APIs are an essential part of the Dashboard. They are used for communication between the Dashboard and other services,
+especially the RE. 
 The Dashboard API is a *set* of functions that can be called from other services to create, update, and delete objects in the Dashboard database.
 
 Since the Dashboard is the owner of the database, it is the only service that can perform these actions. All the other services
@@ -50,33 +47,38 @@ The API structure is defined within the `api/api_builder.py` file, where all the
 The implementation of these endpoints can be found in the `apps/service.py` file.
 
 The Dashboard API, written in Python, can be directly used by any service written in Python. 
-However, for services written in other languages such as Java, we need to define corresponding API endpoints in Java.
-It's important to note that these Java-based API 
-endpoints must share the same names as the Python endpoints. These are defined within the `clients/java/src` folder.
+However, for services written in other languages, such as Java (which will be used in these examples), we need to define corresponding API endpoints in that particular language.
+It's important to note that these API endpoints must share the same names as the Python endpoints. These are defined 
+within the `clients/java/src` folder.
 
 Let's say we want to model an Event object. We create a Django model of event in `apps/models.py` file.
 
-```python
-
+```python title="apps/models.py"
 class Event(BaseModel):
+    EVENT_STATUS = (
+        ("NEW", "New"),
+        ("IN-PROGRESS", "In progress"),
+        ("Done", "Done"),
+    )
     name = models.CharField(max_length=256)
-    status = models.CharField(max_length=256, choices=EVENT_STATUS)
+    status = models.CharField(max_length=256, choices=EVENT_STATUS, default='NEW')
     ...
 ```
-In this model, the **status** field can hold one of three values - `new`, `in-progress`, and `done`. 
-Now, suppose the RE needs to update the event's status from `new` to `in-progress` at the start of the event. 
-However, the RE is not authorized to modify the status field directly within the database as the Dashboard is the designated owner of the object.
-RE must call Dashboard API when it wants to change the status of the event.
+In this model, the **status** field can hold one of three values - _New_, _In-progress_, and _Done_. 
+Now, suppose the RE needs to update the event's status from _New_ to _In-progress_ at the start of the event. 
+But as mentioned at the start, the RE is not authorized to modify the status field directly within the database
+as the Dashboard is the designated owner of the object. That's why RE needs to call Dashboard API when it wants to 
+change the status of the event. 
 
-To do this we will need to take the following steps:
-1. Define API endpoint in api_builder.py
-2. Provide the implementation for this endpoint in the 'service.py' file
-3. Define API endpoint and payload in java
-4. Call Dashboard API from the RE
+Here are the 4 steps we need to take in order to make this API calls possible:
+1. Define API endpoint in `api_builder.py` file
+2. Provide the implementation for this endpoint in the `service.py` file
+3. Define API endpoint and payload in the chosen language
+4. Call the Dashboard API from the RE
 
 So let's start with defining API endpoint in `api_builder.py` file:
 
-```python
+```python title="api/api_builder.py"
 @api_interface
 class EventDashboardAPI(BaseAPI):
     service_id = "event_dashboard"
@@ -91,13 +93,15 @@ class EventDashboardAPI(BaseAPI):
         """
 
 ```
+In this file, there's an `EventDashboardAPI` class defined and here is the place for listing all the methods that will be implemented.
 Next, we need to provide the implementation for this endpoint in the `service.py` file. 
-:::caution
+
+:::caution Naming convention
 Keep in mind, all parameters should be in camelCase for both Python and Java.
 :::
 
 
-```python
+```python title="apps/service.py"
 class EventDashboardListener(BaseService):
 
     @api
@@ -110,9 +114,9 @@ class EventDashboardListener(BaseService):
 
 ```
 
-And lastly we must define API endpoint and payload in java.
+This part is crucial as here is where the logic is implemented. Lastly, we need to define an API **endpoint** and **payload** in Java.
 
-```java
+```java title="clients/java/com/mindsmiths/dashboard/EventDashboardAPI.java"
 public class EventDashboardAPI {
 
     private static final String serviceId = "event_dashboard";
@@ -124,29 +128,29 @@ public class EventDashboardAPI {
 }
 ```
 
-```java
+```java title="clients/java/com/mindsmiths/dashboard/api/EventDashboardAPI.java"
 public class SetEventStatus extends Message {
     private String eventId;
     private String status;
 }
 ```
 
-Now we can call Dashboard API from the RE.
+Now for the final step, we can call the Dashboard API from the RE.
 
-```java
+```java title="rule_engine/src/main/java/resources/rules/Rule.drl"
 
 import com.mindsmiths.eventDashboard.EventDashboardAPI;
 
-rule "Set event status to started"
+rule "Change event status"
     when
         signal: EventStarted(eventId: eventId) from entry-point "signals"
         event: Event(id == eventId, status == "new")
     then
         EventDashboardAPI.setEventStatus(eventId, "in progress");
     end
-
 ```
-And that's it! We have successfully updated the status of the event from `new` to `in-progress`. :tada:
+
+And that's it! We have successfully updated the status of the event from _New_ to _In progress_.
 
 ### Emitting signals
 
@@ -170,7 +174,7 @@ To address those changes, we have to write Python functions in the same file whe
 
 Let's say that our model looks like this:
 
-```python
+```python title="apps/models.py"
 class Customer(BaseModel):
     id = models.CharField(primary_key=True, max_length=128, default=id_generator, editable=False)
     first_name = models.CharField(max_length=128)
@@ -189,7 +193,7 @@ class Customer(BaseModel):
 ``` 
 
 At the end of the file, we can add the following function:
-```python
+```python title="apps/models.py"
 @receiver(post_save, sender=Customer)
 def contact_updated(sender: Type[Customer], instance: Customer, *_, **__):
     CustomerView(**instance.to_dict()).emit(change_type=DataChangeType.UPDATED)
@@ -200,17 +204,19 @@ In this case, it is after the object is saved which is defined with the `post_sa
 parameters define the type of Django model which change will trigger this method. `CustomerView` is a Python class that
 will be emitted and as we can see emit method is called with change type `UPDATED`. It is important to emphasize that
 `CustomerView` is a `Customer` class imported as:
+
 ```python
 from services.dashboard.api.views import Customer as CustomerView
 ``` 
+
 The reason why we import the Python class `Customer` as `CustomerView` is to distinguish it from the `Customer` Django model. They are
 not the same thing. First is the Python class that will be emitted from the dashboard, written in the `views.py` file, and the latter
 is the Django model that is saved into the database, written in `models.py`. 
 
-Since RE uses Java, and not Python, we have to write the corresponding `Customer` class using Java, inside
-the `services/dashboard/clients/java/src/main/java/com/mindsmiths/dashboard/models/` folder. Now follows implementations of
-`Customer` class in Python and Java:
-```python
+Since RE uses Java, and not Python, we have to write the corresponding `Customer` class using Java. 
+Now follows implementations of `Customer` class in Python and Java:
+
+```python title="dashboard/api/views.py"
 class Contact(DataModel):
     id: str
     firstName: str
@@ -218,7 +224,8 @@ class Contact(DataModel):
     phone: Optional[str]
     email: Optional[str]
 ```
-```java
+
+```java title="dashboard/clients/java/src/main/java/com/mindsmiths/dashboard/models/Contact.java"
 package com.mindsmiths.dashboard.models;
 
 import lombok.AllArgsConstructor;
@@ -239,15 +246,22 @@ public class Contact {
     String email;
 }
 ```
-Notice that in the Java class, we put decorator `DataModel(emit=true)` which says that this class is emmittable.
+
+:::info
+Notice that in the Java class, we added a decorator `DataModel(emit=true)` which says that this class is emmittable.
+:::
 
 The last part that we have to do is to subscribe RE on this type of event, or simply put, we have to say to the RE to
 listen to all `Customer` signals being emitted. In the `Runner.java` inside the `initialize()` method put
 `registerForChanges(Customer.class)`:
-```java
+
+```java title="rule_engine/src/main/java/Runner.java"
 public class Runner extends RuleEngineService {
     @Override
     public void initialize() {
         registerForChanges(Customer.class);
     }
+}
 ```
+
+That's all! With following this few simple examples, it should be easy to implement your own methods and models and add the DashboardAPI to your project.
