@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 6
 ---
 
 # Web
@@ -85,7 +85,7 @@ The flow's starting point can be defined with setting the `firstScreen` paramete
 :::
 
 On the other hand, when you're building the screens using a **configuration file**, then you'll put all the screens' specification inside a `.yaml` file.
-This configuration file can be defined in a separate file, or within the [Control Panel](../platform/advanced-concepts/control-panel.md) service through the Configuration editor.
+This configuration file can be defined in a separate file, or within the [Control Panel](../../platform/advanced-concepts/control-panel.md) service through the Configuration editor.
 Another option is to define the configuration through the Dashboard. 
 
 In each of these cases, you'll need to build the screens first before showing them. You'll use the `ArmoryAPI.buildScreens()` method for that. 
