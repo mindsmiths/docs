@@ -692,7 +692,7 @@ This component is used in cases where you need users to scan a QR code.
 
 This template shows the branding when user connects.
 
-![image](/img/armory/components/splash-screen.png#center)
+![image](/img/armory/splash-screen.png#center)
 
 To enable it, you need to:
 1. add `INTRO_SCREEN: "splash"` to armory environment variables (in `config.yaml`, under `armory:`, under `env:`)
