@@ -734,6 +734,40 @@ Here you can see how it looks. The first screen is the default screen, while the
 
 ![graphic](/img/web/Screen.png#center)
 
+
+#### Predefined templates
+
+##### Splash screen
+
+This template shows the branding when user connects.
+
+![image](/img/armory/splash-screen.png#center)
+
+To enable it, you need to:
+1. add `INTRO_SCREEN: "splash"` to armory environment variables
+```yaml title="config/config.yaml"
+  // ...
+  armory:
+    // ...
+    env:
+      SITE_URL: '{{ "armory." + env.get("HOST_DOMAIN", "") }}'
+      INTERNAL_SITE_URL: "armory"
+      CORS_ALLOWED_ORIGINS: "https://skolskaknjigapublic.blob.core.windows.net"
+      INTRO_SCREEN: "splash"
+```
+
+2. add logo which will be displayed under `services/armory/src/assets/splash-screen.png`
+
+:::tip Changing background color
+To change the background color of the splash screen, go to `skin.scss` and do the following:
+```css
+body.splash-active {
+  background-color: #808080 !important;  // change with your color preference
+}
+```
+:::
+
+
 ## Creating components and templates
 
 ### Custom components
