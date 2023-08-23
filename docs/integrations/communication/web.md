@@ -688,6 +688,25 @@ This component is used in cases where you need users to scan a QR code.
   - `timeoutMs` is used for setting the timeout in milliseconds
 
 
+#### Splash screen
+
+This template shows the branding when user connects.
+
+![image](/img/armory/components/splash-screen.png#center)
+
+To enable it, you need to:
+1. add `INTRO_SCREEN: "splash"` to armory environment variables (in `config.yaml`, under `armory:`, under `env:`)
+2. add logo which will be displayed under `services/armory/src/assets/splash-screen.png`
+
+:::tip Changing background color
+To change the background color of the splash screen, go to `skin.scss` and do the following:
+```css
+body.splash-active {
+  background-color: #808080 !important;  // change with your color preference
+}
+```
+:::
+
 ### Templates and screen's layout
 How do we organize different components, and how can we assemble them to create a great user experience?
 
