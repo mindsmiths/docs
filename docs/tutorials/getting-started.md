@@ -45,7 +45,7 @@ Your IDE should look something like this:
 ![Mindsmiths IDE](/img/tutorials/cloud_ide.png)
 
 If your IDE doesn't look like this, check out our [FAQ](/docs/platform/reference/faq) for common problems,
-or geet in touch through [Discord](https://discord.gg/mindsmiths).
+or get in touch through [Discord](https://discord.gg/mindsmiths).
 
 To check that everything is set up correctly, open the terminal in the IDE and type `forge run`.
 Now just watch the Platform come to life! You should soon see the **heartbeat of your personal helper - Agent Smith**.

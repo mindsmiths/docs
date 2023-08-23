@@ -26,7 +26,7 @@ Great! You now need a Telegram bot that you can use for testing. You can create 
 
 3. Type (or click on) `/newbot` to create a new bot.
 
-4. Follow the instructions provided by BotFather to set the name and username for your new bot. You can use any name you'd like, but the username has to be
+4. Follow the instructions provided by BotFather to set the name and username for your new bot. You can use any name you'd like, but the username has to be unique.
 You will receive a token that you'll use to interact with your bot.
 :::
 
