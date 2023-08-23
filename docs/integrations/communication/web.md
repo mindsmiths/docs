@@ -688,25 +688,6 @@ This component is used in cases where you need users to scan a QR code.
   - `timeoutMs` is used for setting the timeout in milliseconds
 
 
-#### Splash screen
-
-This template shows the branding when user connects.
-
-![image](/img/armory/splash-screen.png#center)
-
-To enable it, you need to:
-1. add `INTRO_SCREEN: "splash"` to armory environment variables (in `config.yaml`, under `armory:`, under `env:`)
-2. add logo which will be displayed under `services/armory/src/assets/splash-screen.png`
-
-:::tip Changing background color
-To change the background color of the splash screen, go to `skin.scss` and do the following:
-```css
-body.splash-active {
-  background-color: #808080 !important;  // change with your color preference
-}
-```
-:::
-
 ### Templates and screen's layout
 How do we organize different components, and how can we assemble them to create a great user experience?
 
@@ -752,6 +733,40 @@ This will group the `Description` and `Input` component around the screen center
 Here you can see how it looks. The first screen is the default screen, while the second screen includes the `group` component.
 
 ![graphic](/img/web/Screen.png#center)
+
+
+#### Predefined templates
+
+##### Splash screen
+
+This template shows the branding when user connects.
+
+![image](/img/armory/splash-screen.png#center)
+
+To enable it, you need to:
+1. add `INTRO_SCREEN: "splash"` to armory environment variables
+```yaml title="config/config.yaml"
+  // ...
+  armory:
+    // ...
+    env:
+      SITE_URL: '{{ "armory." + env.get("HOST_DOMAIN", "") }}'
+      INTERNAL_SITE_URL: "armory"
+      CORS_ALLOWED_ORIGINS: "https://skolskaknjigapublic.blob.core.windows.net"
+      INTRO_SCREEN: "splash"
+```
+
+2. add logo which will be displayed under `services/armory/src/assets/splash-screen.png`
+
+:::tip Changing background color
+To change the background color of the splash screen, go to `skin.scss` and do the following:
+```css
+body.splash-active {
+  background-color: #808080 !important;  // change with your color preference
+}
+```
+:::
+
 
 ## Creating components and templates
 
