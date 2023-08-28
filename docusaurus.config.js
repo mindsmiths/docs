@@ -93,6 +93,13 @@ const config = {
           },
           {
             type: "doc",
+            label: "Plugins",
+            docId: "plugins/getting-started",
+            position: "left",
+            sidebarPath: "pluginsSidebar",
+          },
+          {
+            type: "doc",
             label: "Community",
             docId: "community",
             position: "right",
