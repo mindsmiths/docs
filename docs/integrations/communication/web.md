@@ -125,7 +125,7 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
             <li><code>public static Show show(String connectionId, List&lt;HistoryItem> history, Screen... screens)</code></li>
             <li><code>public static Show show(String connectionId, String firstScreen, List&lt;HistoryItem&gt; history, Screen... screens)</code></li>
             <li><code>public static Show show(String connectionId, List&lt;HistoryItem> history, Map&lt;String, Object&gt; configuration, Screen... screens)</code></li>
-            <li><code> public static Show show(String connectionId, String firstScreen, List&ltHistoryItem&gt; history, Map&lt;String, Object&gt; configuration, Screen... screens)</code></li>
+            <li><code>public static Show show(String connectionId, String firstScreen, List&ltHistoryItem&gt; history, Map&lt;String, Object&gt; configuration, Screen... screens)</code></li>
             <li><code>public static Show show(String connectionId, List&lt;HistoryItem> history, List&lt;Screen&gt; screens)</code></li>
             <li><code>public static Show show(String connectionId, String firstScreen, List&lt;HistoryItem&gt; history, List&lt;Screen&gt; screens)</code></li>
             <li><code>public static Show show(String connectionId, List&lt;HistoryItem> history, Map&lt;String, Object> configuration, List&lt;Screen> screens)</code></li>
@@ -134,6 +134,34 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
     </div>
 </details>
 
+<details>
+<summary>How to use <code>Map&lt;String, Object> configuration</code></summary>
+<ul>
+  <li>
+    <p><b>Add a custom favicon:</b></p>
+
+    
+  ```java
+    Map<String, Object> configuration = new HashMap<>("customFaviconPath", yourCustomFaviconPath);
+    ArmoryAPI.show(connectionId, configuration, screens);
+  ```
+
+  <div><code>yourCustomFaviconPath</code> - a path to the favicon from <code>/services/armory/public</code></div>
+  </li>
+
+  <li>
+    <p><b>Add custom CSS:</b></p>
+
+    
+  ```java
+    Map<String, Object> configuration = new HashMap<>("customFaviconPath", yourCustomFaviconPath);
+    ArmoryAPI.show(connectionId, configuration, screens);
+  ```
+
+  <div><code>yourCustomCSS</code> - a string that contains the CSS that is applied globally</div>
+  </li>
+</ul>
+</details>
 
 Finally, here are some examples that show how the two different ways of building screens are used in rules. First one is covering the manual way, while the other is covering the configuration file way.
 
