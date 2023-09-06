@@ -134,8 +134,7 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
     </div>
 </details>
 
-<details>
-<summary>How to use <code>Map&lt;String, Object> configuration</code></summary>
+### How to use <code>Map&lt;String, Object> configuration</code>
 <ul>
   <li>
     <p><b>Add a custom favicon:</b></p>
@@ -161,7 +160,8 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
   <div><code>yourCustomCSS</code> - a string that contains the CSS that is applied globally</div>
   </li>
 </ul>
-</details>
+
+### Examples
 
 Finally, here are some examples that show how the two different ways of building screens are used in rules. First one is covering the manual way, while the other is covering the configuration file way.
 
