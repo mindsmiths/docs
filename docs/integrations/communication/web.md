@@ -134,10 +134,12 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
     </div>
 </details>
 
+
 ### How to use <code>Map&lt;String, Object> configuration</code>
-<ul>
+You can use the <code>configuration</code> map as an argument in the <code>ArmoryAPI.show()</code> to customize every flow individually like this:<ul>
   <li>
     <p><b>Add a custom favicon:</b></p>
+    <p>If you store a path to a custom favicon - <code>yourCustomFaviconPath</code> in <code>configuration</code> like here:</p>
 
     
   ```java
@@ -145,19 +147,20 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
     ArmoryAPI.show(connectionId, configuration, screens);
   ```
 
-  <div><code>yourCustomFaviconPath</code> - a path to the favicon from <code>/services/armory/public</code></div>
+  <div>the screens in that flow will be shown with a custom favicon you've chosen.<br><br></div>
   </li>
 
   <li>
     <p><b>Add custom CSS:</b></p>
+    <p>Same goes for custom CSS for your screens. When you store a string containing CSS - <code>yourCustomCSS</code> like so:</p>
 
     
   ```java
-    Map<String, Object> configuration = new HashMap<>("customFaviconPath", yourCustomFaviconPath);
+    Map<String, Object> configuration = new HashMap<>("customCSS", yourCustomCSS);
     ArmoryAPI.show(connectionId, configuration, screens);
   ```
 
-  <div><code>yourCustomCSS</code> - a string that contains the CSS that is applied globally</div>
+  <div>you can differentiate the look of that particular flow from the rest of the project.</div>
   </li>
 </ul>
 
@@ -365,7 +368,7 @@ This component is used for collecting user's input, especially in cases where yo
   - `type` is used for setting the input type, different versions can be found [here](https://www.w3schools.com/tags/att_input_type.asp)
   - `value` is used for setting the default value of the input and can be additionally edited from the user's side
   - `required` is used for setting whether the input is required or not
-  - `label` is used for setting the label text, which will be shown directly above the input and serves as an description of the specific input field
+  - `label` is used for setting the label text, which will be shown directly above the input and serves as a description of the specific input field
 
 #### SubmitButton
 
@@ -481,7 +484,7 @@ This component is used in cases where you need users to select multiple values f
       - text: "Teamwork"
         value: "teamwork"
       - text: "Creativity"
-        value: "creativeity"
+        value: "creativity"
       - text: "Detail oriented"
         value: "flexible"
 ```
