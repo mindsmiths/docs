@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Discord
 
-[Discord](https://discord.com/) is a free voice, video, and text chat app for wide spectre of users. 
+[Discord](https://discord.com/) is a free voice, video, and text chat app for wide spectre of users.
 It's a perfect tool for community building and arranging communication with your users. With it, you can build servers that are open for public, or you can create a private, invite-only servers which are intended for smaller, closer  groups.
 
 <details>
@@ -70,38 +70,38 @@ pip install "discord-adapter[dev]~=5.0"
 ## How to create a Discord bot
 TL;DR: you'll need to create a new application, then create a bot, and finally get the bot token.
 
-First you'll have to [register for a Discord account](https://discord.com/register). 
+First you'll have to [register for a Discord account](https://discord.com/register).
 When you finish with your registration or if you already have a Discord account, you can begin with following these steps:
 
 1. Visit [Dicord's developers site](https://discord.com/developers/applications) and log in with your Discord account
 2. Click to the `New application` button - you need an application to create a bot
 <div style={{textAlign:'center'}}>
 
-   ![image](/img/discord/create-discord-bot1.png)
+![image](/img/discord/create-discord-bot1.png)
 </div>
 
 3. Give your app a name and click `Create`
 <div style={{textAlign:'center'}}>
 
-   ![image](/img/discord/create-discord-bot2.png)
+![image](/img/discord/create-discord-bot2.png)
 </div>
 
 4. This will lead you to the newly created app menu, where you should click to the `Bot` side-option and continue with `Add Bot` and confirm this action
 <div style={{textAlign:'center'}}>
 
-  ![image](/img/discord/create-discord-bot3.png)
+![image](/img/discord/create-discord-bot3.png)
 </div>
 
 5. After creating a bot, you can now specify its name (optionally, you can set an avatar and experiment with other bot options)
 6. On the same menu, scroll down and toggle: 'Presence Intent', 'Server Members Intent', 'Message Content Intent'
 <div style={{textAlign:'center'}}>
 
-   ![image](/img/discord/create-discord-bot4.png)
+![image](/img/discord/create-discord-bot4.png)
 </div>
 7. You can get your bot token by clicking `View token`
 <div style={{textAlign:'center'}}>
 
-  ![image](/img/discord/create-discord-bot5.png)
+![image](/img/discord/create-discord-bot5.png)
 </div>
 
 :::caution Store the token somewhere safe
@@ -115,13 +115,13 @@ Also, make sure to keep your bot token secret, as it can be used to control your
 2. Click on the `OAuth2` menu and choose the `Url Generator` sub-menu
 <div style={{textAlign:'center'}}>
 
-   ![image](/img/discord/create-discord-bot6.png)
+![image](/img/discord/create-discord-bot6.png)
 </div>
 
 3. Select `bot` within the `SCOPES` category, go to the `BOT PERMISSIONS` category that poped up and choose what options you want to authorize
 <div style={{textAlign:'center'}}>
 
-  ![image](/img/discord/create-discord-bot7.png)
+![image](/img/discord/create-discord-bot7.png)
 </div>
 
 :::info Picking the right permissions
@@ -155,7 +155,7 @@ Same goes for `chatId` and `guildId`, which is the unique identifier of the serv
 Using more than one bot in your Discord server will simplify keeping track of the communication between users and your agents.
 This also helps with the separation of concerns, as each bot can be assigned to a specific task they have.
 
-For example, one bot can be used to send messages to the users, while other can be used to receive messages from the users. 
+For example, one bot can be used to send messages to the users, while other can be used to receive messages from the users.
 You can also have another bot that will notify a specific persona to take action after some unexpected event.
 
 Also, Discord allows you to have a single bot on multiple servers, which is also one way for you to organize your client communication.
@@ -172,14 +172,14 @@ For example, a `sendMessage` function in your Agent class could look like this:
 
 ```java
   public void sendMessage(String text){
-          SendChannelMessage channelMessage = DiscordAdapterAPI.sendChannelMessage(text, channelId);
-          String replyMessageId = channelMessage.getId();
-  }
+        SendChannelMessage channelMessage = DiscordAdapterAPI.sendChannelMessage(text, channelId);
+        String replyMessageId = channelMessage.getId();
+        }
 ```
 :::note
 - The fields `List<Button> buttons` and `String botToken` are optional
 - The field `botToken` specifies which bot receives the message and it always goes last, otherwise if it is empty the Discord adapter uses your primary bot
-:::
+  :::
 
 When editing, deleting or replying to messages, we need to catch its `messageId`:
 
@@ -197,6 +197,24 @@ The following function updates the role of a user:
 
 ```
 public static UpdateRole updateRole(String guildId, Role role)
+```
+
+The following functions can be used for editing channels:
+
+```
+public static EditChannelCategory editChannelCategory(String channelId, String newCategoryId)
+```
+```
+public static EditChannelName editChannelName(String channelId, String newName)
+```
+
+These functions can be used for creating and editing forums within a guild:
+
+```
+public static CreateGuildForum createGuildForum(String guildId, String name, String categoryId)
+```
+```
+public static CreateForumThread createForumThread(String guildId, String channelId, String name)
 ```
 
 Lastly, we also have the following functions for creating, deleting and getting guilds:
@@ -241,6 +259,25 @@ And here is a list of all the possible signals for you to incorporate into your 
 
 <details>
   <summary>Available signals</summary>
+    <div>
+    <div><p><b>Error replies:</b></p></div>
+      <ul>
+        <li>DiscordCategoryCreationFailed</li>
+        <li>DiscordChannelCreationFailed</li>
+        <li>DiscordChannelDeletionFailed</li>
+        <li>DiscordChannelEditFailed</li>
+        <li>DiscordChannelMessageDeletionFailed</li>
+        <li>DiscordEditingMessageFailed</li>
+        <li>DiscordGettingChannelFailed</li>
+        <li>DiscordGettingGuildFailed</li>
+        <li>DiscordGettingMessageFailed</li>
+        <li>DiscordGettingUserFailed</li>
+        <li>DiscordGuildCreationFailed</li>
+        <li>DiscordGuildDeletionFailed</li>
+        <li>DiscordRoleUpdateFailed</li>
+        <li>DiscordSendingMessageFailed</li>
+      </ul>
+  </div>  
   <div>
     <div><p><b>Callbacks:</b></p></div>
       <ul>
@@ -248,29 +285,33 @@ And here is a list of all the possible signals for you to incorporate into your 
         <li>DiscordAllGuildsReply</li>
         <li>DiscordGuildCreated</li>
         <li>DiscordGuildDeleted</li>
-        <li>DiscordGuildCategoryCreated</li>
-        <li>DiscordGuildChannelCreated</li>
+        <li>DiscordChannelCreated</li>
+        <li>DiscordChannelEdited</li>
         <li>DiscordChannelDeleted</li>
+        <li>DiscordChannelMessageDeleted</li>
         <li>DiscordRoleUpdated</li>
-        <li>DiscordMessageSent</li>
         <li>DiscordMessageEdited</li>
-        <li>DiscordMessageDeleted</li>
-        <li>DiscordMessageReplied</li>
+        <li>DiscordCategoryCreated</li>
+        <li>DiscordForumCreated</li>
+        <li>DiscordResult</li>
+        <li>DiscordThreadCreated</li>
       </ul>
   </div>
   <div>  
     <div><p><b>Messages:</b></p></div>
       <ul>
-        <li>DiscordReceivedMessage</li>
-        <li>DiscordSentMessage</li>
         <li>DiscordButtonPressed</li>
         <li>CreateGuild</li>
         <li>CreateGuildCategory</li>
         <li>CreateGuildChannel</li>
+        <li>CreateGuildForum</li>
+        <li>CreateForumThread</li>
         <li>DeleteChannel</li>
         <li>DeleteGuild</li>
+        <li>DiscordAdapterAPI</li>
         <li>DeleteChannelMessage</li>
         <li>EditChannelMessage</li>
+        <li>EditChannelName</li>
         <li>GetAllGuildIds</li> 
         <li>GetGuild</li>
         <li>ReplyToChannelMessage</li>
@@ -340,18 +381,18 @@ end
 
 For discord servers used in local development, it's useful to periodically clean them. That's because (dependening on implementation) `discord-adapter` creates new channels for every `forge reset` and forgets the old ones, leading to dead channels.
 
-To do this, make sure you have `discord-adapter[dev]` installed. If not, run the following:
+To do this, make sure you have `discord-adapter-cli[dev]` installed. If not, run the following:
 ```shell
-pip install "discord-adapter[dev]~=5.0"
+pip install "discord-adapter-cli[dev]~=5.0"
 ```
 
 To delete all channels and categories just run the following command:
 ```shell
-discord-adapter delete-all-channels
+discord-adapter delete_all_channels  -g  "guild_ID" -t "bot_token"
 ```
 
 You will be asked for the `GUILD_ID` (i.e. discord server where to delete channels and categories). Once you type the `GUILD_ID` of your discord server, all channels and categories should get deleted.
 
 :::note
 - For deletion to work, in your `.env` needs to be a `DISCORD_BOT_TOKEN` whose bot **has Administrator access to the server**
-:::
+  :::
