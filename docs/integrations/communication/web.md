@@ -135,8 +135,10 @@ You can show the screens you create using `ArmoryAPI.show()`, which takes the us
 </details>
 
 
-### How to use <code>Map&lt;String, Object> configuration</code>
-You can use the <code>configuration</code> map as an argument in the <code>ArmoryAPI.show()</code> to customize every flow individually like this:<ul>
+### Flow configuration
+
+You can use the <code>configuration</code> map as an argument in the <code>ArmoryAPI.show()</code> to customize every flow individually like this:
+<ul>
   <li>
     <p><b>Add a custom favicon:</b></p>
     <p>If you store a path to a custom favicon - <code>yourCustomFaviconPath</code> in <code>configuration</code> like here:</p>
@@ -147,7 +149,7 @@ You can use the <code>configuration</code> map as an argument in the <code>Armor
     ArmoryAPI.show(connectionId, configuration, screens);
   ```
 
-  <div>the screens in that flow will be shown with a custom favicon you've chosen.<br><br></div>
+  <div>the screens in that flow will be shown with a custom favicon you've chosen.<br/></div>
   </li>
 
   <li>
@@ -163,6 +165,8 @@ You can use the <code>configuration</code> map as an argument in the <code>Armor
   <div>you can differentiate the look of that particular flow from the rest of the project.</div>
   </li>
 </ul>
+
+You can use any other implementation of the <code>ArmoryAPI.show()</code> method, as long as you pass the <code>configuration</code> map as an argument.
 
 ### Examples
 
