@@ -89,6 +89,10 @@ services:
       cpu: str
       memory: str
 
+    deploymentStrategy: Optional[DeploymentStrategy]
+    deploymentSelectors: Optional[Dict[str, str]]
+    dontDeployWith: Optional[List[str]]
+
     exposed: bool = False  # True for type=django
     host: Optional[str]
     port: int = 8000

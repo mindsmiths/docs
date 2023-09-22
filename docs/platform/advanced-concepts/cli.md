@@ -146,6 +146,13 @@ This will run "some shell command" as a shell command, with all the necessary en
 
 ## Changelog
 
+### [5.1.4] - 2023-09-22
+
+#### Added
+- optional deploymentStrategy field in service config, either `Recreate` or `RollingUpdate`
+- optional deploymentSelectors field in serivce config
+- optional dontDeployWith field in service config
+
 
 ### [5.1.3] - 2023-07-04
 
