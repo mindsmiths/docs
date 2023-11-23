@@ -38,7 +38,7 @@ To access it, you just need a Mindsmiths IDE — a VSCode-like web IDE.
 
 If you don't already have one, go to the 
 [Mindsmiths Discord](https://discord.gg/mindsmiths) and just ask for one in *#dev* channel.
-It will take just a few minutes for us to get your IDE up and running.
+We'll contact you once we've approved your request.
 
 Your IDE should look something like this:
 

@@ -14,8 +14,8 @@ It is a set of tools and services that allow you to create and deploy AI-powered
 
 ### Try it out
 
-Mindsmiths Platform is cloud-based and can be used from any browser. You can try it out for free
-by contacting us in [Discord](https://discord.gg/mindsmiths) *#dev* channel.
+Mindsmiths Platform is cloud-based and can be used from any browser. You can request access
+by contacting us in our [Discord](https://discord.gg/mindsmiths) *#dev* channel.
 
 The easiest way to get started is to go through our [tutorials](/docs/tutorials/getting-started).
 They will guide you through the process of creating your first AI-powered agents, integrating with
